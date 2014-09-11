@@ -1,0 +1,12 @@
+[ 2014-09-11T00:05:06+08:00 ] 0.0.0.0 /copydp/index.php/Index/_APP__/Index/index
+ERR: 非法操作:_APP__
+
+[ 2014-09-11T00:06:03+08:00 ] 0.0.0.0 /copydp/index.php/Index/_APP__/Index/index
+ERR: 非法操作:_APP__
+
+[ 2014-09-11T10:26:25+08:00 ] 127.0.0.1 /copydp/index.php/Admin/login.html
+ERR: 非法操作:login
+
+[ 2014-09-11T10:26:45+08:00 ] 127.0.0.1 /copydp/index.php/Admin/login.html
+ERR: 非法操作:login
+

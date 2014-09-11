@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<include file="./Home/Tpl/Public/title.html"/>
+<link rel="Shortcut Icon" href="http://t3.s2.dpfile.com/t/res/favicon.5ff777c11d7833e57e01c9d192b7e427.ico" type="image/x-icon" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
+<link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/g.base.min.bb13e1f02d559f45cb8a58a8e82b6ba4.css" type="text/css" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+<link rel="stylesheet" src="css/fg.css" type="text/css" />
+</head>
+<body>
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+			
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	<div class="pgm">
+		<div class="main_w">
+			<div class="gray-box content order-process">
+				<div class="cont">
+					<div class="infor-box pay-method">
+						<!-- 手机信息/手机绑定 -->
+						<!-- mobile validation begins -->
+						<div class="pay-phone-success Fix ">
+							<div class="field">
+								<div class="fromnum">
+									<strong> 团购成功后，团购券序列号将发送到&nbsp; <span class="num J_binded_mobile" id="binded_num"> 186****2480 </span> &nbsp; </strong> <a href="javascript:" id="J_edit-phone"></a>
+								</div>
+							</div>
+						</div>
+						<!-- 订单信息 -->
+						<!-- order confirmed begins -->
+						<div class="pay-confirm">
+							<h3 class="title">确认订单</h3>
+							<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+								<tbody>
+									<tr>
+										<th width="55%">商品名称</th>
+										<th width="15%">单价</th>
+										<th width="15%">数量</th>
+										<th width="15%">总计</th>
+									</tr>
+									<tr>
+										<td valign="middle" align="left" class="deal">仅售22.5元，价值30元代金券，不限时段通用，免费WiFi，免费停车位！限抵扣30元以内产品，超出需另交费！</td>
+										<td align="center" class="Price-font">&#165;22.5 </td>
+										<td align="center">1</td>
+										<td align="center" class="Price-font">&#165;22.5 </td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="infor">
+								<span class="item">原价：<strong class="Price-font" id="J_off-coupon">&#165;0 </strong></span> 
+								<span class="item">团购立减：<strong class="Price-font" id="J_balance-pay">&#165;0 </strong></span> 
+								<span class="allprice">团购价格金额：<strong class="price Price-font" id="J_total-price">&#165;22.5 </strong></span>
+							</div>
+						</div>
+						<!-- order confirmed ends -->
+					</div>
+					<div class="field">
+						<a href="javascript:history.back();">返回重新下单</a>
+					</div>
+					<div class="order-btn">
+						<div class="b-rbtn Right">
+							<input type="button" id="payOrder" value="确认订单" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="side">
+				<div style="index_switch J_switch imgloading">
+					<img src="img/3.jpg" height="185">
+				</div>
+				<div class="hot region J_hot Hide">
+				</div>
+				<div class="feedback region sidebox sidebox-collapse">
+					<h3> <span>意见反馈</span> </h3>
+					<div class="voice Fix">
+						<img src="img/a.png"> <span>我们希望听到你的声音<br />
+						<a>提交意见反馈»</a></span>
+					</div>
+				</div>
+				<div class="feedback region sidebox">
+					<h3> <span>商务合作</span> </h3>
+					<div class="voice Fix">
+						<img src="img/b.png"> <span>希望在这里组织团购吗？<br />
+						<a>提交需求»</a></span>
+					</div>
+				</div>
+				<div class="recent-box-holder">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 美食结束-->
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+</html>
