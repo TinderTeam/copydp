@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>  
 <html>
 <head>
 <meta charset="UTF-8"/>
@@ -6,10 +6,7 @@
 <link rel="dns-prefetch" href="http://t2.dpfile.com" />
 <link rel="dns-prefetch" href="http://t3.dpfile.com" />
 <link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
-<!---标题---->
-	<include file="./Home/Tpl/Public/title.html"/>
-<!---标题---->
-
+<title>团购网站</title>
 <link rel="Shortcut Icon" href="http://t3.s2.dpfile.com/t/res/favicon.5ff777c11d7833e57e01c9d192b7e427.ico" type="image/x-icon" />
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/account/login.min.87f3f79a1a6d4db0517fcf5c3eb42178.css" type="text/css"/>
@@ -59,11 +56,11 @@
 												<span class="input-error J_err Hide"></span> <span class="prompt J_prmt Hide">长度为6到32个字符</span> </li>
 											<li><span class="ws">验证码</span>
 												<input onclick="_hip.push(['mv', {module: '5_emailreg_verify', action: 'click'}])" name="validate" class="text validate foc J_reg_email_captcha" type="text" id="email-validate" tabindex="3" autocomplete="off" />
-												<img id="mcImgVC2" onclick="this.src='/account/treg.jpg?xx=' + Math.floor(Math.random()*1001);" src='/account/treg.jpg?xx=888'> <a href="#" onclick="document.getElementById('mcImgVC2').src='/account/treg.jpg?xx=?'+ Math.floor(Math.random()*1001);return false;">换一个</a> <span class="input-error J_err Hide"></span> <span class="prompt J_prmt Hide"></span> </li>
+												<img id="mcImgVC2" onclick="this.src='/account/treg.jpg?xx=' + Math.floor(Math.random()*1001);" src='/account/treg.jpg?xx=888'> <a href="__APP__/Buy/product_list" onclick="document.getElementById('mcImgVC2').src='/account/treg.jpg?xx=?'+ Math.floor(Math.random()*1001);return false;">换一个</a> <span class="input-error J_err Hide"></span> <span class="prompt J_prmt Hide"></span> </li>
 											<li class="J_general_err Hide"> <span class="ws">&nbsp;</span> <span class="J_err input-error Hide"></span> <span class="prompt J_prmt Hide"></span> </li>
 											<li class="J_action"><span class="ws">&nbsp;</span>
 												<div class="reg-btn-new">
-													<a href="#" track="|1|module#5_emailreg_button,action#click" class="b-rbtn mob-login J_user_reg_email"> <span>同意用户协议，注册</span> </a>
+													<a href="__APP__/Buy/product_list" track="|1|module#5_emailreg_button,action#click" class="b-rbtn mob-login J_user_reg_email"> <span>同意用户协议，注册</span> </a>
 												</div>
 											</li>
 											<li> <span class="ws">&nbsp;</span><a class="aggrement" href="/useragreement">《XXX团用户协议》</a> </li>
@@ -92,6 +89,6 @@
 	</div>
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
-	<!---footer-->
+	<!---footer--> 
 </body>
-</html>
+</html></pre>

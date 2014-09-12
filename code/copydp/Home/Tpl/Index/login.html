@@ -6,14 +6,44 @@
 <link rel="dns-prefetch" href="http://t2.dpfile.com" />
 <link rel="dns-prefetch" href="http://t3.dpfile.com" />
 <link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
-<!---标题---->
-	<include file="./Home/Tpl/Public/title.html"/>
-<!---标题---->
-
+<title>团购网站</title>
 <link rel="Shortcut Icon" href="http://t3.s2.dpfile.com/t/res/favicon.5ff777c11d7833e57e01c9d192b7e427.ico" type="image/x-icon" />
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/account/login.min.87f3f79a1a6d4db0517fcf5c3eb42178.css" type="text/css"/>
 <link rel="stylesheet" src="css/fg.css" type="text/css" />
+
+<script type="text/javascript">
+
+	function tableChange(obj){
+	var newtab;
+	var newdiv;
+		if(obj=='login'){
+			newtab = document.getElementById("logintab");
+			newdiv = document.getElementById("logindiv");
+		}else if(obj=='memberRigist'){
+			newtab = document.getElementById("membertab");
+			newdiv = document.getElementById("memberdiv");
+		}else if(obj=='sellerRigist'){
+			newtab = document.getElementById("sellertab");
+			newdiv = document.getElementById("sellerdiv");
+		}
+
+		cleanAll();
+		newtab.className = 'switch-bg1 J_switch_tab reg-switch-sel'; 
+		newdiv.className = 'reg-switch-box J_switch_box'; 
+	}
+	function cleanAll(){
+	
+		document.getElementById("logintab").className='switch-bg1 J_switch_tab';
+		document.getElementById("sellertab").className='switch-bg1 J_switch_tab';
+		document.getElementById("membertab").className='switch-bg1 J_switch_tab';
+		
+		document.getElementById("logindiv").className= 'reg-switch-box J_switch_box Hide'; 
+		document.getElementById("memberdiv").className= 'reg-switch-box J_switch_box Hide'; 
+		document.getElementById("sellerdiv").className= 'reg-switch-box J_switch_box Hide'; 
+	}
+	
+</script>
 </head>
 <body>
 	<!---标题栏---->
@@ -48,9 +78,12 @@
 					<div class="box-cont box-cont-new">
 						<div class="login-cont J_cont">
 							<div class="reg-switch J_switch">
-								<span class="switch-bg1 J_switch_tab reg-switch-sel">会员登录</span>
+								<span id="logintab" class="switch-bg1 J_switch_tab reg-switch-sel" onClick="tableChange('login')">会员登录</span>
+								<span id="membertab" class="switch-bg1 J_switch_tab" onClick="tableChange('memberRigist')">会员注册</span>
+								<span id="sellertab" class="switch-bg1 J_switch_tab" onClick="tableChange('sellerRigist')">商家注册</span>
 							</div>
-							<div class="reg-switch-box J_switch_box ">
+						
+							<div id="logindiv" class="reg-switch-box J_switch_box">
 								<div class="J_login Fix">
 									<form action="" method="post">
 										<ul class="login-new-ul">
@@ -78,18 +111,95 @@
 										</ul>
 									</form>
 								</div>
+							</div>	
+							<!---会员注册-->
+							<div id="memberdiv" class="reg-switch-box J_switch_box Hide">
+								<div class="J_login Fix">
+									<form action="" method="post">
+										<ul class="login-new-ul">
+											<li> <span class="ws">用户名</span>
+												<input class="text J_login_username focus" name="username" type="text"
+                       value="" tabindex="1" size="30" autocomplete="off"
+                       placeholder="用户名"/>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
+												<li><span class="ws">密码</span>
+												<input class="text foc J_login_password focus" name="password" type="password"
+                       tabindex="2" autocomplete="off"/>
+										   <li> <span class="ws">激活码</span>
+												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"
+                       placeholder="无激活码请留空"/>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
+											<li> <span class="ws">手机号码</span>
+												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"
+                       placeholder="手机号码"/>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>			   
+											<li class="J_general_err Hide"> '
+												<span class="ws">&nbsp;</span>
+												<span class="J_err input-error Hide"></span>
+												<span class="prompt J_prmt Hide"></span>
+											</li>
+											<li class="J_action">
+												<span class="ws">&nbsp;</span>
+												<div class="login-btn-new">
+													<a class="b-rbtn mob-login J_user_login"> <span>登 录</span> </a>
+												</div>
+											</li>
+										</ul>
+									</form>
+								</div>
+							</div>	
+							
+							<!---商家注册-->
+							<div id="sellerdiv" class="reg-switch-box J_switch_box Hide">
+								<div class="J_login Fix">
+									<form action="" method="post">
+										<ul class="login-new-ul">
+											<li> <span class="ws">用户名</span>
+												<input class="text J_login_username focus" name="username" type="text"
+                       value="" tabindex="1" size="30" autocomplete="off"
+                       placeholder="用户名"/>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
+												<li><span class="ws">密码</span>
+												<input class="text foc J_login_password focus" name="password" type="password"
+                       tabindex="2" autocomplete="off"/>
+										   <li> <span class="ws">选择城市</span>
+												<select>
+													<option>北京</option>
+													<option>上海</option>
+													<option>深圳</option>
+													<option>广州</option>
+												</select>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
+											<li> <span class="ws">手机号码</span>
+												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"
+                       placeholder="手机号码"/>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
+												<li> <span class="ws">地址</span>
+												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"
+                       placeholder="手机号码"/>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>			   
+											<li class="J_general_err Hide"> '
+												<span class="ws">&nbsp;</span>
+												<span class="J_err input-error Hide"></span>
+												<span class="prompt J_prmt Hide"></span>
+											</li>
+											<li class="J_action">
+												<span class="ws">&nbsp;</span>
+												<div class="login-btn-new">
+													<a class="b-rbtn mob-login J_user_login"> <span>登 录</span> </a>
+												</div>
+											</li>
+										</ul>
+									</form>
+								</div>
 							</div>		
 						</div>
 						<div class="aside-right-new">
-							<span>没有XXX团帐号？</span>
-							<a track="|1|module#5_lg_mobreg,action#click" class="aside-right-buy-btn m-lbtn" href="/register"><span>快速注册</span></a>
-							<!----
-							<span class="login">合作网站账号登录</span>
-								<ul>
-									
-								</ul>
+							<h2>注册须知</h2>
+							<p>注册须知</p>
+							<p>注册须知</p>
+							<p>注册须知</p>
 							</div>
-							------>
 						</div>
 					</div>
 				</div>
