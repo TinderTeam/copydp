@@ -32,7 +32,18 @@
 				<img src="__PUBLIC__/img/logo.jpg" style="top: 5px;">
 			</div>
 			<div class="guides">
-				<h2 class="Fix switch-wrap"> <a class="switch J_city_switch" href="javascript:;"> <span class="current J_currentcityname">城市</span> </a> <a  href="__APP__/Index/city" class="switch-city">[切换城市]</a> </h2>
+				<h2 class="Fix switch-wrap"> 
+					<a class="switch J_city_switch" href="javascript:;"> 
+						<span class="current J_currentcityname">
+							<?php
+								echo $_SESSION['city'];
+							?>							
+						</span>
+					</a> 
+					<a  href="__APP__/Index/city" class="switch-city">
+						[切换城市]
+					</a> 
+				</h2>
 			</div>
 			<div class="search-div search-div-new" data-jump="" data-promo-text="#买团购见叫兽#">
 				<input type="text" autocomplete="off" name="search" class="input focus" placeholder="请输入店名、商品名称、商区等" id="search-keywords" value="" >

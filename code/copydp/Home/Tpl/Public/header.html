@@ -1,14 +1,66 @@
 <div class="head-bar responsive">
 		<div class="cont">
 			<ul class="nav nav-left">
-				<li class="has-line"><a href="__APP__/Index/login"> <span>用户登陆</span> </a> </li>
-				<li class="logo-browser-fav J_browser_fav"> <a href="__APP__/Index/login"> <span>免费注册</span> </a> </li>
+				<?php				
+					if(empty($_SESSION['login_user'])){								
+						$login='false';	
+					//}else{
+						//获取用户信息
+						$db=new Model('user');
+						$userName=$_SESSION['login_user'];
+						$userName='customer';
+						$condition['username']=$userName;	
+						$role =  $db->where($condition)->getField('role');
+						$user_id= $db->where($condition)->getField('user_id');
+						
+						//顾客获取积分信息及活动信息
+						if($role == 'CUSTOMER'){
+							//获取积分信息
+							$customerdb=new Model('customer');
+							$condition['user_id']=$user_id;	
+							$score = $customerdb->where($condition)->getField('score');
+							//获取活动信息
+							$activitydb=new Model('activity_order');
+							$activiycondition['customer_id']=$user_id;	
+							$activiycondition['status']='进行中';	
+							$activitytitle=$activitydb->where($activiycondition)->order('activity_id')->limit(3)->getField('activity_title',true);
+							$activityid=$activitydb->where($activiycondition)->order('activity_id')->limit(3)->getField('activity_id',true);	
+							
+						}
+						$login='true';
+					}
+				?>
+				<if condition="$login eq 'false'">
+					<li class="has-line"><a href="__APP__/Index/login"> <span>用户登陆</span> </a> </li>
+					<li class="logo-browser-fav J_browser_fav"> <a href="__APP__/Index/login"> <span>免费注册</span> </a> </li>	
+					
+				<else/>
+					<li class="has-line"><a href="__APP__/Index/login"> <span>{$userName}！</span> </a> </li>
+					<if condition="$role eq 'CUSTOMER'">					
+						<li class="J_browser_fav"> <a > <span>当前积分：</span> </a> </li>	
+						<li class="has-line"><a href="__APP__/Index/login"> <span>{$score}</span> </a> </li>
+						
+						<li class="logo-browser-fav J_browser_fav"> 
+							<a> <span>参加活动： </span></a>
+							<volist name="activitytitle" id="title" key="i" >
+								<volist name="activityid" id="a_id" key="k" >
+									<if condition="$i eq $k">
+										<a href="__APP__/Activity/activity_show?activity_id={$a_id}"> <span>{$title}</span></a>
+									</if>
+								</volist>
+							</volist>
+							
+						</li>	
+					</if>		
+				</if>		
 			</ul>
 			<ul class="nav">
 				<!-- active-dropdown -->
 				<li class="has-line"> <a href="__APP__/Admin/userinfo" class=""><span>会员中心</span></a> </li>
 				<li class="has-line"> <a href="__APP__/Admin/sellesInfo" class=""><span>商家中心</span></a> </li>
-				<li class="has-line"> <a href="__APP__/Admin/member_manage" class=""><span>后台管理</span></a> </li>
+				<if condition="($login eq 'true') and ($login_user_role eq 'ADMIN') ">
+					<li class="has-line"> <a href="__APP__/Admin/member_manage" class=""><span>后台管理</span></a> </li>
+				</if>
 			</ul>
 		</div>
 	</div>	

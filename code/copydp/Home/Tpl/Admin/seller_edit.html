@@ -11,11 +11,15 @@
 
 
 <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
-    <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
-	<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
 <link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
 <link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
 
+
+<script type="text/javascript"  src="__PUBLIC__/js/ueditor.config.js"></script>
+<script type="text/javascript"  src="__PUBLIC__/js/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/lang/zh-cn/zh-cn.js"></script>
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
@@ -29,9 +33,6 @@
 		
 		<div class="nav-bar">
 			<div class="cont">
-				<!-----分类菜单---->
-					<include file="./Home/Tpl/Public/typemenu_p.html"/>
-				<!-----分类菜单---->
 				<!-----主菜单---->
 					<include file="./Home/Tpl/Public/menu.html"/>
 				<!-----主菜单---->
@@ -42,13 +43,6 @@
 	<!---主页面---->
 	<div class="wrap">
 		<!---左侧导航栏--->
-		<div class="user-nav J_user_nav">
-			<ul>
-				<li > <a href="/account/coupons">会员管理</a> <i class="n-arr"></i></li>
-				<li > <a href="/account/coupons">商家管理</a> <i class="n-arr"></i></li>
-				<li class="cur" > <a href="/account/coupons">活动管理</a> <i class="n-arr"></i></li>
-			</ul>
-		</div><!---左侧导航栏--->
 		<!---中间主要内容--->
 		<div class="main_w Tabs-page user-main  page-account">	
 			<div class="user-main">
@@ -94,8 +88,10 @@
 									
 								
 									  	<div class="form-block">
-										<span class="label">详细描述：</span>
-										<textarea rows="50" cols="50"  class="form-textarea form-default"></textarea>
+										<span class="label">详细描述：</span>	
+										
+										<script id="editor" type="text/plain" style="width:auto;height:500px;"></script>
+										
 										<span id="fv_TrafficInfo"  class="fv-def"></span>
 									</div>              
 									
@@ -116,5 +112,12 @@
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
+	
+<script type="text/javascript">
+
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+</script>
 </body>
 </html>
