@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<title>团购网站</title>
+<link type="text/css" href="http://t3.s2.dpfile.com/t/cssnew/my/index.min.81e8e568c7d3705cb3d1ecc2cf472b7d.css" rel="stylesheet"/>
+
+
+<link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+    <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+<link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+				
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	<!---主页面---->
+	<div class="wrap">
+		<!---左侧导航栏--->
+		<div class="user-nav J_user_nav">
+			<ul>
+				<li class="cur"> <a href="/account/usercenter">商户管理</a> <i class="n-arr"></i> </li>
+				<li > <a href="/account/coupons">产品管理</a> <i class="n-arr"></i>
+					<ul>
+						<li > <a href="/account/orders/0">团购管理</a> <i class="n-arr"></i> </li>
+						<li > <a href="/account/orders/0">活动管理</a> <i class="n-arr"></i> </li>
+					</ul>
+				</li>
+				<li > <a href="/account/coupons">订单管理</a> <i class="n-arr"></i>
+					<ul>
+						<li > <a href="/account/orders/0">团购订单管理</a> <i class="n-arr"></i> </li>
+						<li > <a href="/account/orders/0">活动申请管理</a> <i class="n-arr"></i> </li>
+					</ul>
+				</li>
+			</ul>
+		</div><!---左侧导航栏--->
+		<!---中间主要内容--->
+		<div class="main_w Tabs-page user-main  page-account">	
+			<div class="user-main">
+				<!---产品信息编辑--->
+				<div class="um-con">
+					<!--标题-->
+					<div class="modebox my-booking J_my_booking">
+						<div class="hd">
+							<h4>产品信息编辑</h4>	
+						</div> 	
+					</div> 	<!--标题--> 
+					<!--表单-->
+					<div class="con">
+						<div class="main page-sa page-sa-col Fix">
+							<div class="block shop-add-form">
+								<!--表单内容-->
+								<div class="form-inner">
+									<div class="form-block">
+										<label class="label label_required" for="txtShopName">商户名：<em>*</em></label>
+										<input type="text" maxlength="50" id="txtShopName"  class="form-txt form-txt-l" autocomplete="off" size="60" value="">
+										<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
+                      			  	</div>    
+								                
+									<div class="form-block">
+										<span class="label label_required">类型：<em>*</em></span>
+										<select id="ddlShopType"  class="form-select-sim">
+											<option selected="selected" value="10">美食</option>		
+										</select>
+										<select id="ddlCategory"  class="form-select-sim form-select-sim-m">
+											<option value="10">请选择菜系</option>						
+										</select>
+									</div>
+									<div class="form-block">
+										<span class="label">概述：</span>
+										<textarea rows="7" cols="50"  class="form-textarea form-default"></textarea>
+										<span id="fv_TrafficInfo"  class="fv-def"></span>
+									</div> 
+									<div id="trPriceInfo"  class="form-block">
+										<span class="label">原价：</span>
+										<input></input>
+										<span id="fv_txtPriceInfo" style="visibility: hidden; " class="fv-def"></span>
+									</div>
+									<div id="trPriceInfo"  class="form-block">
+										<span class="label">团购价：</span>
+										<input></input>
+										<span id="fv_txtPriceInfo" style="visibility: hidden; " class="fv-def"></span>
+									</div>
+									
+									<div class="form-block">
+										<a class=" form-default"><img src="img/1jpg.jpg "  width="100px" /></a>
+										<a class=" form-default"><img src="img/1jpg.jpg "  width="100px" /></a>
+										<a class=" form-default"><img src="img/1jpg.jpg "  width="100px" /></a>
+										<a class=" form-default"><img src="img/1jpg.jpg "  width="100px" /></a>
+										<a class=" form-default"><img src="img/1jpg.jpg "  width="100px" /></a>
+									</div> 
+									<div class="form-block">
+										<span class="label">图片上传：</span>
+										<input type="file">
+										<span id="fv_TrafficInfo"  class="fv-def"></span>
+									</div>   
+									  	<div class="form-block">
+										<span class="label">详细描述：</span>
+										<textarea rows="50" cols="50"  class="form-textarea form-default"></textarea>
+										<span id="fv_TrafficInfo"  class="fv-def"></span>
+									</div>              
+									
+                   			 </div><!--表单内容-->
+							 <!--提交区域-->
+							<div class="block form-btn-block form-block form-content-block">
+								<strong class="btn-type-b btn-fn-c">
+									<input id="btnAdd" type="button" value="提交商户" class="form-btn">
+								</strong>                       
+							</div><!--提交区域-->
+						</div>
+					</div>		
+				</div><!--表单-->	
+            </div><!---产品信息编辑--->
+		</div>
+	</div><!---中间主要内容--->
+</div><!---主页面---->
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+</html>

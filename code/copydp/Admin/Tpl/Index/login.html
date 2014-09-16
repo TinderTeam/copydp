@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<title>团购网站</title>
+<link rel="Shortcut Icon" href="http://t3.s2.dpfile.com/t/res/favicon.5ff777c11d7833e57e01c9d192b7e427.ico" type="image/x-icon" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/account/login.min.87f3f79a1a6d4db0517fcf5c3eb42178.css" type="text/css"/>
+<link rel="stylesheet" src="css/fg.css" type="text/css" />
+
+<script type="text/javascript">
+
+	function tableChange(obj){
+	var newtab;
+	var newdiv;
+		if(obj=='login'){
+			newtab = document.getElementById("logintab");
+			newdiv = document.getElementById("logindiv");
+		}else if(obj=='memberRigist'){
+			newtab = document.getElementById("membertab");
+			newdiv = document.getElementById("memberdiv");
+		}else if(obj=='sellerRigist'){
+			newtab = document.getElementById("sellertab");
+			newdiv = document.getElementById("sellerdiv");
+		}
+
+		cleanAll();
+		newtab.className = 'switch-bg1 J_switch_tab reg-switch-sel'; 
+		newdiv.className = 'reg-switch-box J_switch_box'; 
+	}
+	function cleanAll(){
+	
+		document.getElementById("logintab").className='switch-bg1 J_switch_tab';
+		document.getElementById("sellertab").className='switch-bg1 J_switch_tab';
+		document.getElementById("membertab").className='switch-bg1 J_switch_tab';
+		
+		document.getElementById("logindiv").className= 'reg-switch-box J_switch_box Hide'; 
+		document.getElementById("memberdiv").className= 'reg-switch-box J_switch_box Hide'; 
+		document.getElementById("sellerdiv").className= 'reg-switch-box J_switch_box Hide'; 
+	}
+	
+</script>
+</head>
+<body>
+	<!---标题栏---->
+		<include file="./Admin/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Admin/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+	
+				<!-----主菜单---->
+					<include file="./Admin/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	<!---登陆栏---->
+	<div class="pgm">
+		<div class="main_w">
+			<div class="page-sa box Form-box">
+				<div class="box-t">
+					<span class="box-tl"></span>
+					<span class="box-tm"></span>
+					<span class="box-tr"></span>
+				</div>
+				<div class="box-wrap">
+					<div class="box-cont box-cont-new">
+						<div class="login-cont J_cont">
+							<div class="reg-switch J_switch">
+								<span id="logintab" class="switch-bg1 J_switch_tab reg-switch-sel" onClick="tableChange('login')">管理员登录</span>
+
+							</div>
+					  
+							<div id="logindiv" class="reg-switch-box J_switch_box">
+								<div class="J_login Fix">
+									<form name="forml" action="__URL__/check" method="post">
+										<ul class="login-new-ul">
+											<li> <span class="ws">账号</span>
+												<input class="text J_login_username focus" name="name" type="text" value="" tabindex="1" size="30" autocomplete="off" placeholder="用户名"/>
+												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
+												<li><span class="ws">密码</span>
+												<input class="text foc J_login_password focus" name="pwd" type="password" tabindex="2" autocomplete="off"/>
+												<a href="">忘记密码</a> <span class="J_err input-error Hide"></span> </li>
+										
+											<li class="J_general_err Hide"> 
+												<span class="ws">&nbsp;</span>
+												<span class="J_err input-error Hide"></span>
+												<span class="prompt J_prmt Hide"></span>
+											</li>
+											<li class="J_action">
+												<span class="ws">&nbsp;</span>
+												<div class="login-btn-new">
+													<button class="b-rbtn mob-login J_user_login" type="submit"> <span>登 录</span> </button>
+												</div>
+											</li>
+										</ul>
+									</form>
+								</div>
+							</div>	
+
+							
+
+								
+
+						</div>
+					</div>		
+				</div>
+
+
+
+				<div class="box-b">
+					<span class="box-bl"></span> <span class="box-bm"></span> <span class="box-br"></span>
+				</div>
+			
+		    </div>
+		</div>
+	</div>
+	<!---footer-->
+		<include file="./Admin/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+</html>
