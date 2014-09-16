@@ -4,11 +4,10 @@
 				<?php				
 					if(empty($_SESSION['login_user'])){								
 						$login='false';	
-					//}else{
+					}else{
 						//获取用户信息
 						$db=new Model('user');
 						$userName=$_SESSION['login_user'];
-						$userName='customer';
 						$condition['username']=$userName;	
 						$role =  $db->where($condition)->getField('role');
 						$user_id= $db->where($condition)->getField('user_id');
@@ -35,7 +34,8 @@
 					<li class="logo-browser-fav J_browser_fav"> <a href="__APP__/Index/login"> <span>免费注册</span> </a> </li>	
 					
 				<else/>
-					<li class="has-line"><a href="__APP__/Index/login"> <span>{$userName}！</span> </a> </li>
+					<li class="has-line"><a href="__APP__/Index/login"> <span>欢迎您，{$userName}！</span> </a> </li>
+						<li class="J_browser_fav"> <a href="__APP__/Index/logout"> <span>注销</span> </a> </li>	
 					<if condition="$role eq 'CUSTOMER'">					
 						<li class="J_browser_fav"> <a > <span>当前积分：</span> </a> </li>	
 						<li class="has-line"><a href="__APP__/Index/login"> <span>{$score}</span> </a> </li>
@@ -58,9 +58,10 @@
 				<!-- active-dropdown -->
 				<li class="has-line"> <a href="__APP__/Admin/userinfo" class=""><span>会员中心</span></a> </li>
 				<li class="has-line"> <a href="__APP__/Admin/sellesInfo" class=""><span>商家中心</span></a> </li>
-				<if condition="($login eq 'true') and ($login_user_role eq 'ADMIN') ">
-<li class="has-line"> <a href="__ROOT__/admin.php/Index/login" class=""><span>后台管理</span></a> </li>
-				</if>
+
+				<if condition="($login eq 'true') and ($role eq 'ADMIN') ">
+			    <li class="has-line"> <a href="__APP__/UserManage/index" class=""><span>后台管理</span></a> </li>			
+				</if> 
 				
 			</ul>
 		</div>

@@ -34,11 +34,50 @@ class IndexAction extends Action {
 		$_SESSION['city']=$cityName;
 		$this->redirect('Index/index');
     }
-	
+	//退出
+	public function logout(){
+		session_destroy();
+		$this->redirect('Index/index');
+		
+	}
+	//登录页面
 	public function login(){
 		$this->display();
     }
+	//登录校验
+ 	public function check(){
+		session_start();
+        $time=30*60; 
+        setcookie(session_name(),session_id(),time()+$time,"/");
+		
+
+      
+			if(!empty($_POST['name'])&&!empty($_POST['pwd'])){
+				$admin= M('user');
+        
+				$condition['name']=$_POST['name'];
+				$pwdenter=$_POST['pwd'];
+				$pwdtrue = $admin->where($condition)->getField('password');
+
+				if($pwdtrue==$pwdenter){
+					$_SESSION['login_user']= $_POST['name'];
+					
+					$this->assign("jumpUrl","index");
+					$this->success("管理员登陆成功！");
+				}else{
+					//$this->redirect('Index/login','',2,'用户名或密码不正确！');
+				 $this->assign("jumpUrl","login");
+				$this->error("用户名或密码不正确！");
+				}
+			}else{
+				$this->assign("jumpUrl","login");
+				$this->error("用户名或密码不能为空！");
 	
+				}
+			 
+
+	
+	}	
 	public function register(){
 		$this->display();
     }
