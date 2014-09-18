@@ -32,155 +32,88 @@
 	</div>
 	<div class="wrap responsive">
 		<div class="land">
-			<!-----最新咨询---->
-			<ul class="location">
-		   <li>
-				<dl class="Fix J_list">
-					<dt class="loc-1">商户分类</dt>
-					<dd class="J_content">
-						<?php
-						//获取分类id
-							$typedb=new Model('product_type');								
-							$typeid=$typedb->limit(15)->order('rand()')->getField('type_id',true);
-							//print_r($typeid);
-						?>
-						<volist name="typeid" id="type_id">
+			<!-----商户总览---->
+				<include file="./Home/Tpl/Seller/seller_index.html"/>
+			<!-----商户总览---->
+			<div class="big-promo Fix">
+				<div class="promo-container">
+					<div class="promo-switch J_promo_switch">
+						<h2>团购推荐</h2>
+						<ul id="carousel-list" class="promo-wrap J_promo_wrap" data-mode="render" style="position: absolute; left: -366520px;">	
 							<?php
-							//获取分类名称
-								$typedb=new Model('product_type');
-								$idcondition['type_id']=$type_id;	
-								$typename=$typedb->where($idcondition)->getField('type_name');
-							?>
-							<a href="__APP__/Buy/search_seller?typeid={$type_id}">{$typename}</a>							
-						</volist>
-					</dd>
-				</dl>
-			</li>
-
-		   
-			<li>
-				<dl class="Fix J_list">
-					<dt class="loc-2">商户区域</dt>
-					<dd class="J_content">
-						<?php
-							//获取区域
-							$city=$_SESSION['city'];
-							$citydb=new Model('city');	
-							$citycondition['city']=$city;
-							$city_id=$citydb->where($citycondition)->getField('city_id');
-							
-							$zonedb=new Model('city_zone');							
-							$zonecondition['city_id']=$city_id;			
-							$zoneid=$zonedb->where($zonecondition)->limit(15)->order('rand()')->getField('zone_id',true);
-						?>
-							<volist name="zoneid" id="zone_id_item">
-								<?php
-								//获取区域名称
-									$zonedb=new Model('city_zone');	
-									$zoneidcondtion['zone_id']=$zone_id_item;	
-									$zone_name=$zonedb->where($zoneidcondtion)->getField('zone_name');
-								?>		
-								<a href="__APP__/Buy/searchSellerByZone?zoneid={$zone_id_item}">{$zone_name}</a>							
-							</volist>											
-							</dd>
-
-					<dd class="J_more more Hide"><a href="__APP__/Buy/product_list"></a></dd>
-				</dl>
-			</li>
-
-			<li class="">
-				<dl class="Fix J_list">
-					<dt class="loc-3">热门商区</dt>
-					<dd class="J_content">
-						<?php
-							$sellerdb=new Model('seller');	
-							$sellercondition['city_id']=$city_id;
-							$seller_zone_id=$sellerdb->where($sellercondition)->limit(15)->order('rand()')->Distinct(true)->getField('zone_id',true);
-						?>
-							<volist name="seller_zone_id" id="seller_zone_id_item">
-								<?php
-								//获取区域名称
-									$zoneidcondtion['zone_id']=$seller_zone_id_item;	
-									$zone_name=$zonedb->where($zoneidcondtion)->getField('zone_name');
-								?>		
-								<a href="__APP__/Buy/searchSellerByZone?zoneid={$zone_id_item}">{$zone_name}</a>							
-							</volist>	
-					</dd>
-				</dl>
-			</li>
-		</ul>
-		<div class="big-promo Fix">
-		<div class="promo-container">
-			<div class="promo-switch J_promo_switch">
-				<h2>团购推荐</h2>
-				<ul id="carousel-list" class="promo-wrap J_promo_wrap" data-mode="render" style="position: absolute; left: -366520px;">	
-					<?php
-						$rcmViewDB=new Model('view_recommernd');
-						$rcmViewCondition['city']=$city;							
-						$rcmIDList=$rcmViewDB->where($rcmViewCondition)->getField('product_id',true);
+								$rcmViewDB=new Model('view_recommernd');
+								$rcmViewCondition['city']=$city;							
+								$rcmIDList=$rcmViewDB->where($rcmViewCondition)->getField('product_id',true);
+								$num = count($rcmIDList);
+							?>		
+							<if condition="	$num eq 0">
+								<p>
+									<li class="promo-item J_promo_item" style="position: absolute; float: none; left: 366520px;">暂无推荐</li>
+								</p>
+							<else/>
+								<volist name="rcmIDList" id="rcmid" key="i">
+									<?php
+										$n=$i%2;
+									?>
+									<if condition="$i gt 2">
+										<if condition="$n eq 1">
+											<li id="carousel-list-item-{$i}" class="promo-item J_promo_item Hide" style="position: absolute; float: none; left: 366520px;">
+										<else/>
+											<li id="carousel-list-item-{$i}"  class="promo-item J_promo_item Hide" data="2" style="position: absolute; float: none; left: 366860px;">
+										</if>
+									<else/>
+										<if condition="$n eq 1">
+											<li id="carousel-list-item-{$i}" class="promo-item J_promo_item" style="position: absolute; float: none; left: 366520px;">
+										<else/>
+											<li id="carousel-list-item-{$i}"  class="promo-item J_promo_item" data="2" style="position: absolute; float: none; left: 366860px;">
+										</if>
+									</if>				
+										<?php>
+															
+											$rcmViewIDCondition['product_id']=$rcmid;								
+											$p_name=$rcmViewDB->where($rcmViewIDCondition)->getField('name');
+											$p_img=$rcmViewDB->where($rcmViewIDCondition)->getField('imgsrc');
+											$p_dscr=$rcmViewDB->where($rcmViewIDCondition)->getField('dscr');
+											$p_price=$rcmViewDB->where($rcmViewIDCondition)->getField('price');
+										?>
+											<a title="{$p_name}" href="__APP__/Buy/productInfo?productID={$rcmid}">
+												<img src="__PUBLIC__/uploads/img/{$p_img}" width="330" height="206" style="float:left;" >						
+												<div class="title">
+													<div class="title-text">
+														<h3>{$p_name}</h3>
+														<h4>{$p_dscr}</h4>
+														<div class="mask"></div>
+													</div>
+													<h5 class="price">¥<em>{$p_price}</em></h5>
+												</div>
+											</a>					
+										</li>
+								</volist>	
+							</if>
+														
+						</ul>
 						
-					?>
-					<volist name="rcmIDList" id="rcmid" key="i">
-						<?php
-							$n=$i%2;
-						?>
-						<if condition="$i gt 2">
-							<if condition="$n eq 1">
-								<li id="carousel-list-item-{$i}" class="promo-item J_promo_item Hide" style="position: absolute; float: none; left: 366520px;">
-							<else/>
-								<li id="carousel-list-item-{$i}"  class="promo-item J_promo_item Hide" data="2" style="position: absolute; float: none; left: 366860px;">
-							</if>
-						<else/>
-							<if condition="$n eq 1">
-								<li id="carousel-list-item-{$i}" class="promo-item J_promo_item" style="position: absolute; float: none; left: 366520px;">
-							<else/>
-								<li id="carousel-list-item-{$i}"  class="promo-item J_promo_item" data="2" style="position: absolute; float: none; left: 366860px;">
-							</if>
-						</if>				
-							<?php>
-												
-								$rcmViewIDCondition['product_id']=$rcmid;								
-								$p_name=$rcmViewDB->where($rcmViewIDCondition)->getField('name');
-								$p_img=$rcmViewDB->where($rcmViewIDCondition)->getField('imgsrc');
-								$p_dscr=$rcmViewDB->where($rcmViewIDCondition)->getField('dscr');
-								$p_price=$rcmViewDB->where($rcmViewIDCondition)->getField('price');
-							?>
-								<a title="{$p_name}" href="__APP__/Buy/productInfo?productID={$rcmid}">
-									<img src="__PUBLIC__/uploads/img/{$p_img}" width="330" height="206" style="float:left;" >						
-									<div class="title">
-										<div class="title-text">
-											<h3>{$p_name}</h3>
-											<h4>{$p_dscr}</h4>
-											<div class="mask"></div>
-										</div>
-										<h5 class="price">¥<em>{$p_price}</em></h5>
-									</div>
-								</a>					
-							</li>
-					</volist>								
-				</ul>
-				
-				 <div class="promo-ctrl J_ctrl">
-					<ul id="carousel-tab" class="Fix">						
-						<volist name="rcmIDList" id="rcmid" key="i">
-							<?php
-								$n=$i%2;
-								$k=($i+1)/2;
-							?>
-							<if condition="$n eq 1">
-								<if condition="$k eq 1">
-									<li data="{$k}" class="carousel-tab on"></li>
-								<else/>
-									<li data="{$k}" class="carousel-tab "></li>
-								</if>
-							</if>
-						</volist>
-					</ul>
+						 <div class="promo-ctrl J_ctrl">
+							<ul id="carousel-tab" class="Fix">						
+								<volist name="rcmIDList" id="rcmid" key="i">
+									<?php
+										$n=$i%2;
+										$k=($i+1)/2;
+									?>
+									<if condition="$n eq 1">
+										<if condition="$k eq 1">
+											<li data="{$k}" class="carousel-tab on"></li>
+										<else/>
+											<li data="{$k}" class="carousel-tab "></li>
+										</if>
+									</if>
+								</volist>
+							</ul>
+						</div>
+					</div>
 				</div>
-			</div>
+			</div> 
 		</div>
-	</div> 
-</div>
 		
 		<!----功能模块最新信息---->
 		<div class="promo">
@@ -189,54 +122,41 @@
 					<div class="tab-col J_tab_col n-deal on">
 						<a href="javascript:void(0)" class="J_tab_item"><span>最新特惠</span></a>
 					</div>
-					<div class="tab-col J_tab_col">
-						<a href="javascript:void(0)" class="J_tab_item"><span>推荐商品</span></a>
-					</div>
 				</div>
 				<div class="promo-list-item J_promo_list_item Hide on">
 					<div class="promo-window J_promo_window">
 						<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
-							<li class="promo-window-item J_promo_window_item"> <a title="大树餐厅" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/4.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [多商区]  大树餐厅 </h3>
-									<h4>代金券，无需预约，节假日通用！ </h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>69</em> </h5>
-									<h6>¥<em>100</em> </h6>
-								</div>
-								</a>
-							</li>
-							<li class="promo-window-item J_promo_window_item"> <a title="缪氏川菜" target="_blank" href="/deal/8027897"> <img src="__PUBLIC__/img/5.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3>[多商区]缪氏川菜</h3>
-									<h4>代金券，不限时段通用，节假日通用！贺缪氏川菜进驻龙华九方购物中心！（另有其他套餐可选）</h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>65</em></h5>
-									<h6>¥<em>100</em></h6>
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="马家烧麦馆" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/6.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [3店通用] 马家烧麦馆 </h3>
-									<h4>代金券，节假日通用！ </h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>39.9</em> </h5>
-									<h6>¥<em>50</em> </h6>
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="黑姆奇时尚韩餐" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/7.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [东中街]  黑姆奇时尚韩餐 </h3>
-									<h4>超值双人套餐，无需预约，节假日通用！ </h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>49</em> </h5>
-									<h6>¥<em>132</em> </h6>
-								</div>
-								</a> </li>
+							<?php
+								$productViewDB=new Model('view_product');
+								$productCityCondition['city']=$city;							
+								$procuctIDList=$productViewDB->where($productCityCondition)->order('update_date desc')->limit(4)->getField('product_id',true);		
+								$num = count($rcmIDList);								
+							?>
+							<if condition="	$num eq 0">
+								<li class="promo-window-item J_promo_window_item">暂无特惠</li>
+							<else/>
+								<volist name="procuctIDList" id="productID">
+								<li class="promo-window-item J_promo_window_item">
+										<?php>											
+											$productIDCondition['product_id']=$productID;								
+											$p_name=$productViewDB->where($productIDCondition)->getField('name');
+											$p_img=$productViewDB->where($productIDCondition)->getField('imgsrc');
+											$p_dscr=$productViewDB->where($productIDCondition)->getField('dscr');
+											$p_price=$productViewDB->where($productIDCondition)->getField('price');
+											$p_org_price=$productViewDB->where($productIDCondition)->getField('original_price');
+										?>
+										<a title="{$p_name}" href="__APP__/Buy/productInfo?productID={$productID}"> <img src="__PUBLIC__/uploads/img/{$p_img}" width="180" height="112" style="float:left;" >
+											<div class="window-title">
+												<h3>{$p_name}</h3>
+												<h4>{$p_dscr}</h4>
+												<div class="mask"></div>
+												<h5 class="price">¥<em>{$p_price}</em></h5>
+												<h6>¥<em>{$p_org_price}</em> </h6>
+											</div>
+										</a>
+									</li>						
+								</volist>	
+							</if>
 						</ul>
 					</div>
 					<div class="panel-foot">
@@ -432,20 +352,19 @@
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript">
-	$(".carousel-tab").click(function(){	
-		carousel_clean();	
-		$(this).addClass("on");		
-		var data=Number($(this).attr("data"));
-		$("#carousel-list-item-"+(data*2-1)).removeClass("Hide");
-		$("#carousel-list-item-"+(data*2)).removeClass("Hide");
-	});
-	
-	function carousel_clean(){
-		$("#carousel-tab").children().removeClass("on");
-		$("#carousel-list").children().addClass("Hide");
-	}
-
-</script>
+	<script type="text/javascript">
+		$(".carousel-tab").click(function(){	
+			carousel_clean();	
+			$(this).addClass("on");		
+			var data=Number($(this).attr("data"));
+			$("#carousel-list-item-"+(data*2-1)).removeClass("Hide");
+			$("#carousel-list-item-"+(data*2)).removeClass("Hide");
+		});
+		
+		function carousel_clean(){
+			$("#carousel-tab").children().removeClass("on");
+			$("#carousel-list").children().addClass("Hide");
+		}
+	</script>
 </body>
 </html>

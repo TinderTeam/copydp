@@ -7,9 +7,14 @@
 <link rel="dns-prefetch" href="http://t3.dpfile.com"/>
 <link rel="dns-prefetch" href="http://si1.s1.dpfile.com/"/>
 <title>【当期优惠】-团购网</title>
-<meta name="viewport"          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
 <link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
 <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/deal/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" rel="stylesheet"/>
+	<style type="text/css">
+		#allmap{width:100%;height:500px;}
+	</style>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DNGm7Kq87zslzLLkll9epKQY"></script>
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
@@ -31,6 +36,22 @@
 		</div>
 	</div>
 	
+	
+	<?php
+		$productDB=new Model('product');
+		$productIDCondition['product_id']=$productID;
+		$productName=$productDB->where($productIDCondition)->getField('name');
+		$productDscr=$productDB->where($productIDCondition)->getField('describe');
+		$productPrice=$productDB->where($productIDCondition)->getField('price');
+		$productOPrice=$productDB->where($productIDCondition)->getField('original_price');
+		$sellerID=$productDB->where($productIDCondition)->getField('seller_id');
+		$endTime=$productDB->where($productIDCondition)->getField('end_date_time');
+		$productImgsrc=$productDB->where($productIDCondition)->getField('imgsrc');
+		$productImgList=$productDB->where($productIDCondition)->getField('imglist');
+		$infoHtml=$productDB->where($productIDCondition)->getField('basic_infor');
+
+	?>
+	
 	<!----主界面---->
 	<div class="pgm">
 		<div class="main_w page-index normal-type">
@@ -38,10 +59,27 @@
 				<div class="no-book">
 				</div>
 				<div class="bd">
-					<h1 class="title"> [128店通用]棒约翰比萨 </h1>
-					<h2 class="sub-title"> <span>仅售41元，价值79元美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</span> </h2>
+					<h1 class="title">{$productName}</h1>
+					<h2 class="sub-title"> <span>{$productDscr}</span> </h2>
 					<div class="price-wrap">
-						<h3 class="price"> <span class="price-display"> <em>&#165;</em>41 </span> <span class="discount"> <span class="price-discount"> 5.2<em>折</em> </span> <span class="price-original"> 价值&nbsp;<em>&#165;</em>79 </span> </span> </h3>
+						<h3 class="price">
+							<span class="price-display">
+								<em>&#165;</em>{$productPrice}
+							</span>
+							<span class="discount">
+								<span class="price-discount">
+									<?php
+										$count=round($productPrice*10/$productOPrice, 2);
+									?>
+									<em>{$count}折</em>
+								</span>
+								<span class="price-original">
+									价值&nbsp;
+									<em>&#165;</em>
+									{$productOPrice}
+								</span>
+							</span>
+						</h3>
 						<div class="Hide Toe-promo-box">
 						</div>
 						<i></i>
@@ -51,81 +89,98 @@
 							<tr>
 								<td>
 									<div class="action-info">
-										<span><em class="J_current_join">125</em>人购买</span>
+										<?php
+											$OrderDB=new Model('order');
+											$OrderProductIDCondition['product_id']=$productID;
+											$numberBuy=$OrderDB->where($OrderProductIDCondition)->count();
+										?>
+										<span><em class="J_current_join">{$numberBuy}</em>人购买</span>
 									</div>
 								</td>
 								<td>
 									<div class="action-info">
-										<span> <a href="__APP__/Buy/product_list" class="comments-count J_site_comment_jump"> 48273 </a>条商户评价 </span>
+										<?php
+											$sellerEvaDB=new Model('seller_evaluation');
+											$sellerEvaSellerIDCondition['seller_id']=$sellerID;
+											$numberSellerEva=$sellerEvaDB->where($sellerEvaSellerIDCondition)->count();
+											
+										?>
+										<span> <a> {$numberSellerEva}</a>条商户评价 </span><!--这里加入锚点-->
 									</div>
-								</td>
-								<td class="last">
-									<div class="action-info service-item" xmlns="http://www.w3.org/1999/html">
-										<span class="refund"> <a target="_blank" href="/promise" track="dp_tg_deal_refund" rel="nofollow"> <i></i> <span>支持随时退</span> </a> </span> <span class="expired"> <a target="_blank" href="/promise" track="dp_tg_deal_refund" rel="nofollow"> <i></i> <span>过期自动退</span> </a> </span>
-									</div>
-								</td>
+								</td>							
 							</tr>
 						</table>
 					</div>
 					<div class="validate-date">
-						<span>有效期：至2014-10-7</span>
+						<span>有效期：至{$endTime}</span>
 					</div>
+					
 					<div class="setmeal-box J_setmeal-box">
-						<div class="pop_soldout J_pop_soldout Hide">
-							<span></span><i></i>
-						</div>
-						<span class="tit Hide">套餐：</span>
-						<ul class=" Hide">
-							<li class="simple-meal J_simple-meal"> <a class="active" href="__APP__/Buy/product_list"> <i></i> <span>卷边小装美式烟熏牛肉比萨</span>
-								<div class="mask">
-								</div>
-								</a> </li>
-						</ul>
 						<div class="quantity Fix">
 							<span class="tit">数量：</span>
-							<div class="counter J_counter" data-eval-config='{"min":1,"max":0,"default":1,"limit":true}'>
-								<a class="minus" href="__APP__/Buy/product_list"><i></i></a>
-								<input class="num" value="">
-								<a class="plus" href="__APP__/Buy/product_list"><i></i></a>
+							<div class="counter J_counter">
+								<a class="minus"><i></i></a>
+								<input class="num" value="0">
+								<a class="plus" ><i></i></a>
 							</div>
 						</div>
-					</div>
+					</div>				 
 					<div class="order">
-						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Buy/order"> <span>立即抢购</span> </a> <a class="b-new-btn small cart-btn J_package_cart"> <i></i><span>加入购物车</span> </a>
+						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Buy/order"> <span>立即抢购</span> </a> <button >成为超级VIP</button>
 					</div>
 				</div>
+				
 				<div class="lbd">
 					<div class="img-area">
 						<div class="slider">
 							<div class="slide J_switch J_switch_carousel imgloading">
 								<div class="img-wrap J_wrap">
-									<img alt="棒约翰比萨团购"> <img alt="棒约翰比萨团购">
-								</div>
-								<ul class="sideTrigger ">
-									<li class="before J_before Hide"><span>向前</span></li>
-									<li class="after J_after Hide"><span>向后</span></li>
-								</ul>
+									<img  src="__PUBLIC__/uploads/img/{$productImgsrc}" >
+								</div>							
 								<div class="imgctrl J_ctrl">
-									<a rel="nofollow" href="__APP__/Buy/product_list"> <img/> </a> <a rel="nofollow" href="__APP__/Buy/product_list"> <img/> </a>
+									<?php
+										$imgList=explode(";",$productImgList);
+									?>
+									<volist name="imgList" id="imgName">
+										<a rel="nofollow" href="__APP__/Buy/product_list"> 
+											<img  src="__PUBLIC__/uploads/img/{$imgName}" >
+										</a>
+									</volist>								
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="func">
-						<ul class="func-link">
-							<li class="book Hide J_book"> <a href="__APP__/Buy/product_list" track="dp_tg_booking"><i></i>在线预约</a> </li>
-							<li class="collection J_collect"> <a href="__APP__/Buy/product_list" track="dp_tg_deal_collect|1|module#5_button_collect,action#click"> <i></i>收藏这单 </a> </li>
-						</ul>
-						<div class="share J_share">
-						</div>
-						<dl data-remain-sec="2465767"  class="count-down J_count_down">
+					<div class="func">					
+						<dl class="count-down J_count_down">
 							<dt>剩余</dt>
-							<dd class="time"> <em>28</em>天 <em>12</em>小时 <em>56</em>分钟 </dd>
+							<dd class="time">
+							<?php
+							
+								$Date_1=date("Y-m-d");						
+								$Date_2=$endTime;
+								$Date_List_a1=explode("-",$Date_1);
+								$Date_List_a2=explode("-",$Date_2);
+								$d1=mktime(0,0,0,$Date_List_a1[1],$Date_List_a1[2],$Date_List_a1[0]);
+								$d2=mktime(0,0,0,$Date_List_a2[1],$Date_List_a2[2],$Date_List_a2[0]);	
+								
+								$Days=round(($d2-$d1)/3600/24);
+								
+								if($d2-$d1 < 0)
+								{
+									print("已过期");
+								}else{
+									print($Days . "天");
+								}
+							?>
+							
 						</dl>
 					</div>
 				</div>
 			</div>
+			
+
 			<div class="content">
+				<!----
 				<div class="other-deal-box">
 					<div class="tit">
 						<h3>该品牌的其他团购</h3>
@@ -136,6 +191,7 @@
 						</ul>
 					</div>
 				</div>
+				--->
 				<div class="box content J_tab_container">
 					<div class="box Tabs-box switch-box">
 						<div class="box-wrap">
@@ -157,19 +213,21 @@
 									<!----基本介绍-->
 									<div class="detail">
 										<h3 class="new-tit"><span class="name">基本介绍</span></h3>
-										<p class="listitem"></p>
-										<p class="explain">德克萨斯风味牛肉条与芝士一起烘烤，搭配蘑菇、薯角块，辅以棒约翰特制番茄莎莎酱，软嫩多汁，满口生津！</p>
-										<div class="img">
-											<img lazy-src-load="http://t3.s1.dpfile.com/pc/mc/bb02cf86b23ef8860620111af0abf303(640x1024)/thumb.jpg" />
-										</div>
+										<?php
+											print($infoHtml);
+										?>
+										{$infoHtml}
 									</div>
 									<div class="detail">
 										<h3 class="new-tit"><span class="name">商家介绍</span></h3>
 										<p class="listitem"></p>
-										<p class="explain">德克萨斯风味牛肉条与芝士一起烘烤，搭配蘑菇、薯角块，辅以棒约翰特制番茄莎莎酱，软嫩多汁，满口生津！</p>
-										<div class="img">
-											<img lazy-src-load="http://t3.s1.dpfile.com/pc/mc/bb02cf86b23ef8860620111af0abf303(640x1024)/thumb.jpg" />
-										</div>
+										<?php
+											$sellerDB=new Model('seller');
+											$sellerIDCondition['user_id']=$sellerID;									
+											$sellerDscr=$sellerDB->where($sellerIDCondition)->getField('description');
+											$productPosition=$sellerDB->where($sellerIDCondition)->getField('position');
+										?>
+										<p class="explain">{$sellerDscr}</p>										
 									</div>
 									<div class="detail J_tab">
 										<h3 class="new-tit"><span class="name">特惠详细</span></h3>
@@ -185,9 +243,9 @@
 											</thead>
 											<tbody>
 												<tr>
-													<td>卷边小装美式烟熏牛肉比萨</td>
+													<td>{$productName}</td>
 													<td class="tc">1份</td>
-													<td class="tc">79元</td>
+													<td class="tc">{$productPrice}元</td>
 												</tr>
 												<tr class="total">
 													<td></td>
@@ -200,46 +258,72 @@
 										</table>
 									</div>
 									<div class="detail">
-										<h3 class="new-tit"><span class="name">在线地图</span></h3>
-										<p class="listitem"></p>
-										<p class="explain">德克萨斯风味牛肉条与芝士一起烘烤，搭配蘑菇、薯角块，辅以棒约翰特制番茄莎莎酱，软嫩多汁，满口生津！</p>
-										<div class="img">
-											<img lazy-src-load="http://t3.s1.dpfile.com/pc/mc/bb02cf86b23ef8860620111af0abf303(640x1024)/thumb.jpg" />
-										</div>
+										<p id ="position" data="{$productPosition}"></p>
+										<?php
+											$city=$_SESSION['city'];
+										?>
+										<p id ="city" data="{$city}"></p>
+										<h3 class="new-tit"><span class="name">在线地图</span></h3>	
+										<div id="allmap" class="img map"></div>
 									</div>
 									<div class="detail J_tab" id="tab_show_6">
 										<h3 class="new-tit"><span class="name">购买须知</span></h3>
 										<div class="detail-box">
 											<div class="purchase-notes">
+											
+												<?php
+													$noticeDB=new Model('product_notice');
+													$NoticeProductIDCondition['product_id']=$productID;
+													$orderinfo=$noticeDB->where($NoticeProductIDCondition)->getField('orderinfo');
+													$rule=$noticeDB->where($NoticeProductIDCondition)->getField(rule);
+													$warning=$noticeDB->where($NoticeProductIDCondition)->getField('warning');
+												?>
 												<dl>
 													<dt>有效期</dt>
 													<dd>
-														<p class="listitem">2014-09-09至2014-10-07</p>
+														<p class="listitem">至{$endTime}</p>
 													</dd>
 												</dl>
 												<dl>
 													<dt>预约信息</dt>
 													<dd>
-														<p class="listitem">无需预约，如遇消费高峰时段您可能需要排队</p>
-													</dd>
-												</dl>
-												<dl>
-													<dt>堂食外带</dt>
-													<dd>
-														<p class="listitem">本单可外带可堂食</p>
-														<p class="listitem">商家不提供外送外卖服务</p>
+														<p class="listitem">
+															<?php
+																if($orderinfo!=null){
+																	print($orderinfo);
+																}else{
+																	print('无');
+																}															
+															?>													
+														</p>
 													</dd>
 												</dl>
 												<dl>
 													<dt>规则提醒</dt>
 													<dd>
-														<p class="listitem">不再与店内其他优惠同享</p>
+														<p class="listitem">
+														<?php
+																if($rule!=null){
+																	print($rule);
+																}else{
+																	print('无');
+																}															
+															?>
+														</p>
 													</dd>
 												</dl>
 												<dl>
 													<dt>温馨提示</dt>
 													<dd>
-														<p class="listitem">如需团购券发票，请您在消费时向商户咨询</p>
+														<p class="listitem">
+															<?php
+																if($warning!=null){
+																	print($warning);
+																}else{
+																	print('如需团购券发票，请您在消费时向商户咨询');
+																}															
+															?>
+														</p>
 													</dd>
 												</dl>
 											</div>
@@ -253,33 +337,66 @@
 										</div>
 										<div class="comment-box J_comment_box">
 											<div class="tab-box J_site_comment" data-loaded="true">
-												<ul>
-													<li class="site-item Fix">
-														<div class="avatar">
-															<a target="_blank" rel="nofollow" user-id="28746710" class="J_card"> <img src="http://j3.s2.dpfile.com/s/img/uc/default-avatar48c48.v17.png" alt="用户1"> </a>
-															<p class="name">用户1</p>
-														</div>
-														<div class="comment-body J_comment_body">
-															<div class="user-info">
-																<span title="" class="item-rank-rst irr-star45"></span>
-																<div class="comment-rst">
-																	<em class="sep">|</em> <span class="rst">口味4<em class="col-exp">(非常好)</em></span> <span class="rst">环境4<em class="col-exp">(非常好)</em></span> <span class="rst">服务4<em class="col-exp">(非常好)</em></span>
+												<ul id="pageListArray">
+													<?php
+														$productEvaDB=new Model('product_evaluation');
+														$productIDCondition['product_id']=$productID;
+														$product_eva_id=$productEvaDB->where($productIDCondition)->order('datetime desc')->getField('product_eva_id',true);
+														
+													?>
+													<volist name="product_eva_id" id="eva_id" key="i">
+														<if condition="$i gt 5">
+															<li id="item_{$i}" class="site-item Fix Hide">
+														<else/>
+															<li id="item_{$i}" class="site-item Fix">
+														</if>
+														
+															<?php
+																$productEvaViewDB=new Model('view_product_eva');
+																$EvaIDCondition['product_eva_id']=$eva_id;
+																$user_name=$productEvaViewDB->where($EvaIDCondition)->getField('user_name');
+																$score=$productEvaViewDB->where($EvaIDCondition)->getField('score_product');
+																$seller=$productEvaViewDB->where($EvaIDCondition)->getField('seller_name');
+																$content=$productEvaViewDB->where($EvaIDCondition)->getField('eva_content');
+																$datetime=$productEvaViewDB->where($EvaIDCondition)->getField('datetime');
+															?>
+															
+															<div class="avatar">																
+																<p class="name">{$user_name}</p>
+															</div>
+															<div class="comment-body J_comment_body">
+																<div class="user-info">
+																	<span title="" class="item-rank-rst irr-star{$score}0"></span>
+																	<div class="comment-rst">
+																		<em class="sep">|</em> <span class="rst">产品:{$score}分</span> 
+																	</div>
+																	<span class="branch-name"><a href="" >{$seller}</a></span>
 																</div>
-																<span class="branch-name"><a track="|1|module#5_tab_allreview,action#click,dealgrp_id#8057385,shopid#1895407" target="_blank" href="http://www.dianping.com/shop/1895407">上海华诚店</a></span>
+																<div class="misc-info">
+																	<p> {$content}</p>
+																</div>
+																<div class="misc-info">
+																	<span class="time"> {$datetime}</span>																
+																</div>
 															</div>
-															<div class="misc-info">
-																<p> 最好吃的一款披萨，希望优惠折扣更多一点就更好了 </p>
-															</div>
-															<div class="misc-info">
-																<span class="time">2014-09-09</span>
-																<h2 class="misc-name">棒约翰比萨</h2>
-															</div>
-														</div>
-													</li>
+														</li>
+													</volist>													
 												</ul>
 												<div class="pages-wrap J_tab2_pagewrap">
 													<div class="Pages">
-														<span class="PageSel">1</span> <a href="javascript:" data-page="2" class="PageLink" title="2">2</a> <a href="javascript:" data-page="3" class="PageLink" title="3">3</a> <a href="javascript:" data-page="4" class="PageLink" title="4">4</a> <a href="javascript:" data-page="5" class="PageLink" title="5">5</a> <a href="javascript:" data-page="2" class="NextPage" title="下一页">下一页</a>
+													<?php
+														$pageNumber=floor (count($product_eva_id)/5);
+													?>
+														<if condition="$pageNumber gt 0">
+															<a class="LastPage" title="上一页">上一页</a>
+															<span class="pageTagArray" data="1">
+															<a id="page_1" class="PageSel pageTag" >1</a> 
+															<for start="1" end="($pageNumber+1)">
+																<a id="page_{$i+1}" class="PageLink pageTag">{$i+1}</a> 
+															 </for>	
+															</span>
+															<a class="NextPage" title="下一页" data="{$pageNumber+1}">下一页</a>
+														</if>													
 													</div>
 												</div>
 											</div>
@@ -315,11 +432,11 @@
 											<th width="50"></th>
 										</tr>
 										<tr>
-											<td class="Price-font"> &#165;79 </td>
+											<td class="Price-font">{$productPrice}</td>
 											<td width="50"></td>
-											<td> 5.2折 </td>
+											<td>{$count}折 </td>
 											<td width="50"></td>
-											<td> <span class="J_dealCount"> 125人 </span> </td>
+											<td> <span class="J_dealCount"> {$numberBuy}人 </span> </td>
 											<td width="50"></td>
 										</tr>
 									</tbody>
@@ -330,65 +447,70 @@
 				</div>
 			</div>
 			<!---侧边栏--->
-			<div class="side">
-				<div style="index_switch J_switch imgloading">
-					<img src="img/3.jpg" height="185">
-				</div>
-				<div class="hot region J_hot Hide">
-				</div>
-				<div class="feedback region sidebox sidebox-collapse">
-					<h3> <span>意见反馈</span> </h3>
-					<div class="voice Fix">
-						<img src="img/a.png"> <span>我们希望听到你的声音<br />
-						<a>提交意见反馈»</a></span>
-					</div>
-				</div>
-				<div class="feedback region sidebox">
-					<h3> <span>商务合作</span> </h3>
-					<div class="voice Fix">
-						<img src="img/b.png"> <span>希望在这里组织团购吗？<br />
-						<a>提交需求»</a></span>
-					</div>
-				</div>
-				<div class="recent-box-holder">
-				</div>
-				<div class="recent-box sidebox region">
-					<h3><span>最近浏览</span></h3>
-					<ul>
-						<li>暂无浏览记录</li>
-					</ul>
-				</div>
-		
-			<div class="J_see_also region sidebox M-today">
-				<div class="recom-ul">
-					<h3><span>商家特惠</span></h3>
-					<ul>
-						<li><a class="thumb"> <img width="200" height="125" src="http://t3.s1.dpfile.com/pc/mc/3bc9f3c5ab0745110b93a81e00bdd7d0(450c280)/thumb.jpg"> </a>
-							<h6> <a target="_blank" title="喜栈"> <strong>11店通用</strong> 喜栈</a> </h6>
-							<a href="/deal/6294310" target="_blank" class="recom-worth"> 
-								<span class="Price-font price">¥12.8</span>
-								<del class="o-price">¥20</del>
-								<strong class="recom-word"></strong>
-							</a>
-						</li>		
-						<li class="last">
-							<div class="more">
-								<a href="/dongguan#">更多特惠</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+			<include file="./Home/Tpl/Public/sidebar.html"/>
 			<!---侧边栏--->
 		</div>
 	</div>
-	<div class="celebrate-icon J_ad_deal_left_float">
-	</div>
-	<div class="J_ad_deal_right_float">
-	</div>
+
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
+
 </body>
+	<script type="text/javascript">
+		$(".pageTag").click(function(){	
+			pageClean();	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data);	
+		});
+		
+		function pageClean(){
+			$(".pageTagArray").children().removeClass("PageSel");
+			$(".pageTagArray").children().addClass("PageLink");
+			$("#pageListArray").children().addClass("Hide");
+		}
+		$(".NextPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');			
+			var data=Number(current)+1;
+			var max=Number($(".NextPage").attr('data'));
+			if(data<=max){
+				pageClean();
+				change_page(data);	
+			}
+		
+		});
+		$(".LastPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');
+			
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean();
+				change_page(data);	
+			}			
+		});
+		function change_page(data){
+			$("#page_"+data).addClass("PageSel");						
+			$(".pageTagArray").attr('data',data);	
+			var start=(data-1)*5;
+			$("#item_"+(start+1)).removeClass("Hide");
+			$("#item_"+(start+2)).removeClass("Hide");
+			$("#item_"+(start+3)).removeClass("Hide");
+			$("#item_"+(start+4)).removeClass("Hide");
+			$("#item_"+(start+5)).removeClass("Hide");
+		}
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		// 百度地图API功能
+		var position=$("#position").attr('data');
+		var xy= position.split(",");
+		var city=$("#city").attr('data');
+		
+		var map = new BMap.Map("allmap");    // 创建Map实例
+		map.centerAndZoom(new BMap.Point(Number(xy[0]),Number(xy[1])), 21);  // 初始化地图,设置中心点坐标和地图级别
+		map.setCurrentCity(city);          // 设置地图显示的城市 此项是必须设置的
+	</script>
 </html>

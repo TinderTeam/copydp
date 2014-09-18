@@ -2,196 +2,323 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<link rel="dns-prefetch" href="http://t1.dpfile.com" />
-<link rel="dns-prefetch" href="http://t2.dpfile.com" />
-<link rel="dns-prefetch" href="http://t3.dpfile.com" />
-<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
-<title>团购网站</title>
-<link rel="Shortcut Icon" href="http://t3.s2.dpfile.com/t/res/favicon.5ff777c11d7833e57e01c9d192b7e427.ico" type="image/x-icon" />
-<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
-<link rel="stylesheet" href="http://j1.s2.dpfile.com/mod/css-reset/0.1.1/css/index.min.css" type="text/css"/>
-<link rel="stylesheet" href="http://j1.s2.dpfile.com/concat/~mod~mbox~0.1.5~css~mbox.min.css,~mod~main-authbox~0.1.0~css~index.min.css,~mod~css-rating~0.1.0~css~index.min.css,~mod~css-shop-tag~0.1.0~css~index.min.css,~mod~app-main-header~0.1.8~css~footer.min.css,~mod~app-main-header~0.1.8~css~hotel.min.css,~mod~app-main-header~0.1.8~css~index.min.css,~mod~app-main-shop-comment~0.1.3~css~index.min.css,~mod~app-midas~0.1.6~css~style.min.css,~mod~app-main-shop~0.1.9~css~index.min.css" type="text/css"/>
-<link rel="stylesheet" src="css/fg.css" type="text/css" />
-<style type="text/css">
-body{
-	background-color:#fafafa;
-}
-
-</style>
+<link rel="dns-prefetch" href="http://t1.dpfile.com"/>
+<link rel="dns-prefetch" href="http://t2.dpfile.com"/>
+<link rel="dns-prefetch" href="http://t3.dpfile.com"/>
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/"/>
+<title>【当期优惠】-团购网</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/deal/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" rel="stylesheet"/>
+	<style type="text/css">
+		#allmap{width:100%;height:500px;}
+		
+		
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DNGm7Kq87zslzLLkll9epKQY"></script>
+			<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
 </head>
-<body id="top">
+<body id="body" data-type="">
 	<!---标题栏---->
 		<include file="./Home/Tpl/Public/header.html"/>
 	<!---标题栏---->
-<div class="head responsive">
+	
+	<div class="head responsive">
 		<!---Logo栏---->
 			<include file="./Home/Tpl/Public/logobar.html"/>
 		<!---Logo栏---->
 		
 		<div class="nav-bar">
 			<div class="cont">
+			
 				<!-----主菜单---->
 					<include file="./Home/Tpl/Public/menu.html"/>
 				<!-----主菜单---->
 			</div>
 		</div>
 	</div>
-
-
-<div id="body" class="body">
-	<div class="body-content clearfix">
-		<div class="main">
-		
-			<div class="base shakeable">
-				<h1 class="shop-name">商家介绍 </h1>
-				<div id="base-info" class="base-info">
-					<h1 class="shop-name">    
-						<span class="name" title="真功夫(万商白马店)">真功夫(万商白马店)</span>         
-					</h1>
-					<p class="info multi-info" itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">
-						<span class="item">
-							口味：7.3
-						</span>
-						<span class="item">
-							环境：7.4
-						</span>
-						<span class="item">
-							服务：7.4
-						</span>         
-					</p>
-					<div class="photos">
-							<a target="_blank" href="/shop/17585050/photos">
-								<img 
-									itemprop="photo" src="http://i1.dpfile.com/pc/522da1075c9ad5e4a62191b35d8548a2/68095992_m.jpg" title="真功夫的图片" alt="真功夫的图片" 
-								/>							
-							</a>
-							<p>
-								<a id="pic-count" href="/shop/17585050/photos" target="_blank">
-									图片描述
-								</a>
-							</p>
+	
+	
+	<?php
+		$sellerViewDB=new Model('view_seller');
+		$sellerIDCondition['seller_id']=$sellerID;
+		$sellerName=$sellerViewDB->where($sellerIDCondition)->getField('username');
+		$sellerDscr=$sellerViewDB->where($sellerIDCondition)->getField('description');
+		$sellerImgsrc=$sellerViewDB->where($sellerIDCondition)->getField('img');
+		$sellerPosition=$sellerViewDB->where($sellerIDCondition)->getField('position');
+		$city=$sellerViewDB->where($sellerIDCondition)->getField('city');
+		$type=$sellerViewDB->where($sellerIDCondition)->getField('type_name');
+		$zone_name=$sellerViewDB->where($sellerIDCondition)->getField('zone_name');
+	?>
+	
+	<!----主界面---->
+	<div class="pgm">
+		<div class="main_w page-index normal-type">
+			<div class="summary summary-comments-big J_summary Fix" style="height: 300px;">
+				<div class="no-book">
+				</div>
+				<div class="bd">
+					<h1 class="title">{$sellerName}</h1>
+					<h2 class="sub-title"> <span>{$sellerDscr}</span> </h2>
+					<div class="action-box">
+						<table class="action-blk">
+							<tr>
+								<td>
+									<div class="action-info">										
+										<span>所在城市：{$city}</span>
+									</div>
+								</td>
+								<td>
+									<div class="action-info">										
+										<span>区域：{$zone_name}</span>
+									</div>
+								</td>								
+							</tr>
+						</table>
 					</div>
-					<p class="info info-indent info-indent-2" itemprop="street-address">
-						<span class="info-name">地址：</span>
-						<a href="/search/category/16/10/r110" rel="nofollow" target="_blank">
-							<span itemprop="locality region">江岸区</span></a>
-						<span class="item" itemprop="street-address">
-							汉口万商白马服饰批发市场1楼
-						</span>
-						<br>
-					</p>
-					<p class="info">电话：
-							<span  itemprop="tel">027-85381538</span>
-					</p>
-					<p class="info J-service">特色：
-						<a class="tag tag-tuan-b J-service-tuan" href="javascript:;" target="_blank"></a>  
-					</p>
-					<div class="action">               
-						<a class="write"><i class="icon"></i>评价</a>
+					<div class="action-box">
+						<table class="action-blk">
+							<tr>
+								<td>
+									<div class="action-info">
+										<div class="action-info">										
+											<span> 商户类型：{$type}</span>
+										</div>
+									</div>
+								</td>							
+							</tr>
+						</table>
+					</div>	
+				<div class="action-box">
+						<table class="action-blk">
+							<tr>
+								<td>
+									<div class="action-info">
+										<?php
+											$sellerEvaDB=new Model('seller_evaluation');
+											$sellerEvaSellerIDCondition['seller_id']=$sellerID;
+											$numberSellerEva=$sellerEvaDB->where($sellerEvaSellerIDCondition)->count();										
+										?>
+										<span> <a> {$numberSellerEva}</a>条商户评价 </span>
+									</div>
+								</td>							
+							</tr>
+						</table>
+					</div>						
+				</div>				
+				<div class="lbd">
+					<div class="img-area">
+						<div class="slider" style="height: 280px;">
+							<div class="slide J_switch J_switch_carousel imgloading">
+								<div class="img-wrap J_wrap">
+									<img  src="__PUBLIC__/uploads/img/{$sellerImgsrc}" >
+								</div>							
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div id="sales" class="mod sales-promotion clearfix">
-				<h2 class="mod-title">
-					<a class="item current">优惠促销</a>
-				</h2>
-				<div class="group clearfix">
-						<div class="item big">
-							<p class="title">
-								酸菜卤肉饭+四季猪骨汤套餐
-							</p>
-							<img class="pic" src="http://t3.s1.dpfile.com/pc/mc/dd95fb420a84656f47edd8060908d9ad(450c280)/thumb.jpg" />
-							<span class="price"><em>&yen;</em>16</span>
-							<del class="del-price">&yen;28</del>
-							<i class="tag tag-tuan">团</i>
-							<span class="sold-count">已售30726</span>
-							<a class="block-link" href="http://t.dianping.com/deal/6185269" target="_blank"></a>
-						</div>
-						<div class="item big">
-							<p class="title">
-								瘦肉粉1份（小）
-							</p>
-							<img class="pic" src="http://t3.s2.dpfile.com/pc/mc/24a089ff3e22538fd0e5e0c67df9d622(450c280)/thumb.jpg" />
-							<span class="price"><em>&yen;</em>5.5</span>
-							<del class="del-price">&yen;9</del>
-								<i class="back">返现</i>
-							<i class="tag tag-tuan">团</i>
-							<span class="sold-count">已售24984</span>
-							<a class="block-link" href="http://t.dianping.com/deal/6403922" target="_blank"></a>
-						</div>
+			
+
+			<div class="content">
+				<div class="other-deal-box">
+					<div class="tit">
+						<h3>商家产品</h3>
+					</div>
+					<div class="cont">
+						<ul class="other-deal-list">
+							<li > <a class="Fix" target="_blank" href="/deal/6489407"> <span class="price Price-font">&#165;41</span> <span class="sellprice">价值79元</span> <span class="infor">[多商区]  棒约翰比萨:卷边小装腊肠比萨1个</span> <span class="num">7410人已购买</span> </a> </li>
+						</ul>
+					</div>
+					<div class="cont">
+						<ul class="other-deal-list">
+							<li > <a class="Fix" target="_blank" href="/deal/6489407"> <span class="price Price-font">&#165;41</span> <span class="sellprice">价值79元</span> <span class="infor">[多商区]  棒约翰比萨:卷边小装腊肠比萨1个</span> <span class="num">7410人已购买</span> </a> </li>
+						</ul>
+					</div>
 				</div>
-				<div class="group clearfix">
-						<a class="item small " href="http://t.dianping.com/deal/6185284" target="_blank">
-							<i class="tag tag-tuan">团</i>
-							<span class="price">¥13</span>
-							<del class="del-price">¥19</del>
-						 冬/香菇鸡腿肉饭+香滑蒸蛋套餐
-						</a>
-						<a class="item small " href="http://t.dianping.com/deal/6185237" target="_blank">
-							<i class="tag tag-tuan">团</i>
-							<span class="price">¥30</span>
-							<del class="del-price">¥50</del>
-						双人精品套餐
-						</a>
+				<div class="box content J_tab_container">
+					<div class="box Tabs-box switch-box">
+						<div class="box-wrap">
+							<div id="J_tab_mod" data-id="tab_mod">
+								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
+									<li class="new"> <a href="__APP__/Buy/seller_list"><span>商家介绍</span></a> </li>
+									<li class="new"> <a href="__APP__/Buy/seller_list"><span>在线地图</span></a> </li>
+									<li class="new"> <a href="__APP__/Buy/seller_list"><span>商户评价</span></a> </li>
+								</ul>
+							</div>
+							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
+								<div class="dptg-intro Fix">								
+									<div class="detail">
+										<h3 class="new-tit"><span class="name">商家介绍</span></h3>
+										<p class="explain">{$sellerDscr}</p>										
+									</div>									
+									<div class="detail">
+										<p id ="position" data="{$sellerPosition}"></p>
+										<p id ="city" data="{$city}"></p>
+										<h3 class="new-tit"><span class="name">在线地图</span></h3>	
+										<div id="allmap" class="img map"></div>
+									</div>
+									<!-- movie info end -->
+									<div class="detail J_tab J_loadTab">
+										<div class="comment-tab J_comment_tab">
+											<span class="tab-item cur" data-ref="J_site_comment"> <a href="__APP__/Buy/seller_list">商户评价<em class="Hide J_total_count"></em></a> </span>
+										</div>
+										<div class="comment-box J_comment_box">
+											<div class="tab-box J_site_comment" data-loaded="true">
+												<ul id="pageListArray">
+													<?php
+														$sellerEvaDB=new Model('seller_evaluation');
+														$sellerIDCondition['seller_id']=$sellerID;
+														$seller_eva_id=$sellerEvaDB->where($sellerIDCondition)->order('datetime desc')->getField('seller_eva_id',true);
+														$number=count(seller_eva_id);
+													?>
+												
+													<if condition="$seller_eva_id eq ''">
+														<li class="site-item Fix">暂无评价</li>
+													</if>
+													<volist name="seller_eva_id" id="eva_id" key="i">
+														<if condition="$i gt 5">
+															<li id="item_{$i}" class="site-item Fix Hide">
+														<else/>
+															<li id="item_{$i}" class="site-item Fix">
+														</if>
+															<?php
+																$sellerEvaViewDB=new Model('view_seller_eva');
+																$EvaIDCondition['seller_eva_id']=$eva_id;
+																$user_name=$sellerEvaViewDB->where($EvaIDCondition)->getField('username');
+																$score_s=$sellerEvaViewDB->where($EvaIDCondition)->getField('score_service');
+																$score_e=$sellerEvaViewDB->where($EvaIDCondition)->getField('score_enviroment');
+																$seller=$sellerEvaViewDB->where($EvaIDCondition)->getField('seller_name');
+																$content=$sellerEvaViewDB->where($EvaIDCondition)->getField('eva_content');
+																$datetime=$sellerEvaViewDB->where($EvaIDCondition)->getField('datetime');
+																
+															?>
+															
+															<div class="avatar">																
+																<p class="name">{$user_name}</p>
+															</div>
+															<div class="comment-body J_comment_body">
+																<div class="user-info">
+																	<div class="comment-rst">
+																		<span class="rst">环境:{$score_e}分</span> 
+																	</div>
+																	<span title="" class="item-rank-rst irr-star{$score_e}0"></span>
+																	<div class="comment-rst">
+																		<em class="sep">|</em> <span class="rst">服务:{$score_s}分</span> 
+																	</div>
+																	<span title="" class="item-rank-rst irr-star{$score_s}0"></span>
+																	
+																	<span class="branch-name"><a href="" >{$seller}</a></span>
+																</div>
+																<div class="misc-info">
+																	<p> {$content}</p>
+																</div>
+																<div class="misc-info">
+																	<span class="time"> {$datetime}</span>																
+																</div>
+															</div>
+														</li>
+													</volist>													
+												</ul>
+												<div class="pages-wrap J_tab2_pagewrap">
+													<div class="Pages">
+													<?php
+														$pageNumber=floor (count($seller_eva_id)/5);
+													?>
+														<if condition="$pageNumber gt 0">
+															<a class="LastPage" title="上一页">上一页</a>
+															<span class="pageTagArray" data="1">
+															<a id="page_1" class="PageSel pageTag" >1</a> 
+															<for start="1" end="($pageNumber+1)">
+																<a id="page_{$i+1}" class="PageLink pageTag">{$i+1}</a> 
+															 </for>	
+															</span>
+															<a class="NextPage" title="下一页" data="{$pageNumber+1}">下一页</a>
+														</if>													
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="detail J_tab J_loadTab">
+										<div class="comment-tab J_comment_tab">
+										</div>
+										<div class="comment-box J_comment_box">
+											<div class="tab-box Hide J_site_comment imgloading">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>						
+					</div>
 				</div>
 			</div>
-
-
-	<div class="mod comment">
-		<ul class="comment-list">
-			<li class="comment-item">
-				<a class="avatar J-avatar" >
-					<img src="http://j1.s2.dpfile.com/s/i/blank.34cdf505e1d61164df34b5bc67584823.png">
-				</a>
-				<p class="user-info">
-					<a class="name">茜啊</a>				
-				</p>
-				
-					<p class="shop-info">				
-						<span class="item">口味：4</span>
-						<span class="item">环境：4</span>
-						<span class="item">服务：4</span>
-					</p>
-					<p class="desc">还不错，可以多搞点活动，吃的还可以</p>
-		
-			</li>
-			<li class="comment-item">
-				<a class="avatar J-avatar" >
-					<img src="http://j1.s2.dpfile.com/s/i/blank.34cdf505e1d61164df34b5bc67584823.png">
-				</a>
-				<p class="user-info">
-					<a class="name">茜啊</a>				
-				</p>
-			
-					<p class="shop-info">				
-						<span class="item">口味：4</span>
-						<span class="item">环境：4</span>
-						<span class="item">服务：4</span>
-					</p>
-					<p class="desc">还不错，可以多搞点活动，吃的还可以</p>
-				
-			</li>
-			<li class="comment-item">
-				<a class="avatar J-avatar" >
-					<img src="http://j1.s2.dpfile.com/s/i/blank.34cdf505e1d61164df34b5bc67584823.png">
-				</a>
-				<p class="user-info">
-					<a class="name">茜啊</a>				
-				</p>
-			
-					<p class="shop-info">				
-						<span class="item">口味：4</span>
-						<span class="item">环境：4</span>
-						<span class="item">服务：4</span>
-					</p>
-					<p class="desc">还不错，可以多搞点活动，吃的还可以</p>
-				
-			</li>
-		</ul>
-	</div>
-</div>
-		<!-- sideBar-->
+			<!---侧边栏--->
 			<include file="./Home/Tpl/Public/sidebar.html"/>
-		<!-- sideBar-->	
+			<!---侧边栏--->
+		</div>
+	</div>
 
-</body></html>
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+
+</body>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	// 百度地图API功能
+	var position=$("#position").attr('data');
+	var xy= position.split(",");
+	var city=$("#city").attr('data');
+	
+	var map = new BMap.Map("allmap");    // 创建Map实例
+	map.centerAndZoom(new BMap.Point(Number(xy[0]),Number(xy[1])), 21);  // 初始化地图,设置中心点坐标和地图级别
+	map.setCurrentCity(city);          // 设置地图显示的城市 此项是必须设置的
+</script>
+	<script type="text/javascript">
+		$(".pageTag").click(function(){	
+			pageClean();	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data);	
+		});
+		
+		function pageClean(){
+			$(".pageTagArray").children().removeClass("PageSel");
+			$(".pageTagArray").children().addClass("PageLink");
+			$("#pageListArray").children().addClass("Hide");
+		}
+		$(".NextPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');			
+			var data=Number(current)+1;
+			var max=Number($(".NextPage").attr('data'));
+			if(data<=max){
+				pageClean();
+				change_page(data);	
+			}
+		
+		});
+		$(".LastPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');
+			
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean();
+				change_page(data);	
+			}			
+		});
+		function change_page(data){
+			$("#page_"+data).addClass("PageSel");						
+			$(".pageTagArray").attr('data',data);	
+			var start=(data-1)*5;
+			$("#item_"+(start+1)).removeClass("Hide");
+			$("#item_"+(start+2)).removeClass("Hide");
+			$("#item_"+(start+3)).removeClass("Hide");
+			$("#item_"+(start+4)).removeClass("Hide");
+			$("#item_"+(start+5)).removeClass("Hide");
+		}
+	</script>
+</html>

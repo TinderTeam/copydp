@@ -6,7 +6,7 @@
     <link rel="dns-prefetch" href="http://t2.dpfile.com"/>
     <link rel="dns-prefetch" href="http://t3.dpfile.com"/>
     <link rel="dns-prefetch" href="http://si1.s1.dpfile.com/"/>
-    <title>【推荐商家】-团购网</title>
+    <title>产品列表</title>
     <meta name="viewport"          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
 	<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/> 
 </head>
@@ -38,9 +38,42 @@
     <div class="category-box" id="J_category_box">
 		<!----导航栏--->
 		<div class="bread-box">
-			<span href="/dongguan">当期特惠&nbsp;&gt;</span>
-			<span class="choose">今日新单<a href="/list/dongguan" class="close"track="">×</a></span>
-    		<a href="/list/dongguan">清除</a>
+			<span>当前筛选&nbsp;&gt;</span>
+			<?php	
+				//获取当前的筛选条件路径
+				$typeDB=new Model('product_type');			
+				if($typeRoot!=0){							
+					$typeIDCondition['type_id']=$typeRoot;
+					$father_id =  $typeDB->where($typeIDCondition)->getField('father_id');
+					if($father_id!=0){
+						$crtConditionList=array("0",$father_id,$typeRoot);
+					}else{						
+						$crtConditionList=array("0",${typeRoot});
+					}
+					
+				}else{
+					$crtConditionList=array("0");
+				}
+			?>
+			<volist name="crtConditionList" id="crtCdtItm">					
+				<span class="choose">
+					<?php
+						$typeDB=new Model('product_type');
+						$typeIDCondition['type_id']=$crtCdtItm;
+						$typeName=$typeDB->where($typeIDCondition)->getField('type_name');
+					?>	
+					{$typeName}
+					<a href="__APP__/Buy/cancelFilter?crtCdtItm={$crtCdtItm}"  class="close">
+						×
+					</a>
+				</span>
+			</volist>
+			<a href="__APP__/Buy/product_list">
+				<?php
+					print_r($typeRoot);
+				?>
+			</a>
+    		<a href="__APP__/Buy/product_list">清除</a>
     		<div class="dot-border"></div>
 		</div><!----导航栏--->
 		<!----分类标签--->
@@ -49,42 +82,48 @@
         	<div class="l-title">分类</div>
         	<div class="cont">
 				<div class="classify Fix">
-					<a class="this" href="/list/dongguan/items_40s953">
-					不限
-					</a>
-					<a  href="/list/dongguan-category_/items_40s953">
-					美食
-					</a>
-					<a  href="/list/dongguan-category_3/items_40s953">
-					休闲娱乐
-					</a>
-					<a  href="/list/dongguan-category_4/items_40s953">
-					酒店
-					</a>
-					<a  href="/list/dongguan-category_7/items_40s953">
-					购物
-					</a>
-					<a  href="/list/dongguan-category_6/items_40s953">
-					旅游
-					</a>
-					<a  href="/list/dongguan-category_9/items_40s953">
-					亲子
-					</a>
+					<?php
+						//获取可选择的分类列表
+						$typeDB=new Model('product_type');				
+						if($typeRoot!=0){							
+							$typeCondition['father_id']=$typeRoot;
+						}else{
+							$typeCondition['father_id']=0;
+						}
+						$typeList=$typeDB->where($typeCondition)->getField('type_id',true);
+						
+					?>
+					<if condition="$typeRoot eq 0">	
+						<a  class="this" href="__APP__/Buy/product_list">
+							全部
+							
+						</a>
+					</if>
+								
+					<volist name="typeList" id="typeID">
+						<?php
+							$typeIDCondition['type_id']=$typeID;
+							$typeName =  $typeDB->where($typeIDCondition)->getField('type_name');
+						?>
+						<if condition="$typeRoot eq $typeID">	
+							<a class="this" href="__APP__/Buy/typeSelect?SelectType={$typeID}">
+						<else/>
+							<a href="__APP__/Buy/typeSelect?SelectType={$typeID}">
+						</if>					
+							{$typeName}
+						</a>
+					</volist>
             	</div>
             	<div class="desc-bg Fix Hide"></div>
        		</div>
 		</div><!----分类标签--->	
 
-		<!---筛选功能*---->
+		<!---筛选功能*-
    		<div class="categ-sort Fix" data-id="sort-region">
             <div class="categ-group">
 				<a href="/list/dongguan/items_40s953"
 				   class="categ-item has">
 					<span>默认排序</span>
-				</a>
-				<a href="/list/dongguan/items_40s953?desc=&sort=sale"
-				   class="categ-item ">
-					<span>销量最高</span>
 				</a>
 				<a href="/list/dongguan/items_40s953?desc=&sort=new"
 				   class="categ-item ">
@@ -94,229 +133,76 @@
 				   class="categ-item ">
 					<span>价格最低</span>
 				</a>
-            </div>
-			<!----综合筛选---
-            <div class="categ-group">
-				<a class="checkbox checkbox-on categ-simple"
-				   href="/list/dongguan">
-					<i></i>
-					<span>今日新单</span>
-				</a>
-				<a class="checkbox checkbox-ok categ-simple"
-				   href="/list/dongguan/items_2s8946_40s953">
-					<i></i>
-					<span>免预约</span>
-				</a>
-				<a class="checkbox checkbox-ok categ-simple"
-				   href="/list/dongguan/items_22s8947_40s953">
-					<i></i>
-					<span>节假日可用</span>
-				</a>
-				<a class="checkbox checkbox-ok categ-simple"
-				   href="/list/dongguan/items_24s8949_40s953">
-					<i></i>
-					<span>代金券</span>
-				</a>
-				<a class="checkbox checkbox-dis categ-simple"
-				   href="__APP__/Buy/product_list">
-					<i></i>
-						<b class="new"></b>
-					<span class="red">返现</span>
-				</a>
-				<a class="checkbox checkbox-dis categ-simple"
-				   href="__APP__/Buy/product_list">
-					<i></i>
-					<span>立减</span>
-				</a>
-            </div><!----综合筛选---->
-		</div><!---筛选功能*---->
+            </div>		
+		</div>.--->
     </div>
 
 
 	<div class="floor J_floor" data-mode="render">
 		<div class="floor-item">
 			<ul class="Fix">
-				<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-						<div class="flag">
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
-				<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-				  
-						<div class="flag">
-							<span class="f-"></span>
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
-					<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-				  
-						<div class="flag">
-							<span class="f-"></span>
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
-					<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-				  
-						<div class="flag">
-							<span class="f-"></span>
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
-					<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-				  
-						<div class="flag">
-							<span class="f-"></span>
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
-					<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-				  
-						<div class="flag">
-							<span class="f-"></span>
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
-					<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-				  
-						<div class="flag">
-							<span class="f-"></span>
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
-				<li class="floor-box J_floor_box" did="8057385">
-					<a title="" target="_blank" href="__APP__/Buy/product_info">
-				  
-						<div class="flag">
-							<span class="f-2"></span>
-							<span class="f-3"></span>
-						</div>
-						<img lazy-src-load="http://i2.s.dpfile.com/pc/mc/2a84b5a68e794d3023df256b8d09cf(353c22)/thumb.jpg">
-						<h3>    [世博/金月湾/星玺]棒约翰比萨</h3>
-						<h4>美式烟熏牛肉比萨，不限时段通用！特制卷边饼底，将芝士藏在饼边里，咬下一口，回味无穷！</h4>
-						<div class="mask"></div>
-						<div class="price">
-							<h5>&#65;<em>4</em></h5>
-							<h6>&#65;<em>79</em></h6>
-							<span class="buy">
-								<em>0</em>人购买
-							</span>
-						</div>
-						<div class="activity">
-						</div>
-					</a>
-				</li>
+				<?php
+					//按照已有条件查询
+					//1.按照类型分类
+					if($typeRoot!=0){
+						//查询子类列表
+						$fatherTypeCondition['father_id']=$typeRoot;
+						$subTypeList=$typeDB->where($fatherTypeCondition)->getField('type_id',true);
+						for($i=0;$i<count($subTypeList);$i++){
+							$TypeFilterCondition['type_id'] = $subTypeList[$i];
+						}
+						$TypeFilterCondition['type_id'] = $typeRoot;
+						$TypeFilterCondition['_logic'] = "OR";
+						$productFilter['_complex']=$TypeFilterCondition;
+					}else{
+						
+					}
+					
+					//获取当前城市
+					$city=$_SESSION['city'];
+					$productFilter['city']=$city;
+					
+					//设置总筛选条件
+					$productViewDB=new Model('view_product');
+					$productList =$productViewDB->where($productFilter)->getField('product_id',true);
+					
+				?>
+				<volist name="productList" id="productID">
+					<li class="floor-box J_floor_box" >
+						<?php
+							$productDB=new Model('product');
+							$productIDCondition['product_id']=$productID;
+							$productName =$productDB->where($productIDCondition)->getField('name');	
+							$productDscr =$productDB->where($productIDCondition)->getField('describe');		
+							$productPrice =$productDB->where($productIDCondition)->getField('price');	
+							$originalPrice =$productDB->where($productIDCondition)->getField('original_price');		
+
+							$orderDB=new Model('order');
+							$orderProductCondition['product_id']=$productID;
+							$ordnumber=$orderDB->where($orderProductCondition)->count();
+
+							$productImgsrc=$productDB->where($productIDCondition)->getField('imgsrc');	
+						?>
+						<a href="__APP__/Buy/product_info?productID={$productID}">							
+							<img  src="__PUBLIC__/uploads/img/{$productImgsrc}" >
+							<h3>
+							{$productName}</h3>
+							<h4>{$productDscr}</h4>
+							<div class="mask"></div>
+							<div class="price">
+								<h5>¥<em>{$productPrice}</em></h5>
+								<h6>¥<em>{$originalPrice}</em></h6>
+								<span class="buy">
+									<em>{$ordnumber}</em>人购买
+								</span>
+							</div>
+							<div class="activity">
+							</div>
+						</a>
+					</li>	
+				</volist>
+				
+				
 			</ul>
 		</div>
 	</div>

@@ -1,0 +1,76 @@
+<ul class="location">
+   <li>
+		<dl class="Fix J_list">
+			<dt class="loc-1">商户分类</dt>
+			<dd class="J_content">
+				<?php
+				//获取分类id
+					$typedb=new Model('product_type');								
+					$typeid=$typedb->limit(15)->order('rand()')->getField('type_id',true);
+					//print_r($typeid);
+				?>
+				<volist name="typeid" id="type_id">
+					<?php
+					//获取分类名称
+						$typedb=new Model('product_type');
+						$idcondition['type_id']=$type_id;	
+						$typename=$typedb->where($idcondition)->getField('type_name');
+					?>
+					<a href="__APP__/Buy/search_seller?typeid={$type_id}">{$typename}</a>							
+				</volist>
+			</dd>
+		</dl>
+	</li>
+
+   
+	<li>
+		<dl class="Fix J_list">
+			<dt class="loc-2">商户区域</dt>
+			<dd class="J_content">
+				<?php
+					//获取区域
+					$city=$_SESSION['city'];
+					$citydb=new Model('city');	
+					$citycondition['city']=$city;
+					$city_id=$citydb->where($citycondition)->getField('city_id');
+					
+					$zonedb=new Model('city_zone');							
+					$zonecondition['city_id']=$city_id;			
+					$zoneid=$zonedb->where($zonecondition)->limit(15)->order('rand()')->getField('zone_id',true);
+				?>
+					<volist name="zoneid" id="zone_id_item">
+						<?php
+						//获取区域名称
+							$zonedb=new Model('city_zone');	
+							$zoneidcondtion['zone_id']=$zone_id_item;	
+							$zone_name=$zonedb->where($zoneidcondtion)->getField('zone_name');
+						?>		
+						<a href="__APP__/Buy/searchSellerByZone?zoneid={$zone_id_item}">{$zone_name}</a>							
+					</volist>											
+					</dd>
+
+			<dd class="J_more more Hide"><a href="__APP__/Buy/product_list"></a></dd>
+		</dl>
+	</li>
+
+	<li class="">
+		<dl class="Fix J_list">
+			<dt class="loc-3">热门商区</dt>
+			<dd class="J_content">
+				<?php
+					$sellerdb=new Model('seller');	
+					$sellercondition['city_id']=$city_id;
+					$seller_zone_id=$sellerdb->where($sellercondition)->limit(15)->order('rand()')->Distinct(true)->getField('zone_id',true);
+				?>
+					<volist name="seller_zone_id" id="seller_zone_id_item">
+						<?php
+						//获取区域名称
+							$zoneidcondtion['zone_id']=$seller_zone_id_item;	
+							$zone_name=$zonedb->where($zoneidcondtion)->getField('zone_name');
+						?>		
+						<a href="__APP__/Buy/searchSellerByZone?zoneid={$zone_id_item}">{$zone_name}</a>							
+					</volist>	
+			</dd>
+		</dl>
+	</li>
+</ul>

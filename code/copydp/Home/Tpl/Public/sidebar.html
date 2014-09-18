@@ -4,29 +4,61 @@
 		<div class="recent-box sidebox region">
 			<h3><span>最新咨询</span></h3>
 			<ul>
-				<li><span>2014-09-19</span><a >龙虾汤鸡腿饭，初秋吃不停</a></li>
-				<li><span>2014-09-19</span><a >龙虾汤鸡腿饭，初秋吃不停</a></li>
-				<li><span>2014-09-19</span><a >龙虾汤鸡腿饭，初秋吃不停</a></li>
-				<li><span>2014-09-19</span><a >龙虾汤鸡腿饭，初秋吃不停</a></li>
-				<li><span>2014-09-19</span><a >龙虾汤鸡腿饭，初秋吃不停</a></li>
+				<?php
+					$newsDB=new Model('news');
+					$newsIDList = $newsDB->order("datetime desc")->limit(4)->getField('news_id',true);
+					
+				?>
+				<volist name="newsIDList" id="newsID">	
+					<?php					
+						$newsDB=new Model('news');
+						$newsIDCondition['news_id']=$newsID;	
+						$newsDate = $newsDB->where($newsIDCondition)->getField('datetime');						
+						$newsTitle = $newsDB->where($newsIDCondition)->getField('title');	
+					?>
+					<li><span>{$newsDate}</span><a  href="__APP__/News/newsShow?newsID={$newsID}" >{$newsTitle}</a></li>
+				</volist>
 			</ul>
 		</div>
 		<div class="recent-box sidebox region">
 			<h3><span>最新活动</span></h3>
 			<ul>
 				<li class="item"> 
-					<a target="_blank" href="/deal/8065967">
-					<div class="image">
-						<img src="http://t2.s1.dpfile.com/pc/mc/ed6ff2a274a62af2eefa0efe498efa35(216c135)/thumb.jpg" title="汤米男孩 : 饮品3选1">
-					</div>
-					<div class="right">
-						<h4>活动</h4>
-						<h5>活动描述</h5>
-						<em class="price">5人参加</em>
-					</div>
-					</a>		
+					<?php
+						$city=$_SESSION['city'];
+						$activityViewDB=new Model('view_activity');
+						$activiyCityCondition['city']=$city;						
+						$activityID=$activityViewDB->where($activiyCityCondition)->order('rand()')->getField('activity_id');
+						$activiyIDCondition['activity_id']=$activityID;		
+						$activityTitle=$activityViewDB->where($activiyIDCondition)->getField('title');
+						$activityImage=$activityViewDB->where($activiyIDCondition)->getField('imgsrc');
+						$activityDscr=$activityViewDB->where($activiyIDCondition)->getField('dscr');
+						
+						
+						$activitydb=new Model('activity_order');
+						$activiyIDCondition['activity_id']=$activityID;								
+						$attendNumber=$activitydb->where($activiyIDCondition)->count();
+					?>
+					<if condition="$activityID eq ''">
+						<a>
+							暂无活动
+						</a>
+					<else/>
+						<a href="__APP__/Activity/activityShow?activityID={$activityID}">
+							<div class="image">
+								<img src="__PUBLIC__/uploads/img/{$activityImage}" title="{$activityTitle}">
+							</div>
+						<div class="right">
+							<h4>{$activityTitle}</h4>
+							<h5>{$activityDscr}</h5>
+							<em class="price">{$attendNumber}人参加</em>
+						</div>
+						</a>
+					</if>
+							
 			</ul>
 		</div>
+		<!----
 		<div class="feedback region sidebox sidebox-collapse">
 			<h3> <span>意见反馈</span> </h3>
 			<div class="voice Fix">
@@ -34,33 +66,37 @@
 				<a>提交意见反馈»</a></span>
 			</div>
 		</div>
+		
+		--->
 		<div class="recent-box-holder">
 		</div>
 		<div class="recent-box sidebox region">
 			<h3><span>最近浏览</span></h3>
 			<ul>
-				<li class="item"> 
-					<a target="_blank" href="/deal/8065967">
-					<div class="image">
-						<img src="http://t2.s1.dpfile.com/pc/mc/ed6ff2a274a62af2eefa0efe498efa35(216c135)/thumb.jpg" title="汤米男孩 : 饮品3选1">
-					</div>
-					<div class="right">
-						<h4>汤米男孩 : 饮品3选1</h4>
-						<em class="price">¥6.9</em> <em class="old-price">¥18</em>
-					</div>
-					</a>
-				</li>
-								<li class="item"> 
-					<a target="_blank" href="/deal/8065967">
-					<div class="image">
-						<img src="http://t2.s1.dpfile.com/pc/mc/ed6ff2a274a62af2eefa0efe498efa35(216c135)/thumb.jpg" title="汤米男孩 : 饮品3选1">
-					</div>
-					<div class="right">
-						<h4>汤米男孩 : 饮品3选1</h4>
-						<em class="price">¥6.9</em> <em class="old-price">¥18</em>
-					</div>
-					</a>
-				</li>
+				<?php
+					$history=$_SESSION['history'];									
+				?>
+				<volist name="history" id="productID" key ="i">		
+					<li class="item"> 
+						<?php
+							$product=new Model('product');
+							$productIDCondition['product_id']=$productID;							
+							$productName=$product->where($productIDCondition)->getField('name');
+							$price=$product->where($productIDCondition)->getField('price');
+							$oldprice=$product->where($productIDCondition)->getField('original_price');
+							$imgsrc=$product->where($productIDCondition)->getField('imgsrc');
+						?>
+						<a target="_blank" href="/deal/8065967">
+						<div class="image">
+							<img src="__PUBLIC__/uploads/img/{$imgsrc}" title="$productName">
+						</div>
+						<div class="right">
+							<h4>{$productName}</h4>
+							<em class="price">{$price}</em> <em class="old-price">{$oldprice}</em>
+						</div>
+						</a>
+					</li>
+				</volist>
 			</ul>
 		</div>
 	</div>

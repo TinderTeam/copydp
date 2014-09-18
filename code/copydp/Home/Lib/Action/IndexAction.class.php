@@ -18,14 +18,7 @@ class IndexAction extends Action {
 			}					
 		}
 		$_SESSION['city']=$city;
-		//1.判断用户是否登录
-		//2.初始化新闻
-		//3.初始化分类类型
-		//4.初始化今日特惠
-		//5.初始化推荐商品
-		//6.初始化联盟商户
-		//7.初始化最新团购
-
+		
 		$this->display();
     }
 	
