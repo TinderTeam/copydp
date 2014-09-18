@@ -29,9 +29,7 @@
 		
 		<div class="nav-bar">
 			<div class="cont">
-				<!-----分类菜单---->
-					<include file="./Home/Tpl/Public/typemenu_p.html"/>
-				<!-----分类菜单---->
+
 				<!-----主菜单---->
 					<include file="./Home/Tpl/Public/menu.html"/>
 				<!-----主菜单---->
@@ -44,9 +42,9 @@
 		<!---左侧导航栏--->
 		<div class="user-nav J_user_nav">
 			<ul>
-				<li > <a href="/account/coupons">会员管理</a> <i class="n-arr"></i></li>
-				<li class="cur"> <a href="/account/coupons">商家管理</a> <i class="n-arr"></i></li>
-				<li> <a href="/account/coupons">活动管理</a> <i class="n-arr"></i></li>
+				<li > <a href="__APP__/UserManage/index">会员管理</a> <i class="n-arr"></i></li>
+				<li class="cur"> <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
+				<li> <a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
 			</ul>
 		</div><!---左侧导航栏--->
 		<!---中间主要内容--->
@@ -67,8 +65,8 @@
 								<!--表单内容-->
 								<div class="form-inner">
 									<div class="form-block">
-										<label class="label label_required" for="txtShopName">商户名：<em>*</em></label>
-										<input type="text" maxlength="50" id="txtShopName"  class="form-txt form-txt-l" autocomplete="off" size="60" value="">
+										<label class="label label_required" >商户名：<em>*</em></label>
+										<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="" name="seller_name">
 										<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
                       			  	</div>    
 								                

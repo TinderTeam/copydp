@@ -52,10 +52,10 @@
 					</div>								
 					<ul class="tab-filter">
 						<li>
-							<span >用户ID</span><input type="text" name="userID"/>
+							<span >会员编号</span><input type="text" name="userID"/>
 						</li>
 						<li>
-							<span >名称</span><input type="text" name="userName"/>
+							<span >会员名称</span><input type="text" name="userName"/>
 						</li>
 						<li>
 							<span >手机</span><input type="text" name="phoneNum"/>
@@ -69,7 +69,7 @@
  							
 								<strong class="btn-type-b btn-fn-c">
 									<a href="{:U('UserManage/userAdd')}"  class="form-btn" style="font-color:red!important;">新增会员</a>
-								</strong>                       
+								</strong> 
 
 						</li>
 					</ul>
@@ -81,26 +81,30 @@
 								<tr>
 									<th width="15%">会员编号</th>
 									<th width="15%">会员名称</th>
-									<th width="15%">会员级别</th>	
-									<th width="15%">当前积分</th>
+									<th width="10%">会员级别</th>	
+									<th width="10%">积分</th>
 									<th width="15%">手机</th>	
-									<th width="10%">用户状态</th>							
-									<th width="15%">操作</th>
+									<th width="15%">用户状态</th>							
+									<th width="30%">操作</th>
 								</tr>
+						<form name="form2" action="" method="post">
 						<foreach name='userInfo' item='v1'>
+						
 								<tr>
-									<td valign="middle" align="left" class="deal">{$v1.user_id}</td>
-									<td valign="middle" align="left" class="deal">{$v1.user_name}</td>
+									<td align="center" class="deal">{$v1.user_id}</td>
+									<td align="center" class="deal">{$v1.user_name}</td>
 									<td align="center" >{$v1.grade}</td>
 									<td align="center"> {$v1.score}</td>
 									<td align="center" >{$v1.cellphone}</td>
 									<td align="center">{$v1.status}</td >		
 									<td valign="middle">
-										<input type="button" value="解冻">
-										<input type="button" value="升级">
+									<input type="submit" value="冻结"  onclick="javascript:this.form.action='__URL__/freeze?id={$v1.user_id}';"/>
+									<input type="submit" value="升级"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
+
 									</td>
 								</tr>
 						</foreach>
+						</form>
 						  <tr >
                             <td colspan="7" style=" text-align: center;" ><span>{$page}</span></td>
                           </tr>
@@ -123,44 +127,51 @@
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
 								<tr>
-									<th width="10%">会员ID</th>
-									<th width="20%">会员名称</th>
+									<th width="20%">会员编号</th>
+									<th width="15%">会员名称</th>
 									<th width="10%">会员级别</th>	
-									<th width="10%">申请类型</th>
-									<th width="10%">手机</th>							
-									<th width="5%">操作</th>
+									<th width="15%">会员状态</th>
+									<th width="20%">手机号码</th>							
+									<th width="20%">操作</th>
 								</tr>
+								<?php //用户数据读取区域
+								
+									$customer=new Model('customer');
+									import("ORG.Util.Page"); 
+									
+									//$userOperate=$customer->where('user_id=3')->select();	
+									//$condition['request'] != 'null';
+									$map['request']  = array('neq','null');
+									$count = $customer->where($map)->count(); 
+									$Page = new Page($count,5); 
+									$page2 = $Page->show();
+									$userOperate=$customer->where($map)->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
+																
+								
+								?>
+								<form name="form3" action="__URL__/search" method="post">
+								<foreach name='userOperate' item='v2'>
+								
 								<tr>
-									<td valign="middle" align="left" class="deal">00001</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >VIP</td>
-									<td align="center"> 升级</td>
-									<td align="center" >18612345678</td>
+									<td valign="middle" align="center" class="deal" name="userID">{$v2.user_id}</td>
+									<td valign="middle" align="center" class="deal">{$v2.user_name}</td>
+									<td align="center" >{$v2.grade}</td>
+									<td align="center" >{$v2.status}</td>
+									<td align="center" >{$v2.cellphone}</td>
 									<td align="center" >
-										<input type="button" value="升级">
+										<input type="submit" value="{$v2.request}"  onclick="javascript:this.form.action='__URL__/requestDeal?id={$v2.user_id}';"/>
+										<input type="submit" value="拒绝" onclick="javascript:this.form.action='__URL__/requestDelete?id={$v2.user_id}';"/>
 									</td>
 								</tr>
-								<tr>
-									<td valign="middle" align="left" class="deal">00002</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >VIP</td>
-									<td align="center"> 审核</td>
-									<td align="center" >18612345678</td>
-									<td align="center" >
-										<input type="button" value="审核">
-									</td>
+								
+								</foreach>
+								</form>
+								<tr >
+									<td colspan="6" style=" text-align: center;" ><span>{$page2}</span></td>
 								</tr>
-								<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >SVIP</td>
-									<td align="center"> 解冻</td>
-									<td align="center" >18612345678</td>
-									<td align="center" >
-										<input type="button" value="解冻">
-									</td>
-								</tr>
+
 							</tbody>
+							
 						</table>
 					</div>
 				</div>
@@ -171,34 +182,43 @@
 						<h4>积分管理</h4>
 						<span>管理员对积分进行管理</span>
 					</div>
+				<form name="form4" action="__URL__/searchScore" method="post">
 					<ul class="tab-filter">
 						<li>
-							<span>用户ID</span><input type="text"/>
+							<span>用户编号</span><input type="text" name="userID"/>
 						</li>
 						<li>
-							<input type="button" value="查询"/>				
+								<strong class="btn-type-b btn-fn-c">
+									<input  type="submit" value="查询" class="form-btn">
+								</strong> 			
 						</li>
 					</ul>
+				</form>
 					<div class="pay-confirm">
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
 								<tr>
-									<th width="30%">会员ID</th>
-									<th width="30%">会员名称</th>
-									<th width="20%">变动分值</th>	
-									<th width="30%">变更原因</th>						
-									<th width="2%">操作</th>
+									<th width="20%">会员编号</th>
+									<th width="20%">会员名称</th>
+									<th width="15%">积分</th>
+									<th width="10%">变更后积分值</th>					
+									<th width="5%">操作</th>
 								</tr>
+						
+						<foreach name='scoreInfo' item='v3'>
+						<form name="form5" action="__APP__/modifyScore" method="post">
 								<tr>
-									<td align="center" >12345</td>
-									<td align="center" >会员名称</td>
-									<td align="center" ><input type="num"></td>
-									<td align="center" ><input type="text"></td>
+									<td align="center" name="scoreID">{$v3.user_id}</td>
+									<td align="center" >{$v3.user_name}</td>
+									<td align="center" >{$v3.score}</td>
+									<td align="center" ><input type="num" name="newScore"></td>
 									<td align="center" >
-										<input type="button" value="确认">
+									<input type="submit" value="确认" onclick="javascript:this.form.action='__URL__/modifyScore?id={$v3.user_id}';"/>
 									</td>
 								</tr>
-								
+						</form >
+						</foreach>
+							
 							</tbody>
 						</table>
 					</div>
@@ -206,5 +226,9 @@
 			</div>
 		</div>
 	</div>
+	
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
 </body>
 </html>

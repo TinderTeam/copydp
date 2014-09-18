@@ -71,15 +71,14 @@
 
 					</ul>
 					
-					<div >&nbsp</div>
+					<div >&nbsp&nbsp</div>
 					<div >
 							<span><strong class="btn-type-b btn-fn-c">
 									<input id="btnAdd" type="submit" value="查询" class="form-btn">
 							</strong> </span>
-							<!-- <a href="{:U('Index/userAdd')}"  type="button" > 新增会员</a> -->
  							
 							<span><strong class="btn-type-b btn-fn-c">
-									<a href="{:U('Index/sellerAdd')}"  class="form-btn" >新增商家</a>
+									<a href="{:U('SellerManage/sellerAdd')}"  class="form-btn" >新增商家</a>
 							</strong></span> 
 					</div>
 				</form>
@@ -108,29 +107,7 @@
 									</td>
 								</tr>
 						</foreach>		
-<!-- 							<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试商户</td>
-									<td align="center" >餐饮</td>
-									<td align="center"> 深圳</td>
-									<td align="center" >深圳的一家小餐饮店</td>
-									<td align="center" >
-										<input type="button" value="编辑">
-										<input type="button" value="冻结">
-									</td>
-								</tr>
-								<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试商户</td>
-									<td align="center" >餐饮</td>
-									<td align="center"> 深圳</td>
-									<td align="center" >深圳的一家小餐饮店</td>
-									<td align="center" >
-										<input type="button" value="编辑">
-										<input type="button" value="冻结">
 
-									</td>
-								</tr> -->
 							<tr >
 								<td colspan="6" style=" text-align: center;" ><span>{$page}</span></td>
 							</tr>
@@ -157,16 +134,21 @@
 							<span>城市</span><input type="text"/>
 						</li>
 						<li>
-							<span>分类</span>
-							<select>
-								<option value="分类" selected>分类</option>
-								<option value="分类2">分类2</option>
-							</select>
-						</li>
-						<li>
-							<input type="button" value="查询">
+							<p>分类</p>
+							<p><select name="type_id">
+								<option value="" selected>请选择分类</option>
+								<option value="1">分类1</option>
+								<option value="2">分类2</option>
+							</select></p>
 						</li>
 					</ul>
+					<div >&nbsp&nbsp</div>
+					<div >
+							<span><strong class="btn-type-b btn-fn-c">
+									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+							</strong> </span>
+ 				
+					</div>					
 					<div class="pay-confirm">
 					<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 						<thead>
@@ -241,5 +223,9 @@
 				
 			</div><!--<div class="user-main">-->
 		</div><!--	<div class="wrap">-->
+		
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->			
 </body>
 </html>
