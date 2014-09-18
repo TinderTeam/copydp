@@ -47,7 +47,7 @@ class UserManageAction extends Action {
 	}
 	public function search(){
 		
-		$db = M('customer');
+		$db = M('view_customer');
         import("ORG.Util.Page"); 
 
 		$userID=$_POST['userID'];
@@ -58,7 +58,7 @@ class UserManageAction extends Action {
 		   $condition['user_id'] = $userID;
 		}
 		if($userName!=''){
-		   $condition['user_name'] = $userName;
+		   $condition['username'] = $userName;
 		}
 		if($phoneNum!=''){
 		   $condition['cellphone'] = $phoneNum;
@@ -200,19 +200,16 @@ class UserManageAction extends Action {
 
 	public function searchScore(){
 		
-		$db = M('customer');
+		$db = M('view_customer');
         import("ORG.Util.Page"); 
 	
 		$userID=$_POST['userID'];
 
-		
-		if($userID!=''){
-		   $condition['user_id'] = $userID;
-		}
+
 				
 		if($userID!='' )
 		{
-
+			$condition['user_id'] = $userID;
 			$list = $db->where($condition)->select();
 			$this->assign('scoreInfo',$list);
 			$this->display('index');

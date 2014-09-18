@@ -17,43 +17,47 @@ class SellerManageAction extends Action {
 	public function search(){
 		if($_SESSION['login_user']!=""){
 		
-		$db = M('seller');
+		$db = M('view_seller');
         import("ORG.Util.Page"); 
 		//mysql_query("set names utf8");
-		$sellerID=$_POST['seller_id'];
-		$sellerName=$_POST['seller_name'];
-		$cityID=$_POST['city_id'];
-		$typeID=$_POST['type_id'];
+		$sellerID=$_GET['seller_id'];
+		$sellerName=$_GET['seller_name'];
+		$cityName=$_GET['city_name'];
+		$typeName=$_GET['type_name'];
 		
 		if($sellerID!=''){
-		   $condition['seller_id'] = $sellerID;
+		   $condition['user_id'] = $sellerID;
 		}
 		if($sellerName!=''){
-		   $condition['seller_name'] = $sellerName;
+		   $condition['username'] = $sellerName;
 		}
-		if($cityID!=''){
-		   $condition['city_id'] = $cityID;
+		if($cityName!=''){
+		   $condition['city'] = $cityName;
 		}
-		if($typeID!=''){
-		   $condition['type_id'] = $typeID;
-		}			
-		if($sellerID!='' or $sellerName!='' or $cityID!='' or $typeID!='')
+		if($typeName!=''){
+		   $condition['type_name'] = $typeName;
+		}
+
+	
+		if($sellerID!='' or $sellerName!='' or $cityName!='' or $typeName!='')
 		{
 
-			$list = $db->where($condition)->select();
-			$this->assign('sellerInfo',$list);
+
 			$count = $db->where($condition)->count(); 
 			$Page = new Page($count,5); 
 			$show = $Page->show();
-			$this->assign('page',$show);
+			$list=$db->where($condition)->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
+			$this->assign('page1',$show);
+			$this->assign('sellerInfo',$list);
 			$this->display('index');
 			
 		}else{	
 
-			echo "<script>alert('请输入关键信息!');history.back();</script>";
+			$this->assign("jumpUrl","index");
+			$this->error("请输入关键搜索信息！");
 			
 		}
-		
+
 		}else{
 		  $this->redirect('Index/login','',0,'你还没登陆');//页面重定向
 		}

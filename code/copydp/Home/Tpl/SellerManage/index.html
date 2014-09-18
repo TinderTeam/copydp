@@ -49,7 +49,7 @@
 						<h4>商户管理</h4>
 						<span>管理系统商户</span>
 					</div>
-				<form name="forml" action="__URL__/search" method="post">
+				<form name="forml" action="__URL__/search" method="get">
 					<ul class="tab-filter">
 						<li>
 							<span>用户编号</span><input type="text" name="seller_id"/>
@@ -58,14 +58,20 @@
 							<span>名称</span><input type="text" name="seller_name"/>
 						</li>
 						<li>
-							<span>城市</span><input type="text" name="city_id"/>
+							<span>城市</span><input type="text" name="city_name"/>
 						</li>
 						<li>
 							<p>分类</p>
-							<p><select name="type_id">
+							<p><select name="type_name">
 								<option value="" selected>请选择分类</option>
-								<option value="1">分类1</option>
-								<option value="2">分类2</option>
+								<?php
+									$productType=new Model('product_type');
+								    $type=$productType->select();
+								?>
+								<foreach name='type' item='v1'>
+								<option value="{$v1.type_name}">{$v1.type_name}</option>
+
+								</foreach>
 							</select></p>
 						</li>
 
@@ -93,12 +99,14 @@
 									<th width="30%">商户描述</th>							
 									<th width="5%">操作</th>
 								</tr>
+						<form name="form2" action="" method="post">		
 						<foreach name='sellerInfo' item='v1'>	
+						
 								<tr>
-									<td valign="middle" align="left" class="deal">{$v1.seller_id}</td>
-									<td valign="middle" align="left" class="deal">{$v1.seller_name}</td>
-									<td align="center" >{$v1.type_id}</td>
-									<td align="center"> {$v1.city_id}</td>
+									<td valign="middle" align="left" class="deal">{$v1.user_id}</td>
+									<td valign="middle" align="left" class="deal">{$v1.username}</td>
+									<td align="center" >{$v1.type_name}</td>
+									<td align="center"> {$v1.city}</td>
 									<td align="center" >{$v1.description}</td>
 									<td align="center" >
 										<input type="button" value="编辑">
@@ -106,11 +114,13 @@
 
 									</td>
 								</tr>
+						
 						</foreach>		
-
+						
 							<tr >
-								<td colspan="6" style=" text-align: center;" ><span>{$page}</span></td>
+								<td colspan="6" style=" text-align: center;" ><span>{$page1}</span></td>
 							</tr>
+						</form>
 							</tbody>
 						</table>
 					</div>
@@ -137,8 +147,10 @@
 							<p>分类</p>
 							<p><select name="type_id">
 								<option value="" selected>请选择分类</option>
-								<option value="1">分类1</option>
-								<option value="2">分类2</option>
+								<foreach name='type' item='v11'>
+								<option value="{$v11.type_id}">{$v11.type_name}</option>
+
+								</foreach>
 							</select></p>
 						</li>
 					</ul>
@@ -150,10 +162,12 @@
  				
 					</div>					
 					<div class="pay-confirm">
-					<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+					<form method="post" name="box" id="box" action="">
+					
+					<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">				
 						<thead>
 							<tr>
-								<th width="5%">全选<input type="checkbox"></th>
+								<th width="5%"><input type="checkbox"></th>
 								<th>
 									商家ID
 								</th>
@@ -213,9 +227,11 @@
                             </td>                  
                         </tr>
 						 </tbody>
+					
 						 </table>
 						 <input type="button" value="批量审批">
 						 <input type="button" value="批量退回">
+					</form>
 						 </div><!---<div class="pay-confirm">--->
 					</div><!---<div class="modebox my-comm J_my_comm" >--->
 				</div><!--<div class="um-con">-->

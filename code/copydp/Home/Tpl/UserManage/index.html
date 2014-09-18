@@ -92,7 +92,7 @@
 						
 								<tr>
 									<td align="center" class="deal">{$v1.user_id}</td>
-									<td align="center" class="deal">{$v1.user_name}</td>
+									<td align="center" class="deal">{$v1.username}</td>
 									<td align="center" >{$v1.grade}</td>
 									<td align="center"> {$v1.score}</td>
 									<td align="center" >{$v1.cellphone}</td>
@@ -136,7 +136,7 @@
 								</tr>
 								<?php //用户数据读取区域
 								
-									$customer=new Model('customer');
+									$customer=new Model('view_customer');
 									import("ORG.Util.Page"); 
 									
 									//$userOperate=$customer->where('user_id=3')->select();	
@@ -154,7 +154,7 @@
 								
 								<tr>
 									<td valign="middle" align="center" class="deal" name="userID">{$v2.user_id}</td>
-									<td valign="middle" align="center" class="deal">{$v2.user_name}</td>
+									<td valign="middle" align="center" class="deal">{$v2.username}</td>
 									<td align="center" >{$v2.grade}</td>
 									<td align="center" >{$v2.status}</td>
 									<td align="center" >{$v2.cellphone}</td>
@@ -166,7 +166,7 @@
 								
 								</foreach>
 								</form>
-								<tr >
+								<tr>
 									<td colspan="6" style=" text-align: center;" ><span>{$page2}</span></td>
 								</tr>
 
