@@ -86,7 +86,7 @@
 							$oldprice=$product->where($productIDCondition)->getField('original_price');
 							$imgsrc=$product->where($productIDCondition)->getField('imgsrc');
 						?>
-						<a target="_blank" href="/deal/8065967">
+						<a title="{$p_name}" href="__APP__/Buy/product_info?productID={$productID}"> 
 						<div class="image">
 							<img src="__PUBLIC__/uploads/img/{$imgsrc}" title="$productName">
 						</div>

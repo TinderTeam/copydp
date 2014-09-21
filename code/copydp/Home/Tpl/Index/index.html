@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <title>团购网站</title>
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.05bc1f8116a303ec3ea228348bbf6db5.css" type="text/css" />
 <link rel="stylesheet" src="css/fg.css" type="text/css" />
 
 
@@ -76,7 +77,7 @@
 											$p_dscr=$rcmViewDB->where($rcmViewIDCondition)->getField('dscr');
 											$p_price=$rcmViewDB->where($rcmViewIDCondition)->getField('price');
 										?>
-											<a title="{$p_name}" href="__APP__/Buy/productInfo?productID={$rcmid}">
+											<a title="{$p_name}" href="__APP__/Buy/product_info?productID={$rcmid}">
 												<img src="__PUBLIC__/uploads/img/{$p_img}" width="330" height="206" style="float:left;" >						
 												<div class="title">
 													<div class="title-text">
@@ -145,7 +146,7 @@
 											$p_price=$productViewDB->where($productIDCondition)->getField('price');
 											$p_org_price=$productViewDB->where($productIDCondition)->getField('original_price');
 										?>
-										<a title="{$p_name}" href="__APP__/Buy/productInfo?productID={$productID}"> <img src="__PUBLIC__/uploads/img/{$p_img}" width="180" height="112" style="float:left;" >
+										<a title="{$p_name}" href="__APP__/Buy/product_info?productID={$productID}"> <img src="__PUBLIC__/uploads/img/{$p_img}" width="180" height="112" style="float:left;" >
 											<div class="window-title">
 												<h3>{$p_name}</h3>
 												<h4>{$p_dscr}</h4>
@@ -167,185 +168,123 @@
 				</div>
 			</div><!----最新特惠---->
 			
-			
-			<div class="promo-commbo J_promo_tab J_promo_box"><!----联盟商户---->
-				<div class="promo-tab Fix">
-					<div class="tab-col J_tab_col n-deal on">
-						<a href="javascript:void(0)" class="J_tab_item"><span>联盟商户</span></a>
-					</div>
-				</div>
-				<div class="promo-list-item J_promo_list_item Hide on">
-					<div class="promo-window J_promo_window">
-						<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
-							<li class="promo-window-item J_promo_window_item"> <a title="大树餐厅" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/4.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [多商区]  大树餐厅 </h3>
-									<h4>代金券，无需预约，节假日通用！ </h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>69</em> </h5>
-									<h6>¥<em>100</em> </h6>
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item"> <a title="缪氏川菜" target="_blank" href="/deal/8027897"> <img src="__PUBLIC__/img/5.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3>[多商区]缪氏川菜</h3>
-									<h4>代金券，不限时段通用，节假日通用！贺缪氏川菜进驻龙华九方购物中心！（另有其他套餐可选）</h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>65</em></h5>
-									<h6>¥<em>100</em></h6>
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="马家烧麦馆" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/6.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [3店通用] 马家烧麦馆 </h3>
-									<h4>代金券，节假日通用！ </h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>39.9</em> </h5>
-									<h6>¥<em>50</em> </h6>
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="黑姆奇时尚韩餐" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/7.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [东中街]  黑姆奇时尚韩餐 </h3>
-									<h4>超值双人套餐，无需预约，节假日通用！ </h4>
-									<div class="mask">
-									</div>
-									<h5>¥<em>49</em> </h5>
-									<h6>¥<em>132</em> </h6>
-								</div>
-								</a> </li>
-						</ul>
-					</div>
-					<div class="panel-foot">
-						<div class="promo-window-ctrl panel-ctrl J_promo_window_ctrl">
-							<a href="__APP__/Buy/product_list">查看全部»</a>						
-						</div>
-					</div>
-				</div>
-			</div><!----联盟商户---->
-				<div class="promo-commbo J_promo_tab J_promo_box"><!----新进商家---->
-				<div class="promo-tab Fix">
-					<div class="tab-col J_tab_col n-deal on">
-						<a href="javascript:void(0)" class="J_tab_item"><span>新进商家</span></a>
-					</div>
-				</div>
-				<div class="promo-list-item J_promo_list_item Hide on">
-					<div class="promo-window J_promo_window">
-						<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
-							<li class="promo-window-item J_promo_window_item"> <a title="大树餐厅" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/4.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [多商区]  大树餐厅 </h3>
-									<h4>代金券，无需预约，节假日通用！ </h4>						
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item"> <a title="缪氏川菜" target="_blank" href="/deal/8027897"> <img src="__PUBLIC__/img/5.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3>[多商区]缪氏川菜</h3>
-									<h4>代金券，不限时段通用，节假日通用！贺缪氏川菜进驻龙华九方购物中心！（另有其他套餐可选）</h4>							
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="马家烧麦馆" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/6.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [3店通用] 马家烧麦馆 </h3>
-									<h4>代金券，节假日通用！ </h4>		
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="黑姆奇时尚韩餐" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/7.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [东中街]  黑姆奇时尚韩餐 </h3>
-									<h4>超值双人套餐，无需预约，节假日通用！ </h4>
-								</div>
-								</a> </li>
-						</ul>
-					</div>
-					<div class="panel-foot">
-						<div class="promo-window-ctrl panel-ctrl J_promo_window_ctrl">
-							<a href="__APP__/Buy/product_list">查看全部»</a>						
-						</div>
-					</div>
-				</div>
-			</div><!----新进商家---->
-		</div>
-		
-		
-		
-		<!-- 最新团购-->
+		<!-- 分类推荐-->
 		<div class="floor J_floor" data-mode="render">
-			<div class="floor-item J_floor_item">
-				<h2> <span>最新团购</span> <img src="__PUBLIC__/img/newtuangou.png"></h2>
-				<ul class="floor-link">
-					<li> <a href="/shenzhen/c/10s1006" target="_blank">自助餐</a></li>
-					<li> <a href="/shenzhen/c/10s1002" target="_blank">甜品饮料</a></li>	
-				</ul>
+			<?php
+			//获取总类信息
+				$typedb=new Model('product_type');
+				$condition['father_id']=0;	
+				$maintypename=$typedb->where($condition)->getField('type_name',true);
+				$maintypeid=$typedb->where($condition)->getField('type_id',true);
+				
+			?>
+			
+			
+			<volist name="maintypename" id="maintypenameitem" key="mainKey">
+				<div id="{$mainKey}" class="floor-item J_floor_item">
+						<?php
+							
+							//获取总类信息
+							$typedb=new Model('product_type');
+							$condition['father_id']=$maintypeid[$i];
+							$subtypeid=$typedb->where($condition)->getField('type_id',true);	
+							
+							$where['_string'] = '(type_id = "'. $maintypeid[$mainKey-1] .'")';
+							for($j=0;$j<count($subtypeid);$j++){
+								$where['_string'] =$where['_string'] . 'OR (type_id = "'. $subtypeid[$j] .'")';
+							}	
+							$where['city']=$city;
+							$productDB=new Model('view_product');
+							$productIDList=$productDB->where($where)->order('rand()')->limit(3)->getField('product_id',true);
+							
+						?>
+					<h2> <span>{$maintypenameitem}</span> <img src="__PUBLIC__/img/{$mainKey}.png"></h2>
+					<ul class="Fix">
+						
+						<volist name="productIDList" id="productID">
+							<?php
+								$productionTypeIDCondition['product_id']=$productID;
+								$productName=$productDB->where($productionTypeIDCondition)->getField('name');
+								$p_img=$productViewDB->where($productionTypeIDCondition)->getField('imgsrc');
+								$p_dscr=$productViewDB->where($productionTypeIDCondition)->getField('dscr');
+								$p_price=$productViewDB->where($productionTypeIDCondition)->getField('price');
+								$p_org_price=$productViewDB->where($productionTypeIDCondition)->getField('original_price');
+							?>
+							
+							<li class="floor-box J_floor_box" > <a title="{$p_name}" href="__APP__/Buy/product_info?productID={$productID}">
+								<div class="flag">
+								</div>
+								<img src="__PUBLIC__/uploads/img/{$p_img}">
+								<h3>
+								{$productName}
+								</h3>
+								<h4>{$p_dscrs}</h4>
+								<div class="mask">
+								</div>
+								<div class="price">
+									<h5>&#165;<em>{$p_price}</em></h5>
+									<h6>&#165;<em>{$p_org_price}</em></h6>
+								</div>
+								</a> 
+							</li>
+						</volist>						
+					</ul>
+					<a class="floor-more" href="__APP__/Buy/typeSelect?SelectType={$mainKey}"> <span>查看全部{$maintypenameitem}»</span> </a>
+				</div>	
+			</volist>
+			
+			<!---->
+			<div class="floor-nav J_floor_nav" style="position: fixed; top: -50px; bottom: auto; left:0px;">
 				<ul class="Fix">
-					<li class="floor-box J_floor_box" > <a title="顺品甜品屋" target="_blank" href="/deal/155944" >
-						<div class="flag">
-						</div>
-						<img src="img/8.jpg">
-						<div class="area J_floor_area Hide">
-							<span><i></i>南山中心区、南头、西丽、大小梅沙</span>
-						</div>
-						<h3>[4店通用]顺品甜品屋</h3>
-						<h4>甜品套餐，无需预约，热烈庆祝海岸城新店开业，4店同庆！</h4>
-						<div class="mask">
-						</div>
-						<div class="price">
-							<h5>&#165;<em>15.8</em></h5>
-							<h6>&#165;<em>39</em></h6>
-							<span class="buy"><em>74078</em>人购买</span>
-						</div>
-						<div class="activity">
-						</div>
-						</a> </li>
-					<li class="floor-box J_floor_box" > <a title="顺品甜品屋" target="_blank" href="/deal/155944" >
-						<div class="flag">
-						</div>
-						<img src="img/9.jpg">
-						<div class="area J_floor_area Hide">
-							<span><i></i>南山中心区、南头、西丽、大小梅沙</span>
-						</div>
-						<h3>[4店通用]顺品甜品屋</h3>
-						<h4>甜品套餐，无需预约，热烈庆祝海岸城新店开业，4店同庆！</h4>
-						<div class="mask">
-						</div>
-						<div class="price">
-							<h5>&#165;<em>15.8</em></h5>
-							<h6>&#165;<em>39</em></h6>
-							<span class="buy"><em>74078</em>人购买</span>
-						</div>
-						<div class="activity">
-						</div>
-						</a> </li>
-					<li class="floor-box J_floor_box" > 
-						<a title="顺品甜品屋" target="_blank" href="/deal/155944" >
-							<div class="flag">
-							</div>
-							<img src="img/10.jpg">
-							<div class="area J_floor_area Hide">
-								<span><i></i>南山中心区、南头、西丽、大小梅沙</span>
-							</div>
-							<h3>[4店通用]顺品甜品屋</h3>
-							<h4>甜品套餐，无需预约，热烈庆祝海岸城新店开业，4店同庆！</h4>
-							<div class="mask">
-							</div>
-							<div class="price">
-								<h5>&#165;<em>15.8</em></h5>
-								<h6>&#165;<em>39</em></h6>
-								<span class="buy"><em>74078</em>人购买</span>
-							</div>
-							<div class="activity">
-							</div>
-						</a></li>
+						<li>
+							<a href="#1" >								
+								<span>餐饮美食</span>
+							</a>
+						</li>
+						<li>
+							<a href="#2" >								
+								<span>休闲娱乐</span>
+							</a>
+						</li>
+						<li>
+							<a href="#3" >								
+								<span>汽车服务</span>
+							</a>
+						</li>
+						<li>
+							<a href="#4" >								
+								<span>酒店旅游</span>
+							</a>
+						</li>
+						<li>
+							<a href="#5" >								
+								<span>摄影写真</span>
+							</a>
+						</li>
+						<li>
+							<a href="#6" >								
+								<span>都市丽人</span>
+							</a>
+						</li>
+						<li>
+							<a href="#7" >								
+								<span>教育培训</span>
+							</a>
+						</li>
+						<li>
+							<a href="#8" >								
+								<span>生活服务</span>
+							</a>
+						</li>
+						
 				</ul>
-				<a class="floor-more" target="_blank" href="/shenzhen/c/10"> <span>查看全部美食»</span> </a>
 			</div>
+			<!---->
 		</div>
 		<!-- sideBar-->
 			<include file="./Home/Tpl/Public/sidebar.html"/>
 		<!-- sideBar-->
+		
 	</div>
 	<!-- 美食结束-->
 	<!---footer-->
