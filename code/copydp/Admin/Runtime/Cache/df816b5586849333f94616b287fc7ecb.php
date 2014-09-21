@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,13 +17,9 @@
 
 
  <div id="wrapper">
-   <p class="msg-title">{$msgTitle}</p>
-   <present name="message">
-    <p class="message">{$message}</p>
-   </present>
-   <present name="error">
-    <p class="error">{$error}</p>
-   </present>
+   <p class="msg-title"><?php echo ($msgTitle); ?></p>
+   <?php if(isset($message)): ?><p class="message"><?php echo ($message); ?></p><?php endif; ?>
+   <?php if(isset($error)): ?><p class="error"><?php echo ($error); ?></p><?php endif; ?>
 
     <p class="notice">页面自动 <a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> 等待时间： <b id="wait"><?php echo($waitSecond); ?></b>秒</p>
   </div>

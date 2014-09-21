@@ -10,22 +10,26 @@
 <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
 <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+
+<link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
-		<include file="./Home/Tpl/Public/header.html"/>
+		<include file="./Admin/Tpl/Public/header.html"/>
 	<!---标题栏---->
 	
 	<div class="head responsive">
 		<!---Logo栏---->
-			<include file="./Home/Tpl/Public/logobar.html"/>
+			<include file="./Admin/Tpl/Public/logobar.html"/>
 		<!---Logo栏---->
 		
 		<div class="nav-bar">
 			<div class="cont">
 		
 				<!-----主菜单---->
-					<include file="./Home/Tpl/Public/menu.html"/>
+					<include file="./Admin/Tpl/Public/menu.html"/>
 				<!-----主菜单---->
 			</div>
 		</div>
@@ -33,39 +37,49 @@
 	<div class="wrap">
 		<div class="user-nav J_user_nav">
 			<ul>
-				<li class="cur"> <a href="__APP__/Admin/member_manage">会员管理</a> <i class="n-arr"></i></li>
-				<li> <a href="__APP__/Admin/seller_manage">商家管理</a> <i class="n-arr"></i></li>
-				<li> <a href="__APP__/Admin/activity_manage">活动管理</a> <i class="n-arr"></i></li>
+				<li class="cur"> <a href="__APP__/Index/index">会员管理</a> <i class="n-arr"></i></li>
+				<li> <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
+				<li> <a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
 			</ul>
 		</div>
 		<div class="user-main">
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
+				<form name="forml" action="__URL__/search" method="post">
 					<div class="hd">
 						<h4>会员管理</h4>
 						<span>管理系统用户</span>	
 					</div>								
 					<ul class="tab-filter">
 						<li>
-							<span>用户ID</span><input type="text"/>
+							<span >用户ID</span><input type="text" name="userID"/>
 						</li>
 						<li>
-							<span>名称</span><input type="text"/>
+							<span >名称</span><input type="text" name="userName"/>
 						</li>
 						<li>
-							<span>手机</span><input type="text"/>
+							<span >手机</span><input type="text" name="phoneNum"/>
 						</li>
 						<li>
-							<input type="button" value="查询">
-							<input type="button" value="新增会员">
+							<!-- <input type="submit" value="查询" class="form-btn" /> -->
+								<strong class="btn-type-b btn-fn-c">
+									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+								</strong> 
+							<!-- <a href="{:U('Index/userAdd')}"  type="button" > 新增会员</a> -->
+ 							
+								<strong class="btn-type-b btn-fn-c">
+									<a href="{:U('Index/userAdd')}"  class="form-btn" style="font-color:red!important;">新增会员</a>
+								</strong>                       
+
 						</li>
 					</ul>
-					
+
+				</form>	
 					<div class="pay-confirm">
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
 								<tr>
-									<th width="15%">会员ID</th>
+									<th width="15%">会员编号</th>
 									<th width="15%">会员名称</th>
 									<th width="15%">会员级别</th>	
 									<th width="15%">当前积分</th>
@@ -73,74 +87,27 @@
 									<th width="10%">用户状态</th>							
 									<th width="15%">操作</th>
 								</tr>
+						<foreach name='userInfo' item='v1'>
 								<tr>
-									<td valign="middle" align="left" class="deal">00001</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >VIP</td>
-									<td align="center"> 8004分</td>
-									<td align="center" >18612345678</td>
-									<td align="center">正常</td >		
-									<td align="center" >
+									<td valign="middle" align="left" class="deal">{$v1.user_id}</td>
+									<td valign="middle" align="left" class="deal">{$v1.user_name}</td>
+									<td align="center" >{$v1.grade}</td>
+									<td align="center"> {$v1.score}</td>
+									<td align="center" >{$v1.cellphone}</td>
+									<td align="center">{$v1.status}</td >		
+									<td valign="middle">
 										<input type="button" value="解冻">
 										<input type="button" value="升级">
 									</td>
 								</tr>
-								<tr>
-									<td valign="middle" align="left" class="deal">00002</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >VIP</td>
-									<td align="center"> 8004分</td>
-									<td align="center" >18612345678</td>
-									<td  width="10%">正常</td >	
-									<td align="center" >
-										<input type="button" value="解冻">
-										<input type="button" value="升级">
-									</td>
-								</tr>
-								<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >SVIP</td>
-									<td align="center"> 8004分</td>
-									<td align="center" >18612345678</td>
-									<td  width="10%">冻结</td >	
-									<td align="center" >
-										<input  type="button" value="解冻">
-										<input type="button" value="降级">
-									</td>
-								</tr>
-									<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >SVIP</td>
-									<td align="center"> 8004分</td>
-									<td align="center" >18612345678</td>
-									<td  width="10%">冻结</td >	
-									<td align="center" >
-										<input  type="button" value="解冻">
-										<input type="button" value="降级">
-									</td>
-								</tr>
-									<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试会员</td>
-									<td align="center" >SVIP</td>
-									<td align="center"> 8004分</td>
-									<td align="center" >18612345678</td>
-									<td  width="10%">冻结</td >	
-									<td align="center" >
-										<input  type="button" value="解冻">
-										<input type="button" value="降级">
-									</td>
-								</tr>
+						</foreach>
+						  <tr >
+                            <td colspan="7" style=" text-align: center;" ><span>{$page}</span></td>
+                          </tr>
+
 							</tbody>
 						</table>
-						<span><a href="">首页</a></span>
-						<span><a href="">上页</a></span>
-						<span>第3页</span>
-						<span>共5页</span>
-						<span><a href="">下页</a></span>
-						<span><a href="">尾页</a></span>
+
 					</div>
 				</div>
 			</div>

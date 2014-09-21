@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<title>团购网站</title>
+<link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+
+<link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+		
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	<div class="wrap">
+		<div class="user-nav J_user_nav">
+			<ul>
+				<li class="cur"> <a href="__APP__/UserManage/index">会员管理</a> <i class="n-arr"></i></li>
+				<li> <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
+				<li> <a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
+			</ul>
+		</div>
+		<div class="user-main">
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+				<form name="forml" action="__URL__/search" method="post">
+					<div class="hd">
+						<h4>会员管理</h4>
+						<span>管理系统用户</span>	
+					</div>								
+					<ul class="tab-filter">
+						<li>
+							<span >会员编号</span><input type="text" name="userID"/>
+						</li>
+						<li>
+							<span >会员名称</span><input type="text" name="userName"/>
+						</li>
+						<li>
+							<span >手机</span><input type="text" name="phoneNum"/>
+						</li>
+						<li>
+							<!-- <input type="submit" value="查询" class="form-btn" /> -->
+								<strong class="btn-type-b btn-fn-c">
+									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+								</strong> 
+							<!-- <a href="{:U('Index/userAdd')}"  type="button" > 新增会员</a> -->
+ 							
+								<strong class="btn-type-b btn-fn-c">
+									<a href="{:U('UserManage/userAdd')}"  class="form-btn" style="font-color:red!important;">新增会员</a>
+								</strong> 
+
+						</li>
+					</ul>
+
+				</form>	
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="15%">会员编号</th>
+									<th width="15%">会员名称</th>
+									<th width="10%">会员级别</th>	
+									<th width="10%">积分</th>
+									<th width="15%">手机</th>	
+									<th width="15%">用户状态</th>							
+									<th width="30%">操作</th>
+								</tr>
+						<form name="form2" action="" method="post">
+						<foreach name='userInfo' item='v1'>
+						
+								<tr>
+									<td align="center" class="deal">{$v1.user_id}</td>
+									<td align="center" class="deal">{$v1.username}</td>
+									<td align="center" >{$v1.grade}</td>
+									<td align="center"> {$v1.score}</td>
+									<td align="center" >{$v1.cellphone}</td>
+									<td align="center">{$v1.status}</td >		
+									<td valign="middle">
+									<input type="submit" value="冻结"  onclick="javascript:this.form.action='__URL__/freeze?id={$v1.user_id}';"/>
+									<input type="submit" value="升级"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
+
+									</td>
+								</tr>
+						</foreach>
+						</form>
+						  <tr >
+                            <td colspan="7" style=" text-align: center;" ><span>{$page}</span></td>
+                          </tr>
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4>用户请求处理</h4>
+						<span>处理用户的升级、解冻、审核请求</span>
+					</div>
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="20%">会员编号</th>
+									<th width="15%">会员名称</th>
+									<th width="10%">会员级别</th>	
+									<th width="15%">会员状态</th>
+									<th width="20%">手机号码</th>							
+									<th width="20%">操作</th>
+								</tr>
+								<?php //用户数据读取区域
+								
+									$customer=new Model('view_customer');
+									import("ORG.Util.Page"); 
+									
+									//$userOperate=$customer->where('user_id=3')->select();	
+									//$condition['request'] != 'null';
+									$map['request']  = array('neq','null');
+									$count = $customer->where($map)->count(); 
+									$Page = new Page($count,5); 
+									$page2 = $Page->show();
+									$userOperate=$customer->where($map)->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
+																
+								
+								?>
+								<form name="form3" action="__URL__/search" method="post">
+								<foreach name='userOperate' item='v2'>
+								
+								<tr>
+									<td valign="middle" align="center" class="deal" name="userID">{$v2.user_id}</td>
+									<td valign="middle" align="center" class="deal">{$v2.username}</td>
+									<td align="center" >{$v2.grade}</td>
+									<td align="center" >{$v2.status}</td>
+									<td align="center" >{$v2.cellphone}</td>
+									<td align="center" >
+										<input type="submit" value="{$v2.request}"  onclick="javascript:this.form.action='__URL__/requestDeal?id={$v2.user_id}';"/>
+										<input type="submit" value="拒绝" onclick="javascript:this.form.action='__URL__/requestDelete?id={$v2.user_id}';"/>
+									</td>
+								</tr>
+								
+								</foreach>
+								</form>
+								<tr>
+									<td colspan="6" style=" text-align: center;" ><span>{$page2}</span></td>
+								</tr>
+
+							</tbody>
+							
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4>积分管理</h4>
+						<span>管理员对积分进行管理</span>
+					</div>
+				<form name="form4" action="__URL__/searchScore" method="post">
+					<ul class="tab-filter">
+						<li>
+							<span>用户编号</span><input type="text" name="userID"/>
+						</li>
+						<li>
+								<strong class="btn-type-b btn-fn-c">
+									<input  type="submit" value="查询" class="form-btn">
+								</strong> 			
+						</li>
+					</ul>
+				</form>
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="20%">会员编号</th>
+									<th width="20%">会员名称</th>
+									<th width="15%">积分</th>
+									<th width="10%">变更后积分值</th>					
+									<th width="5%">操作</th>
+								</tr>
+						
+						<foreach name='scoreInfo' item='v3'>
+						<form name="form5" action="__APP__/modifyScore" method="post">
+								<tr>
+									<td align="center" name="scoreID">{$v3.user_id}</td>
+									<td align="center" >{$v3.user_name}</td>
+									<td align="center" >{$v3.score}</td>
+									<td align="center" ><input type="num" name="newScore"></td>
+									<td align="center" >
+									<input type="submit" value="确认" onclick="javascript:this.form.action='__URL__/modifyScore?id={$v3.user_id}';"/>
+									</td>
+								</tr>
+						</form >
+						</foreach>
+							
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+</html>
