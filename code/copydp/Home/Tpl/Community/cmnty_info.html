@@ -47,6 +47,7 @@ body{
 <div class="main page-sa page-topigetScrollc Fix">
 	<div class="section-wrapper">
 	    <div class="section">
+			<!--发表新帖与分页--->
 			<div class="block raw-block b-topic-op">
 			
 					<p>&nbsp;</p>
@@ -76,94 +77,111 @@ body{
 						</div>
 					</div>
 				</div>
-			</div>
+			</div><!--发表新帖与分页--->
+			
+			<!----主内容--->
 			<div class="block raw-block b-topic-wrapper">
 				<div class="block-inner">
-					<h1>文章标题</h1>
-					<div class="topic-reply-hits">
-						<span>回复：56</span>
-						<span>人气：1430</span>
+				<?php
+					$communityDB = new Model("community");
+					$communityCondition['community_id'] = $communityID;
+					$title=$communityDB->where($communityCondition)->getField('title');
+					$datetime=$communityDB->where($communityCondition)->getField('datetime');
+					$context=$communityDB->where($communityCondition)->getField('context');
+					
+					
+					$communityCustomerDB = new Model("view_community_customer");
+					$username=$communityCustomerDB->where($communityCondition)->getField('username');
+					
+					$communityDiscussViewDB=new Model('view_community_discuss_sum');
+					$num=$communityDiscussViewDB->where($communityCondition)->getField('discuss_num');	
+					
+				?>
+					<h1>{$title}</h1>
+					<div class="topic-reply-hits">					
+						<span>回复：{$num}</span>
 					</div>
 					<div class="topic-list" id="J_topic_list">
 						<div class="topic-item ti-leading topic-badge" id="J_main_post">
-							<div class="user-info">		
-								<a href="http://www.dianping.com/member/15777234" rel="nofollow" class="J_card" user-id="15777234">ISAND</a>
+							<div class="user-info">
+								<a href="http://www.dianping.com/member/15777234" class="J_card">{$username}</a>
 								<span class="note">楼主</span>
 							</div>
 							<div class="topic-info">
-								<span class="time" id="mainNoteTime">发表于 14-08-25 16:16</span>
-								<a href="/topic/7493338/lz" onClick="pageTracker._trackPageview('dp_club_group_content_onlyyou')" rel="nofollow">只看楼主</a>
-								<span class='sep'> | </span><a href="#" event-type="quote" note-data="7493338" note-type="main">引用</a>
+								<span class="time" id="mainNoteTime">发表于 {$datetime}</span>
 							</div>
 							<div class="topic-entry ">
-								<div id="mainNoteInfo"><p>文章标题</p>
-								<p>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+								<div id="mainNoteInfo"><p>{$title}</p>
+								{$context}
 								</div>
 								<div class="topic-misc">
 									<div class="tm-content" id="J_op_info">				           
-										<p>2014-08-25 16:39:55 被作者重新编辑</p>
-									</div>
-									<div class="collect-box J_btnCollect">
-										
+										<p>发表于 {$datetime}</p>
 									</div>
 								</div>
 							<!--分享&回帖&赞-->
-								<div id="J_boxWidget" class="mix-btn-box"><!--控件框-->
-									<span class="medi-btn-shallow">
-										<a onClick="pageTracker._trackPageview('dp_club_groupnote_good')" href="#" title="赞" class="btn-txt J_btnLike">
-											<i class="icon-hymn"></i>
-											<span>赞(<em class="J_numLike">12</em>)</span>
-										</a>
+								<div id="J_boxWidget" class="mix-btn-box"><!--控件框-->									
+									<span class="big-btn">
+										<a href="#NoteAdd" title="回帖" class="btn-txt J_btnReply">回帖</a>
 									</span>
-									<div class="btn-reply-box">
-										<span class="big-btn">
-											<a href="#NoteAdd" title="回帖" class="btn-txt J_btnReply">回帖</a>
-										</span>
-									</div>
-								</div>
-								<div id="J_barWidget" class="suspended-nav Hide" style="z-index:30001;"><!--控件条-->
-									<div class="opacity"></div>
-									<div class="con J_conWidget"></div>
 								</div>
 							<!--收藏&回帖&赞 end-->
 							</div><!--主帖-->
 						</div>
-						<div class="topic-item topic-badge" id="followNote_131345784">
-							<div class="user-info">
-								<a rel="nofollow" class="J_card" user-id="22087785">酪梨绿</a>
-								<a class="fn-top" title="回到顶部" href="#top">回到顶部</a>
-								<span class="note">1楼</span>
+						
+						<?php
+							$DiscussDB = new Model("view_community_discuss");
+							$communityCondition['community_id'] = $communityID;
+							$discussList=$DiscussDB->where($communityCondition)->getField('community_discuss_id',true);	
+						?>
+						<div  id="pageListArray">
+						<volist name="discussList" id="disscussItem">						
+							<?php
+								$DiscussCondition['community_discuss_id'] = $disscussItem;
+								$username=$DiscussDB->where($DiscussCondition)->getField('username');
+								$datetime=$DiscussDB->where($DiscussCondition)->getField('datetime');
+								$content=$DiscussDB->where($DiscussCondition)->getField('content');
+							?>
+							
+							<if condition="$key gt 5">
+								<div id="item_{$i}" class="topic-item topic-badge Hide">
+							<else/>
+								<div id="item_{$i}" class="topic-item topic-badge">
+							</if>							
+								<div class="user-info">
+									<a class="J_card" >{$username}</a>
+									<a class="fn-top" title="回到顶部" href="#top">回到顶部</a>
+									<span class="note">{$key+1}楼</span>
+								</div>
+								<div class="topic-info">
+									<span class="time">发表于{$datetime}</span>								
+								</div>
+								<div class="topic-entry">
+									<p>{$content}</p>
+								</div>														
 							</div>
-							<div class="topic-info">
-								<span class="time">发表于 14-08-25 16:58</span>								
-							</div>
-							<div class="topic-entry">
-								<p>留言内容</p>
-							</div>														
-						</div>
+						</volist></div>						
 					</div><!--帖子列表 包括主帖及跟帖-->
 				
 						<div class="footer-links">
 							<div class="fl-primary">
 								<span class="link-top"><a href="#top">回顶部</a></span><span class="sep">|</span>		                
 								<a class="fn-link" href="/love214" onClick="pageTracker._trackPageview('dp_club_group_content_return');">返回帖子列表</a>                   
-							</div>				
-							<div class="Pages">
-								<span class="PageSel">1</span>
-								<a href="?pageno=2" class="PageLink" title="2">2</a>
-								<a href="?pageno=3" class="PageLink" title="3">3</a>	
-								<a href="?pageno=2" class="NextPage" title="下一页">下一页</a>
-								<div class="slt-page J_pageGo">
-									<span class="goto-page">
-										去第
-										<input class="ipt-plane J_pageInput" type="text" maxlength="5" />
-										页
+							</div>							
+							<div class="Pages">	
+								<?php
+									$pageNumber=floor (count($discussList)/5);
+								?>
+								<if condition="$pageNumber gt 0">
+									<a  class="LastPage" title="上一页">上一页</a>
+									<span class="pageTagArray" data="1">
+									<a  id="page_1" class="PageSel pageTag" >1</a> 
+									<for start="1" end="($pageNumber+1)">
+										<a id="page_{$i+1}" class="PageLink pageTag">{$i+1}</a> 
+									 </for>	
 									</span>
-									<span class="micro-btn-ash">
-										<a class="btn-txt J_pageBtn" href="javascript:;" title="跳转">跳转</a>
-									</span>
-									<span class="pmb-error J_pageError Hide" >页码错误</span>
-								</div>
+									<a class="NextPage1" title="下一页" data="{$pageNumber+1}">下一页</a>
+								</if>														
 							</div>
 						</div>
 					</div>
@@ -201,57 +219,60 @@ body{
 				</div>
 			</div>
 		</div>
-    </div>   
-	<div class="aside aside-right">
-      	<div class="block b-nav">
-        	<div class="block-title">部落导航</div>
-       		<ul class="nav-list">
-					<li class="nav-item">
-	            		<h4 class="root-item"><a>东莞生活</a></h4>
-	          		</li>       			
-					<li class="nav-item">
-	            		<h4 class="root-item"><a>东莞生活</a></h4>
-	          		</li>   
-					<li class="nav-item">
-	            		<h4 class="root-item"><a>东莞生活</a></h4>
-	          		</li>     					
-        	</ul>
-      	</div>
-   
-		<div class="block b-topics">
-			<div class="block-title">本部落精华帖</div>
-			<ul>				
-				<li>
-					<h4><a class="B" href="/topic/7504455" onClick="pageTracker._trackPageview('dp_group_post_goodnote_dongguan');">【挽夏】你遇到过多少人渣？</a></h4>
-				</li>
-				<li>
-					<h4><a class="B" href="/topic/7504455" onClick="pageTracker._trackPageview('dp_group_post_goodnote_dongguan');">【挽夏】你遇到过多少人渣？</a></h4>
-				</li>
-				<li>
-					<h4><a class="B" href="/topic/7501423" onClick="pageTracker._trackPageview('dp_group_post_goodnote_dongguan');">【挽夏】盘点你遇到过的奇葩男</a></h4>
-				</li>
-			</ul>
-		</div>
-      	<div class="block b-hot">
-        	<div class="block-title">本部落热门帖</div>
-    		<ul class=" bullet-list-c">    			
-	    			<li>
-	        			<h4><a target="_blank" href="/topic/7533871"  >每次穿高跟鞋都把脚后跟磨破皮</a></h4>
-	          		</li>
-	    			<li>
-	        			<h4><a target="_blank" href="/topic/7532777"  >《暖秋》主要还是暖心</a></h4>
-	          		</li>
-	    			<li>
-	        			<h4><a target="_blank" href="/topic/7532650"  >中秋重磅炸弹，不得不说的我的极品老公！</a></h4>
-	          		</li>
-    		</ul>
-      	</div>
-
-	</div>
+    </div>
+	<!---sidebar-->
+		<include file="./Home/Tpl/Community/sidebar.html"/>
+	<!---sidebar-->	
 </div>
 
 	<!---footer-->
 	<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
 </body>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+		$(".pageTag").click(function(){	
+			pageClean();	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data);	
+		});
+		
+		function pageClean(){
+			$(".pageTagArray").children().removeClass("PageSel");
+			$(".pageTagArray").children().addClass("PageLink");
+			$("#pageListArray").children().addClass("Hide");
+		}
+		$(".NextPage1").click(function(){		
+			var current=$(".pageTagArray").attr('data');			
+			var data=Number(current)+1;
+			var max=Number($(".NextPage1").attr('data'));
+			if(data<=max){
+				pageClean();
+				change_page(data);	
+			}		
+		});
+		
+		$(".LastPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');
+			
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean();
+				change_page(data);	
+			}			
+		});
+		function change_page(data){
+			$("#page_"+data).addClass("PageSel");						
+			$(".pageTagArray").attr('data',data);	
+			var start=(data-1)*5;
+			$("#item_"+(start+1)).removeClass("Hide");
+			$("#item_"+(start+2)).removeClass("Hide");
+			$("#item_"+(start+3)).removeClass("Hide");
+			$("#item_"+(start+4)).removeClass("Hide");
+			$("#item_"+(start+5)).removeClass("Hide");
+		}
+	</script>
+	
 </html>

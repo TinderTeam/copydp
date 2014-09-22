@@ -1,0 +1,59 @@
+<div class="aside aside-right">
+      	<div class="block b-nav">
+        	<div class="block-title">社区中心</div>
+       		<ul class="nav-list">
+				<?php
+					$communityDB=new Model('community');
+					$communityTypeList=$communityDB->distinct(true)->getField('community_type',true);	
+				?>
+				
+				<volist name="communityTypeList" id="type">
+					<li class="nav-item">
+	            		<h4 class="root-item"><a href="__APP__/Community/selectType?typeName={$type}">{$type}</a></h4>
+	          		</li>  	
+				</volist>										
+        	</ul>
+      	</div>
+   
+		<div class="block b-topics">
+			<div class="block-title">精华帖</div>
+			<?php
+				$communityDiscussViewDB=new Model('view_community_discuss_sum');
+				$communityTopicList=$communityDiscussViewDB->limit(6)->getField('community_id',true);							
+			?>				
+			<ul>
+				<volist name="communityTopicList" id="topicID">
+					<?php
+						$TopicCondition['community_id']=$topicID;
+						$num=$communityDiscussViewDB->where($TopicCondition)->getField('discuss_num');		
+						$title=$communityDiscussViewDB->where($TopicCondition)->getField('title');	
+						$title=mb_substr($title,0,9,'utf-8')."...";
+					?>
+					<li>
+						<h4><a  class="B" title="{$title}" href="__APP__/Community/cmnty_info?communityID={$topicID}">{$title}</a></h4>
+					</li>
+				</volist>
+			</ul>
+		</div>
+      	<div class="block b-hot">
+        	<div class="block-title">最新帖子</div>
+    		<ul class=" bullet-list-c"> 
+				<?php
+					$communityDB=new Model('community');
+					$communityList=$communityDB->order('rand()')->limit(6)->getField('community_id',true);							
+				?>	
+				<volist name="communityList" id="communityID">
+					<?php
+						$communityIDCondition['community_id']=$communityID;
+						$title=$communityDB->where($communityIDCondition)->getField('title');
+						$type=$communityDB->where($communityIDCondition)->getField('community_type');
+						$date=$communityDB->where($communityIDCondition)->getField('datetime');
+					?>
+					<li>
+	        			<h4><a title={$title} href="__APP__/Community/cmnty_info?communityID={$communityID}">{$title}</a></h4>
+	          		</li>
+				</volist>   				    		
+    		</ul>
+      	</div>
+
+	</div>

@@ -33,7 +33,6 @@ body{
 			</div>
 		</div>
 	</div>
-	
 
 		<div class="main page-as page-community-home Fix">
 			<div class="section">
@@ -43,34 +42,27 @@ body{
 					<div class="block b-features">
 						<div class="block-title">
 							热点推荐
-						</div>
-						<div class="block-inner">
-							<a href="community-info.html" class="thumb"><img src="http://i1.dpfile.com/cms/20140901/487149148750.jpg" height="90" width="120" alt="" /></a>
-							<div class="content">
-								<h2><a title="精彩九月汇，好礼来相送~">精彩九月汇，好礼来相送~</a></h2>
-								<p>868元大闸蟹，跳舞毯、哑铃、多种精美礼品尽在全国9月汇~...<a class="more">全文</a></p>
-							</div>
-						</div>
+						</div>						
 						<!--帖子-->
 						<ul class="topic-list">
-							<li>
-								<a class="term">[小吃零食]</a>
-								<a title="龙虾汤鸡腿饭，初秋吃不停">龙虾汤鸡腿饭，初秋吃不停</a>
-								<span class="i-hot">hot</span>
-								<span class="misc"><strong>2503</strong>人气</span>
-							</li>
-							<li>
-								<a class="term">[小吃零食]</a>
-								<a title="龙虾汤鸡腿饭，初秋吃不停">龙虾汤鸡腿饭，初秋吃不停</a>
-								<span class="i-hot">hot</span>
-								<span class="misc"><strong>2503</strong>人气</span>
-							</li>
-							<li>
-								<a class="term">[小吃零食]</a>
-								<a title="龙虾汤鸡腿饭，初秋吃不停">龙虾汤鸡腿饭，初秋吃不停</a>
-								<span class="i-hot">hot</span>
-								<span class="misc"><strong>2503</strong>人气</span>
-							</li>
+							<?php
+								$communityDB=new Model('community');
+								$communityList=$communityDB->order('rand()')->limit(6)->getField('community_id',true);							
+							?>	
+							<volist name="communityList" id="communityID">
+								<?php
+									$communityIDCondition['community_id']=$communityID;
+									$title=$communityDB->where($communityIDCondition)->getField('title');
+									$type=$communityDB->where($communityIDCondition)->getField('community_type');
+									$date=$communityDB->where($communityIDCondition)->getField('datetime');
+								?>
+								<li>
+									<a class="term">[{$type}]</a>
+									<a title={$title} href="__APP__/Community/cmnty_info?communityID={$communityID}">{$title}</a>
+									<span class="i-hot">hot</span>
+									<span class="misc">{$date}</span>
+								</li>
+							</volist>							
 						</ul><!--帖子-->
 					</div><!---center--->
 					
@@ -80,69 +72,64 @@ body{
 						<div class="block-title">
 							热门话题
 						</div>
+						<?php
+							$communityDiscussViewDB=new Model('view_community_discuss_sum');
+							$communityTopicList=$communityDiscussViewDB->limit(6)->getField('community_id',true);							
+						?>
 						<ul class="title-list num-list">
-							<li><span class="nl-top">1</span>
-								<h4><a title="趣味大爆炸，楼层连连看火热进行">【趣味活动】趣味， </a></h4>
-							</li>
-							<li><span class="nl-top">1</span>
-								<h4><a title="趣味大爆炸，楼层连连看火热进行">【趣味活动】 </a></h4>
-							</li>
-							<li><span class="nl-top">1</span>
-								<h4><a title="趣味大爆炸，楼层连连看火热进行">【趣味活动】趣 </a></h4>
-							</li>
-							<li><span class="nl-top">1</span>
-								<h4><a title="趣味大爆炸，楼层连连看火热进行">【趣味活动】趣味， </a></h4>
-							</li>
-							<li><span class="nl-top">1</span>
-								<h4><a title="趣味大爆炸，楼层连连看火热进行">【趣味活动】 </a></h4>
-							</li>
-							<li><span class="nl-top">1</span>
-								<h4><a title="趣味大爆炸，楼层连连看火热进行">【趣味活动】趣 </a></h4>
-							</li>
-							
+							<volist name="communityTopicList" id="topicID">
+								<?php
+									$TopicCondition['community_id']=$topicID;
+									$num=$communityDiscussViewDB->where($TopicCondition)->getField('discuss_num');		
+									$title=$communityDiscussViewDB->where($TopicCondition)->getField('title');	
+									$title=mb_substr($title,0,9,'utf-8')."...";
+								?>
+								<li><span class="nl-top">{$num}</span>
+									<h4><a title="{$title}" href="__APP__/Community/cmnty_info?communityID={$topicID}">{$title}</a></h4>
+								</li>
+							</volist>	
 						</ul>
 					</div>	<!---热门--->		
 				</div><!---<div class="features-wrapper">--->
 			
-				<div class="block b-misc">
-					<div class="block-sub block-recentTopics">
+				<div class="features-wrapper">
+					<!---center--->
+					<div class="block b-features">
+						<?php
+							$communityDB=new Model('community');
+							if($typeName ==''){
+								$basicTitle="全部发帖";
+								$communityList=$communityDB->order('datetime desc')->getField('community_id',true);	
+							}else{
+								$basicTitle= $typeName."发帖";
+								$communityTypeCondition['community_type']=$typeName;
+								$communityList=$communityDB->where($communityTypeCondition)->order('datetime desc')->getField('community_id',true);	
+							}
+							
+						?>	
 						<div class="block-title">
-							最新发帖
-						</div>
-						<div class="block-inner">
-							<ul class="topic-list bullet-list">
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>
-								<li><a>树的表情 (2)</a></li>		
-							</ul>
-						</div>
-					</div>
-					<!--/最新发帖-->
-					<div class="block-sub block-forumList">
-						<div class="block-title">
-							本周热门部落
-						</div>
-						<div class="block-inner">
-							<ul class="title-list num-list">
-								<li><span class="nl-top">1</span><a href="/lingshi" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">小吃零食</a><span class="numbers"><em class="misc">4419</em>帖子</span></li>
-								<li><span class="nl-top">2</span><a href="/kitchen" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">美食厨房DIY</a><span class="numbers"><em class="misc">2363</em>帖子</span></li>
-								<li><span class="nl-top">3</span><a href="/diary" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">小日记</a><span class="numbers"><em class="misc">2239</em>帖子</span></li>
-								<li><span class="normal">4</span><a href="/love214" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">话唠大本营</a><span class="numbers"><em class="misc">1612</em>帖子</span></li>
-								<li><span class="normal">5</span><a href="/shine" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">美容化妆</a><span class="numbers"><em class="misc">1378</em>帖子</span></li>
-								<li><span class="normal">6</span><a href="/trip111" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">游山玩水</a><span class="numbers"><em class="misc">1285</em>帖子</span></li>
-								<li><span class="normal">7</span><a href="/forum" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">站务论坛</a><span class="numbers"><em class="misc">1030</em>帖子</span></li>
-								<li><span class="normal">8</span><a href="/huodong" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">网站活动</a><span class="numbers"><em class="misc">1009</em>帖子</span></li>
-								<li><span class="normal">9</span><a href="/himusic" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">第8号当铺</a><span class="numbers"><em class="misc">952</em>帖子</span></li>
-								<li><span class="normal">10</span><a href="/ent" onClick="pageTracker._trackPageview('dp_group_index_hotgroup_dongguan');">★゛娱乐⑧卦゛...</a><span class="numbers"><em class="misc">575</em>帖子</span></li>
-							</ul>
-						</div>
-					</div><!--/最新发帖-->
+							{$basicTitle}
+						</div>						
+						<!--帖子-->
+						<ul class="topic-list">
+
+							<volist name="communityList" id="communityID">
+								<?php
+									$communityIDCondition['community_id']=$communityID;
+									$title=$communityDB->where($communityIDCondition)->getField('title');
+									$type=$communityDB->where($communityIDCondition)->getField('community_type');
+									$date=$communityDB->where($communityIDCondition)->getField('datetime');
+								?>
+								<li>
+									<a class="term">[{$type}]</a>
+									<a title={$title} href="__APP__/Community/cmnty_info?communityID={$communityID}">{$title}</a>
+									<span class="i-hot">hot</span>
+									<span class="misc">{$date}</span>
+								</li>
+							</volist>							
+						</ul><!--帖子-->
+					</div><!---center--->
+					
 					
 					<!--/会员热榜-->
 					<div class="block-sub block-memberList">
@@ -151,20 +138,28 @@ body{
 						</div>
 						<div class="block-inner">
 							<ul class="figure-list">
-								<li>
-									<a class="thumbs">
-										<img height="20" width="20" src="http://j1.s2.dpfile.com/pc/b82a577abdcabd96ad16508767238078(48c48)/thumb.jpg" class="J_card">
-									</a> 
-									<a class="J_card">
-										用户A
-									</a> 
-									<em class="membercount"><span class="misc">1</span>帖子</em>
-								</li>			
+								<?php
+									$communityUserDB=new Model('view_community_customer');
+									$UserIDList=$communityUserDB->limit(10)->getField('customer_id',true);						
+								?>
+								<volist name="UserIDList" id="userID">
+									<li>
+										<?php
+											$communityViewIDCondition['customer_id']=$userID;
+											$customer_number=$communityUserDB->where($communityViewIDCondition)->getField('customer_number');
+											$username=$communityUserDB->where($communityViewIDCondition)->getField('username');									
+										?>									
+										<a class="J_card" href="__APP__/Admin/userinfo?userID={$userID}" >
+											{$username}
+										</a> 
+										<em class="membercount"><span class="misc">{$customer_number}</span>帖子</em>
+									</li>
+								</volist>	
+											
 							</ul>
 						</div>
 					</div><!--/会员热榜-->
-				
-				</div>
+				</div><!---<div class="features-wrapper">--->	
 			</div>
 			<!-----分类目录---->
 			<div class="aside">
@@ -172,36 +167,22 @@ body{
 					<div class="block b-nav">
 						<div class="block-title tabbed-title">
 							<ul class="tab-list">
-								<li class="tab active"><a id="discuss" href="__APP__/Buy/product_list">社区中心</a><span class="hyphen">|</span></li>	
+								<li class="tab active"><a id="discuss" href="#">社区中心</a></li>	
 							</ul>
 						</div>
 						<div hand-mark="discuss">
 							<ul class="bullet-list">	
-								<li class="root-item"> <strong class="root-name"><a href="/category/471/home">房介信息</a></strong>
+								<li class="root-item"> <strong class="root-name"><a href="__APP__/Community/community">全部分类</a></strong>
 									<ul class="sub-nav">
-										<li><a>二手房</a></li>
-										<li><a>整租</a></li>
-										<li><a>合租</a></li>
-										<li><a>二手房</a></li>
-										
+										<?php
+											$communityDB=new Model('community');
+											$communityTypeList=$communityDB->distinct(true)->getField('community_type',true);	
+										?>
+										<volist name="communityTypeList" id="type">
+											<li><a href="__APP__/Community/selectType?typeName={$type}">{$type}</a></li>	
+										</volist>				
 									</ul>
-								</li>
-									<li class="root-item"> <strong class="root-name"><a href="/category/18468/home">应聘信息</a></strong>
-									<ul class="sub-nav">
-										<li><a>全职</a></li>
-										<li><a>兼职</a></li>
-										<li><a>服务</a></li>
-										<li><a>猎头</a></li>
-									</ul>
-								</li>
-								<li class="root-item"> <strong class="root-name"><a href="/category/472/home">招聘信息</a></strong>
-									<ul class="sub-nav">
-										<li><a>全职</a></li>
-										<li><a>兼职</a></li>
-										<li><a>服务</a></li>
-										<li><a>猎头</a></li>
-									</ul>
-								</li>
+								</li>									
 							</ul>
 						</div>	
 					</div>

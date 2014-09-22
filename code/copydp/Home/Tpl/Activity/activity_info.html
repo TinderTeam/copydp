@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com"/>
+<link rel="dns-prefetch" href="http://t2.dpfile.com"/>
+<link rel="dns-prefetch" href="http://t3.dpfile.com"/>
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/"/>
+<title>【当期优惠】-团购网</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/deal/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" rel="stylesheet"/>
+	<style type="text/css">
+		#allmap{width:100%;height:500px;}
+		
+		.myblock{padding-left: 150px;}
+
+	</style>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DNGm7Kq87zslzLLkll9epKQY"></script>
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+			
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	<?php
+		$activityDB=new Model('view_activity');
+		$activityIDCondition['activity_id']=$activityID;
+		$activityName=$activityDB->where($activityIDCondition)->getField('title');
+		$activityDscr=$activityDB->where($activityIDCondition)->getField('dscr');
+		$activityCity=$activityDB->where($activityIDCondition)->getField('city');
+		$imgsrc = $activityDB->where($activityIDCondition)->getField('imgsrc');
+		$endTime= $activityDB->where($activityIDCondition)->getField('datelimit');
+		$point= $activityDB->where($activityIDCondition)->getField('point');
+		$address= $activityDB->where($activityIDCondition)->getField('address');
+		$memberlimit= $activityDB->where($activityIDCondition)->getField('memberlimit');
+		$datetime= $activityDB->where($activityIDCondition)->getField('datetime');
+		$note= $activityDB->where($activityIDCondition)->getField('note');
+		$info= $activityDB->where($activityIDCondition)->getField('info');
+
+	?>
+	
+	<!----主界面---->
+	<div class="pgm">
+		<div class="main_w page-index normal-type">
+			<div class="summary summary-comments-big J_summary Fix">
+				<div class="bd">
+					<h1 class="title">{$activityName}</h1>
+					<h2 class="sub-title"> <span>{$activityDscr}</span> </h2>	
+					<div class="action-box">
+						<table class="action-blk">
+							<tr>
+								<div class="action-info">										
+									<span>积分奖励：{$point}</span>
+								</div>									
+							</tr>
+							<tr>
+								<div class="action-info">										
+									<span>创建时间：{$datetime}</span>
+								</div>									
+							</tr>
+							<tr>	
+								<div class="action-info">										
+									<span>说明：{$note}</span>
+								</div>									
+							</tr>							
+						</table>
+					</div>	
+					<div class="action-box">
+						<table class="action-blk">
+							<tr>
+								<td>
+									<div class="action-info">										
+										<span>所在城市：{$activityCity}</span>
+									</div>
+								</td>
+								<td>
+									<div class="action-info">
+										<div class="action-info">										
+											<span> 活动地点：{$address}</span>
+										</div>
+									</div>
+								</td>							
+							</tr>																
+						</table>
+					</div>	
+				
+					<div class="action-box">
+						<table class="action-blk">
+							<tr>
+								<td>
+									<div class="action-info">
+										<?php							
+											$activityOrderDB=new Model('activity_order');
+											$activityOrderCondition['activity_id']=$activityID;
+											$memberNum=$activityOrderDB->where($activityOrderCondition)->count();											
+										?>
+										<span> 当前参与人数：{$memberNum}/{$memberlimit}</span>
+										
+									</div>
+									<div class="action-info">
+										
+									</div>
+								</td>															
+							</tr>
+						</table>
+					</div>
+					<div class="action-box myblock">
+						<a class="b-new-rbtn small order-btn J_package"  href=""> <span>报名参与</span> </a>					
+					</div>
+				</div>	
+				<div class="lbd">
+					<div class="img-area">
+						<div class="slider">
+							<div class="slide J_switch J_switch_carousel imgloading">
+								<div class="img-wrap J_wrap">
+									<img  src="__PUBLIC__/uploads/img/{$imgsrc}" >
+								</div>															
+							</div>
+						</div>
+					</div>
+					<div class="func">					
+						<dl class="count-down J_count_down">
+							<dt>剩余</dt>
+							<dd class="time">
+								<?php
+								
+									$Date_1=date("Y-m-d");						
+									$Date_2=$endTime;
+									$Date_List_a1=explode("-",$Date_1);
+									$Date_List_a2=explode("-",$Date_2);
+									$d1=mktime(0,0,0,$Date_List_a1[1],$Date_List_a1[2],$Date_List_a1[0]);
+									$d2=mktime(0,0,0,$Date_List_a2[1],$Date_List_a2[2],$Date_List_a2[0]);	
+									
+									$Days=round(($d2-$d1)/3600/24);
+									
+									if($d2-$d1 < 0)
+									{
+										print("已过期");
+									}else{
+										print($Days . "天");
+									}
+								?>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			
+
+			<div class="content">			
+				<div class="box content J_tab_container">
+					<div class="box Tabs-box switch-box">
+						<div class="box-wrap">
+							<div id="J_tab_mod" data-id="tab_mod">
+								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
+									<li class="new"> <a href="__APP__/Buy/product_list"><span>活动介绍</span></a> </li>								
+								</ul>
+							</div>
+							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
+								<div class="dptg-intro Fix">
+									<!----基本介绍-->
+									<div class="detail">
+										<h3 class="new-tit"><span class="name">基本介绍</span></h3>
+										{$info}
+									</div>											
+								</div>
+							</div>
+						</div>
+						<div class="box-buy-bottom Fix">
+							<div class="buy-bottom-btn">
+								<a id="J_downbuy" class="b-rbtn small J_package" href=""> <span>报名参加</span> </a> 
+							</div>
+							<div class="Price-font buy-bottom-price">
+								{$point}积分
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---侧边栏--->
+			<include file="./Home/Tpl/Public/sidebar.html"/>
+			<!---侧边栏--->
+		</div>
+	</div>
+
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+
+</body>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+</html>
