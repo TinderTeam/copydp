@@ -14,7 +14,7 @@ class SellerManageAction extends Action {
 		
     }
 	//搜索
-	public function search(){
+	public function searchSeller(){
 		if($_SESSION['login_user']!=""){
 		
 		$db = M('view_seller');
@@ -108,6 +108,59 @@ class SellerManageAction extends Action {
 			}
 			
 		}
+		public function searchProduct(){
+		
+		if($_SESSION['login_user']!=""){
+		
+		$db = M('product');
+        import("ORG.Util.Page"); 
+		//mysql_query("set names utf8");
+		
+		$sellerID=$_GET['seller_id'];
+		$sellerName=$_GET['seller_name'];
+		$cityName=$_GET['city_name'];
+		$typeName=$_GET['type_name'];
+		
+		if($sellerID!=''){
+		   $condition['user_id'] = $sellerID;
+		}
+		if($sellerName!=''){
+		   $condition['username'] = $sellerName;
+		}
+		if($cityName!=''){
+		   $condition['city'] = $cityName;
+		}
+		if($typeName!=''){
+		   $condition['type_name'] = $typeName;
+		}
+
+	
+		if($sellerID!='' or $sellerName!='' or $cityName!='' or $typeName!='')
+		{
+
+
+			$count = $db->where($condition)->count(); 
+			$Page = new Page($count,5); 
+			$show = $Page->show();
+			$list=$db->where($condition)->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
+			$this->assign('page1',$show);
+			$this->assign('sellerInfo',$list);
+			$this->display('index');
+			
+		}else{	
+
+			$this->assign("jumpUrl","index");
+			$this->error("请输入关键搜索信息！");
+			
+		}
+
+		}else{
+		  $this->redirect('Index/login','',0,'你还没登陆');//页面重定向
+		}		
+		}
+
+		
+
 
 
 
