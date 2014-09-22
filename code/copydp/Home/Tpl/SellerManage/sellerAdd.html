@@ -17,6 +17,48 @@
 <link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
 
 </head>
+<script language="javascript" type="text/javascript">
+var http_request = false;
+function createRequest(url) {
+	//初始化对象并发出XMLHttpRequest请求
+	http_request = false;
+	if (window.XMLHttpRequest) { // Mozilla或其他除IE以外的浏览器
+		http_request = new XMLHttpRequest();
+		if (http_request.overrideMimeType) {
+			http_request.overrideMimeType("text/xml");
+		}
+	} else if (window.ActiveXObject) { // IE浏览器
+		try {
+			http_request = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				http_request = new ActiveXObject("Microsoft.XMLHTTP");
+
+		   } catch (e) {}
+		}
+	}
+	if (!http_request) {
+		alert("不能创建XMLHTTP实例!");
+		return false;
+	}
+	http_request.onreadystatechange = alertContents;    //指定响应方法
+	//发出HTTP请求
+	http_request.open("GET", url, true);
+	http_request.send(null);
+}
+function alertContents() {    //处理服务器返回的信息
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+			subType.innerHTML=http_request.responseText; //设置文本替换内容
+		} else {
+			alert('您请求的页面发现错误');
+		}
+	}
+
+}
+
+
+</script>
 <body id="body" data-type="">
 	<!---标题栏---->
 		<include file="./Home/Tpl/Public/header.html"/>
@@ -72,12 +114,18 @@
 								                
 									<div class="form-block">
 										<span class="label label_required">类型：<em>*</em></span>
+										<?php
+												$productType=M('product_type');
+												$type=$productType->select();
+										?>										
 										<select id="ddlShopType"  class="form-select-sim">
-											<option selected="selected" value="10">美食</option>		
+											<option selected="selected" value="">请选择类型</option>
+											
+										<foreach name='type' item='vt'>
+											<option value="{$vt.type_name}">{$vt.type_name}</option>	
+										</foreach>											
 										</select>
-										<select id="ddlCategory"  class="form-select-sim form-select-sim-m">
-											<option value="10">请选择菜系</option>						
-										</select>
+
 									</div>
 									<div class="form-block">
 										<span class="label">概述：</span>
@@ -85,11 +133,43 @@
 										<span id="fv_TrafficInfo"  class="fv-def"></span>
 									</div> 
 									<div id="trPriceInfo"  class="form-block">
-										<span class="label">地址：</span>
-										<textarea rows="7" cols="50"  class="form-textarea form-default"></textarea>
-										<span id="fv_txtPriceInfo" style="visibility: hidden; " class="fv-def"></span>
-									</div>
+										<span class="label label_required">地区：<em>*</em></span>
+										<?php
+										  $citydb= M('city');
+										  $city=$citydb->select();
+										?>
+									<form action=""  method="post" name="formCity">
+										<select id="citySelect"  class="form-select-sim" name="citySelect" onchange="selCity()">
+											<option  value="">请选择城市</option>	
+										<foreach name='city' item='vc'>
+											<option value="{$vc.city_id}">{$vc.city}</option>	
+										</foreach>											
+										</select>
+									</form>
+									<div id="result"></div>
+									<div id="list"></div>
+							<script language="javascript" type="text/javascript">
+								function selCity(){
+								
+								}
+
+							</script>									
 									
+
+
+
+
+										<select id="zoneSel"  class="form-select-sim form-select-sim-m">
+											
+										<option value="">请选择区域</option>	
+										<foreach name='zone' item='vz'>
+											
+											<option value="{$vz.zone_id}" >{$vz.zone_name}</option>	
+										</foreach>
+										
+										</select>
+									</div>
+
 								
 									  	<div class="form-block">
 										<span class="label">详细描述：</span>
@@ -114,5 +194,6 @@
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
+
 </body>
 </html>

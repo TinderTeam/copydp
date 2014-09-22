@@ -49,7 +49,7 @@
 						<h4>商户管理</h4>
 						<span>管理系统商户</span>
 					</div>
-				<form name="forml" action="__URL__/search" method="get">
+				<form name="forml" action="__URL__/searchSeller" method="get">
 					<ul class="tab-filter">
 						<li>
 							<span>用户编号</span><input type="text" name="seller_id"/>
@@ -65,7 +65,7 @@
 							<p><select name="type_name">
 								<option value="" selected>请选择分类</option>
 								<?php
-									$productType=new Model('product_type');
+									$productType=M('product_type');
 								    $type=$productType->select();
 								?>
 								<foreach name='type' item='v1'>
@@ -133,15 +133,24 @@
 						<h4>产品审核</h4>
 						<span>审核商铺上传的产品信息</span>
 					</div>
+					<form name="formProduct" action="__URL__/searchProduct" method="get">
 					<ul class="tab-filter">
 						<li>
-							<span>用户ID</span><input type="text"/>
+							<span>用户编号</span><input type="text" name="seller_id"/>
 						</li>
 						<li>
-							<span>产品</span><input type="text"/>
+							<span>产品名称</span><input type="text" name="product_name"/>
 						</li>
 						<li>
-							<span>城市</span><input type="text"/>
+							<span>城市名称</span><input type="text" name="city_name"/>
+							<p>城市名称</p>
+							<p><select name="type_id">
+								<option value="" selected>请选择分类</option>
+								<foreach name='type' item='v11'>
+								<option value="{$v11.type_id}">{$v11.type_name}</option>
+
+								</foreach>
+							</select></p>
 						</li>
 						<li>
 							<p>分类</p>
@@ -157,10 +166,13 @@
 					<div >&nbsp&nbsp</div>
 					<div >
 							<span><strong class="btn-type-b btn-fn-c">
-									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+									<input id="" type="submit" value="查询" class="form-btn">
 							</strong> </span>
  				
-					</div>					
+					</div>
+					</form>
+					
+					
 					<div class="pay-confirm">
 					<form method="post" name="box" id="box" action="">
 					
@@ -169,7 +181,7 @@
 							<tr>
 								<th width="5%"><input type="checkbox"></th>
 								<th>
-									商家ID
+									商家编号
 								</th>
 								<th>
 									产品名
@@ -189,6 +201,7 @@
 						
 						<tbody>
 							<tr>
+							<foreach name='productInfo' item='vP'>
 								<td class="t-check">
 								   <input type="checkbox"/>
 								</td>
@@ -224,7 +237,8 @@
                             <td class="t-op">
                             	<input type="button" value="审批">
 								<input type="button" value="退回">
-                            </td>                  
+                            </td> 
+						</foreach>
                         </tr>
 						 </tbody>
 					
