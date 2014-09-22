@@ -142,12 +142,15 @@
 							<span>产品名称</span><input type="text" name="product_name"/>
 						</li>
 						<li>
-							<span>城市名称</span><input type="text" name="city_name"/>
+						<?php
+							$citydb= M('city');
+						   $city=$citydb->select();
+						?>
 							<p>城市名称</p>
-							<p><select name="type_id">
-								<option value="" selected>请选择分类</option>
-								<foreach name='type' item='v11'>
-								<option value="{$v11.type_id}">{$v11.type_name}</option>
+							<p><select name="city_id">
+								<option value="" selected>请选择城市</option>
+								<foreach name='city' item='vC'>
+								<option value="{$vC.city_id}">{$vC.city}</option>
 
 								</foreach>
 							</select></p>
@@ -180,66 +183,72 @@
 						<thead>
 							<tr>
 								<th width="5%"><input type="checkbox"></th>
-								<th>
+								<th width="15%">
 									商家编号
 								</th>
-								<th>
-									产品名
+								<th width="25%">
+									产品名称
 								</th>
-								<th>
+								<th width="20%">
 									描述
 								</th>
-								<th>
+								<th width="15%">
 									金额
 								</th>
 	
-								<th>
+								<th width="20%">
 									操作
 								</th>	
 							</tr>
 						</thead>
 						
 						<tbody>
+					<foreach name='productInfo' item='vP'>
 							<tr>
-							<foreach name='productInfo' item='vP'>
+							
 								<td class="t-check">
 								   <input type="checkbox"/>
 								</td>
-								<td class="t-check">
-								  123456
+								<td class="t-check" style="text-align:center">
+								  {$vP.seller_id}
 								</td>
 								<td class="t-order">
 									<div class="pic">
-										<a href="/deal/5284492"><img src="http://t3.s1.dpfile.com/pc/mc/87c0d70ca51169d33a9f49379de6867c(160c100)/thumb.jpg" width="85" height="53" /></a>
+										<a href="/deal/5284492"><img src="__PUBLIC__/uploads/img/{$vP.imgsrc}" width="85" height="53" /></a>
 									</div>
 
                                 <div class="txt">
                                     <h4>
                                         <a href="/deal/5284492">
-											    横店影城:2D/3D电影票2选1
+											    {$vP.name}
                                         </a>
                                     </h4>
                                     <h5>
                                         <span>
-                                                过期时间：2014-10-01
+                                                过期时间：{$vP.end_date_time}
                                         </span>
                                     </h5>
                                 </div>
 
                             </td>
                             <td class="t-time">
-                                描述内容
+                                {$vP.dscr}
                             </td>
-                            <td class="t-amount">
-                                <span>200</span>
+                            <td class="t-amount" style="text-align:center">
+                                <span>{$vP.price}</span>
                             </td>
 
                             <td class="t-op">
                             	<input type="button" value="审批">
 								<input type="button" value="退回">
                             </td> 
-						</foreach>
+					
                         </tr>
+						
+					</foreach>
+							<tr >
+								<td colspan="6" style=" text-align: center;" ><span>{$pageProduct}</span></td>
+							</tr>
 						 </tbody>
 					
 						 </table>

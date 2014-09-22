@@ -112,39 +112,39 @@ class SellerManageAction extends Action {
 		
 		if($_SESSION['login_user']!=""){
 		
-		$db = M('product');
+		$db = M('view_product');
         import("ORG.Util.Page"); 
 		//mysql_query("set names utf8");
 		
 		$sellerID=$_GET['seller_id'];
-		$sellerName=$_GET['seller_name'];
-		$cityName=$_GET['city_name'];
-		$typeName=$_GET['type_name'];
+		$productName=$_GET['product_name'];
+		$cityID=$_GET['city_id'];
+		$typeID=$_GET['type_id'];
 		
 		if($sellerID!=''){
-		   $condition['user_id'] = $sellerID;
+		   $condition['seller_id'] = $sellerID;
 		}
-		if($sellerName!=''){
-		   $condition['username'] = $sellerName;
+		if($productName!=''){
+		   $condition['name'] = $productName;
 		}
-		if($cityName!=''){
-		   $condition['city'] = $cityName;
+		if($cityID!=''){
+		   $condition['city_id'] = $cityID;
 		}
-		if($typeName!=''){
-		   $condition['type_name'] = $typeName;
+		if($typeID!=''){
+		   $condition['type_id'] = $typeID;
 		}
-
+        
 	
-		if($sellerID!='' or $sellerName!='' or $cityName!='' or $typeName!='')
+		if($sellerID!='' or $productName!='' or $cityID!='' or $typeID!='')
 		{
-
+			$condition['product_status']="待审核";
 
 			$count = $db->where($condition)->count(); 
 			$Page = new Page($count,5); 
 			$show = $Page->show();
-			$list=$db->where($condition)->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
-			$this->assign('page1',$show);
-			$this->assign('sellerInfo',$list);
+			$list=$db->where($condition)->order('update_date desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+			$this->assign('pageProduct',$show);
+			$this->assign('productInfo',$list);
 			$this->display('index');
 			
 		}else{	
