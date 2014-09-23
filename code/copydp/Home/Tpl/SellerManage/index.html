@@ -177,12 +177,14 @@
 					
 					
 					<div class="pay-confirm">
-					<form method="post" name="box" id="box" action="">
+					<form method="post" name="box" id="box" action="__URL__/quantityDeal">
 					
 					<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">				
 						<thead>
 							<tr>
-								<th width="5%"><input type="checkbox"></th>
+								<th width="5%">
+								<input type="checkbox" name="chkAll" id="chkAll" onclick="selectAll('chkID_[]','chkAll')">
+								</th>
 								<th width="15%">
 									商家编号
 								</th>
@@ -203,18 +205,31 @@
 						</thead>
 						
 						<tbody>
+						<?php 
+						
+							$db = M('view_product');
+							import("ORG.Util.Page");
+							$sellerCondition['product_status']="待审核";
+
+							$count = $db->where($sellerCondition)->count(); 
+							$Page = new Page($count,5); 
+							$pageProduct = $Page->show();
+							$productInfo=$db->where($sellerCondition)->order('update_date desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+
+						?>
+
 					<foreach name='productInfo' item='vP'>
 							<tr>
 							
 								<td class="t-check">
-								   <input type="checkbox"/>
+								   <input type="checkbox" name="chkID_[]" id="chkID_[{$key+1}]" value="{$vP.product_id}"/>
 								</td>
 								<td class="t-check" style="text-align:center">
 								  {$vP.seller_id}
 								</td>
 								<td class="t-order">
 									<div class="pic">
-										<a href="/deal/5284492"><img src="__PUBLIC__/uploads/img/{$vP.imgsrc}" width="85" height="53" /></a>
+										<a href="#"><img src="__PUBLIC__/uploads/img/{$vP.imgsrc}" width="85" height="53" /></a>
 									</div>
 
                                 <div class="txt">
@@ -239,8 +254,8 @@
                             </td>
 
                             <td class="t-op">
-                            	<input type="button" value="审批">
-								<input type="button" value="退回">
+								<input type="submit" value="审批"  onclick="javascript:this.form.action='__URL__/requestDeal?id={$vP.product_id}';"/>
+								<input type="submit" value="退回" onclick="javascript:this.form.action='__URL__/requestDelete?id={$vP.product_id}';"/>
                             </td> 
 					
                         </tr>
@@ -252,9 +267,24 @@
 						 </tbody>
 					
 						 </table>
-						 <input type="button" value="批量审批">
-						 <input type="button" value="批量退回">
+						 <input type="submit" value="批量审批" name="subSure" />
+						 <input type="submit" value="批量退回" name="subQuit"/>
+						 
 					</form>
+					
+					<script type="text/javascript">
+						function selectAll(sonName, cbAllId){
+							var arrSon = document.getElementsByName(sonName);
+							var cbAll = document.getElementById(cbAllId);
+							var tempState=cbAll.checked;
+								for(i=0;i<arrSon.length;i++) {
+									if(arrSon[i].checked!=tempState)
+									arrSon[i].click();
+									}
+							}
+
+
+					</script>
 						 </div><!---<div class="pay-confirm">--->
 					</div><!---<div class="modebox my-comm J_my_comm" >--->
 				</div><!--<div class="um-con">-->
