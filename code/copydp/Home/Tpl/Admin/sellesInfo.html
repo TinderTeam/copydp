@@ -39,14 +39,13 @@
 	<div class="wrap">
 		<div class="user-nav J_user_nav">
 			<ul>
-				<li class="cur"> <a href="/account/usercenter">商户管理</a> <i class="n-arr"></i> </li>
-				<li > <a href="/account/coupons">产品管理</a> <i class="n-arr"></i>
+				<li > <a href="#myEvaluation">我的评价</a> <i class="n-arr"></i> </li>
+				<li > <a href="#orderManage">订单管理</a> <i class="n-arr"></i>
 				</li>
-				<li > <a href="/account/coupons">订单管理</a> <i class="n-arr"></i>
+				<li > <a href="#productManage">产品管理</a> <i class="n-arr"></i>
 				</li>
 			</ul>
 		</div>
-	  <div class="main_w Tabs-page user-main  page-account">	
 		<div class="user-main">
 			<div class="um-hd">
 				<div class="user-info pic-txt J_user_info">
@@ -73,7 +72,7 @@
 			</div>
 			
 					<!--我的评价-->
-			<div class="um-con">
+			<div class="um-con" id="myEvaluation">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
 						<h4>我的评价</h4>			
@@ -100,237 +99,208 @@
 				</div>
 			</div>
 			
-		<div class="um-con">
-            <div class="con-tab">
-				<ul class="tab-line">
-					<li  class="cur">
-						<a href="/account/orders/0">团购订单</a>
-					</li>	
-				</ul>               
-				 <ul class="tab-filter">
-                    <li>
-						<a href="__APP__/Buy/product_list" class="checkbox checkbox-ok">
-							<i></i>
-							<span>全选</span>
-						</a>
-					</li>
-					<li>
-						<a track="|1|module#2_nav_myorders,action#click,index#2,content#/account/orders/0"
-							href="/account/orders/0">已下单</a>
-					</li>
-					<li>
-						<a track="|1|module#2_nav_myorders,action#click,index#2,content#/account/orders/0"
-							href="/account/orders/0">已取消</a>
-							
-					</li>
-					<li>
-						<a track="|1|module#2_nav_myorders,action#click,index#3,content#/account/orders/1"
-						   href="/account/orders/1">已使用</a>
-					</li>
-					<li>
-						<select style="width:120px">
-							<option>按照产品筛选</option>
-						</select>
-					</li>
-				</ul>             
-            </div>
-
-            <div class="con-list">
-                <table>
-                    <thead>
-                    <tr>
-                        <th class="t-check"></th>
-                        <th class="t-order">
-                            订单信息
-                        </th>
-                        <th class="t-time">
-                            下单时间
-                        </th>
-                        <th class="t-amount">
-                            数量
-                        </th>
-                        <th class="t-price">
-                            金额
-                        </th>
-                        <th class="t-status">
-                            交易状态
-                        </th>
-                        <th class="t-op">
-                            操作
-                        </th>
-                        <th class="t-delete"></th>
-                    </tr>
-
-                    </thead>
-                    <tbody>
-
-                        <tr data-id="order-item" data-orderid="309225927">
-                            <td class="t-check">
-                                <a href="__APP__/Buy/product_list"  data-id="check-order" data-eval-config="{'type':'single'}"
-                                   class="checkbox checkbox-ok"><i></i></a>
-                            </td>
-                            <td class="t-order">
-                                <div class="pic">
-                                    <a href="/deal/5284492"><img src="http://t3.s1.dpfile.com/pc/mc/87c0d70ca51169d33a9f49379de6867c(160c100)/thumb.jpg" width="85" height="53" /></a>
-                                </div>
-
-                                <div class="txt">
-                                    <h4>
-                                        <a href="/deal/5284492">
-											    横店影城:2D/3D电影票2选1
-                                        </a>
-                                    </h4>
-                                    <h5>
-                                        <span>
-                                            订单号：309225927
-                                        </span>
-                                    </h5>
-                                    <h5>
-                                        <span>
-                                                过期时间：2014-10-01
-                                        </span>
-                                    </h5>
-                                </div>
-
-                            </td>
-                            <td class="t-time">
-                                <span>2014-07-28</span>
-                            </td>
-                            <td class="t-amount">
-                                <span>2</span>
-                            </td>
-                            <td class="t-price">
-                                <span>&#165;50</span>
-                            </td>
-                            <td class="t-status">
-                            <div>已使用</div>
-                            </td>
-                            <td class="t-op">
-                                <a href='/account/coupons/order_309225927'>使用确认</a>
-                            </td>
-                            <td class="t-delete">
-                                <a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
-                                    <i></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr data-id="order-item" data-orderid="291545547">
-                            <td class="t-check">
-                                <a href="__APP__/Buy/product_list"  data-id="check-order" data-eval-config="{'type':'single'}"
-                                   class="checkbox checkbox-dis"><i></i></a>
-                            </td>
-                            <td class="t-order">
-                                <div class="pic">
-                                    <a href="/deal/5236192"><img src="http://t1.s1.dpfile.com/pc/mc/9f6275722e101caab92553abb52c41a5(160c100)/thumb.jpg" width="85" height="53" /></a>
-                                </div>
-
-                                <div class="txt">
-                                    <h4>
-                                        <a href="/deal/5236192">
-											    中影星河电影城:电影票2选1
-                                        </a>
-                                    </h4>
-                                    <h5>
-                                        <span>
-                                            订单号：291545547
-                                        </span>
-                                    </h5>
-                                    <h5>
-                                        <span>
-                                                过期时间：2014-12-29
-                                        </span>
-                                    </h5>
-                                </div>
-
-                            </td>
-                            <td class="t-time">
-                                <span>2014-07-04</span>
-                            </td>
-                            <td class="t-amount">
-                                <span>2</span>
-                            </td>
-                            <td class="t-price">
-                                <span>&#165;51.6</span>
-                            </td>
-                            <td class="t-status">
-                            <div><span class="ok">未使用：2</span></div>
-                            </td>
-                            <td class="t-op">
-                                <a href='/account/coupons/order_291545547'>使用确认</a>
-								<a href='/receipt/refund/346173366'>申请作废</a>
-                            </td>
-                            <td class="t-delete">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="pages-wrap">
-                </div>
-            </div>
-        </div>
-    </div>
-			
-			<div class="um-con">
-			
-				<!--订单管理-->
-				<div class="modebox my-booking J_my_booking">
-					<div class="hd">
-						<h4>订单管理</h4>
-						<a href="/account/orders" class="more">查看全部&raquo;</a>
-					</div>
-					<div class="con">
-						<div class="pic-list J_booking_list">
-							<ul>
-								<li>
-									<div class="pic">
-										<a title="" class="img"><img src="http://t2.s2.dpfile.com/pc/mc/9f6275722e101caab92553abb52c41a5(216c135)/thumb.jpg"></a>
-									</div>
-									<div class="txt">
-										<p><a>中影星河电影城:电影票2选1</a></p>
-										<p> <strong class="f-ok"> 未使用 </strong>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
+			<div class="um-con" id="orderManage">
+				<div class="hd">
+					<h4>订单管理</h4>
+				</div>
+				<div class="con-tab">             
+					 <ul class="tab-filter">
+						<li>
+							<a href="__APP__/Buy/product_list" class="checkbox checkbox-ok">
+								<i></i>
+								<span>全选</span>
+							</a>
+						</li>
+						<li>
+							<a track="|1|module#2_nav_myorders,action#click,index#2,content#/account/orders/0"
+								href="/account/orders/0">已下单</a>
+						</li>
+						<li>
+							<a track="|1|module#2_nav_myorders,action#click,index#2,content#/account/orders/0"
+								href="/account/orders/0">已取消</a>
+								
+						</li>
+						<li>
+							<a track="|1|module#2_nav_myorders,action#click,index#3,content#/account/orders/1"
+							   href="/account/orders/1">已使用</a>
+						</li>
+						<li>
+							<select style="width:120px">
+								<option>按照产品筛选</option>
+							</select>
+						</li>
+					</ul>             
 				</div>
 
-		</div>
-	
-	
-		<div class="um-con">
-			<div class="modebox my-comm J_my_comm" >
-				<div class="hd">
-				<h4>产品管理</h4>
-				<span>管理您的团购产品</span>
+				<div class="con-list">
+					<table>
+						<thead>
+						<tr>
+							<th class="t-check"></th>
+							<th class="t-order">
+								订单信息
+							</th>
+							<th class="t-time">
+								下单时间
+							</th>
+							<th class="t-amount">
+								数量
+							</th>
+							<th class="t-price">
+								金额
+							</th>
+							<th class="t-status">
+								交易状态
+							</th>
+							<th class="t-op">
+								操作
+							</th>
+							<th class="t-delete"></th>
+						</tr>
+
+						</thead>
+						<tbody>
+
+							<tr data-id="order-item" data-orderid="309225927">
+								<td class="t-check">
+									<a href="__APP__/Buy/product_list"  data-id="check-order" data-eval-config="{'type':'single'}"
+									   class="checkbox checkbox-ok"><i></i></a>
+								</td>
+								<td class="t-order">
+									<div class="pic">
+										<a href="/deal/5284492"><img src="http://t3.s1.dpfile.com/pc/mc/87c0d70ca51169d33a9f49379de6867c(160c100)/thumb.jpg" width="85" height="53" /></a>
+									</div>
+
+									<div class="txt">
+										<h4>
+											<a href="/deal/5284492">
+													横店影城:2D/3D电影票2选1
+											</a>
+										</h4>
+										<h5>
+											<span>
+												订单号：309225927
+											</span>
+										</h5>
+										<h5>
+											<span>
+													过期时间：2014-10-01
+											</span>
+										</h5>
+									</div>
+
+								</td>
+								<td class="t-time">
+									<span>2014-07-28</span>
+								</td>
+								<td class="t-amount">
+									<span>2</span>
+								</td>
+								<td class="t-price">
+									<span>&#165;50</span>
+								</td>
+								<td class="t-status">
+								<div>已使用</div>
+								</td>
+								<td class="t-op">
+									<a href='/account/coupons/order_309225927'>使用确认</a>
+								</td>
+								<td class="t-delete">
+									<a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
+										<i></i>
+									</a>
+								</td>
+							</tr>
+							<tr data-id="order-item" data-orderid="291545547">
+								<td class="t-check">
+									<a href="__APP__/Buy/product_list"  data-id="check-order" data-eval-config="{'type':'single'}"
+									   class="checkbox checkbox-dis"><i></i></a>
+								</td>
+								<td class="t-order">
+									<div class="pic">
+										<a href="/deal/5236192"><img src="http://t1.s1.dpfile.com/pc/mc/9f6275722e101caab92553abb52c41a5(160c100)/thumb.jpg" width="85" height="53" /></a>
+									</div>
+
+									<div class="txt">
+										<h4>
+											<a href="/deal/5236192">
+													中影星河电影城:电影票2选1
+											</a>
+										</h4>
+										<h5>
+											<span>
+												订单号：291545547
+											</span>
+										</h5>
+										<h5>
+											<span>
+													过期时间：2014-12-29
+											</span>
+										</h5>
+									</div>
+
+								</td>
+								<td class="t-time">
+									<span>2014-07-04</span>
+								</td>
+								<td class="t-amount">
+									<span>2</span>
+								</td>
+								<td class="t-price">
+									<span>&#165;51.6</span>
+								</td>
+								<td class="t-status">
+								<div><span class="ok">未使用：2</span></div>
+								</td>
+								<td class="t-op">
+									<a href='/account/coupons/order_291545547'>使用确认</a>
+									<a href='/receipt/refund/346173366'>申请作废</a>
+								</td>
+								<td class="t-delete">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="pages-wrap">
+					</div>
+				</div>
 			</div>
-			<input type="button" value="新增产品">
-			<div class="pay-confirm">
-				<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
-					<tbody>
-						<tr>
-							<th width="10%">产品名称</th>
-							<th width="30%">产品描述</th>
-							<th width="10%">图片预览</th>
-							<th width="10%">价格</th>
-							<th width="15%">开始时间</th>
-							<th width="10%">当前状态</th>
-							<th width="5%">操作</th>
-						</tr>
-						<tr>
-							<td valign="middle" align="left" class="deal">团购1</td>
-							<td valign="middle" align="left" class="deal">仅售22.5元，价值30元代金券，不限时段通用，免费WiFi，免费停车位！限抵扣30元以内产品，超出需另交费！</td>
-							<td align="center" ><img src="img/thumb.jpg" width="100px"></td>
-							<td align="center"> &#165;50（原价：&#165;100）</td>
-							<td align="center" >2014-9-10</td>
-							<td align="center"><select >
-								<option value="进行中" selected="selected">进行中</option>
-								<option value="进行中">已停止</option>
-							</select></td>
-							<td align="center" ><input type="button" value="删除"><a type="button"  href="__APP__/Admin/seller_edit"  >编辑</a></td>
-						</tr>
-					</tbody>
-				</table>
+
+			<div class="um-con" id="productManage">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4>产品管理</h4>
+						<span>管理您的团购产品</span>
+					</div>
+					<input type="button" value="新增产品"></input>
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="10%">产品名称</th>
+									<th width="30%">产品描述</th>
+									<th width="10%">图片预览</th>
+									<th width="10%">价格</th>
+									<th width="15%">开始时间</th>
+									<th width="10%">当前状态</th>
+									<th width="5%">操作</th>
+								</tr>
+								<tr>
+									<td valign="middle" align="left" class="deal">团购1</td>
+									<td valign="middle" align="left" class="deal">仅售22.5元，价值30元代金券，不限时段通用，免费WiFi，免费停车位！限抵扣30元以内产品，超出需另交费！</td>
+									<td align="center" ><img src="img/thumb.jpg" width="100px"></td>
+									<td align="center"> &#165;50（原价：&#165;100）</td>
+									<td align="center" >2014-9-10</td>
+									<td align="center"><select >
+										<option value="进行中" selected="selected">进行中</option>
+										<option value="进行中">已停止</option>
+									</select></td>
+									<td align="center" ><input type="button" value="删除"><a type="button"  href="__APP__/Admin/seller_edit"  >编辑</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
