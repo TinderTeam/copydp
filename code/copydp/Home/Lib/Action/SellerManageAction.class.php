@@ -107,39 +107,34 @@ class SellerManageAction extends Action {
 		
 		if($_SESSION['login_user']!=""){
 		
-		$db = M('product');
+		$db = M('view_product');
         import("ORG.Util.Page"); 
 		//mysql_query("set names utf8");
 		
 		$sellerID=$_GET['seller_id'];
-		$sellerName=$_GET['seller_name'];
-		$cityName=$_GET['city_name'];
-		$typeName=$_GET['type_name'];
+		$productName=$_GET['product_name'];
+		$cityID=$_GET['city_id'];
+		$typeID=$_GET['type_id'];
 		
 		if($sellerID!=''){
-		   $condition['user_id'] = $sellerID;
+		   $condition['seller_id'] = $sellerID;
 		}
-		if($sellerName!=''){
-		   $condition['username'] = $sellerName;
+		if($productName!=''){
+		   $condition['name'] = $productName;
 		}
-		if($cityName!=''){
-		   $condition['city'] = $cityName;
+		if($cityID!=''){
+		   $condition['city_id'] = $cityID;
 		}
-		if($typeName!=''){
-		   $condition['type_name'] = $typeName;
+		if($typeID!=''){
+		   $condition['type_id'] = $typeID;
 		}
-
+        
 	
-		if($sellerID!='' or $sellerName!='' or $cityName!='' or $typeName!='')
+		if($sellerID!='' or $productName!='' or $cityID!='' or $typeID!='')
 		{
+			$condition['product_status']="待审核";
 
-
-			$count = $db->where($condition)->count(); 
-			$Page = new Page($count,5); 
-			$show = $Page->show();
-			$list=$db->where($condition)->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
-			$this->assign('page1',$show);
-			$this->assign('sellerInfo',$list);
+			$this->assign('sellerCondition',$condition);
 			$this->display('index');
 			
 		}else{	
@@ -149,12 +144,73 @@ class SellerManageAction extends Action {
 			
 		}
 
-		}else{
+			}else{
 		  $this->redirect('Index/login','',0,'你还没登陆');//页面重定向
-		}		
+			}		
 		}
 
-		
+		public function requestDeal(){
+			
+			$db= M('product');
+			$productID=$_GET['id'];
+
+			$productRequest=$db->where('product_id='.$productID)->getField('product_status');
+			if(!empty($productRequest))
+			{
+				$db->where('product_id='.$productID)->setField('product_status','正常');
+
+
+				$this->redirect('SellerManage/index','',0,'操作成功');
+				
+				
+			}else{
+				$this->redirect('SellerManage/index','',0,'操作失败');
+				
+			}
+			
+
+			
+			
+		}
+		public function requestDelete(){
+			
+			$db= M('product');
+			$productID=$_GET['id'];
+
+			
+			$db->where('product_id='.$productID)->setField('product_status','未批准');
+			$this->redirect('SellerManage/index','',0,'操作成功');
+	
+				
+		}
+
+		//批量审批与退回
+		public function quantityDeal(){
+			
+			$db= M('product');
+			$productID=$_POST['chkID_'];
+			
+			//判断id是否数组
+			if(is_array($productID)){
+				$condition = 'product_id in('.implode(',',$productID).')';
+			}else{
+				$condition = 'product_id='.$productID;
+			}
+	
+			if (isset($_POST['subSure'])) {
+			$db->where($condition)->setField('product_status','正常');
+			
+			$this->assign("jumpUrl","index");
+			$this->success("批量处理成功！");
+			}
+			if (isset($_POST['subQuit'])) {
+			
+			$db->where($condition)->setField('product_status','未批准');
+			
+			$this->assign("jumpUrl","index");
+			$this->success("批量退回成功！");
+			}			
+		}
 
 
 
