@@ -2,14 +2,16 @@
 // 本类由系统自动生成，仅供测试用途
 class UserManageAction extends Action {
     public function index(){
-
+		$this->assign("currentPage","user");
 		if($_SESSION['login_user']!=""){
-	
+
 	    $this->display();
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");
 		}	
+		
+
     }
 
  	public function check(){

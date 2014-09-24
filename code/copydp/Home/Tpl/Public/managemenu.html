@@ -1,0 +1,29 @@
+<ul>
+	<if condition=" $currentPage eq 'user'" >
+		<li class="cur">
+	<else/>
+		<li>
+	</if>
+	<a href="__APP__/UserManage/index">会员管理</a><i class="n-arr"></i></li>
+
+	<if condition="$currentPage eq 'seller'" >
+		<li class="cur">
+	<else/>
+		<li>
+	</if>
+	 <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
+	
+	<if condition="$currentPage eq 'activity'" >
+		<li class="cur">
+	<else/>
+		<li>
+	</if>
+	<a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
+		
+		<if condition="$currentPage eq 'sys'" >
+		<li class="cur">
+	<else/>
+		<li>
+	</if>
+	<a href="__APP__/SystemManage/index">系统配置</a> <i class="n-arr"></i></li>	
+</ul>

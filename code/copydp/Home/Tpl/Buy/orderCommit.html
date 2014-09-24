@@ -64,7 +64,7 @@
 							<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 								<tbody>
 									<tr>
-										<th width="55%">商品名称</th>
+										<th width="55%">订单名称</th>
 										<th width="15%">单价</th>
 										<th width="15%">数量</th>
 										<th width="15%">总计</th>
@@ -73,7 +73,6 @@
 									<?php								
 										$productDB=new Model('product');
 										$ProductIDCondition['product_id']=$productID;	
-										$name =  $productDB->where($ProductIDCondition)->getField('name');
 										$price =  $productDB->where($ProductIDCondition)->getField('price');
 										$oldprice= $productDB->where($ProductIDCondition)->getField('original_price');
 										$sum= $quantity * 	$price;									
@@ -81,7 +80,7 @@
 										$div=$oldsum-$sum;
 									?>
 									<tr>
-										<td valign="middle" align="left" class="deal">{$name}</td>
+										<td valign="middle" align="left" class="deal">{$orderName}</td>
 										<td align="center" class="Price-font">&#165;{$price}</td>
 										<td align="center">{$quantity}</td>
 										<td align="center" class="Price-font">&#165;{$sum} </td>

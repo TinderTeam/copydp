@@ -13,6 +13,17 @@
 
 <link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
 <link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+
+<style>
+.btnbox{
+	margin-top: 10px;
+}
+.btnitem{
+	display:inline;
+}
+
+</style>
+
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
@@ -36,99 +47,103 @@
 	
 	<div class="wrap">
 		<div class="user-nav J_user_nav">
-			<ul>
-				<li > <a href="__APP__/UserManage/index">会员管理</a> <i class="n-arr"></i></li>
-				<li > <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
-				<li class="cur"> <a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
-			</ul>
+			<!-----管理菜单---->
+				<include file="./Home/Tpl/Public/managemenu.html"/>
+			<!-----管理菜单---->
 		</div>
 		<div class="user-main">
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
+					
 					<div class="hd">
 						<h4>活动管理</h4>
 						<span>管理系统活动</span>
 					</div>
-					<ul class="tab-filter">
-						<li>
-							<span>活动编号</span><input type="text"/>
-						</li>
-						<li>
-							<span>名称</span><input type="text"/>
-						</li>
-						<li>
-							<span>城市</span><input type="text"/>
-						</li>
-						<li>
-							<p>分类</p>
-							<p><select name="type_id">
-								<option value="" selected>请选择分类</option>
-								<option value="1">分类1</option>
-								<option value="2">分类2</option>
-							</select></p>
-						</li>
-						<li>
-							
-						</li>
-					</ul>
-					<div >&nbsp&nbsp</div>
-					<div >
-							<span><strong class="btn-type-b btn-fn-c">
-									<input id="btnAdd" type="submit" value="查询" class="form-btn">
-							</strong> </span>
- 							
-							<span><strong class="btn-type-b btn-fn-c">
-									<a href="{:U('SellerManage/activityAdd')}"  class="form-btn" >新增活动</a>
-							</strong></span> 
-					</div>					
+					<form name="form" action="__URL__/search" method="post">
+						<ul class="tab-filter">
+							<li>
+								<span>编号</span><input name="acty_id" type="text" value=""/>
+							</li>
+							<li>
+								<span>名称</span><input name="acty_title" type="text" value=""/>
+							</li>
+							<li>
+								<span>城市</span><input name="acty_city" type="text" value=""/>
+							</li>	
+						</ul>
+						<div class="btnbox">
+							<div class="btnitem">
+								<div class="btn-type-b btn-fn-c">
+									<input type="submit" value="查询" class="form-btn">
+								</div> 
+							</div>							
+							<div class="btnitem">
+								<div class="btn-type-b btn-fn-c">
+									<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/ActivityManage/newActivity'" />
+								</div> 
+							</div>						
+						</div>
+					</form>						
 					<div class="pay-confirm">
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
 								<tr>
-									<th width="10%">活动编号</th>
+									<th width="10%">编号</th>
 									<th width="15%">名称</th>
-									<th width="10%">类型</th>	
+									<th width="15%">状态</th>	
 									<th width="10%">城市</th>
-									<th width="15%">截止</th>
-									<th width="15%">限制人数</th>	
-									<th width="10%">活动概述</th>							
+									<th width="15%">截止时间</th>
+									<th width="20%">参与/限制人数</th>							
 									<th width="5%">操作</th>
 								</tr>
-								<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试活动</td>
-									<td align="center" >旅行</td>
-									<td align="center"> 深圳</td>
-									<td align="center"> 2014-9-10</td>
-									<td align="center" >20/30</td>
-									<td align="center" >XXXXXXXXXXX</td>
-									<td align="center" >
-										<input type="button" value="编辑">
-										<input type="button" value="取消">
-									</td>
-								</tr>
-							<tr>
-									<td valign="middle" align="left" class="deal">00003</td>
-									<td valign="middle" align="left" class="deal">测试活动</td>
-									<td align="center" >旅行</td>
-									<td align="center"> 深圳</td>
-									<td align="center"> 2014-9-10</td>
-									<td align="center" >20/30</td>
-									<td align="center" >XXXXXXXXXXX</td>
-									<td align="center" >
-										<input type="button" value="编辑">
-										<input type="button" value="取消"/>
-									</td>
-								</tr>
+								<?php
 								
+									$ActivityViewDB=new Model('view_activity');
+									if($IDFilter!=''){
+										$filter['activity_id']=$IDFilter;
+									}
+									if($nameFilter!=''){
+										$filter['title']=$nameFilter;
+									}
+									if($cityFilter!=''){
+										$filter['city']=$cityFilter;
+									}
+									$activityList=$ActivityViewDB->where($filter)->select();
+									
+								?>	
+								<volist name="activityList" id="activityItem" key="i">
+									<tr>
+										<td valign="middle" align="left" class="deal">{$activityItem['activity_id']}</td>
+										<td valign="middle" align="left" class="deal">{$activityItem['title']}</td>
+										<td align="center" >{$activityItem['status']}</td>
+										<td align="center"> {$activityItem['city']}</td>
+										<td align="center"> {$activityItem['datelimit']}</td>
+										<?php
+											$activityOrderDB=new Model('activity_order');
+											$orderIDCondition['activity_id']=$activityItem['activity_id'];
+											$activityMember=$activityOrderDB->where($orderIDCondition)->count();
+											$limit=$activityItem['memberlimit'];
+											if($limit==''){
+												$limit='无限制';
+											}
+										?>							
+										
+										<td align="center" >{$activityMember}/{$limit}</td>
+										<td align="center" >
+											<input type="button" value="编辑" class="form-btn"
+											onclick="location.href='__APP__/ActivityManage/activityEdit?activityID={$activityItem['activity_id']}'" />
+											<input type="button" value="结束" class="form-btn"
+											onclick="location.href='__APP__/ActivityManage/activityEnd?activityID={$activityItem['activity_id']}'" />
+										</td>
+									</tr>
+								</volist>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
+	</div>	
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->	

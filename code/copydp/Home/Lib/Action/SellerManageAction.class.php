@@ -4,6 +4,7 @@
 header("Content-Type:text/html;charset=utf-8");
 class SellerManageAction extends Action {
     public function index(){
+		$this->assign("currentPage","seller");
 		if($_SESSION['login_user']!=""){
 	
 	    $this->display();
