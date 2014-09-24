@@ -64,26 +64,22 @@ class SellerManageAction extends Action {
 	}
 	
 	    //新增用户
-		public function add(){
-			
-			$user = M('seller');
-			
-			$newName=$_POST['user_name'];
+		public function add(){			
+			$user = M('user');			
+			$newName=$_POST['seller_name'];
 			$condition['username'] = $newName;
-			$select=$user->where($condition)->count();
+			
+			$select=$user->where($condition)->count();	
 			
 			if ($select!=0){
 					$this->assign("jumpUrl","index");
-					$this->error("该用户名已经存在！");
-				
-			
+					$this->error("该用户名已经存在！");			
 			}else{
-
 				$data['username']=$newName;
-				$data['role']='CUSTOMER';
+				$data['role']='SELLER';
 				$user->add($data);
-				$customerCondition['username'] = $newName;
-				$newID=$user->where($customerCondition)->getField('user_id');
+				$SellerNameCondition['username'] = $newName;
+				$newID=$user->where($SellerNameCondition)->getField('user_id');
 						
 				if(empty($newID)){
 					$this->assign("jumpUrl","index");
@@ -91,17 +87,16 @@ class SellerManageAction extends Action {
 					
 				}else{
 
-					$customer = M('customer');
+					$seller = M('seller');
 					$data2['user_id']=$newID;
-					$data2['user_name']=$newName;
-					$data2['grade']=$_POST['grade'];
-					$data2['cellphone']=$_POST['cellphone'];
-					$data2['email']=$_POST['email'];
-					$data2['score']=$_POST['score'];
-					$data2['car_id']=$_POST['car_id'];
-					$data2['recommender_id']=$_POST['recommender_id'];
-					$data2['request']='审批';
-					$customer->add($data2);
+					$data2['type_id']=$_POST['type_id'];
+					$data2['description']=$_POST['description'];
+					$data2['position']=$_POST['position'];
+					$data2['img']=$_POST['img'];
+					$data2['city_id']=$_POST['city_id'];
+					$data2['zone_id']=$_POST['zone_id'];
+					$data2['info']=$_POST['info'];
+					$seller->add($data2);
 					$this->assign("jumpUrl","index");
 					$this->success("用户新增成功！");
 				}
