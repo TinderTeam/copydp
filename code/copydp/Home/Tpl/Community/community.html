@@ -111,16 +111,21 @@ body{
 							{$basicTitle}
 						</div>						
 						<!--帖子-->
-						<ul class="topic-list">
+						<ul class="topic-list" id="pageListArray">
 
-							<volist name="communityList" id="communityID">
+							<volist name="communityList" id="communityID" key="i">
 								<?php
 									$communityIDCondition['community_id']=$communityID;
 									$title=$communityDB->where($communityIDCondition)->getField('title');
 									$type=$communityDB->where($communityIDCondition)->getField('community_type');
 									$date=$communityDB->where($communityIDCondition)->getField('datetime');
 								?>
-								<li>
+								<if condition="$i gt 15">
+									<li id="item_{$i}" class="Hide">			
+								<else/>
+									<li id="item_{$i}">
+								</if>							
+								
 									<a class="term">[{$type}]</a>
 									<a title={$title} href="__APP__/Community/cmnty_info?communityID={$communityID}">{$title}</a>
 									<span class="i-hot">hot</span>
@@ -128,6 +133,23 @@ body{
 								</li>
 							</volist>							
 						</ul><!--帖子-->
+						<div class="pages-wrap J_tab2_pagewrap">
+							<div class="Pages">
+							<?php
+								$pageNumber=floor (count($communityList)/15);
+							?>
+								<if condition="$pageNumber gt 0">
+									<a class="LastPage" title="上一页">上一页</a>
+									<span class="pageTagArray" data="1">
+									<a id="page_1" class="PageSel pageTag" >1</a> 
+									<for start="1" end="($pageNumber+1)">
+										<a id="page_{$i+1}" class="PageLink pageTag">{$i+1}</a> 
+									 </for>	
+									</span>
+									<a id="NextPage" title="下一页" data="{$pageNumber+1}">下一页</a>
+								</if>													
+							</div>
+						</div>
 					</div><!---center--->
 					
 					
@@ -155,7 +177,7 @@ body{
 										<em class="membercount"><span class="misc">{$customer_number}</span>帖子</em>
 									</li>
 								</volist>	
-											
+										
 							</ul>
 						</div>
 					</div><!--/会员热榜-->
@@ -176,10 +198,15 @@ body{
 									<ul class="sub-nav">
 										<?php
 											$communityDB=new Model('community');
-											$communityTypeList=$communityDB->distinct(true)->getField('community_type',true);	
+											$communityTypeList=$communityDB->distinct(true)->getField('community_type',true);
+											$listNum = count($communityTypeList);
 										?>
 										<volist name="communityTypeList" id="type">
-											<li><a href="__APP__/Community/selectType?typeName={$type}">{$type}</a></li>	
+											<li>
+												<a href="__APP__/Community/selectType?typeName={$type}">
+													{$type}
+												</a>
+											</li>														
 										</volist>				
 									</ul>
 								</li>									
@@ -192,6 +219,51 @@ body{
 		</div>
 	<!---footer-->
 	<include file="./Home/Tpl/Public/footer.html"/>
+	
 	<!---footer-->
 </body>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		$(".pageTag").click(function(){	
+			pageClean();	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data);	
+		});
+		
+		function pageClean(){
+			$(".pageTagArray").children().removeClass("PageSel");
+			$(".pageTagArray").children().addClass("PageLink");
+			$("#pageListArray").children().addClass("Hide");
+		}
+		
+		$("#NextPage").click(function(){				
+			var current=$(".pageTagArray").attr('data');			
+			var data=Number(current)+1;
+			var max=Number($("#NextPage").attr('data'));
+			if(data<=max){
+				pageClean();
+				change_page(data);	
+			}	
+		});
+		
+		$(".LastPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');
+			
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean();
+				change_page(data);	
+			}			
+		});
+		function change_page(data){
+			$("#page_"+data).addClass("PageSel");						
+			$(".pageTagArray").attr('data',data);	
+			var start=(data-1)*15;
+			for(var i=0;i<15;i++){
+				$("#item_"+(start+i+1)).removeClass("Hide");	
+			}
+		}
+	</script>
 </html>

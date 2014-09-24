@@ -122,7 +122,8 @@
 						</div>
 					</div>				 
 					<div class="order">
-						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Buy/order"> <span>立即抢购</span> </a> <button >成为超级VIP</button>
+						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Buy/order?productID={$productID}&quantity=1"
+						data="__APP__/Buy/order?productID={$productID}"> <span>立即抢购</span> </a> <button >成为超级VIP</button>
 					</div>
 				</div>
 				
@@ -200,9 +201,6 @@
 									<li class="new"> <a href="__APP__/Buy/product_list"><span>购买须知</span></a> </li>
 									<li class="new"> <a href="__APP__/Buy/product_list"><span>综合评价</span></a> </li>
 								</ul>
-								<div class="hd-buy-btn Hide" id="J_tab_buy" data-id="tab_buy">
-									<a rel="nofollow" href="" class="m-rbtn small J_package"> <span>我要购买</span> </a> <a class="m-btn cart-btn J_join_cart"><span><em></em></span></a>
-								</div>
 							</div>
 							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
 								<div class="dptg-intro Fix">
@@ -378,6 +376,7 @@
 														</li>
 													</volist>													
 												</ul>
+												
 												<div class="pages-wrap J_tab2_pagewrap">
 													<div class="Pages">
 													<?php
@@ -411,7 +410,7 @@
 						</div>
 						<div class="box-buy-bottom Fix">
 							<div class="buy-bottom-btn">
-								<a id="J_downbuy" class="b-rbtn small J_package" href="__APP__/Buy/order"> <span>立即抢购</span> </a> 
+								<a id="J_downbuy" class="b-rbtn small J_package" href="__APP__/Buy/order?productID={$productID}"> <span>立即抢购</span> </a> 
 							</div>
 							<div class="Price-font buy-bottom-price">
 								&#165;41

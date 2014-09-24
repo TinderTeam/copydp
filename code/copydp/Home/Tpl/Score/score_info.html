@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com"/>
+<link rel="dns-prefetch" href="http://t2.dpfile.com"/>
+<link rel="dns-prefetch" href="http://t3.dpfile.com"/>
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/"/>
+<title>【当期优惠】-团购网</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/deal/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" rel="stylesheet"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+			
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	
+	<?php
+		$productDB=new Model('product');
+		$productIDCondition['product_id']=$productID;
+		$productName=$productDB->where($productIDCondition)->getField('name');
+		$productDscr=$productDB->where($productIDCondition)->getField('describe');
+		$productPrice=$productDB->where($productIDCondition)->getField('price');		
+		$productImgsrc=$productDB->where($productIDCondition)->getField('imgsrc');
+		$productImgList=$productDB->where($productIDCondition)->getField('imglist');
+		$infoHtml=$productDB->where($productIDCondition)->getField('basic_infor');
+	?>
+	
+	<!----主界面---->
+	<div class="pgm">
+		<div class="main_w page-index normal-type">
+			<div class="summary summary-comments-big J_summary Fix">
+				<div class="no-book">
+				</div>
+				<div class="bd">
+					<h1 class="title">{$productName}</h1>
+					<h2 class="sub-title"> <span>{$productDscr}</span> </h2>
+					<div class="price-wrap">
+						<h3 class="price">
+							<span class="price-display">
+								{$productPrice}
+							</span>
+							<span class="discount">
+								<span class="price-discount">
+									<em>积分兑换</em>
+								</span>							
+							</span>
+						</h3>		
+					</div>
+					<div class="action-box">
+						<table class="action-blk">
+							<tr>
+								<td>
+									<div class="action-info">
+										<?php
+											$OrderDB=new Model('order');
+											$OrderProductIDCondition['product_id']=$productID;
+											$numberBuy=$OrderDB->where($OrderProductIDCondition)->count();
+										?>
+										<span><em class="J_current_join">{$numberBuy}</em>人购买</span>
+									</div>
+								</td>
+								<td>
+									<div class="action-info">
+										<?php
+											$sellerEvaDB=new Model('seller_evaluation');
+											$sellerEvaSellerIDCondition['seller_id']=$sellerID;
+											$numberSellerEva=$sellerEvaDB->where($sellerEvaSellerIDCondition)->count();
+											
+										?>
+										<span> <a> {$numberSellerEva}</a>条商户评价 </span><!--这里加入锚点-->
+									</div>
+								</td>							
+							</tr>
+						</table>
+					</div>
+					<div class="setmeal-box J_setmeal-box">
+						<div class="quantity Fix">
+							<span class="tit">数量：</span>
+							<div class="counter J_counter">
+								<a class="minus"><i></i></a>
+								<input class="num" value="0">
+								<a class="plus" ><i></i></a>
+							</div>
+						</div>
+					</div>				 
+					<div class="order">
+						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Score/order?productID={$productID}&quantity=1"
+						data="__APP__/Buy/order?productID={$productID}"> <span>立即抢购</span> </a> <button >成为超级VIP</button>
+					</div>
+				</div>
+				
+				<div class="lbd">
+					<div class="img-area">
+						<div class="slider">
+							<div class="slide J_switch J_switch_carousel imgloading">
+								<div class="img-wrap J_wrap">
+									<img  src="__PUBLIC__/uploads/img/{$productImgsrc}" >
+								</div>							
+								<div class="imgctrl J_ctrl">
+									<?php
+										$imgList=explode(";",$productImgList);
+									?>
+									<volist name="imgList" id="imgName">
+										<a rel="nofollow" href="__APP__/Buy/product_list"> 
+											<img  src="__PUBLIC__/uploads/img/{$imgName}" >
+										</a>
+									</volist>								
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="func">					
+						<dl class="count-down J_count_down">
+							<dt>剩余</dt>
+							<dd class="time">
+							<?php
+							
+								$Date_1=date("Y-m-d");						
+								$Date_2=$endTime;
+								$Date_List_a1=explode("-",$Date_1);
+								$Date_List_a2=explode("-",$Date_2);
+								$d1=mktime(0,0,0,$Date_List_a1[1],$Date_List_a1[2],$Date_List_a1[0]);
+								$d2=mktime(0,0,0,$Date_List_a2[1],$Date_List_a2[2],$Date_List_a2[0]);	
+								
+								$Days=round(($d2-$d1)/3600/24);
+								
+								if($d2-$d1 < 0)
+								{
+									print("已过期");
+								}else{
+									print($Days . "天");
+								}
+							?>
+							
+						</dl>
+					</div>
+				</div>
+			</div>
+			
+
+			<div class="content">			
+				<div class="box content J_tab_container">
+					<div class="box Tabs-box switch-box">
+						<div class="box-wrap">
+							<div id="J_tab_mod" data-id="tab_mod">
+								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
+									<li class="new"> <a href="__APP__/Buy/product_list"><span>基本介绍</span></a> </li>
+									<li class="new"> <a href="__APP__/Buy/product_list"><span>信息描述</span></a> </li>
+									<li class="new"> <a href="__APP__/Buy/product_list"><span>购买须知</span></a> </li>
+									<li class="new"> <a href="__APP__/Buy/product_list"><span>综合评价</span></a> </li>
+								</ul>
+							</div>
+							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
+								<div class="dptg-intro Fix">
+									<!----基本介绍-->
+									<div class="detail">
+										<h3 class="new-tit"><span class="name">基本介绍</span></h3>
+										<?php
+											print($infoHtml);
+										?>
+										{$infoHtml}
+									</div>									
+									<div class="detail J_tab">
+										<h3 class="new-tit"><span class="name">特惠详细</span></h3>
+										<div class="detail-tit">
+										</div>
+										<table width="100%" cellpadding="0" cellspacing="0" class="detail-table">
+											<thead>
+												<tr>
+													<th width="50%">名称</th>
+													<th width="25%">数量</th>
+													<th width="25%">积分</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{$productName}</td>
+													<td class="tc">1份</td>
+													<td class="tc">{$productPrice}</td>
+												</tr>
+												<tr class="total">
+													<td></td>
+													<td class="tc">
+														<strong>兑换价</strong></td>
+													<td class="tc">
+														<strong>50积分</strong></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									
+									<div class="detail J_tab" id="tab_show_6">
+										<h3 class="new-tit"><span class="name">购买须知</span></h3>
+										<div class="detail-box">
+											<div class="purchase-notes">
+											
+												<?php
+													$noticeDB=new Model('product_notice');
+													$NoticeProductIDCondition['product_id']=$productID;
+													$orderinfo=$noticeDB->where($NoticeProductIDCondition)->getField('orderinfo');
+													$rule=$noticeDB->where($NoticeProductIDCondition)->getField(rule);
+													$warning=$noticeDB->where($NoticeProductIDCondition)->getField('warning');
+												?>
+												<dl>
+													<dt>有效期</dt>
+													<dd>
+														<p class="listitem">至{$endTime}</p>
+													</dd>
+												</dl>
+												<dl>
+													<dt>预约信息</dt>
+													<dd>
+														<p class="listitem">
+															<?php
+																if($orderinfo!=null){
+																	print($orderinfo);
+																}else{
+																	print('无');
+																}															
+															?>													
+														</p>
+													</dd>
+												</dl>
+												<dl>
+													<dt>规则提醒</dt>
+													<dd>
+														<p class="listitem">
+														<?php
+																if($rule!=null){
+																	print($rule);
+																}else{
+																	print('无');
+																}															
+															?>
+														</p>
+													</dd>
+												</dl>
+												<dl>
+													<dt>温馨提示</dt>
+													<dd>
+														<p class="listitem">
+															<?php
+																if($warning!=null){
+																	print($warning);
+																}else{
+																	print('如需团购券发票，请您在消费时向商户咨询');
+																}															
+															?>
+														</p>
+													</dd>
+												</dl>
+											</div>
+										</div>
+									</div>
+									<!-- movie info start -->
+									<!-- movie info end -->
+									<div class="detail J_tab J_loadTab">
+										<div class="comment-tab J_comment_tab">
+											<span class="tab-item cur" data-ref="J_site_comment"> <a href="__APP__/Buy/product_list">产品评价<em class="Hide J_total_count"></em></a> </span>
+										</div>
+										<div class="comment-box J_comment_box">
+											<div class="tab-box J_site_comment" data-loaded="true">
+												<ul id="pageListArray">
+													<?php
+														$productEvaDB=new Model('product_evaluation');
+														$productIDCondition['product_id']=$productID;
+														$product_eva_id=$productEvaDB->where($productIDCondition)->order('datetime desc')->getField('product_eva_id',true);
+														
+													?>
+													<volist name="product_eva_id" id="eva_id" key="i">
+														<if condition="$i gt 5">
+															<li id="item_{$i}" class="site-item Fix Hide">
+														<else/>
+															<li id="item_{$i}" class="site-item Fix">
+														</if>
+														
+															<?php
+																$productEvaViewDB=new Model('view_product_eva');
+																$EvaIDCondition['product_eva_id']=$eva_id;
+																$user_name=$productEvaViewDB->where($EvaIDCondition)->getField('user_name');
+																$score=$productEvaViewDB->where($EvaIDCondition)->getField('score_product');
+																$seller=$productEvaViewDB->where($EvaIDCondition)->getField('seller_name');
+																$content=$productEvaViewDB->where($EvaIDCondition)->getField('eva_content');
+																$datetime=$productEvaViewDB->where($EvaIDCondition)->getField('datetime');
+															?>
+															
+															<div class="avatar">																
+																<p class="name">{$user_name}</p>
+															</div>
+															<div class="comment-body J_comment_body">
+																<div class="user-info">
+																	<span title="" class="item-rank-rst irr-star{$score}0"></span>
+																	<div class="comment-rst">
+																		<em class="sep">|</em> <span class="rst">产品:{$score}分</span> 
+																	</div>
+																	<span class="branch-name"><a href="" >{$seller}</a></span>
+																</div>
+																<div class="misc-info">
+																	<p> {$content}</p>
+																</div>
+																<div class="misc-info">
+																	<span class="time"> {$datetime}</span>																
+																</div>
+															</div>
+														</li>
+													</volist>													
+												</ul>
+												<div class="pages-wrap J_tab2_pagewrap">
+													<div class="Pages">
+													<?php
+														$pageNumber=floor (count($product_eva_id)/5);
+													?>
+														<if condition="$pageNumber gt 0">
+															<a class="LastPage" title="上一页">上一页</a>
+															<span class="pageTagArray" data="1">
+															<a id="page_1" class="PageSel pageTag" >1</a> 
+															<for start="1" end="($pageNumber+1)">
+																<a id="page_{$i+1}" class="PageLink pageTag">{$i+1}</a> 
+															 </for>	
+															</span>
+															<a class="NextPage" title="下一页" data="{$pageNumber+1}">下一页</a>
+														</if>													
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="detail J_tab J_loadTab">
+										<div class="comment-tab J_comment_tab">
+										</div>
+										<div class="comment-box J_comment_box">
+											<div class="tab-box Hide J_site_comment imgloading">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box-buy-bottom Fix">
+							<div class="buy-bottom-btn">
+								<a id="J_downbuy" class="b-rbtn small J_package" href="__APP__/Score/order?productID={$productID}"> <span>立即抢购</span> </a> 
+							</div>
+							<div class="buy-bottom-tab">
+								<table cellpadding="0" cellspacing="0">
+									<tbody>
+										<tr>
+											<th>价值</th>
+											<th width="50"></th>									
+											<th>已购买</th>
+											<th width="50"></th>
+										</tr>
+										<tr>
+											<td class="Price-font">{$productPrice}积分</td>
+											<td width="50"></td>										
+											<td> <span class="J_dealCount"> {$numberBuy}人 </span> </td>
+											<td width="50"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---侧边栏--->
+			<include file="./Home/Tpl/Public/sidebar.html"/>
+			<!---侧边栏--->
+		</div>
+	</div>
+
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+
+</body>
+	<script type="text/javascript">
+		$(".pageTag").click(function(){	
+			pageClean();	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data);	
+		});
+		
+		function pageClean(){
+			$(".pageTagArray").children().removeClass("PageSel");
+			$(".pageTagArray").children().addClass("PageLink");
+			$("#pageListArray").children().addClass("Hide");
+		}
+		$(".NextPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');			
+			var data=Number(current)+1;
+			var max=Number($(".NextPage").attr('data'));
+			if(data<=max){
+				pageClean();
+				change_page(data);	
+			}
+		
+		});
+		$(".LastPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');
+			
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean();
+				change_page(data);	
+			}			
+		});
+		function change_page(data){
+			$("#page_"+data).addClass("PageSel");						
+			$(".pageTagArray").attr('data',data);	
+			var start=(data-1)*5;
+			$("#item_"+(start+1)).removeClass("Hide");
+			$("#item_"+(start+2)).removeClass("Hide");
+			$("#item_"+(start+3)).removeClass("Hide");
+			$("#item_"+(start+4)).removeClass("Hide");
+			$("#item_"+(start+5)).removeClass("Hide");
+		}
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript">
+		// 百度地图API功能
+		var position=$("#position").attr('data');
+		var xy= position.split(",");
+		var city=$("#city").attr('data');
+		
+		var map = new BMap.Map("allmap");    // 创建Map实例
+		map.centerAndZoom(new BMap.Point(Number(xy[0]),Number(xy[1])), 21);  // 初始化地图,设置中心点坐标和地图级别
+		map.setCurrentCity(city);          // 设置地图显示的城市 此项是必须设置的
+	</script>
+</html>

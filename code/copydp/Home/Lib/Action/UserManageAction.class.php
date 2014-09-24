@@ -85,17 +85,14 @@ class UserManageAction extends Action {
     //新增用户
 		public function add(){
 			
-			$user = M('user');
-			
+			$user = M('user');			
 			$newName=$_POST['user_name'];
 			$condition['username'] = $newName;
 			$select=$user->where($condition)->count();
 			
 			if ($select!=0){
 					$this->assign("jumpUrl","index");
-					$this->error("该用户名已经存在！");
-				
-			
+					$this->error("该用户名已经存在！");	
 			}else{
 
 				$data['username']=$newName;

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<title>团购网站</title>
+<link rel="Shortcut Icon" href="http://t3.s2.dpfile.com/t/res/favicon.5ff777c11d7833e57e01c9d192b7e427.ico" type="image/x-icon" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
+<link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/g.base.min.bb13e1f02d559f45cb8a58a8e82b6ba4.css" type="text/css" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+<link rel="stylesheet" src="css/fg.css" type="text/css" />
+</head>
+<body>
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->		
+		<div class="nav-bar">
+			<div class="cont">
+			
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	<div class="pgm">
+		<div class="main_w">
+			<div class="gray-box content order-process">
+				<div class="cont">
+					<div class="infor-box pay-method">
+						<!-- 手机信息/手机绑定 -->
+						<!-- mobile validation begins -->
+						<div class="pay-phone-success Fix ">
+							<div class="field">	
+								<?php
+									if(empty($_SESSION['login_user'])){
+										redirect('../Index/login', 0, '页面跳转中...');
+									}
+									//获取用户信息
+									$db=new Model('user');
+									$userName=$_SESSION['login_user'];
+									$condition['username']=$userName;	
+									$role =  $db->where($condition)->getField('role');
+									$user_id= $db->where($condition)->getField('user_id');								
+								?>							
+								<div class="fromnum">
+									<strong> 恭喜您完成下单！您的订单号为：</strong>
+									<h3><span>{$orderID}</span></h3>
+								</div>
+							</div>
+						</div>
+						<!-- 订单信息 -->
+						<!-- order confirmed begins -->
+						<div class="pay-confirm">
+							<h3 class="title">订单信息</h3>
+							<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+								<tbody>
+									<tr>
+										<th width="55%">商品名称</th>
+										<th width="15%">单价</th>
+										<th width="15%">数量</th>
+										<th width="15%">总计</th>
+									</tr>
+									
+									<?php								
+										$productDB=new Model('product');
+										$ProductIDCondition['product_id']=$productID;	
+										$name =  $productDB->where($ProductIDCondition)->getField('name');
+										$price =  $productDB->where($ProductIDCondition)->getField('price');
+										$oldprice= $productDB->where($ProductIDCondition)->getField('original_price');
+										$sum= $quantity * 	$price;									
+										$oldsum= $quantity * 	$oldprice;	
+										$div=$oldsum-$sum;
+									?>
+									<tr>
+										<td valign="middle" align="left" class="deal">{$name}</td>
+										<td align="center" class="Price-font">&#165;{$price}</td>
+										<td align="center">{$quantity}</td>
+										<td align="center" class="Price-font">&#165;{$sum} </td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="infor">
+								<span class="item">原价：<strong class="Price-font" id="J_off-coupon">&#165;{$oldsum}</strong></span> 
+								<span class="item">团购立减：<strong class="Price-font" id="J_balance-pay">&#165;{$div}</strong></span> 
+								<span class="allprice">团购价格金额：<strong class="price Price-font" id="J_total-price">&#165;{$sum} </strong></span>
+							</div>
+						</div>
+						<!-- order confirmed ends -->
+					</div>
+					<div class="order-btn">
+						<div class="b-rbtn Right">							
+							<a href="__APP__/Index/index" style="text-decoration:none;">回到首页</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!---footer-->
+				<include file="./Home/Tpl/Public/sidebar.html"/>
+			<!---footer-->
+		</div>
+	</div>
+	<!-- 美食结束-->
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+</html>

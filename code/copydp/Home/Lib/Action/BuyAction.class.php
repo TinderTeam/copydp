@@ -1,9 +1,23 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
 class BuyAction extends Action {
-    public function order(){
+    public function order($productID=0,$quantity=0){
+		$this->assign('productID',$productID);
+		$this->assign('quantity',$quantity);
 		$this->display();
     }
+	
+	public function orderCommit(){
+		$customer_id=$_POST['customer_id'];
+		$product_id=$_POST['product_id'];
+		$quantity=$_POST['quantity'];
+
+		//进行下单处理
+			
+		$this->assign('productID',$product_id);
+		$this->assign('quantity',$quantity);
+		$this->display();
+	}
 	
 	public function product_info($productID=0){
 		//最近浏览记录里增加相关内容

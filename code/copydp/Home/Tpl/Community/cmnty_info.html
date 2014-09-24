@@ -130,17 +130,22 @@ body{
 						</div>
 						
 						<?php
-							$DiscussDB = new Model("view_community_discuss");
+							$DiscussDB = new Model("community_discuss");
 							$communityCondition['community_id'] = $communityID;
-							$discussList=$DiscussDB->where($communityCondition)->getField('community_discuss_id',true);	
+							$discussList=$DiscussDB->where($communityCondition)->getField('community_discuss_id',true);
+							
 						?>
 						<div  id="pageListArray">
 						<volist name="discussList" id="disscussItem">						
 							<?php
+								$DiscussViewDB = new Model("view_community_discuss");
 								$DiscussCondition['community_discuss_id'] = $disscussItem;
-								$username=$DiscussDB->where($DiscussCondition)->getField('username');
-								$datetime=$DiscussDB->where($DiscussCondition)->getField('datetime');
-								$content=$DiscussDB->where($DiscussCondition)->getField('content');
+								$customerName=$DiscussViewDB->where($DiscussCondition)->getField('username');
+								$datetime=$DiscussViewDB->where($DiscussCondition)->getField('datetime');
+								$content=$DiscussViewDB->where($DiscussCondition)->getField('content');
+								if($customerName==''){
+									$customerName='匿名用户';
+								}
 							?>
 							
 							<if condition="$key gt 5">
@@ -149,7 +154,7 @@ body{
 								<div id="item_{$i}" class="topic-item topic-badge">
 							</if>							
 								<div class="user-info">
-									<a class="J_card" >{$username}</a>
+									<a class="J_card" >{$customerName}</a>
 									<a class="fn-top" title="回到顶部" href="#top">回到顶部</a>
 									<span class="note">{$key+1}楼</span>
 								</div>
@@ -186,40 +191,39 @@ body{
 						</div>
 					</div>
 				</div>
-			<div class="section-footer" id="J_footer">
-				<a name="NoteAdd"></a>
-				<div id="_followNoteAdd" class="followNoteAdd">
-					<h3 class="followNoteAddTitle"> 我的回帖</h3>
-					<div class="my-preview-wrapper Hide">
-						<div class="my-preview" id="J_note_preview"></div>
-						<div class="my-preview-misc"><input type="checkbox" id="J_pre_check" class="form-chk" checked="checked" /><label for="J_pre_check">引用以上内容回帖</label></div>
-					</div>				
-					<div class="followNoteAddBody">
-						<textarea style="width:664px; height: 220px;" id="dpEditor" name="dpEditor" class="Invisible"></textarea>
-					</div>				
-					<div id="validateCode" class="validCode"> 
-						<p class="box-vCode"> 
-							<img class="img-vd mcImg" id="mcImgVC" alt="看不清楚?请点击!" onclick='this.src="/JValidateCode.jpg?code=" + Math.floor(Math.random()*1001);' src="/JValidateCode.jpg?code=162">
-							<span class="refresh-vd">
-								<a href="javascript:void(0);" onclick='document.getElementById("mcImgVC").src="/JValidateCode.jpg?code=" + Math.floor(Math.random()*1001);'>看不清？换一张</a>
-							</span>
-						</p>
-						<p class="box-input">
-							<span>验证码:</span>
-							<input type="text" id="txtValidateCode" maxlength="20" size="34" onKeyDown="javascript:var e = (event||window.event); if(e.keyCode == 13){ $('btnAdd').click();return false};" />
-							<span id="errorValidateCode" class="Color4"></span> 
-						</p>
+				
+				<!-- 回复框 -->
+				<div class="section-footer" id="J_footer">
+					<div id="_followNoteAdd" class="followNoteAdd">
+						<form id="form" name="form" action="__URL__/reply" method="post">
+							<h3 class="followNoteAddTitle"> 我的回帖</h3>							
+							<div class="followNoteAddBody">
+								<textarea id="textarea_reply" name="textarea_reply" style="width:664px; height: 220px;" value="" ></textarea>
+								<input type="hidden" name="communityID" value="{$communityID}"/>
+								<?php
+									//获取用户信息
+									$db=new Model('user');
+									$userName_submit=$_SESSION['login_user'];
+									$condition['username']=$userName_submit;									
+									$user_id= $db->where($condition)->getField('user_id');							
+								?>
+								<input type="hidden" name="user_id" value="{$user_id}"/>
+								
+							</div>							
+							<div class="followNoteAddAction">
+								<span style="margin-right:10px;" class="medi-btn btn">
+									<input type="submit" title="发表回帖" id="btnAdd" class="btn-txt"/>
+								</span>
+								<span class="medi-btn-ash btn">								
+									<a href="javascript:void(0);" title="清除" class="btn-txt txt-clean">清除</a>
+								</span>					
+							</div>	
+						</form>
 					</div>
-					<div class="followNoteAddAction">
-						<span style="margin-right:10px;" class="medi-btn btn"><a href="javascript:void(0);" title="发表回帖" id="btnAdd" class="btn-txt">发表回帖</a></span>
-						<span class="medi-btn-ash btn"><a href="javascript:void(0);" onClick="page.followNoteClean(); return false;" title="清除" class="btn-txt">清除</a></span>
-						<input type="hidden" name="ut" id="ut" value="eyJvd25lck5hbWUiOiIiLCJwYWlyIjp7IkNsaWVudElQQnlQcm94eSI6IjU5LjM3LjE5MC4xNzkifSwiZXhwaXJlZFRpbWUiOjE0MTA0OTU0NjIsImFjY291bnQiOiJncCIsImJpeiI6ImdwIiwiY2FsbEJhY2tVcmwiOiIiLCJjbGllbnRUeXBlIjoxLCJ2ZXJzaW9uIjoiMS4wLjAifQ==" />
-					</div>
-					<div id="followNoteAddValidator"> </div>
-				</div>
+				</div><!-- 回复框 -->
+
 			</div>
 		</div>
-    </div>
 	<!---sidebar-->
 		<include file="./Home/Tpl/Community/sidebar.html"/>
 	<!---sidebar-->	
@@ -231,6 +235,10 @@ body{
 </body>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
+		$(".txt-clean").click(function(){		
+			$("#textarea_reply").val("");
+		});
+
 		$(".pageTag").click(function(){	
 			pageClean();	
 			$(this).addClass("PageSel");			
