@@ -228,34 +228,37 @@
 					<div class="con" >
 						<div class="comm-list J_comm_list" style="height: 200px;">
 							<ul>
-								<li>
-								<div class="txt-wrap">
-									<div class="txt">
-										<?php
-											$orderID=2;
-										?>
-										<h5><a target="_blank" href="/deal/73838">德客莱斯</a></h5>
-										<p>仅售69.9元,价值127元双人套餐!西式休闲大餐,临窗看景慢品!秋日晴好,适合我们的美好约会!</p>
-										<p>评价：</p>
-										<input id="content-input-{$orderID}" value="" style="width: 140px;"/>
-										<p id="span-{$orderID}" class="Hide"></p>											
-										<div class="slt-stars">
-											<div class="stars-box J_stars_box">
-												<div class="star-rating">
-													<ul id="productSrarList-{$orderID}" class="star-wrap">
-														<li typename="{$orderID}-product" data-value="10" class="s1 starItem">1星</li>
-														<li typename="{$orderID}-product" data-value="20" class="s2 starItem">2星</li>
-														<li typename="{$orderID}-product" data-value="30" class="s3 starItem">3星</li>
-														<li typename="{$orderID}-product" data-value="40" class="s4 starItem">4星</li>
-														<li typename="{$orderID}-product" data-value="50" class="s5 starItem">5星</li>	
-													</ul>	
-													<span id="productSrar-{$orderID}" class=" star-icon Hide" style="margin-left: 10px;"></span>												
+								<foreach name='orderEva' item='v3' >
+									<li>
+									<div class="txt-wrap">
+										<div class="txt">
+										
+											<h5><a href="">{$v3.product_name}</a></h5>
+											<p>{$v3.product_describe}</p>
+											<p>评价：</p>
+											<?php
+												$orderID=$v3.orderID;
+											?>
+											<input id="content-input-{$orderID}" value="" style="width: 140px;"/>
+											<p id="span-{$orderID}" class="Hide"></p>											
+											<div class="slt-stars">
+												<div class="stars-box J_stars_box">
+													<div class="star-rating">
+														<ul id="productSrarList-{$orderID}" class="star-wrap">
+															<li typename="{$orderID}-product" data-value="10" class="s1 starItem">1星</li>
+															<li typename="{$orderID}-product" data-value="20" class="s2 starItem">2星</li>
+															<li typename="{$orderID}-product" data-value="30" class="s3 starItem">3星</li>
+															<li typename="{$orderID}-product" data-value="40" class="s4 starItem">4星</li>
+															<li typename="{$orderID}-product" data-value="50" class="s5 starItem">5星</li>	
+														</ul>	
+														<span id="productSrar-{$orderID}" class=" star-icon Hide" style="margin-left: 10px;"></span>												
+													</div>
+												</div>									
+												<div class="comm">
+													<label class="J_stars_comm">产品</label>
 												</div>
-											</div>									
-											<div class="comm">
-												<label class="J_stars_comm">产品</label>
 											</div>
-										</div>
+											
 										<div class="slt-stars">
 											<div class="stars-box J_stars_box">
 												<div class="star-rating">
@@ -268,7 +271,8 @@
 													</ul>
 													<span id="serviceSrar-{$orderID}" class=" star-icon Hide" style="margin-left: 10px;"></span>												
 												</div>
-											</div>									
+											</div>
+										
 											<div class="comm">
 												<label class="J_stars_comm">服务</label>
 											</div>
@@ -295,6 +299,7 @@
 									</div>
 								</div>
 								</li>
+								</foreach>
 							</ul>
 						</div>
 					</div>							
@@ -305,20 +310,21 @@
 					<div class="modebox my-booking J_my_booking">
 						<div class="hd">
 							<h4>我的收藏</h4>
-							<a href="/account/orders" class="more">查看全部&raquo;</a>
 						</div>
 						<div class="con">
 							<div class="pic-list J_booking_list">
 								<ul>
+									<foreach name='collectList' item='v4' >
 									<li>
 										<div class="pic">
-											<a title="" class="img"><img src="http://t2.s2.dpfile.com/pc/mc/9f6275722e101caab92553abb52c41a5(216c135)/thumb.jpg"></a>
+											<a title="" class="img"><img src="__PUBLIC__/uploads/img/{$v4.imgsrc}"></a>
 										</div>
 										<div class="txt">
-											<p><a>中影星河电影城:电影票2选1</a></p>
-											<p> 22￥ </strong>
+											<p><a>{$v4.product_name}</a></p>
+											<p>￥{$v4.price}</strong>
 										</div>
 									</li>
+									</foreach>
 								</ul>
 							</div>
 						</div>

@@ -89,8 +89,11 @@ class UserCenterAction extends Action {
 	$viewOrder = M('view_order');
 	$notUsedNum = $viewOrder->where($condition)->where('order_status="已下单"')->count();
 	$evaluationNum = $viewOrder->where($condition)->where('order_status="已使用"')->count();
+	//获取待评价产品
+	$orderEva = $viewOrder->where($condition)->where('order_status="已使用"')->select();
 	$this->assign('notUsedNum',$notUsedNum);
 	$this->assign('evaluationNum',$evaluationNum);
+	$this->assign('orderEva',$orderEva);
 	
 	//显示订单列表
 	$orderCount = $viewOrder->where($condition)->count();
@@ -105,6 +108,10 @@ class UserCenterAction extends Action {
 	$activityList = $activity_order->where($condition1)->select();
 	$this->assign('activityList',$activityList);
 	
+	//获取收藏列表
+	$collect = M('view_collect');
+	$collectList = $collect->where($condition)->select();
+	$this->assign('collectList',$collectList);
 	
 	$this->display();
     }

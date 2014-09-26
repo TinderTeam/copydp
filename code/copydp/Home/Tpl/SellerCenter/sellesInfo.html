@@ -14,6 +14,7 @@
     <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
 	<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
 <style>
 body {
 	background-color: #f2f2f2;
@@ -80,18 +81,48 @@ margin-right: 10px;
 						<a track="|1|module#5_my_info,action#click,index#1,content#/account/settings" title="" href="/account/settings"><img class="" width="96" height="96" alt="" src="http://j1.s2.dpfile.com/s/img/uc/default-avatar120c120.v17.png"> </a>
 					</div>
 					<div class="txt">
+						<?php
+							//获取用户名
+							$userName=$_SESSION['login_user'];
+						?>
 						<div class="tit">
 							<h2 class="name">{$userName}</h2>
 						</div>
-						<p> <span>手机已绑定 186****2480 <a track="|1|module#5_my_info,action#click,index#2" class="alter J_rebind_mob" href="__APP__/Buy/product_list">修改</a></span> </p>			
-						<p> </p>			
+						
 					</div>
 				</div>
 				<div class="misc">
 					<div class="tips">
+						<?php
+							//获取商家ID
+							$condition['username'] = $_SESSION['login_user'];
+							$user = M('user');
+							$userID = $user->where($condition)->getField('user_id');
+							$condition3['seller_id'] = $userID;
+							
+							//获取信息栏
+							$order = M('order');
+							$undealOrderCount = $order->where($condition3)->where('order_status="已下单"')->count();
+							$oldOrderCount = $order->where($condition3)->where('order_status="已过期"')->count();
+							
+							//获取评价信息
+							$seller_evaluation = M('seller_evaluation');
+							$evaluationCount = $seller_evaluation->where($condition3)->count();
+							$scoreEnvList = $seller_evaluation->where($condition3)->getField('score_environment',true);
+							$scoreSerList = $seller_evaluation->where($condition3)->getField('score_service',true);
+							$scoreEnv = 0;
+							$scoreSer = 0;
+							for($i=0;$i<$evaluationCount;$i++)
+							{
+								$scoreEnv+=$scoreEnvList[$i];
+								$scoreSer+=$scoreSerList[$i];
+							}
+							$scoreEnv =(int)($scoreEnv/$evaluationCount);
+							$scoreSer =(int)($scoreSer/$evaluationCount);
+						?>
 						<ul>
-							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="/account/coupons"> <strong>1</strong>未处理</a></li>	
-							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="/account/coupons"> <strong>1</strong>已过期</a></li>						
+							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="/account/coupons"> <strong>{$undealOrderCount}</strong>未处理</a></li>	
+							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="/account/coupons"> <strong>{$oldOrderCount}</strong>已过期</a></li>						
 						</ul>
 					</div>
 				</div>
@@ -106,20 +137,15 @@ margin-right: 10px;
 					<div class="con">
 						 <ul class="tab-filter">
 							<li>
-								<span>商家评价</span>
-								<span class="yellowstar45 star-icon"></span>
-								<span>4.5</span>
+								<span>环境评价</span>
+								<span class="yellowstar{$scoreEnv*10} star-icon"></span>
+								<span>{$scoreEnv}星</span>
 							</li>
 							<li>
 								<span>服务评价</span>
-								<span class="yellowstar45 star-icon"></span>
-								<span>4.5</span>
-							</li>
-							<li>
-								<span>产品评价</span>
-								<span class="yellowstar45 star-icon"></span>
-								<span>4.5</span>
-							</li>							
+								<span class="yellowstar{$scoreSer*10} star-icon"></span>
+								<span>{$scoreSer}星</span>
+							</li>						
 						</ul>      					
 					</div>
 				</div>
@@ -132,21 +158,27 @@ margin-right: 10px;
 				<div class="con-tab">             
 					 <ul class="tab-filter">
 						<li>
-							<a track="|1|module#2_nav_myorders,action#click,index#2,content#/account/orders/0"
-								href="/account/orders/0">已下单</a>
+							<a href="__APP__/SellerCenter/sellesInfo?filter_type=all">全部</a>
 						</li>
 						<li>
-							<a track="|1|module#2_nav_myorders,action#click,index#2,content#/account/orders/0"
-								href="/account/orders/0">已取消</a>
+							<a href="__APP__/SellerCenter/sellesInfo?filter_type=place">已下单</a>
+						</li>
+						<li>
+							<a href="__APP__/SellerCenter/sellesInfo?filter_type=cancel">已取消</a>
 								
 						</li>
 						<li>
-							<a track="|1|module#2_nav_myorders,action#click,index#3,content#/account/orders/1"
-							   href="/account/orders/1">已使用</a>
+							<a href="__APP__/SellerCenter/sellesInfo?filter_type=used">已使用</a>
 						</li>
 						<li>
-							<select style="width:120px">
+							<a href="__APP__/SellerCenter/sellesInfo?filter_type=out">已过期</a>
+						</li>
+						<li>
+							<select style="width:120px" id="selectProduct">
 								<option>按照产品筛选</option>
+								<foreach name='productList' item='v0' >
+								<option value="{$v0.product_id}" >{$v0.name}</option>
+								</foreach>
 							</select>
 						</li>
 					</ul>             
@@ -219,9 +251,11 @@ margin-right: 10px;
 								</td>
 								<td class="t-op">
 									<if condition="$v1.order_status eq '已下单' ">
-										<a href="__APP__/Admin/confirmOrder?order_id={$v1.order_id}">使用确认</a>
+										<a href="__APP__/SellerCenter/confirmOrder?order_id={$v1.order_id}">使用确认</a>
+									<elseif condition="$v1.order_status eq '已过期' "/>
+										<a href="__APP__/SellerCenter/cancelOrder?order_id={$v1.order_id}">取消订单</a>
 									<else/>
-										<a href="__APP__/Admin/hideOrder?order_id={$v1.order_id}">删除订单</a>
+										<a href="__APP__/SellerCenter/hideOrder?order_id={$v1.order_id}">删除订单</a>
 									</if>
 								</td>
 								<td class="t-delete">
@@ -265,11 +299,8 @@ margin-right: 10px;
 									<td align="center" ><img src="__PUBLIC__/uploads/img/{$v2.imgsrc}" width="100px"></td>
 									<td align="center">￥{$v2.price}（原价：￥{$v2.original_price}）</td>
 									<td align="center" >{$v2.update_date}</td>
-									<td align="center"><select >
-										<option value="进行中" selected="selected">进行中</option>
-										<option value="进行中">已停止</option>
-									</select></td>
-									<td align="center" ><input type="button" value="删除"><a type="button"  href="__APP__/Admin/seller_edit"  >编辑</a></td>
+									<td align="center">{$v2.product_status}</td>
+									<td align="center" ><input type="button" value="删除"/><a type="button"  href="__APP__/Admin/seller_edit"  >编辑</a></td>
 								</tr>
 								</foreach>
 							</tbody>
@@ -279,5 +310,10 @@ margin-right: 10px;
 			</div>
 		</div>
 	</div>
+<script type="text/javascript">
+		$("#selectProduct").change(function(){ 
+			location.href='__APP__/SellerCenter/sellesInfo?filter_type='+$(this).val();
+		});	 
+</script>
 </body>
 </html>
