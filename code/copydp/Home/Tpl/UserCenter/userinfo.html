@@ -131,11 +131,11 @@
 										</td>
 										<td class="t-op">
 											<if condition="$v1.order_status eq '已下单' ">
-												<a href="__APP__/Admin/cancelOrder?order_id={$v1.order_id}">取消订单</a>
+												<a href="__APP__/UserCenter/cancelOrder?order_id={$v1.order_id}">取消订单</a>
 											<elseif condition="$v1.order_status eq '已使用' "/>
 												<a href="#myEvaluation">点击评价</a>
 											<elseif condition="$v1.order_status eq '已取消' "/>
-												<a href="__APP__/Admin/deleteOrder?order_id={$v1.order_id}">删除订单</a>
+												<a href="__APP__/UserCenter/deleteOrder?order_id={$v1.order_id}">删除订单</a>
 											<else/>
 											</if>
 										</td>
@@ -207,9 +207,9 @@
 										
 										<td class="t-op">
 											<if condition="$activityStatus eq '进行中' ">
-												<a href="__APP__/Admin/cancelActivity?activity_id={$v2.activity_id}">取消参与</a>	
+												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">取消参与</a>	
 											<else/>
-												<a href="__APP__/Admin/cancelActivity?activity_id={$v2.activity_id}">删除活动</a>
+												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">删除活动</a>
 											</if>
 										</td>
 									</tr>
