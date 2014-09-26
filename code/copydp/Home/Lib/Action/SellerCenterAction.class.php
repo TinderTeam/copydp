@@ -2,8 +2,9 @@
 // 本类由系统自动生成，仅供测试用途
 class SellerCenterAction extends Action {
 
-   public function newProduct(){
+   public function newProduct($sellerID=0){
 		$this->assign("newProduct",true);
+		$this->assign("sellerID",$sellerID);
 		$this->display('productEdit');
 	}
 	public function productEdit($productID=0){	
@@ -15,8 +16,59 @@ class SellerCenterAction extends Action {
 	$this->display();
     }
 	
-	public function seller_manager(){
-	$this->display();
+	public function saveProduct(){
+		//导入图片上传类  
+        import("ORG.Net.UploadFile");  
+        //实例化上传类  
+        $upload = new UploadFile();  
+        $upload->maxSize = 4145728; 
+        //$upload->saveRule=time; 
+		//设置文件上传类型  
+        $upload->allowExts = array('jpg','gif','png','jpeg');  
+        //设置文件上传位置  
+        $upload->savePath = "./Public/uploads/img/";//这里说明一下，由于ThinkPHP是有入口文件的，所以这里的./Public是指网站根目录下的Public文件夹  
+        //设置文件上传名(按照时间)  
+        //$upload->saveRule = "time";  
+        if (!$upload->upload()){  
+			$errMsg=($upload->getErrorMsg());				
+        }else{  
+            //上传成功，获取上传信息  
+            $info = $upload->getUploadFileInfo();  
+			$data2['imgsrc']=$info[0]['savename'];
+        }    
+        //保存表单数据，包括上传的图片 
+		$product = M('product');
+		$data2['name']=$_POST['name'];			
+		$data2['update_date']=date('Y-m-d',time());
+		$data2['describe']=$_POST['describe'];	
+		$data2['seller_id']=$_POST['seller_id'];	
+		$data2['basic_infor']=$_POST['info'];	
+		$data2['type_id']=$_POST['type_id'];	
+		$data2['price']=$_POST['price'];	
+		$data2['original_price']=$_POST['original_price'];	
+		$data2['end_date_time']=$_POST['end_date_time'];
+		if($_POST['svip_privilege']=='on'){
+			print($_POST['svip_privilege']);		
+			$data2['svip_privilege']='特权专属';
+		}else{
+			$data2['svip_privilege']='普通';
+		}
+		
+		
+		$data2['imglist']=$_POST['imglist'];	
+		$data2['product_status']='待审核';			
+		
+		if($_POST['product_id']!=''){
+			$IDcondition['product_id']=$_POST['product_id'];
+			$product->where($IDcondition)->save($data2);
+		}else{	
+		
+			$product->add($data2);
+		}
+		$this->assign("sellerID",$_POST['seller_id']);
+		$this->display('sellesInfo');			
+		//$this->assign("jumpUrl","sellesInfo");
+		//$this->success("成功提交");
     }
 	
 	public function sellesInfo(){
@@ -26,6 +78,7 @@ class SellerCenterAction extends Action {
 	$user = M('user');
 	$userID = $user->where($condition)->getField('user_id');
 	$this->assign('userName',$userName);
+	$this->assign('sellerID',$userID);
 	
 	//获取订单信息
 	$condition1['seller_id']=$userID;

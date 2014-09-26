@@ -32,4 +32,32 @@ class CommunityAction extends Action {
 		$this->assign('communityID',$communityID);
 		$this->display('cmnty_info');
     }
+	
+	public function newTopic(){
+		$this->display();
+	}
+	public function saveTopic(){
+		$this->assign("currentPage","user");
+		if($_SESSION['login_user']!=""){
+			//获取用户信息
+			$db=new Model('user');
+			$userName=$_SESSION['login_user'];
+			$condition['username']=$userName;	
+			$user_id= $db->where($condition)->getField('user_id');
+			
+			$communityDB=M('community');	
+			$Data['context']=$_POST['info'];
+			$Data['title']=$_POST['title'];	
+			$Data['datetime']=date('Y-m-d H:i:s',time());
+			$Data['community_type']=$_POST['community_type'];			
+			$Data['customer_id']=$user_id;
+			$communityDB->add($Data);
+			
+			$this->display('community');
+		}else{
+		  	$this->assign("jumpUrl","__APP__/Index/login");
+			$this->error("您还没有登录呢");
+		}	
+			
+	}
 }

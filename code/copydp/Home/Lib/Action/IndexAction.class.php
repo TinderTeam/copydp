@@ -54,7 +54,7 @@ class IndexAction extends Action {
 
 				if($pwdtrue==$pwdenter){
 					$_SESSION['login_user']= $_POST['name'];
-					
+					$this->loginScore($_POST['name']);
 					$this->assign("jumpUrl","index");
 					$this->success("管理员登陆成功！");
 				}else{
@@ -74,6 +74,9 @@ class IndexAction extends Action {
 	public function register(){
 		$this->display();
     }
+	public function loginScore($userName){
+	
+	}
 	
 	public function city(){
 		//获取数据库内容

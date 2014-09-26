@@ -111,46 +111,46 @@
 											</div>
 											<div id="trPriceInfo"  class="form-block">
 												<span class="label label_required">产品类型<em>*</em></span>
+
 												<?php
-												  $typedb= M('product_type');
-												  $typeCondition('father_id')='0';
-												  $mainType=$typedb->->where($typeCondition)->select();
-												?>
-												<select class="form-select-sim selectTarget" name="city_id">
-													<option  value="">请选择分类</option>	
-												<foreach name='city' item='vc'>
-													<if condition="$vc.city_id eq $productItem['city_id']">
-														<option value="{$vc.city_id}" selected >{$vc.city}</option>
-													<else/>
-														<option value="{$vc.city_id}">{$vc.city}</option>	
-													</if>
-													
-												</foreach>
+
+													$typedb= M('product_type');
 												
+													$mainType=$typedb->select();										
+												?>
+												<select class="form-select-sim selectTarget" name="type_id">
+													<option  value="">请选择分类</option>	
+												<foreach name='mainType' item='vc'>
+													<option value="{$vc.type_id}">{$vc.type_name}</option>	
+												</foreach>
+
 												</select>																			
 											</div>
 											<div class="form-block">
 												<span class="label">截止日期:</span>
-												<input name="datelimit" type="text" placeholder="格式：YYYY-mm-DD"  value="{$productItem['datelimit']}" class="form-txt form-txt-l"/>
+												<input name="end_date_time" type="text" placeholder="格式：YYYY-mm-DD"  value="{$productItem['end_date_time']}" class="form-txt form-txt-l"/>
 											</div>
 											
 											
 											<div class="form-block">
 												<span class="label">价格:</span>
-												<input name="memberlimit"  type="number" value="{$productItem['memberlimit']}" class="form-txt form-txt-l"/>
+												<input name="price"  type="number" value="{$productItem['price']}" class="form-txt form-txt-l"/>
 											</div>
 											<div class="form-block">
 												<span class="label">原价:</span>
-												<input name="point"  type="number" value="{$productItem['point']}" class="form-txt form-txt-l"/>
+												<input name="original_price"  type="number" value="{$productItem['original_price']}" class="form-txt form-txt-l"/>
 											</div>
-											
-											
-											
-											
 											<div class="form-block">
 												<span class="label">会员专属</span>
-												<input name="address" type="checkBox" value="{$productItem['address']}" />超级会员专属
-											</div>
+
+												<if condition=" $productItem['original_price'] eq '专属特权'">
+													<input name="svip_privilege" type="checkBox" value="on"/>超级会员专属
+										
+												<else/>
+													<input name="svip_privilege" type="checkBox" />超级会员专属
+										
+												</if>
+												</div>
 											
 											<div class="form-block">
 												<span class="label">封面上传：</span>										
@@ -167,16 +167,18 @@
 													<img name="img0" src="__PUBLIC__/uploads/img/{$productItem['imgsrc']}" alt="请上传活动封面" style="margin-left:90px;height:200px;width:350px;" id="img0">
 												</if>
 											</div> 
+											<!---
 											<div class="form-block">
 												<span class="label">更多图片：</span>
 												<button>更多图片上传</button>									
 											</div>
+											--->
 											<div class="form-block">
 												<span class="label">详细描述：</span>									
 											</div>  
 											<div class="form-block" style="margin-left: 85px;">									
-												<textarea id="info-text" name="info" class="Hide" value=""></textarea>
-												<input name="product_id" type="text" value="{$productID}" class="Hide"/>
+												<textarea id="info-text" name="info" class="Hide" value=""></textarea>								
+												<input name="sellerID" type="text" value="{$sellerID}" class="Hide"/>
 												<script id="editor" type="text/plain" class="form-default" style="width:500px;">
 												</script>									
 											</div>  	
@@ -201,7 +203,7 @@
 	<!---footer-->
 	
 	<div id="htmldiv" class= "hide">
-		{$productItem['info']}
+		{$productItem['basic_infor']}
 	</div>
 	
 	<script type="text/javascript">	
@@ -210,13 +212,11 @@
 		var um = UM.getEditor('editor');
 		UM.getEditor('editor').setContent($("#htmldiv").html());
 		$(".submit-btn").click(function(){
-			$("#info-text").val(UM.getEditor('editor').getContent());		
+			$("#info-text").val(UM.getEditor('editor').getContent());
+			
+			alert($("#info-text").val());
 			$("#form").submit();
 		});
-		
-
-		
-
 	</script>
 
 </body>
