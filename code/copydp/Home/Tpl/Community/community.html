@@ -11,6 +11,13 @@
 body{
 	background-color:#fafafa;
 }
+.page-as .section {
+float: right;
+width: 900px;
+padding-left: 10px;
+overflow: hidden;
+-webkit-text-size-adjust: none;
+}
 </style>
 <meta charset="UTF-8" />
 <meta http-equiv="mobile-agent" content="format=html5; url=http://m.dianping.com/forum/"/>
@@ -34,13 +41,13 @@ body{
 		</div>
 	</div>
 
-		<div class="main page-as page-community-home Fix">
+		<div class="main page-as page-community-home Fix" style="width: 1160px;">
 			<div class="section">
 				<!---<div class="features-wrapper">--->
-				<div class="features-wrapper">
+				<div class="features-wrapper" >
 					<!---center--->
-					<div class="block b-features">
-						<div class="block-title">
+					<div class="block b-features" style="width: 680px;">
+						<div class="block-title" style="width: 650px;">
 							热点推荐
 						</div>						
 						<!--帖子-->
@@ -94,7 +101,7 @@ body{
 			
 				<div class="features-wrapper">
 					<!---center--->
-					<div class="block b-features">
+					<div class="block b-features"  style="width: 680px;">
 						<?php
 							$communityDB=new Model('community');
 							if($typeName ==''){
@@ -107,7 +114,7 @@ body{
 							}
 							
 						?>	
-						<div class="block-title">
+						<div class="block-title" style="width: 650px;">
 							{$basicTitle}
 						</div>						
 						<!--帖子-->
@@ -154,7 +161,7 @@ body{
 					
 					
 					<!--/会员热榜-->
-					<div class="block-sub block-memberList">
+					<div class="block-sub block-memberList" style="margin-left: 27px;">
 						<div class="block-title">
 							会员热榜
 						</div>
