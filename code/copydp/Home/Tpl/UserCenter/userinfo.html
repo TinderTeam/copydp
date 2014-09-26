@@ -229,30 +229,32 @@
 					<div class="con">
 						<div class="comm-list J_comm_list">
 							<ul>
-								<li>
-								<div class="txt-wrap">
-									<div class="txt">
-										<h5><a target="_blank" href="/deal/73838">德客莱斯</a></h5>
-										<p>仅售69.9元,价值127元双人套餐!西式休闲大餐,临窗看景慢品!秋日晴好,适合我们的美好约会!</p>
-										<div class="slt-stars">
-											<div class="stars-box J_stars_box">
-												<div class="star-rating">
-													<ul class="star-wrap">
-														<li data-value="10" data-hint="很差" class="s1">1星</li>
-														<li data-value="20" data-hint="差" class="s2">2星</li>
-														<li data-value="30" data-hint="还行" class="s3">3星</li>
-														<li data-value="40" data-hint="好" class="s4">4星</li>
-														<li data-value="50" data-hint="很好" class="s5">5星</li>
-													</ul>
+								<foreach name='orderEva' item='v3' >
+									<li>
+										<div class="txt-wrap">
+											<div class="txt">
+												<h5><a target="_blank" href="/deal/73838">{$v3.product_name}</a></h5>
+												<p>{$v3.product_describe}</p>
+												<div class="slt-stars">
+													<div class="stars-box J_stars_box">
+														<div class="star-rating">
+															<ul class="star-wrap">
+																<li data-value="10" data-hint="很差" class="s1">1星</li>
+																<li data-value="20" data-hint="差" class="s2">2星</li>
+																<li data-value="30" data-hint="还行" class="s3">3星</li>
+																<li data-value="40" data-hint="好" class="s4">4星</li>
+																<li data-value="50" data-hint="很好" class="s5">5星</li>
+															</ul>
+														</div>
+													</div>
+													<div class="comm">
+														<a class="J_stars_comm">点评</a>
+													</div>
 												</div>
 											</div>
-											<div class="comm">
-												<a class="J_stars_comm">点评</a>
-											</div>
 										</div>
-									</div>
-								</div>
-								</li>
+									</li>
+								</foreach>
 							</ul>
 						</div>
 					</div>
@@ -264,20 +266,21 @@
 					<div class="modebox my-booking J_my_booking">
 						<div class="hd">
 							<h4>我的收藏</h4>
-							<a href="/account/orders" class="more">查看全部&raquo;</a>
 						</div>
 						<div class="con">
 							<div class="pic-list J_booking_list">
 								<ul>
+									<foreach name='collectList' item='v4' >
 									<li>
 										<div class="pic">
-											<a title="" class="img"><img src="http://t2.s2.dpfile.com/pc/mc/9f6275722e101caab92553abb52c41a5(216c135)/thumb.jpg"></a>
+											<a title="" class="img"><img src="__PUBLIC__/uploads/img/{$v4.imgsrc}"></a>
 										</div>
 										<div class="txt">
-											<p><a>中影星河电影城:电影票2选1</a></p>
-											<p> 22￥ </strong>
+											<p><a>{$v4.product_name}</a></p>
+											<p>￥{$v4.price}</strong>
 										</div>
 									</li>
+									</foreach>
 								</ul>
 							</div>
 						</div>
