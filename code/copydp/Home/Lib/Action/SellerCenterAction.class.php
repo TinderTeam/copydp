@@ -91,10 +91,6 @@ class SellerCenterAction extends Action {
 	$condition['username'] = $_SESSION['login_user'];
 	$user = M('user');
 	$userID = $user->where($condition)->getField('user_id');
-
-	$this->assign('userName',$userName);
-	$this->assign('sellerID',$userID);
-
 	$condition3['seller_id'] = $userID;
 
 	//获取订单信息

@@ -148,6 +148,28 @@ class UserCenterAction extends Action {
 		}
 
     }
-
+	
+	public function cancelActivity($activity_id=0){
+	
+	$user = M('user');
+	$userName=$_SESSION['login_user'];
+	$condition['username'] = $userName;
+	$user_id = $user->where($condition)->getField('user_id');
+	$condition1['customer_id'] = $user_id;
+	
+	$activity_order = M('activity_order');
+	
+	if($activity_order->where($condition1)->where('activity_id='.$activity_id)->delete())
+		{
+			$this->assign("jumpUrl","__APP__/UserCenter/userinfo");
+			$this->success("成功取消");
+		} 
+	else
+		{
+			$this->assign("jumpUrl","__APP__/UserCenter/userinfo");
+			$this->error("操作失败，请重新取消");
+		}
+    }
+	
 }
 ?>
