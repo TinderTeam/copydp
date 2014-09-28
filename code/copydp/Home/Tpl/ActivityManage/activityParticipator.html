@@ -60,9 +60,12 @@ margin-right: 10px;
 	</div>
 	
 	<div class="wrap">
+		<?php
+			$currentPage='activity';
+		?>
 		<div class="user-nav J_user_nav">
 			<!-----管理菜单---->
-				<include file="./Home/Tpl/Public/managemenu.html"/>
+			<include file="./Home/Tpl/Public/managemenu.html"/>
 			<!-----管理菜单---->
 		</div>
 		<div class="user-main">
@@ -70,8 +73,7 @@ margin-right: 10px;
 				<div class="modebox my-comm J_my_comm" >
 					
 					<div class="hd">
-						<h4>活动管理</h4>
-						<span>管理系统活动</span>
+						<h4>活动参与者</h4>
 					</div>
 					<form name="form" action="__URL__/search" method="post">
 						<ul class="tab-filter">
@@ -137,9 +139,7 @@ margin-right: 10px;
 										<tr id="item_{$i}">
 									</if>
 										<td valign="middle" align="left" class="deal">{$activityItem['activity_id']}</td>
-										<td valign="middle" align="left" class="deal">
-											<a href="__APP__/ActivityManage/activityParticipator?activityID={$activityItem['activity_id']}">{$activityItem['title']}</a>
-										</td>
+										<td valign="middle" align="left" class="deal">{$activityItem['title']}</td>
 										<td align="center" >{$activityItem['status']}</td>
 										<td align="center"> {$activityItem['city']}</td>
 										<td align="center"> {$activityItem['datelimit']}</td>

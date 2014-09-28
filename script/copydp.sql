@@ -19,7 +19,7 @@ CREATE TABLE `t_activity` (
   `note` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT '进行中',
   `city_id` varchar(255) DEFAULT NULL,
-  `datelimit` varchar(255) DEFAULT NULL,
+  `datelimit` datetime DEFAULT NULL,
   `memberlimit` varchar(255) DEFAULT NULL,
   `imgsrc` varchar(255) DEFAULT NULL,
   `point` varchar(255) DEFAULT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `t_city_zone` (
 INSERT INTO `t_city_zone` VALUES (1,'福田区','2'),(2,'宝安区','2'),(3,'南山区','2'),(4,'荔湾区','1'),(5,'越秀区','1');
 
 #
-# Structure for table "t_collect"
+# Source for table "t_collect"
 #
 
 DROP TABLE IF EXISTS `t_collect`;
@@ -103,12 +103,13 @@ CREATE TABLE `t_collect` (
   `customer_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`collect_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_collect"
 #
 
+INSERT INTO `t_collect` VALUES (1,4,1),(2,4,2);
 
 #
 # Structure for table "t_community"
@@ -174,22 +175,7 @@ CREATE TABLE `t_customer` (
 # Data for table "t_customer"
 #
 
-INSERT INTO `t_customer` VALUES (4,'S-VIP',804,'18620592480','12@123.com','粤B4546',2,'正常','null','2014-09-28'),(5,'VIP',402,'13622882288','aa@qq.com','粤B 1122',1,'待审批','null','2014-09-27'),(20,'VIP',0,'','','',0,'正常','null',NULL);
-
-#
-# Structure for table "t_login_logo"
-#
-
-DROP TABLE IF EXISTS `t_login_logo`;
-CREATE TABLE `t_login_logo` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# Data for table "t_login_logo"
-#
-
+INSERT INTO `t_customer` VALUES (4,'S-VIP',400,'18620592480','12@123.com','粤B4546',2,'正常','null'),(5,'VIP',200,'13622882288','aa@qq.com','粤B 1122',1,'待审批','null'),(20,'VIP',0,'','','',0,'正常','null');
 
 #
 # Structure for table "t_news"
@@ -430,6 +416,18 @@ DROP VIEW IF EXISTS `t_view_activity`;
 CREATE VIEW `t_view_activity` AS 
   select `t_activity`.`status` AS `status`,`t_activity`.`activity_id` AS `activity_id`,`t_activity`.`title` AS `title`,`t_city`.`city` AS `city`,`t_activity`.`dscr` AS `dscr`,`t_activity`.`imgsrc` AS `imgsrc`,`t_activity`.`point` AS `point`,`t_activity`.`datelimit` AS `datelimit`,`t_activity`.`memberlimit` AS `memberlimit`,`t_activity`.`address` AS `address`,`t_activity`.`info` AS `info`,`t_activity`.`datetime` AS `datetime`,`t_activity`.`note` AS `note` from (`t_activity` join `t_city` on((`t_city`.`city_id` = `t_activity`.`city_id`)));
 
+#
+# Source for view "t_view_collect"
+#
+
+DROP VIEW IF EXISTS `t_view_collect`;
+CREATE VIEW `t_view_collect` AS 
+  select `t_collect`.`collect_id` AS `collect_id`,`t_collect`.`product_id` AS `product_id`,`t_collect`.`customer_id` AS `customer_id`,`t_user`.`username` AS `username`,`t_product`.`imgsrc` AS `imgsrc`,`t_product`.`name` AS `product_name`,`t_product`.`price` AS `price` from ((`t_collect` join `t_product` on((`t_product`.`product_id` = `t_collect`.`product_id`))) join `t_user` on((`t_user`.`user_id` = `t_collect`.`customer_id`)));
+
+#
+# Source for view "t_view_community_customer"
+#
+
 DROP VIEW IF EXISTS `t_view_community_customer`;
 CREATE VIEW `t_view_community_customer` AS 
   select `t_community`.`customer_id` AS `customer_id`,count(`t_community`.`customer_id`) AS `customer_number`,`t_user`.`username` AS `username` from (`t_community` join `t_user` on((`t_user`.`user_id` = `t_community`.`customer_id`))) group by `t_community`.`customer_id` order by 'num';
@@ -456,7 +454,7 @@ CREATE VIEW `t_view_product` AS
 
 DROP VIEW IF EXISTS `t_view_product_eva`;
 CREATE VIEW `t_view_product_eva` AS 
-  select `copydp`.`t_product_evaluation`.`product_eva_id` AS `product_eva_id`,`copydp`.`t_user`.`username` AS `user_name`,`copydp`.`t_product_evaluation`.`score_product` AS `score_product`,`copydp`.`t_product_evaluation`.`eva_content` AS `eva_content`,`copydp`.`t_product_evaluation`.`datetime` AS `datetime` from (`copydp`.`t_product_evaluation` join `copydp`.`t_user` on((`copydp`.`t_user`.`user_id` = `copydp`.`t_product_evaluation`.`customer_id`)));
+  select `t_product_evaluation`.`product_eva_id` AS `product_eva_id`,`t_user`.`username` AS `user_name`,`t_product_evaluation`.`score_product` AS `score_product`,`t_product_evaluation`.`eva_content` AS `eva_content`,`t_product_evaluation`.`datetime` AS `datetime` from (`t_product_evaluation` join `t_user` on((`t_user`.`user_id` = `t_product_evaluation`.`customer_id`)));
 
 DROP VIEW IF EXISTS `t_view_recommernd`;
 CREATE VIEW `t_view_recommernd` AS 
@@ -465,3 +463,7 @@ CREATE VIEW `t_view_recommernd` AS
 DROP VIEW IF EXISTS `t_view_seller`;
 CREATE VIEW `t_view_seller` AS 
   select `t_seller`.`user_id` AS `user_id`,`t_seller`.`city_id` AS `city_id`,`t_seller`.`zone_id` AS `zone_id`,`t_seller`.`type_id` AS `type_id`,`t_seller`.`description` AS `description`,`t_seller`.`position` AS `position`,`t_seller`.`img` AS `img`,`t_product_type`.`type_name` AS `type_name`,`t_product_type`.`father_id` AS `father_id`,`t_city`.`city` AS `city`,`t_city_zone`.`zone_name` AS `zone_name`,`t_user`.`password` AS `password`,`t_user`.`username` AS `username`,`t_user`.`role` AS `role` from ((((`t_seller` left join `t_product_type` on((`t_seller`.`type_id` = `t_product_type`.`type_id`))) left join `t_city` on((`t_seller`.`city_id` = `t_city`.`city_id`))) left join `t_city_zone` on(((`t_seller`.`city_id` = `t_city_zone`.`city_id`) and (`t_seller`.`zone_id` = `t_city_zone`.`zone_id`)))) left join `t_user` on((`t_seller`.`user_id` = `t_user`.`user_id`))) where (`t_user`.`role` = 'SELLER');
+
+DROP VIEW IF EXISTS `t_view_seller_eva`;
+CREATE VIEW `t_view_seller_eva` AS 
+  select `t_seller`.`user_id` AS `user_id`,`t_seller_evaluation`.`seller_eva_id` AS `seller_eva_id`,`t_seller_evaluation`.`customer_id` AS `customer_id`,`t_seller_evaluation`.`datetime` AS `datetime`,`t_seller_evaluation`.`score_environment` AS `score_environment`,`t_seller_evaluation`.`score_service` AS `score_service`,`t_seller_evaluation`.`eva_content` AS `eva_content`,`t_seller_evaluation`.`seller_id` AS `seller_id`,`t_seller`.`city_id` AS `city_id`,`t_seller`.`type_id` AS `type_id`,`t_seller`.`description` AS `description`,`t_seller`.`position` AS `position`,`t_seller`.`zone_id` AS `zone_id`,`t_seller`.`img` AS `img`,`t_user`.`password` AS `password`,`t_user`.`username` AS `username`,`t_user`.`role` AS `role` from ((`t_seller_evaluation` left join `t_seller` on((`t_seller_evaluation`.`seller_id` = `t_seller`.`user_id`))) left join `t_user` on((`t_seller`.`user_id` = `t_user`.`user_id`)));

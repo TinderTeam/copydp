@@ -124,5 +124,9 @@ class ActivityManageAction extends Action {
 		$this->assign("jumpUrl","index");
 		$this->success("成功提交");
 	}
+	public function activityParticipator(){
+
+		$this->display();
+	}
 }
 ?>
