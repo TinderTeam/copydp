@@ -77,21 +77,19 @@
 										$price =  $productDB->where($ProductIDCondition)->getField('price');
 										$oldprice= $productDB->where($ProductIDCondition)->getField('original_price');
 										$sum= $quantity * 	$price;									
-										$oldsum= $quantity * 	$oldprice;	
-										$div=$oldsum-$sum;
+										$oldsum= $quantity * 	$oldprice;											
 									?>
 									<tr>
 										<td valign="middle" align="left" class="deal">{$name}</td>
-										<td align="center" class="Price-font">&#165;{$price}</td>
+										<td align="center" class="Price-font">{$price}分</td>
 										<td align="center">{$quantity}</td>
-										<td align="center" class="Price-font">&#165;{$sum} </td>
+										<td align="center" class="Price-font">{$sum}分 </td>
 									</tr>
 								</tbody>
 							</table>
 							<div class="infor">
 								<span class="item">原价：<strong class="Price-font" id="J_off-coupon">&#165;{$oldsum}</strong></span> 
-								<span class="item">团购立减：<strong class="Price-font" id="J_balance-pay">&#165;{$div}</strong></span> 
-								<span class="allprice">团购价格金额：<strong class="price Price-font" id="J_total-price">&#165;{$sum} </strong></span>
+								<span class="allprice">团购积分总额：<strong class="price Price-font" id="J_total-price">{$sum} 分</strong></span>
 							</div>
 						</div>
 						<!-- order confirmed ends -->

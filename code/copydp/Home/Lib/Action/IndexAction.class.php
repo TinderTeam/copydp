@@ -87,6 +87,7 @@ class IndexAction extends Action {
 			}else{
 				$this->assign("jumpUrl","login");
 				$this->error("用户名或密码不能为空！");
+
 	
 				}
 			 
@@ -94,11 +95,46 @@ class IndexAction extends Action {
 	
 	}	
 	public function register(){
-		$this->display();
-    }
-	public function loginScore($userName){
 	
-	}
+		$admin= M('user');      
+		$condition['username']=$_POST['username'];
+		$userID = $admin->where($condition)->getField('user_id');
+		
+		if($userID!=''){
+			$this->assign("jumpUrl","login");
+			$this->error("用户名被注册！");
+		}
+		
+		$userData['username']=$_POST['username'];
+		$userData['password']=$_POST['password'];
+		$userData['role']='CUSTOMER';
+		$admin->add($userData);
+		
+		$userID = $admin->where($condition)->getField('user_id');
+		print($userID);
+		$customerDB= M('customer'); 
+		
+		$customerData['user_id']=$userID;
+		$customerData['score']=0;
+		$customerData['cellphone']=$_POST['cellphone'];
+		$customerData['grade']='VIP';
+		$customerData['email']=$_POST['email'];
+		$customerData['car_id']=$_POST['car_id'];
+		$condition['username']=$_POST['recommender_name'];
+		$recommender_id = $admin->where($condition)->getField('user_id');
+		$customerData['recommender_id']=$recommender_id;
+		
+		if($_POST['code']==''){
+			$customerData['status']='待审批';
+		}else{
+			$customerData['status']='正常';
+		}
+		$customerDB->add($customerData);
+	
+		$this->assign("jumpUrl","login");
+		$this->success("注册成功！");
+    }
+
 	
 	public function city(){
 		//获取数据库内容

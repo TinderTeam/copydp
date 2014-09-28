@@ -114,29 +114,36 @@
 							<!---会员注册-->
 							<div id="memberdiv" class="reg-switch-box J_switch_box Hide">
 								<div class="J_login Fix">
-									<form action="" method="post">
+									<form name="form2" action="__URL__/register" method="post">	
 										<ul class="login-new-ul">
 											<li> <span class="ws">用户名</span>
-												<input class="text J_login_username focus" name="name" type="text"
-													value="" tabindex="1" size="30" autocomplete="off" placeholder="用户名"/>
+												<input class="text J_login_username focus" name="username" type="text"
+													value="" tabindex="1" size="30" placeholder="用户名"/>
 												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
 												<li><span class="ws">密码</span>
-												<input class="text foc J_login_password focus" name="password" type="password" tabindex="2" autocomplete="off"/>
+												<input class="text foc J_login_password focus" name="password" type="password" tabindex="1" autocomplete="off"/>
 										   <li> <span class="ws">激活码</span>
-												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"  placeholder="无激活码请留空"/>
-												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
-											<li> <span class="ws">手机号码</span>
-												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"  placeholder="手机号码"/>
-												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>			   
-											<li class="J_general_err Hide"> 
-												<span class="ws">&nbsp;</span>
-												<span class="J_err input-error Hide"></span>
-												<span class="prompt J_prmt Hide"></span>
+												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="2" size="30" autocomplete="off"  placeholder="无激活码请留空"/>											
 											</li>
+											<li>
+												<span class="ws">Email</span>
+												<input class="text J_login_username focus" name="email" type="text" value="" tabindex="3" size="30" autocomplete="off"  placeholder="Email"/>
+											
+											</li>
+											<li>
+												<span class="ws">车牌号</span>
+												<input class="text J_login_username focus" name="car_id" type="text" value="" tabindex="3" size="30" autocomplete="off"  placeholder="车牌号"/>
+											
+											</li>											
+											<li>
+												<span class="ws">手机号码</span>
+												<input class="text J_login_username focus" name="cellphone" type="text" value="" tabindex="4" size="30" autocomplete="off"  placeholder="手机号码"/>
+								
+											</li>											
 											<li class="J_action">
 												<span class="ws">&nbsp;</span>
 												<div class="login-btn-new">
-													<a class="b-rbtn mob-login J_user_login"> <span>注 册</span> </a>
+													<button class="b-rbtn mob-login J_user_login" type="submit"> <span>注 册</span> </button>
 												</div>
 											</li>
 										</ul>

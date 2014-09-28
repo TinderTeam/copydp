@@ -164,7 +164,23 @@ class SellerCenterAction extends Action {
 	$order = M('order');
 	$condition['order_id'] = $order_id;
 	$data['order_status']="已使用";
+	
+	
+	//下单送积分
+	$customerID=$order->where($condition)->getField('customer_id');
+	$sys= M('sys_config');
+	$sysCondition['key']='order_score';
+	$value=	$sys->where($sysCondition)->getField('value');
+	
 
+	$customerDB= M('customer');
+	$userIDCondition['user_id']=$customerID;
+	$point=	$customerDB->where($userIDCondition)->getField('score');
+	$UserData['score']=(int)$point+(int)$value;
+	print($UserData['score']);
+	$customerDB->where($userIDCondition)->save($UserData);
+	
+	
 	if($order->where($condition)->save($data))
 		{
 			$this->assign("jumpUrl","__APP__/SellerCenter/sellesInfo");

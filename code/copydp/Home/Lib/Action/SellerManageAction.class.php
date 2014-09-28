@@ -64,8 +64,12 @@ class SellerManageAction extends Action {
 		}
 	}
 	
-	    //新增用户
-		public function add(){			
+	    //新增商家
+		public function add(){
+
+			
+			
+		
 			$user = M('user');			
 			$newName=$_POST['seller_name'];
 			$condition['username'] = $newName;
@@ -88,6 +92,27 @@ class SellerManageAction extends Action {
 					
 				}else{
 
+					//导入图片上传类  
+					import("ORG.Net.UploadFile");  
+					//实例化上传类  
+					$upload = new UploadFile();  
+					$upload->maxSize = 4145728; 
+					//$upload->saveRule=time; 
+					//设置文件上传类型  
+					$upload->allowExts = array('jpg','gif','png','jpeg');  
+					//设置文件上传位置  
+					$upload->savePath = "./Public/uploads/img/";//这里说明一下，由于ThinkPHP是有入口文件的，所以这里的./Public是指网站根目录下的Public文件夹  
+					//设置文件上传名(按照时间)  
+					//$upload->saveRule = "time";  
+					if (!$upload->upload()){  
+						$errMsg=($upload->getErrorMsg());	
+						
+					}else{  
+						//上传成功，获取上传信息  
+						$info = $upload->getUploadFileInfo();  
+						$data2['img']=$info[0]['savename'];					
+					}    
+					
 					$seller = M('seller');
 					$data2['user_id']=$newID;
 					$data2['type_id']=$_POST['type_id'];
