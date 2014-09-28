@@ -12,6 +12,21 @@ class SellerCenterAction extends Action {
 		$this->assign("productID",$productID);
 		$this->display();
 	}
+	public function productDelete($productID=0){	
+		//
+		$product = M('product');
+		$conditionDelete['product_id'] = $productID;
+		if($product->where($conditionDelete)->delete())
+		{
+			$this->assign("jumpUrl","__APP__/SellerCenter/sellesinfo");
+			$this->success("删除成功");
+		} 
+		else
+		{
+			$this->assign("jumpUrl","__APP__/SellerCenter/sellesinfo");
+			$this->error("删除失败，请重试");
+		}
+	}
 	public function seller_edit(){
 	$this->display();
     }
@@ -36,24 +51,29 @@ class SellerCenterAction extends Action {
             $info = $upload->getUploadFileInfo();  
 			$data2['imgsrc']=$info[0]['savename'];
         }    
-        //保存表单数据，包括上传的图片 
+        
+		//获取商家ID
+		$userIDCondition['username'] = $_SESSION['login_user'];
+		$user = M('user');
+		$seller_id = $user->where($userIDCondition)->getField('user_id');
+		
+		//保存表单数据，包括上传的图片
+		
 		$product = M('product');
 		$data2['name']=$_POST['name'];			
 		$data2['update_date']=date('Y-m-d',time());
 		$data2['describe']=$_POST['describe'];	
-		$data2['seller_id']=$_POST['seller_id'];	
+		$data2['seller_id']=$seller_id;	
 		$data2['basic_infor']=$_POST['info'];	
 		$data2['type_id']=$_POST['type_id'];	
 		$data2['price']=$_POST['price'];	
 		$data2['original_price']=$_POST['original_price'];	
 		$data2['end_date_time']=$_POST['end_date_time'];
-		if($_POST['svip_privilege']=='on'){
-			print($_POST['svip_privilege']);		
+		if($_POST['svip_privilege']=='on'){		
 			$data2['svip_privilege']='特权专属';
 		}else{
 			$data2['svip_privilege']='普通';
 		}
-		
 		
 		$data2['imglist']=$_POST['imglist'];	
 		$data2['product_status']='待审核';			
@@ -62,11 +82,11 @@ class SellerCenterAction extends Action {
 			$IDcondition['product_id']=$_POST['product_id'];
 			$product->where($IDcondition)->save($data2);
 		}else{	
-		
 			$product->add($data2);
 		}
-		$this->assign("sellerID",$_POST['seller_id']);
-		$this->display('sellesInfo');			
+
+		$this->redirect('SellerCenter/sellesInfo');
+		//$this->display('sellesInfo');
 		//$this->assign("jumpUrl","sellesInfo");
 		//$this->success("成功提交");
     }

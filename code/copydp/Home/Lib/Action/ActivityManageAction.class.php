@@ -4,8 +4,13 @@ class ActivityManageAction extends Action {
     public function index(){
 		$this->assign("currentPage","activity");
 		if($_SESSION['login_user']!=""){	
-		
-	    $this->display();
+			//产品截至时间到期，且处于已下单状态的订单更新为已过期
+			$activity = M('activity');
+			$deadlineCondition['datelimit']=array('LT',date('Y-m-d H:i:s',time()));		//判断截至时间小于当前时间的条件
+			$data['status'] = "已结束";
+			$activity->where($deadlineCondition)->where('status="进行中"')->save($data);		//更新订单状态
+
+			$this->display();
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");
@@ -29,21 +34,48 @@ class ActivityManageAction extends Action {
 			$this->error("您还没有登录呢");
 		}
     }
-	
+	public function cancelActivity($activityID=0){
+		
+		$activity = M('activity');
+		$IDcondition['activity_id'] = $activityID;
+		$data['status']="已取消";
+		if($activity->where($IDcondition)->save($data))
+		{
+			$this->assign("jumpUrl","index");
+			$this->success("取消成功");
+		}
+		else
+		{
+			$this->assign("jumpUrl","index");
+			$this->error("操作失败，请重试");
+		}
+		//$this->assign("currentPage","activity");
+		//$this->display('index');		
+	}
+	public function deleteActivity($activityID=0){
+		
+		$activity = M('activity');
+		$IDcondition['activity_id'] = $activityID;
+		if($activity->where($IDcondition)->delete())
+		{
+			$this->assign("jumpUrl","index");
+			$this->success("删除成功");
+		}
+		else
+		{
+			$this->assign("jumpUrl","index");
+			$this->error("操作失败，请重试");
+		}
+		//$this->assign("currentPage","activity");
+		//$this->display('index');		
+	}
 	public function activityEdit($activityID=0){
 		$this->assign("currentPage","activity");		
 		$this->assign("newActivity",false);
 		$this->assign("activityID",$activityID);
 		$this->display();
 	}
-	
-	public function activityEnd($activityID=0){
-		$this->assign("currentPage","activity");
-		$this->display('index');		
-	}
-	
-	
-	
+
 	public function newActivity(){
 		$this->assign("currentPage","activity");
 		$this->assign("newActivity",true);

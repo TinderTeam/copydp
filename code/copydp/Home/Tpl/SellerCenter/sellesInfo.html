@@ -300,7 +300,10 @@ margin-right: 10px;
 									<td align="center">￥{$v2.price}（原价：￥{$v2.original_price}）</td>
 									<td align="center" >{$v2.update_date}</td>
 									<td align="center">{$v2.product_status}</td>
-									<td align="center" ><input type="button" value="删除"/><a type="button"  href="__APP__/Admin/seller_edit"  >编辑</a></td>
+									<td align="center" >
+									<input type="button" value="编辑" onclick="location.href='__URL__/productEdit?productID={$v2.product_id}'"/>
+									<input type="button" value="删除" onclick="location.href='__URL__/productDelete?productID={$v2.product_id}'"/>
+									</td>
 								</tr>
 								</foreach>
 							</tbody>

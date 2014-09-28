@@ -63,7 +63,7 @@
 		<div class="user-nav J_user_nav">
 			<!-----管理菜单---->
 			<ul>
-				<li class="cur"><a href="#">产品编辑</a><i class="n-arr"></i></li>
+				<li class="cur"><a href="#">产品管理</a><i class="n-arr"></i></li>
 			</ul>
 			<!-----管理菜单---->
 		</div><!---左侧导航栏--->
@@ -73,6 +73,7 @@
 				<!---产品信息编辑--->
 				<div class="um-con">
 					<!--标题-->
+					<form id="form" name="form" action="__URL__/saveProduct" method="post" enctype="multipart/form-data">
 					<div class="modebox my-booking J_my_booking">
 						<div class="hd">
 							<h4>
@@ -86,11 +87,11 @@
 										$productItem=$product->where($productIDCondition)->find();
 									}
 								?>
+							<input name="product_id" style="display:none" value="{$productID}"/>
 							</h4>	
 						</div> 	
 					</div> 	<!--标题--> 
 					<!--表单-->
-					<form id="form" name="form" action="__URL__/saveProduct" method="post" enctype="multipart/form-data">
 						<div class="con">
 							<div class="main page-sa page-sa-col Fix">
 								<div class="block shop-add-form">

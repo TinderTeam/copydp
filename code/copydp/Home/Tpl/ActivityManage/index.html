@@ -148,8 +148,13 @@ margin-right: 10px;
 										<td align="center" >
 											<input type="button" value="编辑" class="form-btn"
 											onclick="location.href='__APP__/ActivityManage/activityEdit?activityID={$activityItem['activity_id']}'" />
-											<input type="button" value="结束" class="form-btn"
-											onclick="location.href='__APP__/ActivityManage/activityEnd?activityID={$activityItem['activity_id']}'" />
+											<if condition="$activityItem['status'] eq '进行中' ">
+											<input type="button" value="取消" class="form-btn"
+											onclick="location.href='__APP__/ActivityManage/cancelActivity?activityID={$activityItem['activity_id']}'" />
+											<else/>
+											<input type="button" value="删除" class="form-btn"
+											onclick="location.href='__APP__/ActivityManage/deleteActivity?activityID={$activityItem['activity_id']}'" />
+											</if>
 										</td>
 									</tr>
 								</volist>
