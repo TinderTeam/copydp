@@ -95,4 +95,14 @@ class BuyAction extends Action {
 		$this->assign('typeRoot',$typeRoot);
 		$this->display('product_list');
 	}
+	
+	public function searchProduct(){		
+		$typeRoot=0;
+		$search='true';
+		$keyword='%'.$_POST['keyword'].'%';
+		$this->assign('typeRoot',$typeRoot);
+		$this->assign('keyword',$keyword);
+		$this->assign('search',$search);
+		$this->display('product_list');
+	}
 }

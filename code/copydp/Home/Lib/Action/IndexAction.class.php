@@ -48,12 +48,34 @@ class IndexAction extends Action {
 			if(!empty($_POST['name'])&&!empty($_POST['pwd'])){
 				$admin= M('user');
         
-				$condition['name']=$_POST['name'];
+				$condition['username']=$_POST['name'];
 				$pwdenter=$_POST['pwd'];
 				$pwdtrue = $admin->where($condition)->getField('password');
-
+				$userID = $admin->where($condition)->getField('user_id');
+				$role = $admin->where($condition)->getField('role');
+				
 				if($pwdtrue==$pwdenter){
 					$_SESSION['login_user']= $_POST['name'];
+					//处理登陆赠送积分
+					if($role=='CUSTOMER'){
+						$custmerDB= M('customer');
+						$customerIDCondition['user_id']=$userID;
+						$lastDate=$custmerDB->where($customerIDCondition)->getField('login_date');
+						$score=$custmerDB->where($customerIDCondition)->getField('score');
+						
+						$sysDB= M('sys_config');
+						$sysCondition['key']='login_score';
+						$scoreAdd=$sysDB->where($sysCondition)->getField('value');					
+						$nowDate = date('Y-m-d',time());
+						
+						if($lastDate=="" || $lastDate!=$nowDate){
+							//赠送积分
+							$CustomerData['score']=$score+$scoreAdd;
+						}
+						$CustomerData['login_date']=$nowDate;
+						$custmerDB->where($customerIDCondition)->save($CustomerData);
+					}
+					
 					$this->loginScore($_POST['name']);
 					$this->assign("jumpUrl","index");
 					$this->success("管理员登陆成功！");

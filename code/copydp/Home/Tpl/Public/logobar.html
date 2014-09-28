@@ -24,6 +24,12 @@
 				right: 128px;
 				}
 		</style>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+		<script>
+		function searchsubmit(){
+			$("#searchform").submit();
+		}
+		</script>
 		
 		
 		
@@ -46,7 +52,9 @@
 				</h2>
 			</div>
 			<div class="search-div search-div-new" data-jump="" data-promo-text="#买团购见叫兽#">
-				<input type="text" autocomplete="off" name="search" class="input focus" placeholder="请输入店名、商品名称、商区等" id="search-keywords" value="" >
-				<a class="my-search-btn"  href="__APP__/Buy/product_list">搜索</a>
+			<form id="searchform" name="searchform" action="__APP__/Buy/searchProduct" method="post">
+				<input type="text" name="keyword" class="input focus" placeholder="请输入店名、商品名称、商区等" id="search-keywords" value="" >
+				<a class="my-search-btn"  href="javascript:void(0);" onclick="searchsubmit()">搜索</a>
+			</form>
 			</div>
 		</div>

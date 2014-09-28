@@ -60,6 +60,9 @@
 						$typeDB=new Model('product_type');
 						$typeIDCondition['type_id']=$crtCdtItm;
 						$typeName=$typeDB->where($typeIDCondition)->getField('type_name');
+						if($crtCdtItm==0){
+							$typeName='全部';
+						}
 					?>	
 					{$typeName}
 					<a href="__APP__/Buy/cancelFilter?crtCdtItm={$crtCdtItm}"  class="close">
@@ -67,11 +70,14 @@
 					</a>
 				</span>
 			</volist>
-			<a href="__APP__/Buy/product_list">
-				<?php
-					print_r($typeRoot);
-				?>
-			</a>
+			<if condition="$search eq 'true'">
+				<span class="choose">	
+					自定义
+					<a href="__APP__/Buy/product_list"  class="close">
+						×
+					</a>
+				</span>
+			</if>
     		<a href="__APP__/Buy/product_list">清除</a>
     		<div class="dot-border"></div>
 		</div><!----导航栏--->
@@ -160,6 +166,11 @@
 					//获取当前城市
 					$city=$_SESSION['city'];
 					$productFilter['city']=$city;
+					
+					if($search=='true'){
+						$productFilter['name']= array('like',$keyword);
+					}
+					
 					
 					//设置总筛选条件
 					$productViewDB=new Model('view_product');

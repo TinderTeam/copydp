@@ -24,7 +24,7 @@ class UserManageAction extends Action {
 			if(isset($_POST['name'])&&isset($_POST['pwd'])){
 				$admin= M('user');
         
-				$condition['name']=$_POST['name'];
+				$condition['username']=$_POST['name'];
 				$pwdenter=$_POST['pwd'];
 				$pwdtrue = $admin->where($condition)->getField('password');
 

@@ -52,7 +52,6 @@
 		$datetime= $activityDB->where($activityIDCondition)->getField('datetime');
 		$note= $activityDB->where($activityIDCondition)->getField('note');
 		$info= $activityDB->where($activityIDCondition)->getField('info');
-
 	?>
 	
 	<!----主界面---->
@@ -121,7 +120,7 @@
 						</table>
 					</div>
 					<div class="action-box myblock">
-						<a class="b-new-rbtn small order-btn J_package"  href=""> <span>报名参与</span> </a>					
+						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Activity/activityOrderCommit?activityID={$activityID}"> <span>报名参与</span> </a>					
 					</div>
 				</div>	
 				<div class="lbd">
@@ -184,7 +183,7 @@
 						</div>
 						<div class="box-buy-bottom Fix">
 							<div class="buy-bottom-btn">
-								<a id="J_downbuy" class="b-rbtn small J_package" href=""> <span>报名参加</span> </a> 
+								<a id="J_downbuy" class="b-rbtn small J_package" href="__APP__/Activity/activityOrderCommit?activityID={$activityID}"> <span>报名参加</span> </a> 
 							</div>
 							<div class="Price-font buy-bottom-price">
 								{$point}积分

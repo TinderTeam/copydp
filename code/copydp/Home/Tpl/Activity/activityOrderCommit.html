@@ -39,7 +39,7 @@
 						<!-- 手机信息/手机绑定 -->
 						<!-- mobile validation begins -->
 						<div class="pay-phone-success Fix ">
-							<div class="field">
+							<div class="field">	
 								<?php
 									if(empty($_SESSION['login_user'])){
 										redirect('../Index/login', 0, '页面跳转中...');
@@ -49,67 +49,51 @@
 									$userName=$_SESSION['login_user'];
 									$condition['username']=$userName;	
 									$role =  $db->where($condition)->getField('role');
-									$user_id= $db->where($condition)->getField('user_id');
-									
-									//获取积分信息
-									$customerdb=new Model('customer');
-									$condition['user_id']=$user_id;	
-									$cellphoneStr = $customerdb->where($condition)->getField('cellphone');
-									$cellphone = substr($cellphoneStr,0,3) . "****" .substr($cellphoneStr,7,10);
-								?>
+									$user_id= $db->where($condition)->getField('user_id');								
+								?>							
 								<div class="fromnum">
-									<strong> 团购成功后，请妥善保管团购订单号，以便消费时核对。&nbsp; 您的手机号码为：{$cellphone}
-									</strong>
+									<strong> 恭喜您完成下单参与！您的参与号为：</strong>
+									<h3><span>{$orderID}</span></h3>
 								</div>
 							</div>
 						</div>
 						<!-- 订单信息 -->
 						<!-- order confirmed begins -->
 						<div class="pay-confirm">
-							<h3 class="title">确认订单</h3>
+							<h3 class="title">活动信息</h3>
 							<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 								<tbody>
 									<tr>
-										<th width="55%">商品名称</th>
-										<th width="15%">单价</th>
-										<th width="15%">数量</th>
-										<th width="15%">总计</th>
+										<th width="15%">活动名称</th>
+										<th width="55%">描述</th>
+										<th width="15%">截止时间</th>
+										<th width="15%">积分奖励</th>
+
 									</tr>
 									
-									<?php								
-										$productDB=new Model('product');
-										$ProductIDCondition['product_id']=$productID;	
-										$name =  $productDB->where($ProductIDCondition)->getField('name');
-										$price =  $productDB->where($ProductIDCondition)->getField('price');
-										$oldprice= $productDB->where($ProductIDCondition)->getField('original_price');
-										
-										$sum= $quantity * 	$price;									
-										$oldsum= $quantity * 	$oldprice;	
-										$div=$oldsum-$sum;
+									<?php			
+										print('id:'.$activityID);
+										$activityDB=new Model('activity');
+										$activityIDCondition['activity_id']=$activityID;	
+										$title =  $activityDB->where($activityIDCondition)->getField('title');
+										$dscr= $activityDB->where($activityIDCondition)->getField('dscr');
+										$datelimit=$activityDB->where($activityIDCondition)->getField('datelimit');	
+										$point=$activityDB->where($activityIDCondition)->getField('point');	
 									?>
 									<tr>
-										<td valign="middle" align="left" class="deal">{$name}</td>
-										<td align="center" class="Price-font">{$price}分</td>
-										<td align="center">{$quantity}</td>
-										<td align="center" class="Price-font">{$sum}分 </td>
+										<td valign="middle" align="left" class="deal">{$title}</td>
+										<td align="center">{$dscr}</td>
+										<td align="center">{$datelimit}</td>
+										<td align="center">{$point}积分</td>
 									</tr>
 								</tbody>
 							</table>
-							<div class="infor">
-								<span class="item">原价：<strong class="Price-font" id="J_off-coupon">&#165;{$oldsum}</strong></span>  
-								<span class="allprice">团购积分：<strong class="price Price-font" id="J_total-price">{$sum}分 </strong></span>
-							</div>
 						</div>
 						<!-- order confirmed ends -->
 					</div>
 					<div class="order-btn">
-						<div class="b-rbtn Right">
-							<form name="form" action="__URL__/orderCommit" method="post">
-								<input name="customer_id" type="hidden" value="{$user_id}"/>
-								<input name="product_id" type="hidden" value="{$productID}"/>
-								<input name="quantity" type="hidden" value="{$quantity}"/>								
-								<input type="submit" id="payOrder" value="确认订单" />
-							</form>
+						<div class="b-rbtn Right">							
+							<a href="__APP__/Index/index" style="text-decoration:none;">回到首页</a>
 						</div>
 					</div>
 				</div>
