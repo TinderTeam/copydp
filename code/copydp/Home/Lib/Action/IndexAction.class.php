@@ -37,6 +37,7 @@ class IndexAction extends Action {
 	public function login(){
 		$this->display();
     }
+	
 	//登录校验
  	public function check(){
 		session_start();
@@ -76,9 +77,8 @@ class IndexAction extends Action {
 						$custmerDB->where($customerIDCondition)->save($CustomerData);
 					}
 					
-					$this->loginScore($_POST['name']);
 					$this->assign("jumpUrl","index");
-					$this->success("管理员登陆成功！");
+					$this->success("登陆成功！");
 				}else{
 					//$this->redirect('Index/login','',2,'用户名或密码不正确！');
 				 $this->assign("jumpUrl","login");
@@ -87,12 +87,8 @@ class IndexAction extends Action {
 			}else{
 				$this->assign("jumpUrl","login");
 				$this->error("用户名或密码不能为空！");
-
-	
 				}
-			 
 
-	
 	}	
 	public function register(){
 	

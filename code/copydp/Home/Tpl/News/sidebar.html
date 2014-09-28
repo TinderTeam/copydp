@@ -1,0 +1,23 @@
+<div class="aside aside-right">
+		
+      	<div class="block b-hot">
+        	<div class="block-title">最新咨询</div>
+    		<ul class=" bullet-list-c"> 
+				<?php
+					$newsDB=new Model('news');
+					$newsList=$newsDB->order('rand()')->limit(6)->getField('news_id',true);							
+				?>	
+				<volist name="newsList" id="newsID">
+					<?php
+						$newsIDCondition['news_id']=$newsID;
+						$title=$newsDB->where($newsIDCondition)->getField('title');
+						$date=$newsDB->where($newsIDCondition)->getField('datetime');
+					?>
+					<li>
+	        			<h4><a title={$title} href="__APP__/News/newsShow?newsID={$newsID}">{$title}</a></h4>
+	          		</li>
+				</volist>   				    		
+    		</ul>
+      	</div>
+
+	</div>

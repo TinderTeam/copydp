@@ -11,15 +11,15 @@
 		<volist name="maintypename" id="maintypenameitem" key="i" >
 			<li class="has-sub drop-item">
 				<div class="cat Fix">
-							<a class="cat-l1" href="__APP__/Buy/search_product?typeid={$maintypeid[$i]}" > <span> {$maintypenameitem}</span> </a> <br>
+							<a class="cat-l1" href="__APP__/Seller/typeSelect?SelectType={$maintypeid[$i-1]}" > <span> {$maintypenameitem}</span> </a> <br>
 							<?php
 								//获取分类信息
 								$condition['father_id']=$maintypeid[$i-1];	
 								$subtypename=$typedb->where($condition)->order('type_id')->limit(3)->getField('type_name',true);
-								$subtypeid=$typedb->where($condition)->order('type_id')->limit(3)->getField('type_id',true);			
+								$subtypeid=$typedb->where($condition)->order('type_id')->limit(3)->getField('type_id',true);
 							?>
 							<volist name="subtypename" id="subtypenameitem" key="j" >
-								<a class="cat-l2" href="__APP__/Buy/search_seller?typeid={$subtypeid[$j]}"> <span> {$subtypenameitem} </span> </a> 		
+								<a class="cat-l2" href="__APP__/Seller/typeSelect?SelectType={$subtypeid[$j-1]}"> <span> {$subtypenameitem} </span> </a> 		
 							</volist>
 				</div>
 			</li>

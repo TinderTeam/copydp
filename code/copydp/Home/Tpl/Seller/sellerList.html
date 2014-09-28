@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="dns-prefetch" href="http://t1.dpfile.com"/>
+    <link rel="dns-prefetch" href="http://t2.dpfile.com"/>
+    <link rel="dns-prefetch" href="http://t3.dpfile.com"/>
+    <link rel="dns-prefetch" href="http://si1.s1.dpfile.com/"/>
+    <title>商家列表</title>
+    <meta name="viewport"          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+	<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/> 
+</head>
+
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+<div class="head responsive">
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">				
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+
+<!----主界面---->
+<div class="pgm wrap responsive-reverse">
+    <div class="section_w top_banner"></div>
+	
+    <div class="category-box" id="J_category_box">
+		<!----导航栏--->
+		<div class="bread-box">
+			<span>当前筛选&nbsp;&gt;</span>
+			<?php	
+				//获取当前的筛选条件路径
+				$typeDB=new Model('product_type');			
+				if($typeRoot!=0){							
+					$typeIDCondition['type_id']=$typeRoot;
+					$father_id =  $typeDB->where($typeIDCondition)->getField('father_id');
+					if($father_id!=0){
+						$crtConditionList=array("0",$father_id,$typeRoot);
+					}else{						
+						$crtConditionList=array("0",${typeRoot});
+					}					
+				}else{
+					$crtConditionList=array("0");
+				}
+			?>
+			<volist name="crtConditionList" id="crtCdtItm">					
+				<span class="choose">
+					<?php
+						$typeDB=new Model('product_type');
+						$typeIDCondition['type_id']=$crtCdtItm;
+						$typeName=$typeDB->where($typeIDCondition)->getField('type_name');
+						if($crtCdtItm==0){
+							$typeName='全部';
+						}
+					?>	
+					{$typeName}
+					<a href="__APP__/Seller/cancelFilter?crtCdtItm={$crtCdtItm}"  class="close">
+						×
+					</a>
+				</span>
+			</volist>
+			<if condition="$search eq 'true'">
+				<span class="choose">	
+					自定义
+					<a href="__APP__/Seller/sellerList"  class="close">
+						×
+					</a>
+				</span>
+			</if>
+    		<a href="__APP__/Seller/sellerList">清除</a>
+    		<div class="dot-border"></div>
+		</div><!----导航栏--->
+		<!----分类标签--->
+		<div class="category-nav">			
+  			<div class="term Fix">
+        	<div class="l-title">分类</div>
+        	<div class="cont">
+				<div class="classify Fix">
+					<?php
+						//获取可选择的分类列表
+						$typeDB=new Model('product_type');				
+						if($typeRoot!=0){							
+							$typeCondition['father_id']=$typeRoot;
+						}else{
+							$typeCondition['father_id']=0;
+						}
+						$typeList=$typeDB->where($typeCondition)->getField('type_id',true);
+						
+					?>
+					<if condition="$typeRoot eq 0">	
+						<a  class="this" href="__APP__/Seller/seller_list">
+							全部
+							
+						</a>
+					</if>
+								
+					<volist name="typeList" id="typeID">
+						<?php
+							$typeIDCondition['type_id']=$typeID;
+							$typeName =  $typeDB->where($typeIDCondition)->getField('type_name');
+						?>
+						<if condition="$typeRoot eq $typeID">	
+							<a class="this" href="__APP__/Seller/typeSelect?SelectType={$typeID}">
+						<else/>
+							<a href="__APP__/Seller/typeSelect?SelectType={$typeID}">
+						</if>					
+							{$typeName}
+						</a>
+					</volist>
+            	</div>
+            	<div class="desc-bg Fix Hide"></div>
+       		</div>
+		</div><!----分类标签--->	
+		
+
+		<!---筛选功能*-
+   		<div class="categ-sort Fix" data-id="sort-region">
+            <div class="categ-group">
+				<a href="/list/dongguan/items_40s953"
+				   class="categ-item has">
+					<span>默认排序</span>
+				</a>
+				<a href="/list/dongguan/items_40s953?desc=&sort=new"
+				   class="categ-item ">
+					<span>发布最新</span>
+				</a>
+				<a href="/list/dongguan/items_40s953?sort=price"
+				   class="categ-item ">
+					<span>价格最低</span>
+				</a>
+            </div>		
+		</div>.--->
+    </div>
+
+
+	<div class="floor J_floor" data-mode="render">
+		<div class="floor-item">
+			<ul class="Fix">
+				<?php
+					//按照已有条件查询
+					//1.按照类型分类
+					if($typeRoot!=0){
+						//查询子类列表
+						$fatherTypeCondition['father_id']=$typeRoot;
+						$subTypeList=$typeDB->where($fatherTypeCondition)->getField('type_id',true);
+						for($i=0;$i<count($subTypeList);$i++){
+							$TypeFilterCondition['type_id'] = $subTypeList[$i];
+						}
+						$TypeFilterCondition['type_id'] = $typeRoot;
+						$TypeFilterCondition['_logic'] = "OR";
+						$sellerFilter['_complex']=$TypeFilterCondition;
+					}else{
+						
+					}
+					
+					//获取当前城市
+					$city=$_SESSION['city'];
+					$sellerFilter['city']=$city;
+					
+
+					if($zoneID!=''){
+						$sellerFilter['zone_id']=$zoneID;
+					}
+					
+					//设置总筛选条件
+					$sellerViewDB=new Model('view_seller');
+					$sellerList =$sellerViewDB->where($sellerFilter)->getField('user_id',true);
+					
+				?>
+				<volist name="sellerList" id="sellerID">
+					<li class="floor-box J_floor_box" >
+						<?php
+							$sellerIDCondition['user_id']=$sellerID;
+							$sellerName =$sellerViewDB->where($sellerIDCondition)->getField('username');	
+							$sellerDscr =$sellerViewDB->where($sellerIDCondition)->getField('description');		
+							$sellerZone =$sellerViewDB->where($sellerIDCondition)->getField('zone_name');	
+							$sellerType =$sellerViewDB->where($sellerIDCondition)->getField('type_name');									
+							$sellerImgsrc=$sellerViewDB->where($sellerIDCondition)->getField('img');	
+						?>
+						<a href="__APP__/Seller/seller_info?sellerID={$sellerID}">							
+							<img  src="__PUBLIC__/uploads/img/{$sellerImgsrc}" >
+							<h3>
+							{$sellerName}</h3>
+							<h4>{$sellerDscr}</h4>
+							<div class="mask"></div>
+							<h4>{$sellerZone}</h4>
+							<h4>{$sellerType}</h4>
+							<div class="activity">
+							</div>
+						</a>
+					</li>	
+				</volist>
+				
+				
+			</ul>
+		</div>
+	</div>
+</div>
+</div>
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+</html>

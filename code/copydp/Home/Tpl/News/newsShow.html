@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="G_N">
+<head>
+<meta charset="UTF-8"/>
+<title>团购网站</title>
+<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/main/base-old.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="http://j3.s2.dpfile.com/s/c/app/group/community-old.1e8d31c8f7429f34295c0c34107785e6.css" type="text/css" />
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
+<link type="text/css" href="http://j3.s2.dpfile.com/s/c/app/group/community-i-old.1914e948eef25dce7be31d7321553af8.css" rel="stylesheet">
+<link type="text/css" href="http://j1.s2.dpfile.com/s/c/app/main/review-form.5abf982b7299b741b00a758d835eedaa.css" rel="stylesheet"> 
+<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/main/base-old.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+
+<style type="text/css">
+body{
+	background-color:#fafafa;
+}
+
+.myblock{
+	margin: 20px;
+	height: 30px;
+	padding: 20px;
+}
+
+.b-topic-wrapper h1 {
+float: left;
+/* width: 510px; */
+width: 550px;
+/* margin: 0 30px 15px 0; */
+margin: 0 0 15px 0;
+font-size: 28px;
+font-weight: bold;
+font-family: 宋体;
+color: black;
+}
+.myp{
+	font-family: 宋体;
+	color: rgb(73, 73, 73);
+}
+</style>
+<meta charset="UTF-8" />
+<meta http-equiv="mobile-agent" content="format=html5; url=http://m.dianping.com/forum/"/>
+</head>
+<body id="top">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+		<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+
+<div class="main page-sa page-topigetScrollc Fix">
+	<div class="section-wrapper">
+	    <div class="section">
+			
+			<!----主内容--->
+			<div class="block raw-block b-topic-wrapper" style="padding-top: 50px;">
+				<div class="block-inner">
+				<?php
+					$newsDB = new Model("news");
+					$newsCondition['news_id'] = $newsID;
+					$title=$newsDB->where($newsCondition)->getField('title');
+					$datetime=$newsDB->where($$newsCondition)->getField('datetime');
+					$context=$newsDB->where($newsCondition)->getField('content');
+				?>
+					<h1 class="topic">{$title}</h1>
+					<div class="topic-list" id="J_topic_list">
+						<div class="topic-item ti-leading topic-badge" id="J_main_post" style="padding-left: 0px;">
+							<div class="topic-info">
+								<span class="time" id="mainNoteTime">发表于 {$datetime}</span>
+							</div>
+							<div class="topic-entry ">
+								<p class="myp">{$context}</p>
+								<div class="topic-misc">
+									<div class="tm-content" id="J_op_info">				           
+										<p>发表于 {$datetime}</p>
+									</div>
+								</div>
+							
+							<!--收藏&回帖&赞 end-->
+							</div><!--主帖-->
+						</div>
+
+					</div><!--帖子列表 包括主帖及跟帖-->
+
+					</div>
+				</div>
+				
+				
+
+			</div>
+		</div>
+	<!---sidebar-->
+		<include file="./Home/Tpl/News/sidebar.html"/>
+	<!---sidebar-->	
+</div>
+
+	<!---footer-->
+	<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+		$(".txt-clean").click(function(){		
+			$("#textarea_reply").val("");
+		});
+
+		$(".pageTag").click(function(){	
+			pageClean();	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data);	
+		});
+		
+		function pageClean(){
+			$(".pageTagArray").children().removeClass("PageSel");
+			$(".pageTagArray").children().addClass("PageLink");
+			$("#pageListArray").children().addClass("Hide");
+		}
+		$(".NextPage1").click(function(){		
+			var current=$(".pageTagArray").attr('data');			
+			var data=Number(current)+1;
+			var max=Number($(".NextPage1").attr('data'));
+			if(data<=max){
+				pageClean();
+				change_page(data);	
+			}		
+		});
+		
+		$(".LastPage").click(function(){	
+			
+			var current=$(".pageTagArray").attr('data');
+			
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean();
+				change_page(data);	
+			}			
+		});
+		function change_page(data){
+			$("#page_"+data).addClass("PageSel");						
+			$(".pageTagArray").attr('data',data);	
+			var start=(data-1)*5;
+			$("#item_"+(start+1)).removeClass("Hide");
+			$("#item_"+(start+2)).removeClass("Hide");
+			$("#item_"+(start+3)).removeClass("Hide");
+			$("#item_"+(start+4)).removeClass("Hide");
+			$("#item_"+(start+5)).removeClass("Hide");
+		}
+	</script>
+	
+</html>
