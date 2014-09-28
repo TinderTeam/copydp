@@ -124,9 +124,62 @@ class ActivityManageAction extends Action {
 		$this->assign("jumpUrl","index");
 		$this->success("成功提交");
 	}
-	public function activityParticipator(){
-
+	public function activityParticipator($activityID=0,$username=0){
+		
+		$activityOrderView = M('view_activity_order');
+		$activityIDCondition['activity_id'] = $activityID;
+		if($username!=''){
+			$userCondition['username'] = $username;
+			$activityOrderList = $activityOrderView->where($activityIDCondition)->where($userCondition)->select();
+		}else{
+			$activityOrderList = $activityOrderView->where($activityIDCondition)->select();
+		}
+		$this->assign('activityID',$activityID);
+		$this->assign('activityOrderList',$activityOrderList);
 		$this->display();
 	}
+	public function searchActivityOrder(){
+
+		$this->redirect('__APP__/ActivityManage/activityParticipator?activityID='.$_POST['activityID'].'&username='.$_POST['customer_name']);
+	}
+	public function cancelActivityOrder($activityOrderID=0){
+		
+		$activity_order = M('activity_order');
+		$IDcondition['activity_order_id'] = $activityOrderID;
+		$activityID = $activity_order->where($IDcondition)->getField('activity_id');
+		$data['status']="取消资格";
+		if($activity_order->where($IDcondition)->save($data))
+		{
+
+			$this->success("取消成功");
+			$this->redirect('__APP__/ActivityManage/activityParticipator?activityID='.$activityID);
+		}
+		else
+		{
+			$this->error("操作失败，请重试");
+			$this->redirect('__APP__/ActivityManage/activityParticipator?activityID='.$activityID);
+		}
+	
+	}
+	public function confirmActivityOrder($activityOrderID=0){
+		
+		$activity_order = M('activity_order');
+		$IDcondition['activity_order_id'] = $activityOrderID;
+		$activityID = $activity_order->where($IDcondition)->getField('activity_id');
+		$data['status']="已参加";
+		if($activity_order->where($IDcondition)->save($data))
+		{
+
+			$this->success("确认成功");
+			$this->redirect('__APP__/ActivityManage/activityParticipator?activityID='.$activityID);
+		}
+		else
+		{
+			$this->error("操作失败，请重试");
+			$this->redirect('__APP__/ActivityManage/activityParticipator?activityID='.$activityID);
+		}
+	
+	}
+
 }
 ?>
