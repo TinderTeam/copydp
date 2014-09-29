@@ -49,6 +49,7 @@
 						$sellerViewCondition['city']=$city;							
 						$sellerIDList=$sellerViewDB->where($sellerViewCondition)->order('rand()')->limit(4)->getField('user_id',true);
 						$num = count($sellerIDList);
+						
 					?>		
 					<if condition="	$num eq 0">
 						<p>
@@ -58,6 +59,7 @@
 						<volist name="sellerIDList" id="sellerid" key="i">
 							<?php
 								$n=$i%2;
+								
 							?>
 							<if condition="$i gt 2">
 								<if condition="$n eq 1">
@@ -74,7 +76,7 @@
 							</if>				
 								<?php>
 													
-									$sellerViewIDCondition['seller_id']=$sellerid;								
+									$sellerViewIDCondition['user_id']=$sellerid;								
 									$p_name=$sellerViewDB->where($sellerViewIDCondition)->getField('username');
 									$p_img=$sellerViewDB->where($sellerViewIDCondition)->getField('img');
 									$p_dscr=$sellerViewDB->where($sellerViewIDCondition)->getField('description');

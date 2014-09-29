@@ -41,7 +41,7 @@
 	
 	<?php
 		$sellerViewDB=new Model('view_seller');
-		$sellerIDCondition['seller_id']=$sellerID;
+		$sellerIDCondition['user_id']=$sellerID;
 		$sellerName=$sellerViewDB->where($sellerIDCondition)->getField('username');
 		$sellerDscr=$sellerViewDB->where($sellerIDCondition)->getField('description');
 		$sellerImgsrc=$sellerViewDB->where($sellerIDCondition)->getField('img');

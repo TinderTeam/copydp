@@ -53,9 +53,9 @@ class UserCenterAction extends Action {
 			$sEvaData['seller_id']=$sellerID;
 			$sEvaData['datetime']=date('Y-m-d H:i:s',time());		
 			if($type=='service'){
-				$sEvaData['score_service']=$value;
+				$sEvaData['score_service']=$value/10;
 			}else if($type=='environment'){
-				$sEvaData['score_environment']=$value;
+				$sEvaData['score_environment']=$value/10;
 			}		
 			$sEvaData['eva_content']=$content;
 			$sEvaData['order_id']=$orderID;

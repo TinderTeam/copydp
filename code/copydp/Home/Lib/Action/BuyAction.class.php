@@ -29,7 +29,8 @@ class BuyAction extends Action {
 			$data2['product_id']=$product_id;
 			$data2['product_name']=$productItem['name'];
 			$data2['product_description']=$productItem['dscr'];
-			$data2['product_seller']=$productItem['seller_id'];
+			$data2['seller_id']=$productItem['seller_id'];
+			$data2['imgsrc']=$productItem['imgsrc'];
 			$data2['order_time']=$datetime;
 			$data2['order_price']=$productItem['price'];
 			$data2['order_original_price']=$productItem['original_price'];

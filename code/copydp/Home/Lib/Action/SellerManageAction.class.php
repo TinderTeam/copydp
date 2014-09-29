@@ -66,16 +66,10 @@ class SellerManageAction extends Action {
 	
 	    //新增商家
 		public function add(){
-
-			
-			
-		
 			$user = M('user');			
 			$newName=$_POST['seller_name'];
 			$condition['username'] = $newName;
-			
-			$select=$user->where($condition)->count();	
-			
+			$select=$user->where($condition)->count();			
 			if ($select!=0){
 					$this->assign("jumpUrl","index");
 					$this->error("该用户名已经存在！");			
@@ -118,7 +112,6 @@ class SellerManageAction extends Action {
 					$data2['type_id']=$_POST['type_id'];
 					$data2['description']=$_POST['description'];
 					$data2['position']=$_POST['position'];
-					$data2['img']=$_POST['img'];
 					$data2['city_id']=$_POST['city_id'];
 					$data2['zone_id']=$_POST['zone_id'];
 					$data2['info']=$_POST['info'];
