@@ -74,7 +74,7 @@ color: black;
 					$datetime=$newsDB->where($$newsCondition)->getField('datetime');
 					$context=$newsDB->where($newsCondition)->getField('content');
 				?>
-					<h1 class="topic">{$title}</h1>
+					<h1 class="topic" style="line-height:30px">{$title}</h1>
 					<div class="topic-list" id="J_topic_list">
 						<div class="topic-item ti-leading topic-badge" id="J_main_post" style="padding-left: 0px;">
 							<div class="topic-info">
