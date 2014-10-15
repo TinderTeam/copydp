@@ -12,8 +12,13 @@ class SystemManageAction extends Action {
 			$loginValue=$sysDB->where($loginCondition)->getField('value');
 			$orderCondition['key']='order_score';
 			$orderValue=$sysDB->where($orderCondition)->getField('value');
-
-
+			
+			//获取管理员列表
+			$user = M('user');
+			$userCondition['role']="ADMIN";
+			$adminList=$user->where($userCondition)->select();
+			$this->assign("adminList",$adminList);
+			
 			$this->assign("currentPage","sys");
 			$this->assign("loginValue",$loginValue);		
 			$this->assign("orderValue",$orderValue);					
@@ -23,6 +28,25 @@ class SystemManageAction extends Action {
 			$this->error("您还没有登录呢");
 		}	
     }
+	public function addAdmin(){	
+		
+		$user = M('user');			
+		$newName=$_POST['user_name'];
+		$condition['username'] = $newName;
+		$select=$user->where($condition)->count();
+		
+		if ($select!=0){
+				$this->assign("jumpUrl","adminAdd");
+				$this->error("该管理员已经存在！");	
+		}else{
+
+			$data['username']=$newName;
+			$data['role']='ADMIN';
+			$user->add($data);
+			$this->assign("jumpUrl","index");
+			$this->success("用户新增成功！");
+		}
+	}
 	public function orderUpdate(){	
 		$orderValue=$_POST['orderValue'];
 		

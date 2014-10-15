@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<title>团购网站</title>
+<link type="text/css" href="http://t3.s2.dpfile.com/t/cssnew/my/index.min.81e8e568c7d3705cb3d1ecc2cf472b7d.css" rel="stylesheet"/>
+<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/deal/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" rel="stylesheet"/>
+<link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+    <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+	<link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<style>
+body {
+	background-color: #f2f2f2;
+}
+.wrap{
+width: 1190px;
+margin: 15px auto;
+}
+.wrap .user-main {
+float: right;
+width: 1000px;
+}
+
+.user-main .um-con .modebox li {
+float: left;
+height: 39px;
+width: 190px;
+margin-right: 10px;
+}
+.span-input{
+	margin-top: 5px;
+}
+
+.span-select{
+    width: 129px;
+    height: 20px;
+}
+</style>
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+				
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	<div class="wrap">
+		<div class="user-nav J_user_nav">
+			<!-----管理菜单---->
+				<include file="./Home/Tpl/Public/managemenu.html"/>
+			<!-----管理菜单---->
+		</div>
+		<div class="user-main">
+			<div class="um-con" id="orderManage">
+				<div class="hd">
+					<h4>订单管理</h4>
+				</div>
+				<div class="con-tab">             
+					 <ul class="tab-filter">
+						<li>
+							<a href="__APP__/OrderManage/index?filter_type=all">全部</a>
+						</li>
+						<li>
+							<a href="__APP__/OrderManage/index?filter_type=place">已下单</a>
+						</li>
+						<li>
+							<a href="__APP__/OrderManage/index?filter_type=cancel">已取消</a>	
+						</li>
+						<li>
+							<a href="__APP__/OrderManage/index?filter_type=abolish">已作废</a>	
+						</li>
+						<li>
+							<a href="__APP__/OrderManage/index?filter_type=used">已使用</a>
+						</li>
+						<li>
+							<a href="__APP__/OrderManage/index?filter_type=out">已过期</a>
+						</li>
+						<li>
+							<select style="width:120px" id="selectProduct">
+								<option>按照产品筛选</option>
+								<foreach name='productList' item='v0' >
+								<option value="{$v0.product_id}" >{$v0.name}</option>
+								</foreach>
+							</select>
+						</li>
+					</ul>             
+				</div>
+
+				<div class="con-list">
+					<table>
+						<thead>
+						<tr>
+							<th class="t-order">
+								订单信息
+							</th>
+							<th class="t-time">
+								下单时间
+							</th>
+							<th class="t-amount">
+								数量
+							</th>
+							<th class="t-price">
+								金额
+							</th>
+							<th class="t-status">
+								交易状态
+							</th>
+							<th class="t-op">
+								操作
+							</th>
+							<th class="t-delete"></th>
+						</tr>
+
+						</thead>
+						<tbody id="pageListArray_activity">
+							<foreach name='orderList' item='v1' key="j" >
+								<if condition="$j gt 5">
+									<tr id="item_activity_{$j+1}" class="Hide">
+								<else/>
+									<tr id="item_activity_{$j+1}" >
+								</if>
+									<td class="t-order">
+										<div class="pic">
+											<a href="#"><img src="__PUBLIC__/uploads/img/{$v1.imgsrc}" width="85" height="53" /></a>
+										</div>
+
+										<div class="txt">
+											<h4>
+												<a href="#">
+													{$v1.product_name}
+												</a>
+											</h4>
+											<h5>
+												<span>
+													订单号：{$v1.order_id}
+												</span>
+											</h5>
+											<h5>
+												<span>
+													过期时间：{$v1.end_date_time}
+												</span>
+											</h5>
+										</div>
+
+									</td>
+									<td class="t-time">
+										<span>{$v1.order_time}</span>
+									</td>
+									<td class="t-amount">
+										<span>{$v1.quantity}</span>
+									</td>
+									<td class="t-price">
+										<span>￥{$v1.order_price}</span>
+									</td>
+									<td class="t-status">
+										<div>{$v1.order_status}</div>
+									</td>
+									<td class="t-op">
+										<a href="__APP__/OrderManage/abolishOrder?order_id={$v1.order_id}">作废</a>
+									</td>
+									<td class="t-delete">
+										<a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
+											<i></i>
+										</a>
+									</td>
+								</tr>
+							</foreach>	
+						</tbody>
+					</table>
+					<div class="pages-wrap J_tab2_pagewrap">
+						<div class="Pages">
+							<?php
+								$pageNumber2=floor(count($orderList)/5);
+							?>			
+								
+							<if condition="$pageNumber2 gt 0">
+								<a class="LastPage" typename="activity" title="上一页">上一页</a>
+								<span class="pageTagArray_activity" data="1" typename="activity">
+								<a id="page_activity_1" class="PageSel pageTag" typename="activity">1</a> 
+								<for start="1" end="($pageNumber2+1)">
+									<a id="page_activity_{$i+1}" typename="activity" class="PageLink pageTag">{$i+1}</a> 
+								 </for>	
+								</span>
+								<a class="NextPage" typename="activity" title="下一页" data="{$pageNumber2+1}">下一页</a>
+							</if>													
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+		$("#selectProduct").change(function(){ 
+			location.href='__APP__/SellerCenter/sellesInfo?filter_type='+$(this).val();
+		});	 
+</script>
+<script type="text/javascript">
+			
+		$(".pageTag").click(function(){	
+			var typename=$(this).attr('typename');
+			pageClean(typename);	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data,typename);	
+		});
+		
+		function pageClean(typename){
+			
+			$(".pageTagArray_"+typename).children().removeClass("PageSel");
+			$(".pageTagArray_"+typename).children().addClass("PageLink");
+			$("#pageListArray_"+typename).children().addClass("Hide");
+		}
+		$(".NextPage").click(function(){	
+			var typename=$(this).attr('typename');
+			var current=$(".pageTagArray_"+typename).attr('data');			
+			var data=Number(current)+1;
+			var max=Number($(this).attr('data'));
+			if(data<=max){
+				pageClean(typename);
+				change_page(data,typename);	
+			}
+		
+		});
+		$(".LastPage").click(function(){	
+			var typename=$(this).attr('typename');
+			var current=$(".pageTagArray_"+typename).attr('data');
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean(typename);
+				change_page(data,typename);	
+			}			
+		});
+		function change_page(data,typename){
+			$("#page_"+typename+"_"+data).addClass("PageSel");						
+			$(".pageTagArray_"+typename).attr('data',data);	
+			
+			var start=(data-1)*5;
+			$("#item_"+typename+"_"+(start+1)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+2)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+3)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+4)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+5)).removeClass("Hide");
+
+		}
+</script>
+</body>
+</html>

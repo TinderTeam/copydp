@@ -39,14 +39,6 @@
 	
 	<!---主页面---->
 	<div class="wrap">
-		<!---左侧导航栏--->
-		<div class="user-nav J_user_nav">
-			<ul>
-				<li class="cur"> <a href="__APP__/UserManage/index">会员管理</a> <i class="n-arr"></i></li>
-				<li> <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
-				<li> <a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
-			</ul>
-		</div><!---左侧导航栏--->
 		<!---中间主要内容--->
 		<div class="main_w Tabs-page user-main  page-account">	
 			<div class="user-main">
@@ -55,10 +47,10 @@
 					<!--标题-->
 					<div class="modebox my-booking J_my_booking">
 						<div class="hd">
-							<h4>会员新增</h4>	
+							<h4>新增管理员</h4>	
 						</div> 	
 					</div> 	<!--标题--> 
-				<form name="forml" action="__URL__/add" method="post">
+				<form name="forml" action="__APP__/SystemManage/addAdmin" method="post">
 					<!--表单-->
 					<div class="con">
 						<div class="main page-sa page-sa-col Fix">
@@ -66,48 +58,10 @@
 								<!--表单内容-->
 								<div class="form-inner">
 									<div class="form-block">
-										<label class="label label_required" >会员名称：<em>*</em></label>
+										<label class="label label_required" >管理员名称：</label>
 										<input name="user_name" type="text" maxlength="50"   class="form-txt form-txt-l" autocomplete="off" size="60" value=""/>
 										<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
                       			  	</div>    
-								                
-									<div class="form-block">
-										<span class="label label_required">用户等级：<em>*</em></span>
-										<select id="ddlShopType"  class="form-select-sim" name="grade">
-											<option selected="selected" value="Null">请选择等级</option>	
-											<option value="VIP">VIP</option>
-											<option value="S-VIP">S-VIP</option>
-										</select>
-
-									</div>
-
-									<div class="form-block">
-										<label class="label label_required" >手机号码：<em>*</em></label>
-										<input name="cellphone" type="text" maxlength="50"   class="form-txt form-txt-l" autocomplete="off" size="60" value=""/>
-										<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
-                      			  	</div>
-									<div class="form-block">
-										<label class="label label_required">邮箱地址：<em>*</em></label>
-										<input name="email" type="email" maxlength="50"   class="form-txt form-txt-l" autocomplete="off" size="60" value=""/>
-										<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
-                      			  	</div>
-									<div class="form-block">
-										<span class="label abel_required">积分：</span>
-										<input name="score" type="text"  maxlength="20" class="form-txt form-txt-l" autocomplete="off" value="" size="50"/>
-										
-									</div> 		
-									<div class="form-block">
-										<span class="label abel_required">车牌号：</span>
-										<input name="car_id"type="text"  maxlength="20" class="form-txt form-txt-l" autocomplete="off" value="" size="50"/>
-										
-									</div> 	
-									<div class="form-block">
-										<label class="label label_required" >推荐人：<em>*</em></label>
-										<input name="recommender_id" type="text" maxlength="50"   class="form-txt form-txt-l" autocomplete="off" size="60" value="" placeholder="请输入推荐人的编号"/>
-										<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
-									</div> 										
-             
-									
                    			 </div><!--表单内容-->
 							 <!--提交区域-->
 							<div class="block form-btn-block form-block form-content-block">

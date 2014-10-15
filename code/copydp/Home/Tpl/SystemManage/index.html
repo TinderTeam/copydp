@@ -117,6 +117,52 @@ margin-right: 10px;
 				</div>
 			</div>
 			
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+				<form name="forml" action="__URL__/search" method="post">
+					<div class="hd">
+						<h4>管理员管理</h4>
+						<span>管理管理员</span>	
+					</div>								
+					<ul class="tab-filter">
+						<li>
+							<strong class="btn-type-b btn-fn-c">			
+								<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/SystemManage/adminAdd'" />
+							</strong> 
+
+						</li>
+					</ul>
+
+				</form>	
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="15%">管理员编号</th>
+									<th width="15%">管理员名称</th>							
+									<th width="30%">操作</th>
+								</tr>
+						<form name="form2" action="" method="post">
+						<foreach name='adminList' item='v1'>
+						
+								<tr>
+									<td align="center" class="deal">{$v1.user_id}</td>
+									<td align="center" class="deal">{$v1.username}</td>	
+									<td align="center" class="deal"></td>	
+								</tr>
+						</foreach>
+						</form>
+						  <tr >
+                            <td colspan="7" style=" text-align: center;" ><span>{$page}</span></td>
+                          </tr>
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 	
