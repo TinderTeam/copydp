@@ -36,13 +36,9 @@
 	<div class="wrap">
 		<div class="user-nav J_user_nav">
 			<ul>
-				<li > <a href="#myOrder">我的订单</a> <i class="n-arr"></i> </li>
-				<li > <a href="#myActivity">我的活动</a> <i class="n-arr"></i>
-				</li>
-				<li > <a href="#myEvaluation">我的评价</a> <i class="n-arr"></i>
-				</li>
-				<li > <a href="#myCollect">我的收藏</a> <i class="n-arr"></i>
-				</li>
+				<!-----主菜单---->
+					<include file="./Home/Tpl/UserCenter/menu.html"/>
+				<!-----主菜单---->			
 			</ul>
 		</div>
 		<div class="user-main"> 
@@ -74,192 +70,13 @@
 				<div class="misc">
 					<div class="tips">
 						<ul>
-							<li><a > <strong>{$notUsedNum}</strong>未使用</a></li>
-							<li><a > <strong>{$evaluationNum}</strong>待评价</a></li>
+							<li><a href="__URL__/myOrder"><strong>{$notUsedNum}</strong>未使用</a></li>
+							<li><a href="#myEvaluation"><strong>{$evaluationNum}</strong>待评价</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			
-			<div class="um-con" id="myOrder">
-				<!--我的订单-->
-				<div class="modebox my-booking J_my_booking">
-					<div class="hd">
-						<h4>我的订单</h4>
-					</div>
-					<div class="con-list">
-						<table>
-							<thead>
-								<tr>
-									<th class="t-order">订单信息</th>
-									<th class="t-time">下单时间</th>
-									<th class="t-amount">数量</th>
-									<th class="t-price">金额</th>
-									<th class="t-status">交易状态</th>
-									<th class="t-op">操作</th>
-								</tr>
-							</thead>
-							<tbody id="pageListArray_order">								
-								<volist name="orderList" id="v1" key="i">
-									<if condition="$i gt 5">
-										<tr id="item_order_{$i+1}" class="Hide">
-									<else/>
-										<tr id="item_order_{$i+1}" >
-									</if>
-						
-										<td class="t-order">
-											<div class="pic">
-												<a><img src="__PUBLIC__/uploads/img/{$v1.imgsrc}" width="85" height="53" /></a>
-											</div>
-											<div class="txt">
-												<h4><a>{$v1.product_name}</a></h4>
-												<h5><span>订单号：{$v1.order_id}</span></h5>
-												<h5>
-													<span>
-															过期时间：{$v1.end_date_time}
-													</span>
-												</h5>
-											</div>
-										</td>
-										<td class="t-time">
-											<span>{$v1.order_time}</span>
-										</td>
-										<td class="t-amount">
-											<span>{$v1.quantity}</span>
-										</td>
-										<td class="t-price">
-											<span>￥{$v1.order_price}</span>
-										</td>
-										<td class="t-status">
-										<div>{$v1.order_status}</div>
-										</td>
-										<td class="t-op">
-											<if condition="$v1.order_status eq '已下单' ">
-												<a href="__APP__/UserCenter/cancelOrder?order_id={$v1.order_id}">取消订单</a>
-											<elseif condition="$v1.order_status eq '已使用' "/>
-												<a href="#myEvaluation">点击评价</a>
-											<elseif condition="$v1.order_status eq '已取消' "/>
-												<a href="__APP__/UserCenter/deleteOrder?order_id={$v1.order_id}">删除订单</a>
-											<else/>
-											</if>
-										</td>
-										<td class="t-delete">
-											<a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
-												<i></i>
-											</a>
-										</td>
-									</tr>
-								</volist>	
-							</tbody>
-						</table>
-						<div class="pages-wrap J_tab2_pagewrap">
-							<div class="Pages">
-								<?php
-									$pageNumber=floor (count($orderList)/5);
-								?>
-								<if condition="$pageNumber gt 0">
-									<a class="LastPage" typename="order" title="上一页">上一页</a>
-									<span class="pageTagArray_order" data="1" typename="order">
-									<a id="page_order_1" class="PageSel pageTag" typename="order">1</a> 
-									<for start="1" end="($pageNumber)" key="p1">
-										<a id="page_order_{$p1+2}" typename="order" class="PageLink pageTag">{$p1+2}</a> 
-									 </for>	
-									</span>
-									<a class="NextPage" typename="order" title="下一页" data="{$pageNumber}">下一页</a>
-								</if>													
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="um-con" id="myActivity">
-				<!--我的活动-->
-				<div class="modebox my-booking J_my_booking">
-					<div class="hd">
-						<h4>我的活动</h4>
-					</div>
-					<div class="con-list">
-						<table>
-							<thead>
-								<tr>
-									<th class="t-order">我的活动</th>
-									<th class="t-time">参加时间</th>								
-									<th class="t-status">活动状态</th>
-									<th class="t-op">操作</th>
-								</tr>
-							</thead>
-							<tbody id="pageListArray_activity">
-								<foreach name='activityList' item='v2' key="j" >
-									<if condition="$j gt 5">
-										<tr id="item_activity_{$j+1}" class="Hide">
-									<else/>
-										<tr id="item_activity_{$j+1}" >
-									</if>								
-										<td class="t-order">
-											<div class="pic">
-												<a><img src="__PUBLIC__/uploads/img/{$v2.imgsrc}" width="85" height="53" /></a>
-											</div>
-											<div class="txt">
-												<h4><a>{$v2.activity_title}</a></h4>
-												<h5><span>限制人数：{$v2.memberlimit}</span></h5>
-												<h5>
-													<span>
-															过期时间：{$v2.datelimit}
-													</span>
-												</h5>
-											</div>
-										</td>
-										<td class="t-time">
-											<span>{$v2.datetime}</span>
-										</td>
-										<td class="t-amount">
-											<span>
-											<?php
-									
-												$condition2['activity_id'] = $v2['activity_id']; 
-												$activity = M('activity');
-												$activityStatus = $activity->where($condition2)->getField('status');
-												if($activityStatus==""){
-													$activityStatus="活动已删除";
-												}
-												print($activityStatus);
-											?>
-											</span>
-										</td>								
-										
-										<td class="t-op">
-											<if condition="$activityStatus eq '进行中' ">
-												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">取消参与</a>	
-											<else/>
-												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">删除活动</a>
-											</if>
-										</td>
-									</tr>
-								</foreach>
-							</tbody>
-						</table>
-						<div class="pages-wrap J_tab2_pagewrap">
-							<div class="Pages">
-								<?php
-									$pageNumber2=floor(count($activityList)/5);
-								?>			
-									
-								<if condition="$pageNumber2 gt 0">
-									<a class="LastPage" typename="activity" title="上一页">上一页</a>
-									<span class="pageTagArray_activity" data="1" typename="activity">
-									<a id="page_activity_1" class="PageSel pageTag" typename="activity">1</a> 
-									<for start="1" end="($pageNumber2+1)">
-										<a id="page_activity_{$i+1}" typename="activity" class="PageLink pageTag">{$i+1}</a> 
-									 </for>	
-									</span>
-									<a class="NextPage" typename="activity" title="下一页" data="{$pageNumber2+1}">下一页</a>
-								</if>													
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="um-con" id="myEvaluation">
 				<!--我的评价-->
 				<div class="modebox my-comm J_my_comm" >
@@ -345,32 +162,6 @@
 						</div>
 					</div>							
 				</div>
-				<div class="um-con" id="myCollect">
-					
-					<!--我的收藏-->
-					<div class="modebox my-booking J_my_booking">
-						<div class="hd">
-							<h4>我的收藏</h4>
-						</div>
-						<div class="con">
-							<div class="pic-list J_booking_list">
-								<ul>
-									<foreach name='collectList' item='v4' >
-									<li>
-										<div class="pic">
-											<a title="" class="img"><img src="__PUBLIC__/uploads/img/{$v4.imgsrc}"></a>
-										</div>
-										<div class="txt">
-											<p><a>{$v4.product_name}</a></p>
-											<p>￥{$v4.price}</strong>
-										</div>
-									</li>
-									</foreach>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -408,54 +199,4 @@
         });		
 	});
 </script>
-<script type="text/javascript">
-			
-		$(".pageTag").click(function(){	
-			var typename=$(this).attr('typename');
-			pageClean(typename);	
-			$(this).addClass("PageSel");			
-			var data=Number($(this).html());
-			change_page(data,typename);	
-		});
-		
-		function pageClean(typename){
-			
-			$(".pageTagArray_"+typename).children().removeClass("PageSel");
-			$(".pageTagArray_"+typename).children().addClass("PageLink");
-			$("#pageListArray_"+typename).children().addClass("Hide");
-		}
-		$(".NextPage").click(function(){	
-			var typename=$(this).attr('typename');
-			var current=$(".pageTagArray_"+typename).attr('data');			
-			var data=Number(current)+1;
-			var max=Number($(this).attr('data'));
-			if(data<=max){
-				pageClean(typename);
-				change_page(data,typename);	
-			}
-		
-		});
-		$(".LastPage").click(function(){	
-			var typename=$(this).attr('typename');
-			var current=$(".pageTagArray_"+typename).attr('data');
-			var data=Number(current)-1;
-			if(data>0){
-				pageClean(typename);
-				change_page(data,typename);	
-			}			
-		});
-		function change_page(data,typename){
-			$("#page_"+typename+"_"+data).addClass("PageSel");						
-			$(".pageTagArray_"+typename).attr('data',data);	
-			
-			var start=(data-1)*5;
-			$("#item_"+typename+"_"+(start+1)).removeClass("Hide");
-			$("#item_"+typename+"_"+(start+2)).removeClass("Hide");
-			$("#item_"+typename+"_"+(start+3)).removeClass("Hide");
-			$("#item_"+typename+"_"+(start+4)).removeClass("Hide");
-			$("#item_"+typename+"_"+(start+5)).removeClass("Hide");
-
-		}
-	</script>
-	
 </html>

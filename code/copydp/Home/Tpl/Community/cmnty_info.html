@@ -59,23 +59,6 @@ body{
 							</span>
 						</a>
 					</strong>
-					<div class="Pages">
-						<span class="PageSel">1</span>
-						<a href="?pageno=2" class="PageLink" title="2">2</a>
-						<a href="?pageno=3" class="PageLink" title="3">3</a>
-						<a href="?pageno=2" class="NextPage" title="下一页">下一页</a>
-						<div class="slt-page J_pageGo">
-							<span class="goto-page">
-								去第
-								<input class="ipt-plane J_pageInput" type="text" maxlength="5" />
-								页
-								</span>
-							<span class="micro-btn-ash">
-								<a class="btn-txt J_pageBtn" href="javascript:;" title="跳转">跳转</a>
-							</span>
-							<span class="pmb-error J_pageError Hide" >页码错误</span>
-						</div>
-					</div>
 				</div>
 			</div><!--发表新帖与分页--->
 			
@@ -152,18 +135,37 @@ body{
 								<div id="item_{$i}" class="topic-item topic-badge Hide">
 							<else/>
 								<div id="item_{$i}" class="topic-item topic-badge">
-							</if>							
+							</if>	
+								
 								<div class="user-info">
 									<a class="J_card" >{$customerName}</a>
 									<a class="fn-top" title="回到顶部" href="#top">回到顶部</a>
+								
 									<span class="note">{$key+1}楼</span>
 								</div>
 								<div class="topic-info">
-									<span class="time">发表于{$datetime}</span>								
+									<span class="time">发表于{$datetime}</span>	
+									<?php
+										if(empty($_SESSION['login_user'])){								
+											$login='false';	
+										}else{
+											//获取用户信息
+											$db=new Model('user');
+											$userName=$_SESSION['login_user'];
+											$condition['username']=$userName;	
+											$role =  $db->where($condition)->getField('role');
+											$login='true';
+										}
+									?>
+								
+									<if condition="($login eq 'true') and ($role eq 'ADMIN') ">
+										<a href="__APP__/CommunityManage/deleteReply?replyID={$disscussItem}">删除此回复</a>	
+									</if> 										
 								</div>
 								<div class="topic-entry">
 									<p>{$content}</p>
-								</div>														
+								</div>
+														
 							</div>
 						</volist></div>						
 					</div><!--帖子列表 包括主帖及跟帖-->

@@ -55,8 +55,7 @@ margin-right: 10px;
 		<!---Logo栏---->
 		
 		<div class="nav-bar">
-			<div class="cont">
-				
+			<div class="cont">	
 				<!-----主菜单---->
 					<include file="./Home/Tpl/Public/menu.html"/>
 				<!-----主菜单---->
@@ -67,11 +66,7 @@ margin-right: 10px;
 	<div class="wrap">
 		<div class="user-nav J_user_nav">
 			<ul>
-				<li > <a href="#myEvaluation">我的评价</a> <i class="n-arr"></i> </li>
-				<li > <a href="#orderManage">订单管理</a> <i class="n-arr"></i>
-				</li>
-				<li > <a href="#productManage">产品管理</a> <i class="n-arr"></i>
-				</li>
+				<include file="./Home/Tpl/SellerCenter/menu.html"/>
 			</ul>
 		</div>
 		<div class="user-main">
@@ -121,8 +116,8 @@ margin-right: 10px;
 							$scoreSer =(int)($scoreSer/$evaluationCount);
 						?>
 						<ul>
-							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="/account/coupons"> <strong>{$undealOrderCount}</strong>未处理</a></li>	
-							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="/account/coupons"> <strong>{$oldOrderCount}</strong>已过期</a></li>						
+							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="__APP__/SellerCenter/orderManage?filter_type=place"> <strong>{$undealOrderCount}</strong>未处理</a></li>	
+							<li><a track="|1|module#5_my_info,action#click,index#3,content#/account/coupons" href="__APP__/SellerCenter/orderManage?filter_type=out"> <strong>{$oldOrderCount}</strong>已过期</a></li>						
 						</ul>
 					</div>
 				</div>
@@ -147,167 +142,6 @@ margin-right: 10px;
 								<span>{$scoreSer}星</span>
 							</li>						
 						</ul>      					
-					</div>
-				</div>
-			</div>
-			
-			<div class="um-con" id="orderManage">
-				<div class="hd">
-					<h4>订单管理</h4>
-				</div>
-				<div class="con-tab">             
-					 <ul class="tab-filter">
-						<li>
-							<a href="__APP__/SellerCenter/sellesInfo?filter_type=all">全部</a>
-						</li>
-						<li>
-							<a href="__APP__/SellerCenter/sellesInfo?filter_type=place">已下单</a>
-						</li>
-						<li>
-							<a href="__APP__/SellerCenter/sellesInfo?filter_type=cancel">已取消</a>
-								
-						</li>
-						<li>
-							<a href="__APP__/SellerCenter/sellesInfo?filter_type=used">已使用</a>
-						</li>
-						<li>
-							<a href="__APP__/SellerCenter/sellesInfo?filter_type=out">已过期</a>
-						</li>
-						<li>
-							<select style="width:120px" id="selectProduct">
-								<option>按照产品筛选</option>
-								<foreach name='productList' item='v0' >
-								<option value="{$v0.product_id}" >{$v0.name}</option>
-								</foreach>
-							</select>
-						</li>
-					</ul>             
-				</div>
-
-				<div class="con-list">
-					<table>
-						<thead>
-						<tr>
-							<th class="t-order">
-								订单信息
-							</th>
-							<th class="t-time">
-								下单时间
-							</th>
-							<th class="t-amount">
-								数量
-							</th>
-							<th class="t-price">
-								金额
-							</th>
-							<th class="t-status">
-								交易状态
-							</th>
-							<th class="t-op">
-								操作
-							</th>
-							<th class="t-delete"></th>
-						</tr>
-
-						</thead>
-						<tbody>
-						<foreach name='orderList' item='v1' >
-							<tr data-id="order-item" data-orderid="309225927">
-								<td class="t-order">
-									<div class="pic">
-										<a href="#"><img src="__PUBLIC__/uploads/img/{$v1.imgsrc}" width="85" height="53" /></a>
-									</div>
-
-									<div class="txt">
-										<h4>
-											<a href="#">
-												{$v1.product_name}
-											</a>
-										</h4>
-										<h5>
-											<span>
-												订单号：{$v1.order_id}
-											</span>
-										</h5>
-										<h5>
-											<span>
-												过期时间：{$v1.end_date_time}
-											</span>
-										</h5>
-									</div>
-
-								</td>
-								<td class="t-time">
-									<span>{$v1.order_time}</span>
-								</td>
-								<td class="t-amount">
-									<span>{$v1.quantity}</span>
-								</td>
-								<td class="t-price">
-									<span>￥{$v1.order_price}</span>
-								</td>
-								<td class="t-status">
-									<div>{$v1.order_status}</div>
-								</td>
-								<td class="t-op">
-									<if condition="$v1.order_status eq '已下单' ">
-										<a href="__APP__/SellerCenter/confirmOrder?order_id={$v1.order_id}">使用确认</a>
-									<elseif condition="$v1.order_status eq '已过期' "/>
-										<a href="__APP__/SellerCenter/cancelOrder?order_id={$v1.order_id}">取消订单</a>
-									<else/>
-										<a href="__APP__/SellerCenter/hideOrder?order_id={$v1.order_id}">删除订单</a>
-									</if>
-								</td>
-								<td class="t-delete">
-									<a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
-										<i></i>
-									</a>
-								</td>
-							</tr>
-						</foreach>	
-						</tbody>
-					</table>
-					<div class="pages-wrap">
-					</div>
-				</div>
-			</div>
-
-			<div class="um-con" id="productManage">
-				<div class="modebox my-comm J_my_comm" >
-					<div class="hd">
-						<h4>产品管理</h4>
-						<span>管理您的团购产品</span>
-					</div>
-					<input type="button" value="新增产品" class="form-btn" onclick="location.href='__URL__/newProduct?sellerID={$sellerID}'" />
-			<div class="pay-confirm">
-					<div class="pay-confirm">
-						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
-							<tbody>
-								<tr>
-									<th width="10%">产品名称</th>
-									<th width="30%">产品描述</th>
-									<th width="10%">图片预览</th>
-									<th width="10%">价格</th>
-									<th width="15%">开始时间</th>
-									<th width="10%">当前状态</th>
-									<th width="5%">操作</th>
-								</tr>
-								<foreach name='productList' item='v2' >
-								<tr>
-									<td valign="middle" align="left" class="deal">{$v2.name}</td>
-									<td valign="middle" align="left" class="deal">{$v2.describe}</td>
-									<td align="center" ><img src="__PUBLIC__/uploads/img/{$v2.imgsrc}" width="100px"></td>
-									<td align="center">￥{$v2.price}（原价：￥{$v2.original_price}）</td>
-									<td align="center" >{$v2.update_date}</td>
-									<td align="center">{$v2.product_status}</td>
-									<td align="center" >
-									<input type="button" value="编辑" onclick="location.href='__URL__/productEdit?productID={$v2.product_id}'"/>
-									<input type="button" value="删除" onclick="location.href='__URL__/productDelete?productID={$v2.product_id}'"/>
-									</td>
-								</tr>
-								</foreach>
-							</tbody>
-						</table>
 					</div>
 				</div>
 			</div>

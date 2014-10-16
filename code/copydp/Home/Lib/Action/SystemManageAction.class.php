@@ -1,6 +1,81 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
 class SystemManageAction extends Action {
+
+	public function newCity(){
+		$CityDB= M('city');
+		$newCity['city']=$_POST['cityName'];
+		$newCity['x']=$_POST['cityPositionX'];
+		$newCity['y']=$_POST['cityPositionY'];
+		$CityDB->add($newCity);
+		$this->assign("jumpUrl","index");
+		$this->success("操作成功");
+	}
+	
+	public function deleteCity($CityID=0){
+		$CityDB= M('city');
+		$deleteCityCondition['city_id']=$CityID;
+		$CityDB->where($deleteCityCondition)->delete();
+		$this->assign("jumpUrl","index");
+		$this->success("操作成功");
+	}
+
+	
+	public function basicInfoEdit($data){
+		$array = explode("~",$data);
+		$tel=urldecode($array[0]);
+		$email=urldecode($array[1]);	
+		$time=urldecode($array[2]);	
+		
+		$siteCfg= M('site_config');
+		
+		$condition['name']='tel';
+		$data1['content']=$tel;
+		$siteCfg->where($condition)->save($data1);
+		
+		$condition2['name']='time';
+		$data2['content']=$time;
+		$siteCfg->where($condition2)->save($data2);
+		
+		$condition3['name']='email';
+		$data3['content']=$email;
+		$siteCfg->where($condition3)->save($data3);
+
+		$this->ajaxReturn('true'.$data, 'Ajax 成功！', 1);
+	}
+	public function linkEdit($data){
+	
+		$array = explode("~",$data);
+		$link=urldecode($array[0]);
+		$linkname=urldecode($array[1]);	
+		$index=urldecode($array[2]);	
+		
+		$siteCfg= M('site_config');
+		$conditionlink['name']="linkname".$index;
+		$data1['content']=$linkname;
+		$siteCfg->where($conditionlink)->save($data1);
+		
+		$conditionlink['name']="link".$index;
+		$data2['content']=$link;
+		$siteCfg->where($conditionlink)->save($data2);
+		
+		$this->ajaxReturn($conditionlink['name'], 'Ajax 成功！', 1);
+	}
+	
+	public function helpEdit($data){
+	
+		$array = explode("~",$data);
+		$help=urldecode($array[0]);
+		$index=urldecode($array[1]);	
+		
+		$siteCfg= M('site_config');
+		$conditionlink['name']="help".$index;
+		$helpData['content']=$help;
+		$siteCfg->where($conditionlink)->save($helpData);
+	
+		$this->ajaxReturn('EDIT'.$conditionlink['name'], 'Ajax 成功！', 1);
+	}
+
     public function index(){
 		
 		if($_SESSION['login_user']!=""){

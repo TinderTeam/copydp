@@ -63,7 +63,7 @@ margin-right: 10px;
 	<div class="wrap">
 		<div class="user-nav J_user_nav">
 			<!-----管理菜单---->
-				<include file="./Home/Tpl/Public/managemenu.html"/>
+			<include file="./Home/Tpl/Public/managemenu.html"/>
 			<!-----管理菜单---->
 		</div>
 		<div class="user-main">
@@ -197,12 +197,9 @@ margin-right: 10px;
 						</li>
 					</ul>
 					<div >&nbsp&nbsp</div>
-					<div >
-							<span><strong class="btn-type-b btn-fn-c">
-									<input id="" type="submit" value="查询" class="form-btn">
-							</strong> </span>
- 				
-					</div>
+						<strong class="btn-type-b btn-fn-c">
+							<input id="" type="submit" value="查询" class=" form-btn">
+						</strong>				
 					</form>
 					
 					
@@ -284,8 +281,8 @@ margin-right: 10px;
                             </td>
 
                             <td class="t-op">
-								<input type="submit" value="审批"  onclick="javascript:this.form.action='__URL__/requestDeal?id={$vP.product_id}';"/>
-								<input type="submit" value="退回" onclick="javascript:this.form.action='__URL__/requestDelete?id={$vP.product_id}';"/>
+								<input type="submit" value="审批"  class="form-btn"  onclick="javascript:this.form.action='__URL__/requestDeal?id={$vP.product_id}';"/>
+								<input type="submit" value="退回"  class="form-btn" onclick="javascript:this.form.action='__URL__/requestDelete?id={$vP.product_id}';"/>
                             </td> 
 					
                         </tr>
@@ -297,8 +294,13 @@ margin-right: 10px;
 						 </tbody>
 					
 						 </table>
-						 <input type="submit" value="批量审批" name="subSure" />
-						 <input type="submit" value="批量退回" name="subQuit"/>
+						 <strong class="btn-type-b btn-fn-c">
+							 <input type="submit" value="批量审批" name="subSure" class=" form-btn" /> 
+						</strong>
+						<strong class="btn-type-b btn-fn-c">
+							<input type="submit" value="批量退回"  class="form-btn" name="subQuit"/>
+						
+						</strong>
 						 
 					</form>
 					

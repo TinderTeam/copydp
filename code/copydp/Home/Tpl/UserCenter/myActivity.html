@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<title>团购网站</title>
+<link type="text/css" href="http://t3.s2.dpfile.com/t/cssnew/my/index.min.81e8e568c7d3705cb3d1ecc2cf472b7d.css" rel="stylesheet"/>
+<link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css"" type="text/css" />
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+				
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	<div class="wrap">
+		<div class="user-nav J_user_nav">
+			<ul>
+				<!-----主菜单---->
+					<include file="./Home/Tpl/UserCenter/menu.html"/>
+				<!-----主菜单---->	
+			</ul>
+		</div>
+		<div class="user-main"> 
+			<div class="um-con" id="myActivity">
+				<!--我的活动-->
+				<div class="modebox my-booking J_my_booking">
+					<div class="hd">
+						<h4>我的活动</h4>
+					</div>
+					<div class="con-list">
+						<table>
+							<thead>
+								<tr>
+									<th class="t-order">我的活动</th>
+									<th class="t-time">参加时间</th>								
+									<th class="t-status">活动状态</th>
+									<th class="t-op">操作</th>
+								</tr>
+							</thead>
+							<tbody id="pageListArray_activity">
+								<foreach name='activityList' item='v2' key="j" >
+									<if condition="$j gt 5">
+										<tr id="item_activity_{$j+1}" class="Hide">
+									<else/>
+										<tr id="item_activity_{$j+1}" >
+									</if>								
+										<td class="t-order">
+											<div class="pic">
+												<a><img src="__PUBLIC__/uploads/img/{$v2.imgsrc}" width="85" height="53" /></a>
+											</div>
+											<div class="txt">
+												<h4><a>{$v2.activity_title}</a></h4>
+												<h5><span>限制人数：{$v2.memberlimit}</span></h5>
+												<h5>
+													<span>
+															过期时间：{$v2.datelimit}
+													</span>
+												</h5>
+											</div>
+										</td>
+										<td class="t-time">
+											<span>{$v2.datetime}</span>
+										</td>
+										<td class="t-amount">
+											<span>
+											<?php
+									
+												$condition2['activity_id'] = $v2['activity_id']; 
+												$activity = M('activity');
+												$activityStatus = $activity->where($condition2)->getField('status');
+												if($activityStatus==""){
+													$activityStatus="活动已删除";
+												}
+												print($activityStatus);
+											?>
+											</span>
+										</td>								
+										
+										<td class="t-op">
+											<if condition="$activityStatus eq '进行中' ">
+												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">取消参与</a>	
+											<else/>
+												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">删除活动</a>
+											</if>
+										</td>
+									</tr>
+								</foreach>
+							</tbody>
+						</table>
+						<div class="pages-wrap J_tab2_pagewrap">
+							<div class="Pages">
+								<?php
+									$pageNumber2=floor(count($activityList)/5);
+								?>			
+									
+								<if condition="$pageNumber2 gt 0">
+									<a class="LastPage" typename="activity" title="上一页">上一页</a>
+									<span class="pageTagArray_activity" data="1" typename="activity">
+									<a id="page_activity_1" class="PageSel pageTag" typename="activity">1</a> 
+									<for start="1" end="($pageNumber2+1)">
+										<a id="page_activity_{$i+1}" typename="activity" class="PageLink pageTag">{$i+1}</a> 
+									 </for>	
+									</span>
+									<a class="NextPage" typename="activity" title="下一页" data="{$pageNumber2+1}">下一页</a>
+								</if>													
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" >
+	$(".starItem").click(function(){
+		var dataType=$(this).attr('typename');
+		var array= dataType.split("-");
+		var orderID=array[0];
+		var type=array[1];
+		var value=$(this).attr('data-value');		
+		var content=$("#content-input-"+orderID).val();
+		//ajax
+		$.ajax({
+              type:"post",
+              url:"__URL__/admire",
+              data:"data="+orderID+"-"+type+"-"+value+"-"+content,
+              dataType:"html",
+              error:
+			  function(){
+                  alert("当前ajax操作出错！");
+              },
+              success:function(msg){
+				$("#"+type+"SrarList-"+orderID).addClass("Hide");
+				$("#"+type+"Srar-"+orderID).addClass("yellowstar"+value);
+				$("#"+type+"Srar-"+orderID).removeClass("Hide");
+				if(type=='product'){
+					$("#content-input-"+orderID).addClass("Hide");
+					$("#span-"+orderID).html(content);
+					$("#span-"+orderID).removeClass("Hide");
+				}
+			  }
+        });		
+	});
+</script>
+<script type="text/javascript">
+			
+		$(".pageTag").click(function(){	
+			var typename=$(this).attr('typename');
+			pageClean(typename);	
+			$(this).addClass("PageSel");			
+			var data=Number($(this).html());
+			change_page(data,typename);	
+		});
+		
+		function pageClean(typename){
+			
+			$(".pageTagArray_"+typename).children().removeClass("PageSel");
+			$(".pageTagArray_"+typename).children().addClass("PageLink");
+			$("#pageListArray_"+typename).children().addClass("Hide");
+		}
+		$(".NextPage").click(function(){	
+			var typename=$(this).attr('typename');
+			var current=$(".pageTagArray_"+typename).attr('data');			
+			var data=Number(current)+1;
+			var max=Number($(this).attr('data'));
+			if(data<=max){
+				pageClean(typename);
+				change_page(data,typename);	
+			}
+		
+		});
+		$(".LastPage").click(function(){	
+			var typename=$(this).attr('typename');
+			var current=$(".pageTagArray_"+typename).attr('data');
+			var data=Number(current)-1;
+			if(data>0){
+				pageClean(typename);
+				change_page(data,typename);	
+			}			
+		});
+		function change_page(data,typename){
+			$("#page_"+typename+"_"+data).addClass("PageSel");						
+			$(".pageTagArray_"+typename).attr('data',data);	
+			
+			var start=(data-1)*5;
+			$("#item_"+typename+"_"+(start+1)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+2)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+3)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+4)).removeClass("Hide");
+			$("#item_"+typename+"_"+(start+5)).removeClass("Hide");
+
+		}
+	</script>
+	
+</html>

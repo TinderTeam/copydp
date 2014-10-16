@@ -3,6 +3,21 @@
 class BuyAction extends Action {
 
     public function order($productID=0,$quantity=0){
+		if(empty($_SESSION['login_user'])){								
+			$this->assign("jumpUrl","login");
+			$this->error("请先登录系统!");	
+		}
+		//获取用户信息
+		$db=new Model('user');
+		$userName=$_SESSION['login_user'];
+		$condition['username']=$userName;	
+		$role =  $db->where($condition)->getField('role');
+		
+		if($role!='CUSTOMER'){
+			$this->assign("jumpUrl","__APP__/Index/index");
+			$this->error("您使用的账户类型不能进行此操作!");	
+		}
+		
 		$this->assign('productID',$productID);
 		$this->assign('quantity',$quantity);
 		$this->display();

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="dns-prefetch" href="http://t1.dpfile.com" />
+<link rel="dns-prefetch" href="http://t2.dpfile.com" />
+<link rel="dns-prefetch" href="http://t3.dpfile.com" />
+<link rel="dns-prefetch" href="http://si1.s1.dpfile.com/" />
+<title>团购网站</title>
+<link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+
+<link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+
+<style>
+body {
+	background-color: #f2f2f2;
+}
+.wrap{
+width: 1190px;
+margin: 15px auto;
+}
+.wrap .user-main {
+float: right;
+width: 1000px;
+}
+
+.user-main .um-con .modebox li {
+float: left;
+height: 39px;
+width: 190px;
+margin-right: 10px;
+}
+.span-input{
+	margin-top: 5px;
+}
+</style>
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+		
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	<div class="wrap">
+		<div class="user-nav J_user_nav">
+			<!-----管理菜单---->
+				<include file="./Home/Tpl/Public/managemenu.html"/>
+			<!-----管理菜单---->
+		</div>
+		<div class="user-main">			
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4>发帖管理</h4>
+						<span>管理社区论坛的发帖</span>
+					</div>
+					<form name="form" action="__URL__/search" method="post">
+						<ul class="tab-filter">
+							<li>
+								<div class="span-input">
+									<span>发帖编号</span><input name="community_id" type="text" value=""/>
+								</div> 
+							</li>
+							<li>
+								<div class="span-input">
+									<span>标题</span><input name="title" type="text" value=""/>
+								</div> 
+							</li>
+							<li>
+								<div class="span-input">
+									<span>发帖人</span><input name="user_name" type="text" value=""/>
+								</div> 
+							</li>
+							<li>
+								<div class="btn-type-b btn-fn-c">
+									<input type="submit" value="查询" class="form-btn">
+								</div>
+							</li>
+						</ul>						
+					</form>						
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<thead>
+								<tr>
+									<th width="10%">发帖编号</th>
+									<th width="15%">标题</th>
+									<th width="15%">类型</th>
+									<th width="15%">发帖时间</th>										
+									<th width="10%">发帖人</th>												
+									<th width="5%">操作</th>
+								</tr>
+							</thead>
+
+							<?php
+								$communityDB = M('view_community_customer');
+								if($IDFilter!=""){
+									$communityCondition['community_id']=$IDFilter;
+								}
+								if($titleFilter!=""){
+									$communityCondition['title']=$titleFilter;
+								}
+								if($userFilters!=""){
+									$communityCondition['username']=$userFilters;
+								}
+								$communityList=$communityDB->where($communityCondition)->select();
+							?>
+							<tbody id="pageListArray">
+								<volist name="communityList" id="communityItem" key="i">
+									
+									<if condition="$i gt 5">
+										<tr id="item_{$i}" class="Hide">
+									<else/>
+										<tr id="item_{$i}">
+									</if>
+										<td align="center">{$communityItem['community_id']}</td>
+										<td align="left">
+											<a href="__APP__/Community/cmnty_info?communityID={$communityItem['community_id']}">{$communityItem['title']}</a>
+										</td>
+										<td align="center" >{$communityItem['community_type']}</td>
+										<td align="center"> {$communityItem['datetime']}</td>
+										<td align="center"> {$communityItem['username']}</td>
+
+										<td align="center" >									
+											<input type="button" value="删除" class="form-btn"
+											onclick="location.href='__APP__/CommunityManage/delete?communityID={$communityItem['community_id']}'" />
+										</td>
+									</tr>
+								</volist>
+							</tbody>
+						</table>	
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+	
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+</body>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+<script>
+	$("#basic-info-save").click(function(){
+		var tel= $("#tel").val();
+		var email= $("#email").val();
+		var time= $("#time").val();
+		tel=tel.replace("~","-");
+		email=email.replace("~","-");
+		time=time.replace("~","-");
+		//ajax
+		$.ajax({
+              type:"post",
+              url:"__URL__/basicInfoEdit",
+              data:"data="+tel+"~"+email+"~"+time,
+              dataType:"html",
+              error:
+			  function(){
+                  alert("当前ajax操作出错！");
+              },
+              success:function(msg){
+				var obj = eval ("(" + msg + ")");
+				if(obj.data="true"){
+					alert("操作成功！");
+				}
+			}
+        });	
+	});
+	
+	$(".link-btn").click(function(){
+	
+		var index=$(this). attr('index');		
+		var link= $("#link_"+index).val();
+		var linkname= $("#link_name_"+index).val();
+		
+		//ajax
+		$.ajax({
+              type:"post",
+              url:"__URL__/linkEdit",
+              data:"data="+link+"~"+linkname+"~"+index,
+              dataType:"html",
+              error:
+			  function(){
+                  alert("当前ajax操作出错！");
+              },
+              success:function(msg){
+				var obj = eval ("(" + msg + ")");
+				if(obj.data="true"){
+					alert("操作成功！");
+				}
+			}
+        });	
+	});
+	
+	$(".help-btn").click(function(){
+	
+		var index=$(this). attr('index');		
+		var help= $("#help"+index).val();
+
+		//ajax
+		$.ajax({
+              type:"post",
+              url:"__URL__/helpEdit",
+              data:"data="+help+"~"+index,
+              dataType:"html",
+              error:
+			  function(){
+                  alert("当前ajax操作出错！");
+              },
+              success:function(msg){
+				var obj = eval ("(" + msg + ")");
+				if(obj.data="true"){
+					alert("操作成功！");
+				}
+			}
+        });	
+	});
+</script>
+
+</html>

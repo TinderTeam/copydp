@@ -3,7 +3,28 @@
 
 
 class IndexAction extends Action {
-
+	public function passwordSetup(){
+		$this->display();
+	}
+	public function modifyPswd(){
+		$UserDB= new Model("user");
+		$condition['username']=$_SESSION['login_user'];
+		$condition['password']=$_POST['oldpswd'];
+		$user=$UserDB->where($condition)->getField('user_id');
+		if($user==''){
+			$this->assign("jumpUrl","passwordSetup");
+			$this->error("密码错误！");
+		}else{
+			$nameCondition['username']=$_SESSION['login_user'];
+			$data['password']=$_POST['newpswd'];
+			$UserDB->where($nameCondition)->save($data);
+			$this->assign("jumpUrl","login");
+			$this->error("操作成功");
+		}
+		
+		
+	}
+	
 	public function index(){
 			
 		//处理城市

@@ -27,7 +27,34 @@
     <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
-	
+	<style>
+body {
+	background-color: #f2f2f2;
+}
+.wrap{
+width: 1190px;
+margin: 15px auto;
+}
+.wrap .user-main {
+float: right;
+width: 1000px;
+}
+
+.user-main .um-con .modebox li {
+float: left;
+height: 39px;
+width: 190px;
+margin-right: 10px;
+}
+.span-input{
+	margin-top: 5px;
+}
+
+.span-select{
+    width: 129px;
+    height: 20px;
+}
+</style>
 	 <script>
         $(function () {
             $("#up0").uploadPreview({ Img: "img0"});		

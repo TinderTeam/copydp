@@ -18,20 +18,27 @@
 	<else/>
 		<li>
 	</if>
-	<a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
+		<a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
 		
-		<if condition="$currentPage eq 'sys'" >
+	<if condition="$currentPage eq 'community'" >
 		<li class="cur">
 	<else/>
 		<li>
 	</if>
-	<a href="__APP__/SystemManage/index">系统管理</a> <i class="n-arr"></i></li>
+	<a href="__APP__/CommunityManage/index">社区管理</a> <i class="n-arr"></i></li>	
 	
+	<if condition="$currentPage eq 'sys'" >
+		<li class="cur">
+	<else/>
+	
+		<li>
+	</if>
+	<a href="__APP__/SystemManage/index">系统配置</a> <i class="n-arr"></i></li>
+
 	<if condition="$currentPage eq 'order'" >
 		<li class="cur">
 	<else/>
 		<li>
 	</if>
 	<a href="__APP__/OrderManage/index">订单管理</a> <i class="n-arr"></i></li>
-	
 </ul>

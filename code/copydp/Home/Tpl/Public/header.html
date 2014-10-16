@@ -56,6 +56,11 @@
 			</ul>
 			<ul class="nav">
 				<!-- active-dropdown -->
+				
+				<if condition="($login eq 'true')">
+					<li class="has-line"> <a href="__APP__/Index/passwordSetup" class=""><span>		修改密码
+					</span></a> </li>
+				</if> 
 				<if condition="($login eq 'true') and ($role eq 'CUSTOMER') ">
 					<li class="has-line"> <a href="__APP__/UserCenter/userinfo" class=""><span>会员中心</span></a> </li>
 				</if> 

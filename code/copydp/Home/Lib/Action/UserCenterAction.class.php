@@ -6,8 +6,6 @@ class UserCenterAction extends Action {
 	
 		//获取用户名、手机号码、积分
 	
-		
-		
 		$array = explode("-",$data);
 		$orderID=$array[0];
 		$type=$array[1];
@@ -71,7 +69,44 @@ class UserCenterAction extends Action {
 		
 		$this->ajaxReturn(null, 'Ajax 成功！', 1);
 	}
+	
+	public function myOrder(){
+		$userName=$_SESSION['login_user'];
+		$condition['username'] = $userName;
+		$viewOrder = M('view_order');
+		//显示订单列表
+		$orderCount = $viewOrder->where($condition)->count();
+		$orderList = $viewOrder->where($condition)->select();
+		$this->assign('orderList',$orderList);
+	
+		$this->display();
+	}
+	public function myActivity(){
+		$userName=$_SESSION['login_user'];
+		$condition['username'] = $userName;
+	
+		//显示活动列表
+		$user = M('user');
+		$user_id = $user->where($condition)->getField('user_id');
+		$condition1['customer_id'] = $user_id; 
+		$activity_order = M('activity_order');
+		$activityList = $activity_order->where($condition1)->select();
+		$this->assign('activityList',$activityList);
+		$this->display();
+	}
+	public function myMark(){
+		$userName=$_SESSION['login_user'];
+		$condition['username'] = $userName;
 
+				
+		//获取收藏列表
+		$collect = M('view_collect');
+		$collectList = $collect->where($condition)->select();
+		$this->assign('collectList',$collectList);
+		$this->display();
+
+	}
+	   
     public function userinfo(){
 	
 	//获取用户名、手机号码、积分
@@ -89,31 +124,15 @@ class UserCenterAction extends Action {
 	$viewOrder = M('view_order');
 	$notUsedNum = $viewOrder->where($condition)->where('order_status="已下单"')->count();
 	$evaluationNum = $viewOrder->where($condition)->where('order_status="已使用"')->count();
+	
 	//获取待评价产品
 	$orderEva = $viewOrder->where($condition)->where('order_status="已使用"')->select();
 	$this->assign('notUsedNum',$notUsedNum);
 	$this->assign('evaluationNum',$evaluationNum);
 	$this->assign('orderEva',$orderEva);
 	
-	//显示订单列表
-	$orderCount = $viewOrder->where($condition)->count();
-	$orderList = $viewOrder->where($condition)->select();
-	$this->assign('orderList',$orderList);
-	
-	//显示活动列表
-	$user = M('user');
-	$user_id = $user->where($condition)->getField('user_id');
-	$condition1['customer_id'] = $user_id; 
-	$activity_order = M('activity_order');
-	$activityList = $activity_order->where($condition1)->select();
-	$this->assign('activityList',$activityList);
-	
-	//获取收藏列表
-	$collect = M('view_collect');
-	$collectList = $collect->where($condition)->select();
-	$this->assign('collectList',$collectList);
-	
 	$this->display();
+
     }
 	
 	public function cancelOrder($order_id=0){

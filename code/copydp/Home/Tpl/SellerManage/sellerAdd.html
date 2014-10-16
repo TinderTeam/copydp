@@ -27,17 +27,40 @@
     <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
-	
+	<style>
+		body {
+			background-color: #f2f2f2;
+		}
+		.wrap{
+		width: 1190px;
+		margin: 15px auto;
+		}
+		.wrap .user-main {
+		float: right;
+		width: 1000px;
+		}
+
+		.user-main .um-con .modebox li {
+		float: left;
+		height: 39px;
+		width: 190px;
+		margin-right: 10px;
+		}
+		.span-input{
+			margin-top: 5px;
+		}
+
+		.span-select{
+			width: 129px;
+			height: 20px;
+		}
+		</style>
 	<style type="text/css">
 		#allmap{
 			margin-left: 89px;width: 500px;height: 400px;"
 				}
 	</style>
-	<script>
-        $(function () {
-            $("#up0").uploadPreview({ Img: "img0"});		
-        });
-    </script>
+	
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DNGm7Kq87zslzLLkll9epKQY"></script>
 </head>
 
@@ -65,12 +88,14 @@
 	<div class="wrap">
 		<!---左侧导航栏--->
 		<div class="user-nav J_user_nav">
-			<ul>
-				<li > <a href="__APP__/UserManage/index">会员管理</a> <i class="n-arr"></i></li>
-				<li class="cur"> <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
-				<li> <a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
-			</ul>
-		</div><!---左侧导航栏--->
+		
+			<?php
+				$currentPage='seller';
+			?>
+			<!-----管理菜单---->
+			<include file="./Home/Tpl/Public/managemenu.html"/>
+			<!-----管理菜单---->
+		</div>
 		<!---中间主要内容--->
 		<div class="main_w Tabs-page user-main  page-account">	
 			<div class="user-main">
@@ -190,6 +215,7 @@
 			<p id="city_{$vc.city_id}" city="{$vc.city}"  x="{$vc.x}" y="{$vc.y}"></p>
 		</foreach>	
 	<div>
+	
 	<script type="text/javascript">	
 	  //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -233,6 +259,10 @@
 		});
 		
 	</script>
-
+	<script>
+        $(function () {
+            $("#up0").uploadPreview({ Img: "img0"});		
+        });
+    </script>
 </body>
 </html>
