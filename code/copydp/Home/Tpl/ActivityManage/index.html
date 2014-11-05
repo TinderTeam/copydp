@@ -105,11 +105,12 @@ margin-right: 10px;
 							<thead>
 								<tr>
 									<th width="10%">编号</th>
-									<th width="15%">名称</th>
-									<th width="15%">状态</th>	
+									<th width="20%">名称</th>
+									<th width="10%">状态</th>	
 									<th width="10%">城市</th>
 									<th width="15%">截止时间</th>
-									<th width="20%">参与/限制人数</th>							
+									<th width="20%">参与/限制人数</th>
+									<th width="10%">赠送积分</th>
 									<th width="5%">操作</th>
 								</tr>
 							</thead>
@@ -154,6 +155,7 @@ margin-right: 10px;
 										?>							
 										
 										<td align="center" >{$activityMember}/{$limit}</td>
+										<td align="center" >{$activityItem['point']}</td>
 										<td align="center" >
 											<input type="button" value="编辑" class="form-btn"
 											onclick="location.href='__APP__/ActivityManage/activityEdit?activityID={$activityItem['activity_id']}'" />
