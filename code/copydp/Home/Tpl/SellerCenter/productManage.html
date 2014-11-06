@@ -101,7 +101,7 @@ margin-right: 10px;
 										<td align="center">{$v2.product_status}</td>
 										<td align="center" >
 										<input type="button" value="编辑" onclick="location.href='__URL__/productEdit?productID={$v2.product_id}'"/>
-										<input type="button" value="删除" onclick="location.href='__URL__/productDelete?productID={$v2.product_id}'"/>
+										<input type="button" value="删除" onclick="show_delete_confirm({$v2.product_id})"/>
 										</td>
 									</tr>
 									</foreach>
@@ -117,6 +117,19 @@ margin-right: 10px;
 		$("#selectProduct").change(function(){ 
 			location.href='__APP__/SellerCenter/sellesInfo?filter_type='+$(this).val();
 		});	 
+</script>
+<script type="text/javascript">
+function show_delete_confirm(productID)
+{
+	var r=confirm("确定要删除该产品？");
+	if(r==true)
+	{
+		top.location="__URL__/productDelete?productID="+productID;
+	}
+	else
+	{
+	}
+}
 </script>
 </body>
 </html>

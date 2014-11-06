@@ -193,7 +193,7 @@ margin-right: 10px;
 									<td align="center" class="deal">{$city.city}</td>	
 									<td align="center" class="deal">({$city.x},{$city.y})</td>
 									<td align="center" class="deal">
-										<input type="button" value="删除" onclick="location.href='__URL__/deleteCity?CityID={$city.city_id}'"/>
+										<input type="button" value="删除" onclick="show_delete_confirm({$city.city_id})"/>
 									</td>									
 								</tr>
 							</foreach>
@@ -431,5 +431,18 @@ margin-right: 10px;
 			});		
 		});	
 	</script>
+<script type="text/javascript">
+function show_delete_confirm(cityID)
+{
+	var r=confirm("确定要删除该城市？");
+	if(r==true)
+	{
+		top.location="__URL__/deleteCity?CityID="+cityID;
+	}
+	else
+	{
+	}
+}
+</script>
 </body>
 </html>

@@ -95,11 +95,11 @@
 										</td>
 										<td class="t-op">
 											<if condition="$v1.order_status eq '已下单' ">
-												<a href="__APP__/UserCenter/cancelOrder?order_id={$v1.order_id}">取消订单</a>
+												<button onclick="show_cancel_confirm({$v1.order_id})" >取消订单</button>
 											<elseif condition="$v1.order_status eq '已使用' "/>
-												<a href="#myEvaluation">点击评价</a>
+												<button href="#myEvaluation">点击评价</button>
 											<elseif condition="$v1.order_status eq '已取消' "/>
-												<a href="__APP__/UserCenter/deleteOrder?order_id={$v1.order_id}">删除订单</a>
+												<button onclick="show_delete_confirm({$v1.order_id})">删除订单</button>
 											<else/>
 											</if>
 										</td>
@@ -217,5 +217,30 @@
 
 		}
 	</script>
-	
+<script type="text/javascript">
+function show_cancel_confirm(orderID)
+{
+	var r=confirm("确定要取消该订单？");
+	if(r==true)
+	{
+		top.location="__APP__/UserCenter/cancelOrder?order_id="+orderID;
+	}
+	else
+	{
+	}
+}
+</script>
+<script type="text/javascript">
+function show_delete_confirm(orderID)
+{
+	var r=confirm("确定要删除该订单？");
+	if(r==true)
+	{
+		top.location="__APP__/UserCenter/deleteOrder?order_id="+orderID;
+	}
+	else
+	{
+	}
+}
+</script>
 </html>

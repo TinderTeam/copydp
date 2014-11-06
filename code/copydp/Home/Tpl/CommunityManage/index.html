@@ -135,10 +135,8 @@ margin-right: 10px;
 										<td align="center" >{$communityItem['community_type']}</td>
 										<td align="center"> {$communityItem['datetime']}</td>
 										<td align="center"> {$communityItem['username']}</td>
-
 										<td align="center" >									
-											<input type="button" value="删除" class="form-btn"
-											onclick="location.href='__APP__/CommunityManage/delete?communityID={$communityItem['community_id']}'" />
+											<input type="button" value="删除" class="form-btn" onclick="show_delete_confirm({$communityItem['community_id']})" />
 										</td>
 									</tr>
 								</volist>
@@ -233,4 +231,17 @@ margin-right: 10px;
 	});
 </script>
 
+<script type="text/javascript">
+function show_delete_confirm(CommunityID)
+{
+	var r=confirm("确定要删除该帖？");
+	if(r==true)
+	{
+		top.location="__APP__/CommunityManage/delete?communityID="+CommunityID;
+	}
+	else
+	{
+	}
+}
+</script>
 </html>

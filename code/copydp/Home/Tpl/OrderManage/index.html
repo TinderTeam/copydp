@@ -176,7 +176,7 @@ margin-right: 10px;
 										<div>{$v1.order_status}</div>
 									</td>
 									<td class="t-op">
-										<a href="__APP__/OrderManage/abolishOrder?order_id={$v1.order_id}">作废</a>
+										<a onclick="show_abolish_confirm({$v1.order_id})" >作废</a>
 									</td>
 									<td class="t-delete">
 										<a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
@@ -262,6 +262,19 @@ margin-right: 10px;
 			$("#item_"+typename+"_"+(start+5)).removeClass("Hide");
 
 		}
+</script>
+<script type="text/javascript">
+function show_abolish_confirm(orderID)
+{
+	var r=confirm("确定要作废该订单？");
+	if(r==true)
+	{
+		top.location="__APP__/OrderManage/abolishOrder?order_id="+orderID;
+	}
+	else
+	{
+	}
+}
 </script>
 </body>
 </html>

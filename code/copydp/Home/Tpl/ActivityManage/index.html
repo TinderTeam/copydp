@@ -160,11 +160,9 @@ margin-right: 10px;
 											<input type="button" value="编辑" class="form-btn"
 											onclick="location.href='__APP__/ActivityManage/activityEdit?activityID={$activityItem['activity_id']}'" />
 											<if condition="$activityItem['status'] eq '进行中' ">
-											<input type="button" value="取消" class="form-btn"
-											onclick="location.href='__APP__/ActivityManage/cancelActivity?activityID={$activityItem['activity_id']}'" />
+											<input type="button" value="取消" class="form-btn" onclick="show_cancel_confirm({$activityItem['activity_id']})"/>
 											<else/>
-											<input type="button" value="删除" class="form-btn"
-											onclick="location.href='__APP__/ActivityManage/deleteActivity?activityID={$activityItem['activity_id']}'" />
+											<input type="button" value="删除" class="form-btn" onclick="show_delete_confirm({$activityItem['activity_id']})"/>
 											</if>
 										</td>
 									</tr>
@@ -242,4 +240,31 @@ margin-right: 10px;
 			$("#item_"+(start+5)).removeClass("Hide");
 		}
 </script>
+<script>
+function show_cancel_confirm(activityID)
+{
+	var r=confirm("确定要取消该活动？");
+	if(r==true)
+	{
+		top.location="__APP__/ActivityManage/cancelActivity?activityID="+activityID;
+	}
+	else
+	{
+	}
+}
+</script>
+<script type="text/javascript">
+function show_delete_confirm(activityID)
+{
+	var r=confirm("确定要删除该活动？");
+	if(r==true)
+	{
+		top.location="__APP__/ActivityManage/deleteActivity?activityID="+activityID;
+	}
+	else
+	{
+	}
+}
+</script>
+
 </html>
