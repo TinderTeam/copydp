@@ -25,14 +25,7 @@
 				}
 		</style>
 		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
-		<script>
-		function searchsubmit(){
-			$("#searchform").submit();
-		}
-		</script>
-		
-		
-		
+
 		<div class="head-qmenu head-qmenu-new cont Fix">
 			<div class="logo Fix">
 				<a href="__APP__/Index/Index" ><img src="__PUBLIC__/img/logo.jpg"    style="top: 5px;"></a>
@@ -52,9 +45,32 @@
 				</h2>
 			</div>
 			<div class="search-div search-div-new" data-jump="" data-promo-text="#买团购见叫兽#">
-			<form id="searchform" name="searchform" action="__APP__/Buy/searchProduct" method="post">
-				<input type="text" name="keyword" class="input focus" placeholder="请输入店名、商品名称、商区等" id="search-keywords" value="" >
-				<a class="my-search-btn"  href="javascript:void(0);" onclick="searchsubmit()">搜索</a>
-			</form>
+			<!--<form id="searchform" name="searchform" action="__APP__/Buy/searchProduct" method="post">-->
+				<input id="search-keywords" type="text" name="keyword" class="input focus" placeholder="请输入店名、商品名称、商区等"  value="" >
+				<a id="search-btn" class="my-search-btn"  href="javascript:void(0);">搜索</a>
 			</div>
 		</div>
+<script>
+	$("#search-btn").click(function(){
+		var keyword = $("#search-keywords").val();
+		$.ajax({
+			type:"post",
+			url:"__APP__/Buy/ajaxSearch",
+			data:"data="+keyword,
+			dataType:"html",
+			error:function(){
+				alert("当前ajax操作出错！");
+			},
+			success:function(msg){
+				var obj = eval ("(" + msg + ")");
+				//alert(obj.data);
+				if(obj.data=='false'){
+					//校验失败	
+					alert(obj.info);
+				}else{
+					 window.location.href="__APP__/Buy/searchProduct?key="+keyword; 						
+				}				
+			}		  
+		});		
+	});
+</script>
