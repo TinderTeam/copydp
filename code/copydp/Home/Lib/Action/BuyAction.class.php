@@ -111,11 +111,30 @@ class BuyAction extends Action {
 		$this->assign('typeRoot',$typeRoot);
 		$this->display('product_list');
 	}
+	public function ajaxSearch($data){
+		$array = explode("-",$data);
+		$keyword=urldecode($array[0]);
+		$product = new Model('product');
+		$map="name like('%".$keyword."%') ";
+		$productCount = $product->where($map)->count();
+		if($keyword=='')
+		{
+			$this->ajaxReturn('false', '请输入关键词', 1);
+		}
+		elseif($productCount==0)
+		{
+			$this->ajaxReturn('false', '没有搜索到相关信息', 1);
+		}
+		else
+		{
+			$this->ajaxReturn('true', '搜索成功', 1);
+		}
+	}
 	
-	public function searchProduct(){		
+	public function searchProduct($key=0){		
 		$typeRoot=0;
 		$search='true';
-		$keyword='%'.$_POST['keyword'].'%';
+		$keyword='%'.$key.'%';
 		$this->assign('typeRoot',$typeRoot);
 		$this->assign('keyword',$keyword);
 		$this->assign('search',$search);

@@ -16,6 +16,29 @@
 <link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
 <link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
 
+<style>
+body {
+	background-color: #f2f2f2;
+}
+.wrap{
+width: 1190px;
+margin: 15px auto;
+}
+.wrap .user-main {
+float: right;
+width: 1000px;
+}
+
+.user-main .um-con .modebox li {
+float: left;
+height: 39px;
+width: 190px;
+margin-right: 10px;
+}
+.span-input{
+	margin-top: 5px;
+}
+</style>
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
@@ -29,7 +52,6 @@
 		
 		<div class="nav-bar">
 			<div class="cont">
-
 				<!-----主菜单---->
 					<include file="./Home/Tpl/Public/menu.html"/>
 				<!-----主菜单---->
@@ -41,11 +63,9 @@
 	<div class="wrap">
 		<!---左侧导航栏--->
 		<div class="user-nav J_user_nav">
-			<ul>
-				<li class="cur"> <a href="__APP__/UserManage/index">会员管理</a> <i class="n-arr"></i></li>
-				<li> <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
-				<li> <a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
-			</ul>
+						<!-----管理菜单---->
+				<include file="./Home/Tpl/Public/managemenu.html"/>
+			<!-----管理菜单---->
 		</div><!---左侧导航栏--->
 		<!---中间主要内容--->
 		<div class="main_w Tabs-page user-main  page-account">	

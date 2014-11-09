@@ -27,10 +27,9 @@
 		<!---Logo栏---->
 		
 		<div class="nav-bar">
-			<div class="cont">
-			
+			<div class="cont">	
 				<!-----主菜单---->
-					<include file="./Home/Tpl/Public/menu.html"/>
+					<include file="./Home/Tpl/Public/menu2.html"/>
 				<!-----主菜单---->
 			</div>
 		</div>
@@ -148,12 +147,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="func">					
-						<dl class="count-down J_count_down">
-							<dt>剩余</dt>
-							<dd class="time">
-							<?php
-							
+					<div class="func" style="margin-top: 20px;">
+						<h2 class="sub-title" style="font-size:22px"> <span><font color="#ff8400">	<b>						
+							<?php						
 								$Date_1=date("Y-m-d");						
 								$Date_2=$endTime;
 								$Date_List_a1=explode("-",$Date_1);
@@ -165,13 +161,12 @@
 								
 								if($d2-$d1 < 0)
 								{
-									print("已过期");
+									print("产品已过期！");
 								}else{
-									print($Days . "天");
+									print('剩余'.$Days . "天");
 								}
 							?>
-							
-						</dl>
+						</b></font> 	</span> </h2>	
 					</div>
 				</div>
 			</div>

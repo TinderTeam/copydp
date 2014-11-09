@@ -38,8 +38,7 @@ class IndexAction extends Action {
 				$city=$this->unescape($iplookup['city']);
 			}					
 		}
-		$_SESSION['city']=$city;
-		
+		$_SESSION['city']=$city;	
 		$this->display();
     }
 	
@@ -55,7 +54,8 @@ class IndexAction extends Action {
 		
 	}
 	//登录页面
-	public function login(){
+	public function login($tabSelect=0){
+		$this->assign('tabSelect',$tabSelect);
 		$this->display();
     }
 	
@@ -64,53 +64,112 @@ class IndexAction extends Action {
 		session_start();
         $time=30*60; 
         setcookie(session_name(),session_id(),time()+$time,"/");
-		
 
-      
-			if(!empty($_POST['name'])&&!empty($_POST['pwd'])){
-				$admin= M('user');
-        
-				$condition['username']=$_POST['name'];
-				$pwdenter=$_POST['pwd'];
-				$pwdtrue = $admin->where($condition)->getField('password');
-				$userID = $admin->where($condition)->getField('user_id');
-				$role = $admin->where($condition)->getField('role');
+		$admin= M('user');
+		$condition['username']=$_POST['name'];
+		$userCount = $admin->where($condition)->count();
+		$pwdenter=$_POST['pwd'];
+		$pwdtrue = $admin->where($condition)->getField('password');
+		$userID = $admin->where($condition)->getField('user_id');
+		$role = $admin->where($condition)->getField('role');
+		if($userCount==0)		//用户不存在
+		{
+			$this->assign("jumpUrl","login?tabSelect=memberRigist");
+			$this->error("用户名不存在，您可以立即注册");
+		}
+		elseif($pwdtrue!=$pwdenter)		//密码不正确
+		{
+			$this->assign("jumpUrl","login");
+			$this->error("用户名或密码不正确！");
+			
+		}
+		else
+		{
+			$_SESSION['login_user']= $_POST['name'];
+			//处理登陆赠送积分
+			if($role=='CUSTOMER'){
+				$custmerDB= M('customer');
+				$customerIDCondition['user_id']=$userID;
+				$lastDate=$custmerDB->where($customerIDCondition)->getField('login_date');
+				$score=$custmerDB->where($customerIDCondition)->getField('score');
 				
-				if($pwdtrue==$pwdenter){
-					$_SESSION['login_user']= $_POST['name'];
-					//处理登陆赠送积分
-					if($role=='CUSTOMER'){
-						$custmerDB= M('customer');
-						$customerIDCondition['user_id']=$userID;
-						$lastDate=$custmerDB->where($customerIDCondition)->getField('login_date');
-						$score=$custmerDB->where($customerIDCondition)->getField('score');
-						
-						$sysDB= M('sys_config');
-						$sysCondition['key']='login_score';
-						$scoreAdd=$sysDB->where($sysCondition)->getField('value');					
-						$nowDate = date('Y-m-d',time());
-						
-						if($lastDate=="" || $lastDate!=$nowDate){
-							//赠送积分
-							$CustomerData['score']=$score+$scoreAdd;
-						}
-						$CustomerData['login_date']=$nowDate;
-						$custmerDB->where($customerIDCondition)->save($CustomerData);
-					}
-					
-					$this->assign("jumpUrl","index");
-					$this->success("登陆成功！");
-				}else{
-					//$this->redirect('Index/login','',2,'用户名或密码不正确！');
-				 $this->assign("jumpUrl","login");
-				$this->error("用户名或密码不正确！");
+				$sysDB= M('sys_config');
+				$sysCondition['key']='login_score';
+				$scoreAdd=$sysDB->where($sysCondition)->getField('value');					
+				$nowDate = date('Y-m-d',time());
+				
+				if($lastDate=="" || $lastDate!=$nowDate){
+					//赠送积分
+					$CustomerData['score']=$score+$scoreAdd;
 				}
-			}else{
-				$this->assign("jumpUrl","login");
-				$this->error("用户名或密码不能为空！");
-				}
+				$CustomerData['login_date']=$nowDate;
+				$custmerDB->where($customerIDCondition)->save($CustomerData);
+			}
+			
+			$this->assign("jumpUrl","index");
+			$this->success("登陆成功！");
+		 
+		}
 
-	}	
+	}
+	//找回密码
+	public function findPswd(){
+		
+		$email=$_POST['email'];
+		$findCondition['username']=$_POST['username'];
+		$customer = M('view_customer');
+		$nameCount=$customer->where($findCondition)->count();
+		$userEmail=$customer->where($findCondition)->getField('email');
+		if(($nameCount==0)||($userEmail!=$email)){
+			$this->assign("jumpUrl","login");
+			$this->error("您输入的用户名或邮箱错误");
+		}
+		else{
+			$user = M('user');
+			$newPswd=$this->randomkeys(6);
+			$Data['password']= $newPswd;
+			$user->where($findCondition)->save($Data);
+			SendMail($_POST['email'],"DIY团密码找回邮件","您的新随机密码为：【".$newPswd."】请尽快登录系统修改密码");
+			$this->assign("jumpUrl","login");
+			$this->success("系统已重置密码，请登录您的Email查看新密码");
+		}
+	}
+	//生产随机密码
+	function randomkeys($length)
+	{
+	 $pattern='1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ';
+	 for($i=0;$i<$length;$i++)
+	 {
+	   $key .= $pattern{mt_rand(0,35)};    //生成php随机数
+	 }
+	 return $key;
+	}
+	//注册Ajax前台验证
+	public function AjaxCheck($data){
+		$array = explode("-",$data);
+		$key=urldecode($array[0]);
+		$value=urldecode($array[1]);
+		if($key=='email'){
+			
+			$customer = M('view_customer');
+			$condition['email']=$value;
+			$emailCount = $customer->where($condition)->count();
+			if($emailCount!=0){
+				$this->ajaxReturn('false', '您填写的邮箱已被注册', 1);
+			}
+		}
+		if($key=='username'){
+			//验证用户名重复
+			$customer = M('view_customer');
+			$condition['username']=$value;
+			$nameCount = $customer->where($condition)->count();
+			if($nameCount!=0){
+				$this->ajaxReturn('false', '您填写的用户名已被注册', 1);
+			}
+		}
+		$this->ajaxReturn('true', 'Ajax 成功！', 1);
+	}
+	//注册校验
 	public function register(){
 	
 		$admin= M('user');      
@@ -128,7 +187,6 @@ class IndexAction extends Action {
 		$admin->add($userData);
 		
 		$userID = $admin->where($condition)->getField('user_id');
-		print($userID);
 		$customerDB= M('customer'); 
 		
 		$customerData['user_id']=$userID;

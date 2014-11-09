@@ -15,9 +15,24 @@ class ActivityAction extends Action {
 	
 	
 	public function activityOrderCommit($activityID=0){
-		print('id='.$activityID);
+		//print('id='.$activityID);
+		
+		if(empty($_SESSION['login_user'])){								
+			$this->assign("jumpUrl","login");
+			$this->error("请先登录系统!");	
+		}
+		//获取用户信息
+		$db=new Model('user');
+		$userName=$_SESSION['login_user'];
+		$condition['username']=$userName;	
+		$role =  $db->where($condition)->getField('role');
+		
+		if($role!='CUSTOMER'){
+			$this->assign("jumpUrl","__APP__/Index/index");
+			$this->error("您使用的账户类型不能进行此操作!");	
+		}
+		
 		if($_SESSION['login_user']!=""){
-
 			$user= M('user');
 			$condition['username']=$_SESSION['login_user'];
 			$customer_id = $user->where($condition)->getField('user_id');		
@@ -32,7 +47,7 @@ class ActivityAction extends Action {
 			$memberlimit=$activityView->where($activityViewCondition)->getField('memberlimit');
 			$datelimit=$activityView->where($activityViewCondition)->getField('datelimit');
 			
-			//������߼��ж�
+			//参与的逻辑判断
 			
 			$order = M('activity_order');
 			$data2['activity_order_id']=$orderID;	
@@ -50,10 +65,10 @@ class ActivityAction extends Action {
 			$this->assign('customer_id',$customer_id);
 			$this->assign('orderID',$orderID);
 			$this->display();
-			//$this->success("�µ��ɹ�");
+			//$this->success("下单成功");
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
-			$this->error("����û�е�¼��");
+			$this->error("您还没有登录呢");
 		}	
 		
 	}

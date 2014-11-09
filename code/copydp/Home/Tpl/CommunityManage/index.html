@@ -36,6 +36,12 @@ margin-right: 10px;
 .span-input{
 	margin-top: 5px;
 }
+
+.btnbar{
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
 </style>
 </head>
 <body id="body" data-type="">
@@ -88,10 +94,10 @@ margin-right: 10px;
 								</div> 
 							</li>
 							<li>
-								<div class="btn-type-b btn-fn-c">
+								<strong class="btn-type-b btn-fn-c btnbar">
 									<input type="submit" value="查询" class="form-btn">
-								</div>
-							</li>
+								</strong> 							
+							</li>		
 						</ul>						
 					</form>						
 					<div class="pay-confirm">
@@ -135,10 +141,8 @@ margin-right: 10px;
 										<td align="center" >{$communityItem['community_type']}</td>
 										<td align="center"> {$communityItem['datetime']}</td>
 										<td align="center"> {$communityItem['username']}</td>
-
 										<td align="center" >									
-											<input type="button" value="删除" class="form-btn"
-											onclick="location.href='__APP__/CommunityManage/delete?communityID={$communityItem['community_id']}'" />
+											<input type="button" value="删除" class="form-btn" onclick="show_delete_confirm({$communityItem['community_id']})" />
 										</td>
 									</tr>
 								</volist>
@@ -233,4 +237,17 @@ margin-right: 10px;
 	});
 </script>
 
+<script type="text/javascript">
+function show_delete_confirm(CommunityID)
+{
+	var r=confirm("确定要删除该帖？");
+	if(r==true)
+	{
+		top.location="__APP__/CommunityManage/delete?communityID="+CommunityID;
+	}
+	else
+	{
+	}
+}
+</script>
 </html>

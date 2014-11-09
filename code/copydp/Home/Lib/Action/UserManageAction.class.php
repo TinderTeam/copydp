@@ -239,6 +239,9 @@ class UserManageAction extends Action {
 		}
 		
 	}
-	
+	public function userAdd(){
+	$this->assign("currentPage","user");
+		$this->display();
+	}	
 }
 ?>

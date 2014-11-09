@@ -31,14 +31,14 @@
 				?>
 				<if condition="$login eq 'false'">
 					<li class="has-line"><a href="__APP__/Index/login"> <span>用户登陆</span> </a> </li>
-					<li class="logo-browser-fav J_browser_fav"> <a href="__APP__/Index/login"> <span>免费注册</span> </a> </li>	
+					<li class="logo-browser-fav J_browser_fav"> <a href="__APP__/Index/login?tabSelect=memberRigist"> <span>免费注册</span> </a> </li>	
 					
 				<else/>
 						<li class="has-line"><a href="__APP__/UserCenter/userinfo"> <span>欢迎您，{$userName}！</span> </a> </li>
 						<li class="J_browser_fav"> <a href="__APP__/Index/logout"> <span>注销</span> </a> </li>	
 					<if condition="$role eq 'CUSTOMER'">					
 						<li class="J_browser_fav"> <a > <span>当前积分：</span> </a> </li>	
-						<li class="has-line"><a href="__APP__/Index/login"> <span>{$score}</span> </a> </li>
+						<li class="has-line"><a href="__APP__/UserCenter/userinfo"> <span>{$score}</span> </a> </li>
 						
 						<li class="logo-browser-fav J_browser_fav"> 
 							<a> <span>参加活动： </span></a>
@@ -68,7 +68,7 @@
 					<li class="has-line"> <a href="__APP__/SellerCenter/sellesInfo" class=""><span>商家中心</span></a> </li>
 				</if> 
 				<if condition="($login eq 'true') and ($role eq 'ADMIN') ">
-					<li class="has-line"> <a href="__APP__/UserManage/index" class=""><span>后台管理</span></a> </li>			
+					<li class="has-line"> <a href="__APP__/SystemManage/ManageIndex" class=""><span>后台管理</span></a> </li>			
 				</if> 
 				
 			</ul>

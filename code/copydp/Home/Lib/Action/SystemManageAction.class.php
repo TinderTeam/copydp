@@ -2,6 +2,43 @@
 // 本类由系统自动生成，仅供测试用途
 class SystemManageAction extends Action {
 
+	public function ManageIndex(){
+			$this->display();
+	}
+	
+	
+	public function deleteAdmin($UserID=0){
+		$UserDB= M('user');
+		$deleteUserCondition['user_id']=$UserID;
+		$UserDB->where($deleteUserCondition)->delete();
+		$this->assign("jumpUrl","index");
+		$this->success("操作成功");
+	}
+  
+	public function privilege($UserID=0){
+		$PrivilegeDB= M('privilege');
+		$privilegeCondition1['user_id']=$UserID;
+		$PList=$PrivilegeDB->where($privilegeCondition1)->getField('function',true);
+		$this->assign("Plist",$PList);
+		$this->assign("UserID",$UserID);
+		$this->display();
+	}
+	
+	public function privilegeSet($UserID=0){
+  	
+		$PrivilegeDB= M('privilege');
+		$privilegeCondition1['user_id']=$UserID;
+		$PrivilegeDB->where($privilegeCondition1)->delete();
+		$List=$_POST['interest'];
+		for($i = 0;$i<count($List);$i++){
+			$c['user_id']=$UserID;
+			$c['function']=$List[$i];
+			$PrivilegeDB->add($c);
+		}
+		$this->success("操作成功");
+		
+	}
+	
 	public function newCity(){
 		$CityDB= M('city');
 		$newCity['city']=$_POST['cityName'];
@@ -19,8 +56,38 @@ class SystemManageAction extends Action {
 		$this->assign("jumpUrl","index");
 		$this->success("操作成功");
 	}
-
 	
+	public function deleteAdmin($UserID=0){
+		$UserDB= M('user');
+		$deleteUserCondition['user_id']=$UserID;
+		$UserDB->where($deleteUserCondition)->delete();
+		$this->assign("jumpUrl","index");
+		$this->success("操作成功");
+	}
+
+	public function privilege($UserID=0){
+		$PrivilegeDB= M('privilege');
+		$privilegeCondition1['user_id']=$UserID;
+		$PList=$PrivilegeDB->where($privilegeCondition1)->getField('function',true);
+		$this->assign("Plist",$PList);
+		$this->assign("UserID",$UserID);
+		$this->display();
+	}
+	
+	public function privilegeSet($UserID=0){
+	
+		$PrivilegeDB= M('privilege');
+		$privilegeCondition1['user_id']=$UserID;
+		$PrivilegeDB->where($privilegeCondition1)->delete();
+		$List=$_POST['interest'];
+		for($i = 0;$i<count($List);$i++){
+			$c['user_id']=$UserID;
+			$c['function']=$List[$i];
+			$PrivilegeDB->add($c);
+		}
+		$this->success("操作成功");
+		
+	}
 	public function basicInfoEdit($data){
 		$array = explode("~",$data);
 		$tel=urldecode($array[0]);

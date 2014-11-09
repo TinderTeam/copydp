@@ -39,6 +39,11 @@ margin-right: 10px;
     width: 129px;
     height: 20px;
 }
+.btnbar{
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
 </style>
 </head>
 <body id="body" data-type="">
@@ -107,16 +112,18 @@ margin-right: 10px;
 								</select>
 							</div>							
 						</li>
+						<li>
+								<strong class="btn-type-b btn-fn-c btnbar">
+									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+								</strong> 
+								<strong class="btn-type-b btn-fn-c btnbar">			
+									<input type="button" value="新增商家" class="form-btn" onclick="location.href='__APP__/SellerManage/sellerAdd'" />
+								</strong> 
+
+						</li>
 
 					</ul>
-					<div >
-						<div class="btn-type-b btn-fn-c">
-							<input id="btnAdd" type="submit" value="查询" class="form-btn">
-						</div> 						
-						<div class="btn-type-b btn-fn-c">
-							<input type="button" value="新增商家" class="form-btn" onclick="location.href='__APP__/SellerManage/sellerAdd'" />
-						</div> 
-					</div>
+			
 				</form>
 					<div class="pay-confirm">
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
@@ -294,10 +301,10 @@ margin-right: 10px;
 						 </tbody>
 					
 						 </table>
-						 <strong class="btn-type-b btn-fn-c">
+						 <strong class="btn-type-b btn-fn-c btnbar">
 							 <input type="submit" value="批量审批" name="subSure" class=" form-btn" /> 
 						</strong>
-						<strong class="btn-type-b btn-fn-c">
+						<strong class="btn-type-b btn-fn-c btnbar">
 							<input type="submit" value="批量退回"  class="form-btn" name="subQuit"/>
 						
 						</strong>

@@ -18,12 +18,12 @@ class SellerCenterAction extends Action {
 		$conditionDelete['product_id'] = $productID;
 		if($product->where($conditionDelete)->delete())
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/sellesinfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/productManage");
 			$this->success("删除成功");
 		} 
 		else
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/sellesinfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/productManage");
 			$this->error("删除失败，请重试");
 		}
 	}
@@ -85,7 +85,7 @@ class SellerCenterAction extends Action {
 			$product->add($data2);
 		}
 
-		$this->redirect('SellerCenter/sellesInfo');
+		$this->redirect('SellerCenter/productManage');
 		//$this->display('sellesInfo');
 		//$this->assign("jumpUrl","sellesInfo");
 		//$this->success("成功提交");
@@ -322,12 +322,12 @@ class SellerCenterAction extends Action {
 	
 	if($order->where($condition)->save($data))
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/sellesInfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
 			$this->success("操作成功");
 		} 
 	else
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/sellesInfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
 			$this->error("操作失败，请重新确认");
 		}
     }
@@ -339,12 +339,12 @@ class SellerCenterAction extends Action {
 
 	if($order->where($condition)->save($data))
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/sellesInfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
 			$this->success("删除成功");
 		} 
 	else
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/sellesInfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
 			$this->error("删除失败，请重新删除");
 		}
     }
@@ -356,12 +356,12 @@ class SellerCenterAction extends Action {
 
 	if($order->where($condition)->save($data))
 		{
-			$this->assign("jumpUrl","__APP__/UserCenter/userinfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
 			$this->success("成功取消");
 		} 
 	else
 		{
-			$this->assign("jumpUrl","__APP__/UserCenter/userinfo");
+			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
 			$this->error("操作失败，请重新取消");
 		}
     }

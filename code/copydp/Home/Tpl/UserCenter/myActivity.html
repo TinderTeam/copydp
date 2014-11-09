@@ -99,9 +99,9 @@
 										
 										<td class="t-op">
 											<if condition="$activityStatus eq '进行中' ">
-												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">取消参与</a>	
+												<button onclick="show_cancel_confirm({$v2.activity_id})" >取消参与</button>	
 											<else/>
-												<a href="__APP__/UserCenter/cancelActivity?activity_id={$v2.activity_id}">删除活动</a>
+												<button onclick="show_delete_confirm({$v2.activity_id})" >删除活动</button>
 											</if>
 										</td>
 									</tr>
@@ -214,5 +214,30 @@
 
 		}
 	</script>
-	
+<script type="text/javascript">
+function show_delete_confirm(activityID)
+{
+	var r=confirm("确定要删除该活动？");
+	if(r==true)
+	{
+		top.location="__APP__/UserCenter/cancelActivity?activity_id="+activityID;
+	}
+	else
+	{
+	}
+}
+</script>
+<script type="text/javascript">
+function show_cancel_confirm(activityID)
+{
+	var r=confirm("确定要取消参与该活动？");
+	if(r==true)
+	{
+		top.location="__APP__/UserCenter/cancelActivity?activity_id="+activityID;
+	}
+	else
+	{
+	}
+}
+</script>		
 </html>

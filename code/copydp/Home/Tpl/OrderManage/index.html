@@ -72,9 +72,13 @@ margin-right: 10px;
 		</div>
 		<div class="user-main">
 			<div class="um-con" id="orderManage">
-				<div class="hd">
-					<h4>订单管理</h4>
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4 style="font-size:14px">订单管理</h4>
+						<span>管理系统订单</span>
+					</div>
 				</div>
+				
 				<div class="con-tab">             
 					 <ul class="tab-filter">
 						<li>
@@ -105,9 +109,11 @@ margin-right: 10px;
 						</li>
 					</ul>             
 				</div>
-
-				<div class="con-list">
-					<table>
+				<div class="modebox my-comm J_my_comm"  style="
+    padding-top: 0px;
+">
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 						<thead>
 						<tr>
 							<th class="t-order">
@@ -130,10 +136,9 @@ margin-right: 10px;
 							</th>
 							<th class="t-delete"></th>
 						</tr>
-
 						</thead>
-						<tbody id="pageListArray_activity">
-							<foreach name='orderList' item='v1' key="j" >
+							<tbody id="pageListArray_activity">							
+								<foreach name='orderList' item='v1' key="j" >
 								<if condition="$j gt 5">
 									<tr id="item_activity_{$j+1}" class="Hide">
 								<else/>
@@ -176,7 +181,7 @@ margin-right: 10px;
 										<div>{$v1.order_status}</div>
 									</td>
 									<td class="t-op">
-										<a href="__APP__/OrderManage/abolishOrder?order_id={$v1.order_id}">作废</a>
+										<a onclick="show_abolish_confirm({$v1.order_id})" >作废</a>
 									</td>
 									<td class="t-delete">
 										<a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
@@ -185,28 +190,33 @@ margin-right: 10px;
 									</td>
 								</tr>
 							</foreach>	
-						</tbody>
-					</table>
-					<div class="pages-wrap J_tab2_pagewrap">
-						<div class="Pages">
-							<?php
-								$pageNumber2=floor(count($orderList)/5);
-							?>			
-								
-							<if condition="$pageNumber2 gt 0">
-								<a class="LastPage" typename="activity" title="上一页">上一页</a>
-								<span class="pageTagArray_activity" data="1" typename="activity">
-								<a id="page_activity_1" class="PageSel pageTag" typename="activity">1</a> 
-								<for start="1" end="($pageNumber2+1)">
-									<a id="page_activity_{$i+1}" typename="activity" class="PageLink pageTag">{$i+1}</a> 
-								 </for>	
-								</span>
-								<a class="NextPage" typename="activity" title="下一页" data="{$pageNumber2+1}">下一页</a>
-							</if>													
+							</tbody>							
+						</table>
+						
+						<div class="pages-wrap J_tab2_pagewrap">
+							<div class="Pages">
+								<?php
+									$pageNumber2=floor(count($orderList)/5);
+								?>			
+									
+								<if condition="$pageNumber2 gt 0">
+									<a class="LastPage" typename="activity" title="上一页">上一页</a>
+									<span class="pageTagArray_activity" data="1" typename="activity">
+									<a id="page_activity_1" class="PageSel pageTag" typename="activity">1</a> 
+									<for start="1" end="($pageNumber2+1)">
+										<a id="page_activity_{$i+1}" typename="activity" class="PageLink pageTag">{$i+1}</a> 
+									 </for>	
+									</span>
+									<a class="NextPage" typename="activity" title="下一页" data="{$pageNumber2+1}">下一页</a>
+								</if>													
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			
+			
+				
 		</div>
 	</div>
 <script type="text/javascript">
@@ -262,6 +272,19 @@ margin-right: 10px;
 			$("#item_"+typename+"_"+(start+5)).removeClass("Hide");
 
 		}
+</script>
+<script type="text/javascript">
+function show_abolish_confirm(orderID)
+{
+	var r=confirm("确定要作废该订单？");
+	if(r==true)
+	{
+		top.location="__APP__/OrderManage/abolishOrder?order_id="+orderID;
+	}
+	else
+	{
+	}
+}
 </script>
 </body>
 </html>

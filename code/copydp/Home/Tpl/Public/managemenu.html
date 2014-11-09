@@ -1,44 +1,104 @@
 <ul>
-	<if condition=" $currentPage eq 'user'" >
-		<li class="cur">
-	<else/>
-		<li>
-	</if>
-	<a href="__APP__/UserManage/index">会员管理</a><i class="n-arr"></i></li>
-
-	<if condition="$currentPage eq 'seller'" >
-		<li class="cur">
-	<else/>
-		<li>
-	</if>
-	 <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
-	
-	<if condition="$currentPage eq 'activity'" >
-		<li class="cur">
-	<else/>
-		<li>
-	</if>
-		<a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
+	<?php
+	if(empty($_SESSION['login_user'])){								
+		$login='false';	
+	}else{
+		//获取用户信息
+		$db=new Model('user');
+		$userName=$_SESSION['login_user'];
+		$condition['username']=$userName;	
+		$role =  $db->where($condition)->getField('role');
+		$user_id= $db->where($condition)->getField('user_id');
+		$login='true';
 		
-	<if condition="$currentPage eq 'community'" >
-		<li class="cur">
-	<else/>
-		<li>
+		if($login=='true'){
+			
+			$PrivilegeDB= M('privilege');
+			$p1['user_id']=$user_id;
+			$PList=$PrivilegeDB->where($p1)->getField('function',true);
+			$MEMBER='false';
+			$SELLER='false';
+			$ACTIVITY='false';
+			$ORDER='false';
+			$SYSTEM='false';
+			$COMMUNITY='false';
+			for($i=0;$i<count($PList);$i++){
+				if($PList[$i]=='MEMBER'){
+					$MEMBER='true';
+				}
+				if($PList[$i]=='SELLER'){
+					$SELLER='true';
+				}
+				if($PList[$i]=='ACTIVITY'){
+					$ACTIVITY='true';
+				}
+				if($PList[$i]=='ORDER'){
+					$ORDER='true';
+				}
+				if($PList[$i]=='SYSTEM'){
+					$SYSTEM='true';
+				}
+				
+				if($PList[$i]=='COMMUNITY'){
+					$COMMUNITY='true';
+				}
+			}
+		}
+	}
+	?>
+	<if condition="$MEMBER eq 'true'" >
+		<if condition=" $currentPage eq 'user'" >
+			<li class="cur">
+		<else/>
+			<li>
+		</if>
+		<a href="__APP__/UserManage/index">会员管理</a><i class="n-arr"></i></li>
 	</if>
-	<a href="__APP__/CommunityManage/index">社区管理</a> <i class="n-arr"></i></li>	
-	
-	<if condition="$currentPage eq 'sys'" >
-		<li class="cur">
-	<else/>
-	
-		<li>
+	<if condition="$SELLER eq 'true'" >
+		<if condition="$currentPage eq 'seller'" >
+			<li class="cur">
+		<else/>
+			<li>
+		</if>
+		 <a href="__APP__/SellerManage/index">商家管理</a> <i class="n-arr"></i></li>
 	</if>
-	<a href="__APP__/SystemManage/index">系统配置</a> <i class="n-arr"></i></li>
+	
+	<if condition="$ACTIVITY eq 'true'" >
+		<if condition="$currentPage eq 'activity'" >
+			<li class="cur">
+		<else/>
+			<li>
+		</if>
+			<a href="__APP__/ActivityManage/index">活动管理</a> <i class="n-arr"></i></li>
+	</if>
+			
+			
+	<if condition="$COMMUNITY eq 'true'" >		
+		<if condition="$currentPage eq 'community'" >
+			<li class="cur">
+		<else/>
+			<li>
+		</if>
+		<a href="__APP__/CommunityManage/index">社区管理</a> <i class="n-arr"></i></li>	
+	</if>
 
-	<if condition="$currentPage eq 'order'" >
-		<li class="cur">
-	<else/>
-		<li>
+	<if condition="$SYSTEM  eq 'true'">
+
+		<if condition="$currentPage eq 'sys'" >
+			<li class="cur">
+		<else/>
+		
+			<li>
+		</if>
+		<a href="__APP__/SystemManage/index">系统配置</a> <i class="n-arr"></i></li>
 	</if>
-	<a href="__APP__/OrderManage/index">订单管理</a> <i class="n-arr"></i></li>
+	
+	<if condition="$ORDER eq 'true' ">
+		<if condition="$currentPage eq 'order'" >
+			<li class="cur">
+		<else/>
+			<li>
+		</if>
+		<a href="__APP__/OrderManage/index">订单管理</a> <i class="n-arr"></i></li>
+	</if>
 </ul>

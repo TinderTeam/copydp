@@ -36,6 +36,12 @@ margin-right: 10px;
 .span-input{
 	margin-top: 5px;
 }
+
+.btnbar{
+    margin-left: 5px;
+    margin-right: 5px;
+
+}
 </style>
 
 </head>
@@ -91,13 +97,14 @@ margin-right: 10px;
 								</div> 
 							</li>
 							<li>
-								<div class="btn-type-b btn-fn-c">
+								<strong class="btn-type-b btn-fn-c btnbar">
 									<input type="submit" value="查询" class="form-btn">
-								</div> 						
-								<div class="btn-type-b btn-fn-c">
+								</strong> 
+								<strong class="btn-type-b btn-fn-c btnbar">			
 									<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/ActivityManage/newActivity'" />
-								</div> 
-							</li>
+								</strong> 
+
+							</li>						
 						</ul>						
 					</form>						
 					<div class="pay-confirm">
@@ -105,11 +112,12 @@ margin-right: 10px;
 							<thead>
 								<tr>
 									<th width="10%">编号</th>
-									<th width="15%">名称</th>
-									<th width="15%">状态</th>	
+									<th width="20%">名称</th>
+									<th width="10%">状态</th>	
 									<th width="10%">城市</th>
 									<th width="15%">截止时间</th>
-									<th width="20%">参与/限制人数</th>							
+									<th width="20%">参与/限制人数</th>
+									<th width="10%">赠送积分</th>
 									<th width="5%">操作</th>
 								</tr>
 							</thead>
@@ -154,15 +162,14 @@ margin-right: 10px;
 										?>							
 										
 										<td align="center" >{$activityMember}/{$limit}</td>
+										<td align="center" >{$activityItem['point']}</td>
 										<td align="center" >
 											<input type="button" value="编辑" class="form-btn"
 											onclick="location.href='__APP__/ActivityManage/activityEdit?activityID={$activityItem['activity_id']}'" />
 											<if condition="$activityItem['status'] eq '进行中' ">
-											<input type="button" value="取消" class="form-btn"
-											onclick="location.href='__APP__/ActivityManage/cancelActivity?activityID={$activityItem['activity_id']}'" />
+											<input type="button" value="取消" class="form-btn" onclick="show_cancel_confirm({$activityItem['activity_id']})"/>
 											<else/>
-											<input type="button" value="删除" class="form-btn"
-											onclick="location.href='__APP__/ActivityManage/deleteActivity?activityID={$activityItem['activity_id']}'" />
+											<input type="button" value="删除" class="form-btn" onclick="show_delete_confirm({$activityItem['activity_id']})"/>
 											</if>
 										</td>
 									</tr>
@@ -240,4 +247,31 @@ margin-right: 10px;
 			$("#item_"+(start+5)).removeClass("Hide");
 		}
 </script>
+<script>
+function show_cancel_confirm(activityID)
+{
+	var r=confirm("确定要取消该活动？");
+	if(r==true)
+	{
+		top.location="__APP__/ActivityManage/cancelActivity?activityID="+activityID;
+	}
+	else
+	{
+	}
+}
+</script>
+<script type="text/javascript">
+function show_delete_confirm(activityID)
+{
+	var r=confirm("确定要删除该活动？");
+	if(r==true)
+	{
+		top.location="__APP__/ActivityManage/deleteActivity?activityID="+activityID;
+	}
+	else
+	{
+	}
+}
+</script>
+
 </html>

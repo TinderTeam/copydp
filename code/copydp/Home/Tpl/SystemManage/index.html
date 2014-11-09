@@ -58,7 +58,7 @@ margin-right: 10px;
 		
 		<div class="nav-bar">
 			<div class="cont">
-		
+		 
 				<!-----主菜单---->
 					<include file="./Home/Tpl/Public/menu.html"/>
 				<!-----主菜单---->
@@ -75,7 +75,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>系统设置</h4>
+						<h4 style="font-size:14px">系统设置</h4>
 						<span>设置系统功能：签到送积分、消费送积分</span>
 					</div>
 					<div class="pay-confirm">
@@ -125,7 +125,7 @@ margin-right: 10px;
 				<div class="modebox my-comm J_my_comm" >
 				<form name="forml" action="__URL__/search" method="post">
 					<div class="hd">
-						<h4>管理员管理</h4>
+					<h4 style="font-size:14px">管理员管理</h4>
 						<span>管理管理员</span>	
 					</div>								
 					<ul class="tab-filter">
@@ -151,7 +151,10 @@ margin-right: 10px;
 								<tr>
 									<td align="center" class="deal">{$v1.user_id}</td>
 									<td align="center" class="deal">{$v1.username}</td>	
-									<td align="center" class="deal"></td>	
+									<td align="center" class="deal">
+										<input type="button" value="删除" onclick="show_delete_confirm_admin({$v1.user_id})"/>
+										<input type="button" value="权限" onclick="showPrivilege({$v1.user_id})"/>
+									</td>	
 								</tr>
 						</foreach>
 						  <tr >
@@ -168,7 +171,7 @@ margin-right: 10px;
 			<div class="mydiv um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>城市管理</h4>
+						<h4 style="font-size:14px">城市管理</h4>
 						<span>编辑系统城市</span>	
 					</div>								
 					<div class="pay-confirm">
@@ -193,7 +196,7 @@ margin-right: 10px;
 									<td align="center" class="deal">{$city.city}</td>	
 									<td align="center" class="deal">({$city.x},{$city.y})</td>
 									<td align="center" class="deal">
-										<input type="button" value="删除" onclick="location.href='__URL__/deleteCity?CityID={$city.city_id}'"/>
+										<input type="button" value="删除" onclick="show_delete_confirm({$city.city_id})"/>
 									</td>									
 								</tr>
 							</foreach>
@@ -227,7 +230,7 @@ margin-right: 10px;
 			<div class="mydiv um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>基本信息管理</h4>
+						<h4 style="font-size:14px">基本信息管理</h4>
 						<span>管理网站的基本信息</span>	
 					</div>	
 
@@ -403,7 +406,8 @@ margin-right: 10px;
 					  alert("当前ajax操作出错！");
 				  },
 				  success:function(msg){
-					alert(msg);
+				  alert('操作成功');
+					//alert(msg);
 				  }
 			});		
 		});	
@@ -428,9 +432,37 @@ margin-right: 10px;
 				  },
 				  success:function(msg){
 					
+					alert('操作成功');
 				  }
 			});		
 		});	
 	</script>
+<script type="text/javascript">
+function show_delete_confirm(cityID)
+{
+	var r=confirm("确定要删除该城市？");
+	if(r==true)
+	{
+		top.location="__URL__/deleteCity?CityID="+cityID;
+	}
+	else
+	{
+	}
+}
+function show_delete_confirm_admin(admin)
+{
+	var r=confirm("确定要删除该管理员？");
+	if(r==true)
+	{
+		top.location="__URL__/deleteAdmin?UserID="+admin;
+	}
+	else
+	{
+	}
+}
+function showPrivilege(admin){
+	top.location="__URL__/privilege?UserID="+admin;
+}
+</script>
 </body>
 </html>
