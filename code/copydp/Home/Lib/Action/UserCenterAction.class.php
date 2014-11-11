@@ -74,6 +74,21 @@ class UserCenterAction extends Action {
 		$userName=$_SESSION['login_user'];
 		$condition['username'] = $userName;
 		$viewOrder = M('view_order');
+		
+		//产品截至时间到期，且处于已下单状态的订单更新为已过期
+		$product = M('product');
+		$order = M('order');
+		$condition1['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));	//判断截至时间小于当前时间的条件
+		
+		$countOldProduct = $product->where($condition1)->count();
+		$oldProductID = $product->where($condition1)->getField('product_id',true);	//查找已过期产品
+		
+		for($i=0;$i<$countOldProduct;$i++)
+		{
+			$condition2['product_id'] = $oldProductID[$i];
+			$data['order_status']="已过期";
+			$order->where($condition2)->where('order_status="已下单"')->save($data);		//更新订单状态
+		}
 		//显示订单列表
 		$orderCount = $viewOrder->where($condition)->count();
 		$orderList = $viewOrder->where($condition)->select();
