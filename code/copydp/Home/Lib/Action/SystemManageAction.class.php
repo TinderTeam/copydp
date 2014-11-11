@@ -5,6 +5,8 @@ class SystemManageAction extends Action {
 	public function ManageIndex(){
 			$this->display();
 	}
+	
+	
 	public function deleteAdmin($UserID=0){
 		$UserDB= M('user');
 		$deleteUserCondition['user_id']=$UserID;
@@ -54,7 +56,6 @@ class SystemManageAction extends Action {
 		$this->assign("jumpUrl","index");
 		$this->success("操作成功");
 	}
-
 	
 
 	public function basicInfoEdit($data){

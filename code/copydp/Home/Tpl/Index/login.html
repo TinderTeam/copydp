@@ -10,6 +10,7 @@
 <link rel="Shortcut Icon" href="http://t3.s2.dpfile.com/t/res/favicon.5ff777c11d7833e57e01c9d192b7e427.ico" type="image/x-icon" />
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" />
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/account/login.min.87f3f79a1a6d4db0517fcf5c3eb42178.css" type="text/css"/>
+
 <script type="text/javascript">
 
 	
@@ -74,6 +75,19 @@
 					});
 		});
 	</script>
+		<style type="text/css">
+			#code
+			{
+				font-family:Arial;
+				font-style:italic;
+				font-weight:bold;
+				border:0;
+				letter-spacing:2px;
+				color:blue;
+				width:100px;
+			}
+		</style>
+
 		<input id="tabSelect" value="{$tabSelect}" style="display:none"/>
 		<div class="nav-bar">
 			<div class="cont">
@@ -120,7 +134,13 @@
 												<span>找回密码？</span>
 												</a>
 											</li>
-												
+											<li class="sbmt">
+												<span class="ws">验证码</span>
+												<input id="input" class="text" name="yz" type="text" tabindex="2" style="vertical-align:middle;height: 20px;" />	
+												<input type = "button" id="code" onclick="createCode()"/>									
+											</li>
+										
+											
 											<li class="find" style="display:none"> 
 												<span class="ws">验证邮箱</span>
 												<input class="text foc J_login_password focus {required:true}" id="email" name="email" type="text" tabindex="2" autocomplete="off" style="vertical-align:middle;height: 20px;" placeholder="请输入注册时的邮箱"/>
@@ -128,7 +148,7 @@
 											<li class="J_action">
 												<span class="ws">&nbsp;</span>
 												<div class="login-btn-new">
-													<button class="b-rbtn mob-login J_user_login sbmt" type="submit"> <span>登 录</span></button>
+													<button class="b-rbtn mob-login J_user_login sbmt" type="button" onclick="validate()" > <span>登 录</span></button>
 													<button id="find-btn" type="button" class="b-rbtn mob-login J_user_login find" style="display:none" ><span>找回密码</span></button>
 												</div>
 											</li>
@@ -194,11 +214,14 @@
 												<input class="text foc J_login_password focus" name="password" type="password"
                        tabindex="2" autocomplete="off" style=" height: 20px;"/>
 										   <li> <span class="ws">选择城市</span>
+										   <?php
+												$CityDB= M('city');
+												$cityList=$CityDB->select();
+										   ?>
 												<select>
-													<option>北京</option>
-													<option>上海</option>
-													<option>深圳</option>
-													<option>广州</option>
+												<foreach name='cityList' item='city'>
+													<option>{$city.city}</option>													
+												</foreach>											
 												</select>
 												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
 											<li> <span class="ws">手机号码</span>
@@ -228,10 +251,12 @@
 					</form>				
 						</div>
 						<div class="aside-right-new">
-							<h2>注册须知</h2>
-							<p>注册须知</p>
-							<p>注册须知</p>
-							<p>注册须知</p>
+						<h2>注册须知</h2>										
+							<p>1.请使用由英文或数字组成的用户名</p>
+							<br/>
+							<p>2.请设置密码长度至少6位以上</p>
+							<br/>
+							<p>3.请务必填写Email地址</p>
 						</div>
 						</div>
 					</div>
@@ -252,6 +277,45 @@
 	</form>
 <!----找回密码---->
 </body>
+
+<script>
+			var code ; //在全局定义验证码 
+			//产生验证码
+			createCode();
+			
+			function createCode(){			
+				 code = ""; 
+				 var codeLength = 4;//验证码的长度	
+				
+				 var random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
+				 'S','T','U','V','W','X','Y','Z');//随机数
+				 for(var i = 0; i < codeLength; i++) {
+				 //循环操作
+					
+					var index = Math.floor(Math.random()*36);
+					//取得随机数的索引（0~35）
+					
+					code += random[index];
+					//根据索引取得随机数加到code上
+				}				
+				$('#code').val(code);//把code值赋给验证码
+			}
+			//校验验证码
+			function validate(){
+				var inputCode = document.getElementById("input").value.toUpperCase(); //取得输入的验证码并转化为大写      
+				if(inputCode.length <= 0) { //若输入的验证码长度为0
+					alert("请输入验证码！"); //则弹出请输入验证码
+				}       
+				else if(inputCode != code ) { //若输入的验证码与产生的验证码不一致时
+					alert("验证码输入错误"); //则弹出验证码输入错误
+					createCode();//刷新验证码
+					document.getElementById("input").value = "";//清空文本框
+				}       
+				else { //输入正确时
+					$("#LoginForm").submit();
+				}           
+			}
+	</script>
 <script type="text/javascript">
 var tab = $("#tabSelect").val();
 if(tab=='memberRigist')
@@ -272,7 +336,6 @@ $("#find-btn").click(function(){
 	$(".ajaxCheck").change(function(){
 		var key=$(this).attr('id');
 		var value =$(this).val();
-		//alert(key);
 		$.ajax({
 			type:"post",
 			url:"__URL__/AjaxCheck",
@@ -282,8 +345,8 @@ $("#find-btn").click(function(){
 				alert("当前ajax操作出错！");
 			},
 			success:function(msg){
+				//alert(msg);
 				var obj = eval ("(" + msg + ")");
-				//alert(obj.data);
 				if(obj.data=='false'){
 					//校验失败	
 					//alert('key='+key);						
@@ -301,7 +364,7 @@ $("#find-btn").click(function(){
 					else if(key=='name'){
 						$(".name-err").html('');	
 					}						
-				}				
+				}			
 			}		  
 		});		
 	});

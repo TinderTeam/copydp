@@ -72,6 +72,7 @@ class IndexAction extends Action {
 		$pwdtrue = $admin->where($condition)->getField('password');
 		$userID = $admin->where($condition)->getField('user_id');
 		$role = $admin->where($condition)->getField('role');
+		
 		if($userCount==0)		//用户不存在
 		{
 			$this->assign("jumpUrl","login?tabSelect=memberRigist");
@@ -81,18 +82,22 @@ class IndexAction extends Action {
 		{
 			$this->assign("jumpUrl","login");
 			$this->error("用户名或密码不正确！");
-			
 		}
 		else
 		{
-			$_SESSION['login_user']= $_POST['name'];
-			//处理登陆赠送积分
+			
+			//处理用户登陆
 			if($role=='CUSTOMER'){
 				$custmerDB= M('customer');
 				$customerIDCondition['user_id']=$userID;
 				$lastDate=$custmerDB->where($customerIDCondition)->getField('login_date');
 				$score=$custmerDB->where($customerIDCondition)->getField('score');
-				
+				$status =$custmerDB->where($customerIDCondition)->getField('status');
+				if($status=='待审批'){
+					$this->assign("jumpUrl","login");
+					$this->error("该用户尚未通过管理员审批，请耐心等待！");
+				}
+				//处理用户登陆送积分
 				$sysDB= M('sys_config');
 				$sysCondition['key']='login_score';
 				$scoreAdd=$sysDB->where($sysCondition)->getField('value');					
@@ -106,6 +111,7 @@ class IndexAction extends Action {
 				$custmerDB->where($customerIDCondition)->save($CustomerData);
 			}
 			
+			$_SESSION['login_user']= $_POST['name'];
 			$this->assign("jumpUrl","index");
 			$this->success("登陆成功！");
 		 
@@ -147,10 +153,10 @@ class IndexAction extends Action {
 	//注册Ajax前台验证
 	public function AjaxCheck($data){
 		$array = explode("-",$data);
+		
 		$key=urldecode($array[0]);
 		$value=urldecode($array[1]);
 		if($key=='email'){
-			
 			$customer = M('view_customer');
 			$condition['email']=$value;
 			$emailCount = $customer->where($condition)->count();
@@ -160,9 +166,9 @@ class IndexAction extends Action {
 		}
 		if($key=='username'){
 			//验证用户名重复
-			$customer = M('view_customer');
+			$user = M('user');
 			$condition['username']=$value;
-			$nameCount = $customer->where($condition)->count();
+			$nameCount = $user->where($condition)->count();
 			if($nameCount!=0){
 				$this->ajaxReturn('false', '您填写的用户名已被注册', 1);
 			}
@@ -175,6 +181,21 @@ class IndexAction extends Action {
 		$admin= M('user');      
 		$condition['username']=$_POST['username'];
 		$userID = $admin->where($condition)->getField('user_id');
+		
+		if($_POST['code']==''){
+		
+		}else{
+			$codeDB= M('poll_code');      
+			$codecondition['code']=$_POST['code'];
+			$codestatus = $codeDB->where($codecondition)->getField('status');
+			if($codestatus=='已使用'){
+				$this->assign("jumpUrl","login");
+				$this->error("验证码已使用！注册失败！");
+			}else if($codestatus==null){
+				$this->assign("jumpUrl","login");
+				$this->error("验证码无效！注册失败！");
+			}
+		}
 		
 		if($userID!=''){
 			$this->assign("jumpUrl","login");
@@ -200,8 +221,12 @@ class IndexAction extends Action {
 		$customerData['recommender_id']=$recommender_id;
 		
 		if($_POST['code']==''){
+			$customerData['request']='审批';
 			$customerData['status']='待审批';
-		}else{
+		}else{ 
+			$codedata['code']=$_POST['code'];	
+			$codedata['status']='已使用';
+			$codeDB->where($codecondition)->save($codedata);
 			$customerData['status']='正常';
 		}
 		$customerDB->add($customerData);

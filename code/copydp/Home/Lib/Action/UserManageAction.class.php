@@ -13,7 +13,32 @@ class UserManageAction extends Action {
 		
 
     }
-
+	
+	public function becomevip(){
+		if(empty($_SESSION['login_user'])){								
+			$this->assign("jumpUrl","login");
+			$this->error("请先登录");
+		}else{
+			//获取用户信息
+			$db=new Model('user');
+			$userName=$_SESSION['login_user'];
+			$condition['username']=$userName;	
+			$role =  $db->where($condition)->getField('role');
+			$user_id= $db->where($condition)->getField('user_id');
+			if($role=='CUSTOMER'){
+				$customer = M('customer');
+				$userID=$user_id;
+				$condition['user_id']=$userID;
+				$customer->where($condition)->setField('request','升级');
+				$this->success("申请成功，请等待管理员审批");
+			}else{
+				$this->error("该类型用户不支持此功能！");
+			}	
+		}
+		
+		
+		
+	}
  	public function check(){
 		session_start();
         $time=30*60; 
@@ -147,7 +172,60 @@ class UserManageAction extends Action {
 			$this->assign("jumpUrl","index");
 			$this->success("用户升级成功！");
 		
-		}		
+		}	
+
+		//验证码查询
+		public function SearchCode(){
+			if($_POST['codeStatus']==""){
+				$codeStatus="全部";
+			}else{
+				$codeStatus=	$_POST['codeStatus'];
+			}
+			
+			
+			$codeDB= M('poll_code');     
+			if($codeStatus!='全部'){
+				$codecondition['status']=$codeStatus;
+				$codeList = $codeDB->where($codecondition)->select();
+			}else{
+				$codeList = $codeDB->select();
+			}
+			$this->assign("codeList",$codeList);
+			$this->display('index');
+		}
+		
+		//验证码删除
+		public function CodeDelete($code=0){		
+			$codeDB= M('poll_code');     
+			$codecondition['code']=$code;
+			$codeDB->where($codecondition)->delete();			
+			$this->assign("codeList",$codeList);
+			$this->display('index');
+		}
+		
+		//验证码新增
+		public function createCode($num=0){				
+			$codeDB= M('poll_code');  
+			$length=(int)$num;    			
+			for($i =0;$i<$length;$i++){
+				$newCode['code']=$this->getRandStr(10);
+				$newCode['status']='未使用';
+				$codeDB->add($newCode);
+			}
+			$this->display('index');
+		}
+		
+		function getRandStr($length) { 
+			$str = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+			$randString = ''; 
+			$len = strlen($str)-1; 
+				for($i = 0;$i < $length;$i ++){ 
+				$num = mt_rand(0, $len); 
+				$randString .= $str[$num]; 
+				} 
+			return $randString ; 
+			}
+		
 		public function requestDeal(){
 			
 			$db= M('customer');

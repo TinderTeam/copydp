@@ -253,11 +253,83 @@ margin-right: 10px;
 					</div>
 				</div>
 			</div>
+			
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4>激活码管理</h4>
+						<span>管理激活码发放</span>
+					</div>
+					<form name="form4" action="__URL__/SearchCode" method="post">
+						<ul class="tab-filter">
+							<li>
+								<div class="span-input">
+									<span>激活码查询</span>
+									<select name= "codeStatus">
+										<option value="已使用"/>已使用
+										<option value="未使用"/>未使用
+										<option value="全部"/>全部
+									</select>					
+								</div>								
+							</li>
+							<li>
+								<strong class="btn-type-b btn-fn-c">
+									<input  type="submit" value="查询" class="form-btn">									
+								</strong> 			
+							</li>
+						</ul>
+						<ul class="tab-filter">
+							<li>
+								<div class="span-input">
+									<span>下发激活码</span>
+									<span><input id ="codeid" type="number" value="10" style="width:30px"/>个</span>								
+								</div>								
+							</li>
+							<li>
+								<strong class="btn-type-b btn-fn-c">
+									<input type="button" value="下发" class="form-btn" onclick="createCode()">									
+								</strong> 			
+							</li>
+						</ul>
+					</form>
+					<div class="pay-confirm">
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="20%">激活码</th>
+									<th width="20%">状态</th>
+									<th width="20%">操作</th>
+								</tr>
+						
+							<foreach name='codeList' item='codeItem'>
+								<tr>
+									<td align="center" name="scoreID">{$codeItem.code}</td>
+									<td align="center" >{$codeItem.status}</td>								
+									<td align="center" >
+									<a href="__URL__/CodeDelete?code={$codeItem.code}">删除</a>
+									</td>
+								</tr>
+							</foreach>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
+	
+	<script>
+		function createCode()
+		{
+			alert('test');
+			var num=$("#codeid").val();
+			window.location.href='__URL__/createCode?num='+num;
+		}
+	</script>
 </body>
 </html>
