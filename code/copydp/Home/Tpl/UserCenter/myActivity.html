@@ -92,14 +92,25 @@
 												if($activityStatus==""){
 													$activityStatus="活动已删除";
 												}
-												print($activityStatus);
+												if($activityStatus=="进行中")
+												{
+													print($v2['status']);
+												}
+												else
+												{
+													print($activityStatus);
+												}
 											?>
 											</span>
 										</td>								
 										
 										<td class="t-op">
 											<if condition="$activityStatus eq '进行中' ">
-												<button onclick="show_cancel_confirm({$v2.activity_id})" >取消参与</button>	
+												<if condition="$v2.status eq '已报名' ">
+													<button onclick="show_cancel_confirm({$v2.activity_id})" >取消参与</button>	
+												<else/>
+													<button onclick="show_delete_confirm({$v2.activity_id})" >删除活动</button>
+												</if>
 											<else/>
 												<button onclick="show_delete_confirm({$v2.activity_id})" >删除活动</button>
 											</if>

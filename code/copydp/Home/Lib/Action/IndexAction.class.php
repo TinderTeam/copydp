@@ -72,7 +72,6 @@ class IndexAction extends Action {
 		$pwdtrue = $admin->where($condition)->getField('password');
 		$userID = $admin->where($condition)->getField('user_id');
 		$role = $admin->where($condition)->getField('role');
-		
 		if($userCount==0)		//用户不存在
 		{
 			$this->assign("jumpUrl","login?tabSelect=memberRigist");
@@ -153,7 +152,6 @@ class IndexAction extends Action {
 	//注册Ajax前台验证
 	public function AjaxCheck($data){
 		$array = explode("-",$data);
-		
 		$key=urldecode($array[0]);
 		$value=urldecode($array[1]);
 		if($key=='email'){

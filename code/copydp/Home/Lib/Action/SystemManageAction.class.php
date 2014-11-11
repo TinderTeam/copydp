@@ -5,8 +5,6 @@ class SystemManageAction extends Action {
 	public function ManageIndex(){
 			$this->display();
 	}
-	
-	
 	public function deleteAdmin($UserID=0){
 		$UserDB= M('user');
 		$deleteUserCondition['user_id']=$UserID;

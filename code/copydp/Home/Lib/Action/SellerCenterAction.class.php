@@ -316,7 +316,6 @@ class SellerCenterAction extends Action {
 	$userIDCondition['user_id']=$customerID;
 	$point=	$customerDB->where($userIDCondition)->getField('score');
 	$UserData['score']=(int)$point+(int)$value;
-	print($UserData['score']);
 	$customerDB->where($userIDCondition)->save($UserData);
 	
 	

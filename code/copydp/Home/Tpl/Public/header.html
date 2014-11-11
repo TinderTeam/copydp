@@ -34,7 +34,20 @@
 					<li class="logo-browser-fav J_browser_fav"> <a href="__APP__/Index/login?tabSelect=memberRigist"> <span>免费注册</span> </a> </li>	
 					
 				<else/>
-						<li class="has-line"><a href="__APP__/UserCenter/userinfo"> <span>欢迎您，{$userName}！</span> </a> </li>
+					<if condition="$role eq 'CUSTOMER'">
+						<li class="has-line">
+							<a href="__APP__/UserCenter/userinfo"> <span>欢迎您，{$userName}！</span></a> 
+						</li>
+					<elseif condition="$role eq 'SELLER'"/>
+						<li class="has-line">
+							<a href="__APP__/SellerCenter/sellesinfo"> <span>欢迎您，{$userName}！</span></a> 
+						</li>
+					<elseif condition="$role eq 'ADMIN'"/>
+						<li class="has-line">
+							<a href="__APP__/SystemManage/ManageIndex"> <span>欢迎您，{$userName}！</span></a> 
+						</li>
+					<else/>
+					</if>
 						<li class="J_browser_fav"> <a href="__APP__/Index/logout"> <span>注销</span> </a> </li>	
 					<if condition="$role eq 'CUSTOMER'">					
 						<li class="J_browser_fav"> <a > <span>当前积分：</span> </a> </li>	

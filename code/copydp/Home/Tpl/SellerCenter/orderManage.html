@@ -174,7 +174,7 @@ margin-right: 10px;
 									</td>
 									<td class="t-op">
 										<if condition="$v1.order_status eq '已下单' ">
-											<button href="__APP__/SellerCenter/confirmOrder?order_id={$v1.order_id}">使用确认</button>
+											<button onclick="show_order_confirm({$v1.order_id})">使用确认</button>
 										<elseif condition="$v1.order_status eq '已过期' "/>
 											<button onclick="show_cancel_confirm({$v1.order_id})" >取消订单</button>
 										<else/>
@@ -200,6 +200,19 @@ margin-right: 10px;
 		$("#selectProduct").change(function(){ 
 			location.href='__APP__/SellerCenter/orderManage?filter_type='+$(this).val();
 		});	 
+</script>
+<script type="text/javascript">
+function show_order_confirm(orderID)
+{
+	var r=confirm("确定已使用该订单？");
+	if(r==true)
+	{
+		top.location="__APP__/SellerCenter/confirmOrder?order_id="+orderID;
+	}
+	else
+	{
+	}
+}
 </script>
 <script type="text/javascript">
 function show_cancel_confirm(orderID)
