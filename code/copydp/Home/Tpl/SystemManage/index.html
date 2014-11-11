@@ -333,8 +333,8 @@ margin-right: 10px;
 								for($i = 0;$i<4;$i++){
 									$condition['name']='help'.($i+1);							
 									$help[$i]=$ConfigDB->where($condition)->getField('content');
-									$condition['name']='helplink'.($i+1);	
-									$helplink[$i]=$ConfigDB->where($condition)->getField('content');
+									$condition['name']='helpname'.($i+1);
+									$helpname[$i]=$ConfigDB->where($condition)->getField('content');
 								}
 							?>
 							<foreach name='help' item='hp' key="i">
@@ -343,10 +343,10 @@ margin-right: 10px;
 										{$i+1}
 									</td>
 									<td align="center" class="deal">
-										<input id="help{$i+1}" value="{$help[$i]}" style="width:100%"/>
-									</td>	
+										<input id="helpname{$i+1}" value="{$helpname[$i]}" style="width:100%"/>
+									</td>
 									<td align="center" class="deal">
-										<input id="helplink{$i+1}" value="{$helplink[$i]}" style="width:100%"/>
+										<input id="help{$i+1}" value="{$hp}" style="width:100%"/>
 									</td>									
 									<td align="center" class="deal">
 										<button index="{$i+1}" class="help-btn" type="button">保存</button>
@@ -417,21 +417,18 @@ margin-right: 10px;
 		$(".help-btn").click(function(){
 			var index=$(this).attr('index');
 			var help=$("#help"+index).val();
-			
-			var helplink=$("#helplink"+index).val();
-			alert(helplink);
+			var helpname=$("#helpname"+index).val();
 			//ajax
 			$.ajax({
 				  type:"post",
 				  url:"__URL__/helpEdit",
-				  data:"data="+help+"~"+helplink+"~"+index,
+				  data:"data="+help+"~"+helpname+"~"+index,
 				  dataType:"html",
 				  error:
 				  function(){
 					  alert("当前ajax操作出错！");
 				  },
 				  success:function(msg){
-					
 					alert('操作成功');
 				  }
 			});		

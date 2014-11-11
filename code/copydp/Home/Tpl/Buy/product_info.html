@@ -49,18 +49,12 @@
 		$productImgList=$productDB->where($productIDCondition)->getField('imglist');
 		$infoHtml=$productDB->where($productIDCondition)->getField('basic_infor');
 		//判断产品是否已过期
-		$Date_1=date("Y-m-d");						
-		$Date_2=$endTime;
-		$Date_List_a1=explode("-",$Date_1);
-		$Date_List_a2=explode("-",$Date_2);
-		$d1=mktime(0,0,0,$Date_List_a1[1],$Date_List_a1[2],$Date_List_a1[0]);
-		$d2=mktime(0,0,0,$Date_List_a2[1],$Date_List_a2[2],$Date_List_a2[0]);	
-		$Days=round(($d2-$d1)/3600/24);
-		if($d2-$d1 < 0)
-		{
-			$data['product_status']="已过期";
-			$productDB->where($productIDCondition)->save($data);			
-		}
+		$conditionTime['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));	
+		$Days=round(($endTime-date('Y-m-d H:i:s',time()))/3600/24);
+		
+		$data['product_status']="已过期";
+		$productDB->where($productIDCondition)->where($conditionTime)->save($data);			
+
 		$productStatus = $productDB->where($productIDCondition)->getField('product_status');
 
 	?>
