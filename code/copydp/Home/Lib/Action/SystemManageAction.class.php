@@ -102,17 +102,16 @@ class SystemManageAction extends Action {
 	
 		$array = explode("~",$data);
 		$help=urldecode($array[0]);
-		$helplink=urldecode($array[1]);
+		$helpname=urldecode($array[1]);	
 		$index=urldecode($array[2]);	
-		
 		$siteCfg= M('site_config');
-		$condition['name']="help".$index;
-		$helpData['content']=$help;
-		$siteCfg->where($condition)->save($helpData);
+		$conditionlink['name']="helpname".$index;
+		$helpData1['content']=$helpname;
+		$siteCfg->where($conditionlink)->save($helpData1);
 		
-		$conditionlink['name']="helplink".$index;
-		$helplinkData['content']=$helplink;
-		$siteCfg->where($conditionlink)->save($helplinkData);
+		$conditionlink['name']="help".$index;
+		$helpData2['content']=$help;
+		$siteCfg->where($conditionlink)->save($helpData2);
 	
 		$this->ajaxReturn('EDIT'.$conditionlink['name'], 'Ajax 成功！', 1);
 	}
