@@ -126,14 +126,20 @@ class ActivityManageAction extends Action {
 	}
 	public function activityParticipator($activityID=0,$username=0){
 		
-		$activityOrderView = M('view_activity_order');
+		$activityDB = M('activity');
 		$activityIDCondition['activity_id'] = $activityID;
+		$activityName = $activityDB->where($activityIDCondition)->getField('title');
+		
+		
+		$activityOrderView = M('view_activity_order');
+		
 		if($username!=''){
 			$userCondition['username'] = $username;
 			$activityOrderList = $activityOrderView->where($activityIDCondition)->where($userCondition)->select();
 		}else{
 			$activityOrderList = $activityOrderView->where($activityIDCondition)->select();
 		}
+		$this->assign('activityName',$activityName);
 		$this->assign('activityID',$activityID);
 		$this->assign('activityOrderList',$activityOrderList);
 		$this->display();
@@ -166,7 +172,23 @@ class ActivityManageAction extends Action {
 		$activity_order = M('activity_order');
 		$IDcondition['activity_order_id'] = $activityOrderID;
 		$activityID = $activity_order->where($IDcondition)->getField('activity_id');
+		$user_id = $activity_order->where($IDcondition)->getField('customer_id');
+		
+		$activityDB = M('activity');
+		$AIDcondition['activity_id'] = $activityID;		
+		$activityScore = $activityDB->where($AIDcondition)->getField('point');
+		
 		$data['status']="已参加";
+		
+				//获取积分信息
+		$customerdb=new Model('customer');
+		$condition['user_id']=$user_id;	
+		$score = $customerdb->where($condition)->getField('score');
+		
+		$finalscore= (int)$score+(int)$activityScore;
+		$data6['score']=$finalscore;
+		$customerdb->where($condition)->save($data6);
+		
 		if($activity_order->where($IDcondition)->save($data))
 		{
 

@@ -5,6 +5,33 @@ class SystemManageAction extends Action {
 	public function ManageIndex(){
 			$this->display();
 	}
+
+	
+	
+	
+	public function NewsEdit(){
+		$this->display();
+	}
+	
+	public function NewsAdd(){
+		$NewsDB= M('news');
+		$Data['title']=$_POST['title'];
+		$Data['content']=$_POST['info'];
+		$Data['datetime']=date('Y-m-d H:i:s',time());
+		$NewsDB->add($Data);
+		$this->assign("jumpUrl","index");
+		$this->success("操作成功");
+	}
+	
+	public function deleteNews($ID=0){
+		$NewsDB= M('news');
+		$deleteNewsCondition['news_id']=$ID;
+		$NewsDB->where($deleteNewsCondition)->delete();
+		$this->assign("jumpUrl","index");
+		$this->success("操作成功");
+	}
+	
+	
 	public function deleteAdmin($UserID=0){
 		$UserDB= M('user');
 		$deleteUserCondition['user_id']=$UserID;

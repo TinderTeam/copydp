@@ -21,7 +21,7 @@
 							//获取活动信息
 							$activitydb=new Model('activity_order');
 							$activiycondition['customer_id']=$user_id;	
-							$activiycondition['status']='进行中';	
+							$activiycondition['status']='已参加';	
 							$activitytitle=$activitydb->where($activiycondition)->order('activity_id')->limit(3)->getField('activity_title',true);
 							$activityid=$activitydb->where($activiycondition)->order('activity_id')->limit(3)->getField('activity_id',true);	
 							
@@ -58,7 +58,7 @@
 							<volist name="activitytitle" id="title" key="i" >
 								<volist name="activityid" id="a_id" key="k" >
 									<if condition="$i eq $k">
-										<a href="__APP__/Activity/activity_show?activity_id={$a_id}"> <span>{$title}</span></a>
+										<a href="__APP__/Activity/activity_info?activityID={$a_id}"> <span>{$title}</span></a>
 									</if>
 								</volist>
 							</volist>
