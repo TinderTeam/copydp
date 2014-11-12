@@ -168,7 +168,7 @@ class UserManageAction extends Action {
 			$customer = M('customer');
 			$userID=$_GET['id'];
 			$condition['user_id']=$userID;
-			$customer->where($condition)->setField('grade','S-VIP');
+			$customer->where($condition)->setField('grade','SVIP');
 			$this->assign("jumpUrl","index");
 			$this->success("用户升级成功！");
 		

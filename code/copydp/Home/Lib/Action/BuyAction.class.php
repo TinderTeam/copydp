@@ -12,15 +12,32 @@ class BuyAction extends Action {
 		$userName=$_SESSION['login_user'];
 		$condition['username']=$userName;	
 		$role =  $db->where($condition)->getField('role');
+		$userID = $db->where($condition)->getField('user_id');
 		
 		if($role!='CUSTOMER'){
 			$this->assign("jumpUrl","__APP__/Index/index");
 			$this->error("您使用的账户类型不能进行此操作!");	
 		}
-		
-		$this->assign('productID',$productID);
-		$this->assign('quantity',$quantity);
-		$this->display();
+		else
+		{
+			$dbProduct =new Model('product');
+			$productCondition['product_id'] = $productID;
+			$privilege = $dbProduct->where($productCondition)->getField('svip_privilege');
+			
+			$dbCustomer = new Model('customer');
+			$IDCondition['user_id'] = $userID;
+			$grade = $dbCustomer->where($IDCondition)->getField('grade');
+			
+			if(($privilege=="专享")&&($grade=="VIP"))
+			{
+				$this->assign("jumpUrl","__APP__/Buy/product_info?productID=".$productID);
+				$this->error("此产品为SVIP客户专享产品，请升级为SVIP之后再购买");
+			}
+			
+			$this->assign('productID',$productID);
+			$this->assign('quantity',$quantity);
+			$this->display();	
+		}	
     }
 	
 	public function orderCommit(){

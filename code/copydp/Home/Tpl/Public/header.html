@@ -21,7 +21,7 @@
 							//获取活动信息
 							$activitydb=new Model('activity_order');
 							$activiycondition['customer_id']=$user_id;	
-							$activiycondition['status']='已参加';	
+							$activiycondition['status']='已报名';	
 							$activitytitle=$activitydb->where($activiycondition)->order('activity_id')->limit(3)->getField('activity_title',true);
 							$activityid=$activitydb->where($activiycondition)->order('activity_id')->limit(3)->getField('activity_id',true);	
 							
