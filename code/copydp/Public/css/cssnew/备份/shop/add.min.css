@@ -1,0 +1,460 @@
+@charset "utf-8";
+	.msg-wrapper .msg-misc: after,.separated-block .form-btn-block: after {
+	clear: both;
+	display: block;
+	height: 0;
+	content: '\20'
+}
+.msg-wrapper .msg-misc,.separated-block .form-btn-block {
+	zoom: 1
+}
+.pop-win p.warning,.notice-block .btn-type-d span,.msg {
+	background-image: url(add.bbd294319088d09ea6e58fe0fa8abef0.png);
+	background-repeat: no-repeat
+}
+.notice-block {
+	margin-bottom: 20px
+}
+.notice-block .btn-type-d {
+	position: relative;
+	top: 5px;
+	top: 6px\9;
+	_top: 5px;
+	margin: 0 3px
+}
+.notice-block .btn-type-d a: hover {
+	color: #61646e
+}
+.notice-block .btn-type-d span {
+	padding: 0 3px 0 12px;
+	background-position: 0 -38px
+}
+.shop-add-form .focus {
+	color: #333
+}
+.shop-add-form .form-block {
+	margin-bottom: 13px
+}
+.shop-add-form .form-btn-block,.shop-add-form .form-content-block {
+	margin-left: 88px;
+	*position: relative;
+	*left: 88px;
+	*margin-left: 0
+}
+.shop-add-form .label {
+	position: relative;
+	top: 3px;
+	top: 5px\9;
+	_top: 4px;
+	margin-right: 0;
+	padding-right: 13px;
+	width: 75px
+}
+.shop-add-form .label em {
+	position: relative;
+	left: -5px;
+	width: 8px;
+	overflow: hidden
+}
+.shop-add-form .label_required {
+	padding-right: 4px;
+	width: 84px
+}
+.shop-add-form .form-txt {
+	float: left;
+	height: 23px;
+	padding: 0 4px;
+	line-height: 23px
+}
+.shop-add-form .form-txt-l {
+	width: 370px
+}
+.shop-add-form .form-txt-s {
+	width: 86px
+}
+.shop-add-form .form-textarea {
+	float: left;
+	width: 370px;
+	height: 53px;
+	margin: 0;
+	_margin-left: -3px;
+	padding: 5px 4px
+}
+.shop-add-form .form-select-sim {
+	height: 25px;
+	padding: 3px 3px 2px 2px;
+	position: relative\9;
+	top: -1px\9;
+	*top: 1px;
+	height: 23px\9;
+	padding: -2px 0 0 2px\9;
+	font-family: inherit
+}
+.shop-add-form .form-select-sim-m {
+	width: 135px
+}
+.shop-add-form .note .disabled {
+	color: gray;
+	cursor: default
+}
+.shop-add-form .form-btn-block .sync-wrapper {
+	position: relative;
+	left: 10px;
+	top: -12px
+}
+.shop-add-form .form-btn-block .sync-chk {
+	top: -9px
+}
+.fb-tele .form-txt-m {
+	width: 195px
+}
+.fb-address-s .form-txt-m {
+	width: 322px
+}
+.fb-map-wrapper {
+	width: 240px;
+	margin-top: 7px;
+	padding: 6px 10px 10px;
+	border: 1px solid #CCC
+}
+.fb-map {
+	width: 240px;
+	height: 240px;
+	margin-top: 4px;
+	background: #EEE
+}
+.pop-win .dialog-cont {
+	width: 745px;
+	margin: 15px 0;
+	padding: 0 30px
+}
+.pop-login .dialog-cont {
+	width: auto
+}
+.pop-win h3 {
+	margin-bottom: 2px;
+	font-size: 1.2em;
+	font-weight: bold
+}
+.pop-win a {
+	color: #66C
+}
+.pop-win a: hover {
+	color: #FFF;
+	background-color: #66C
+}
+.pop-win p.note {
+	margin-top: 10px;
+	text-align: right;
+	color: #999
+}
+.pop-win p.warning {
+	padding-left: 20px;
+	font-size: 1.2em;
+	color: #C00
+}
+.pop-win .close: hover {
+	background-color: #FFF
+}
+.pop-win .dialog-btns {
+	float: left;
+	width: 785px;
+	margin: 5px 0 20px;
+	overflow: hidden
+}
+.pop-win .dialog-btns div {
+	position: relative;
+	left: 50%;
+	float: left;
+	margin: 0 auto;
+	text-align: center
+}
+.pop-win .dialog-btns a {
+	position: relative;
+	right: 50%;
+	float: left;
+	margin: 0 10px 0 0
+}
+.pop-report .dialog-cont {
+	width: auto;
+	margin: 10px 10px 0 10px;
+	padding: 0 0 18px 0
+}
+.pop-report .btn-fn-b a: hover {
+	color: #61646e
+}
+.shop-add-map-wrapper {
+	width: 745px;
+	height: 500px;
+	margin: 12px auto 0;
+	background: #EEE
+}
+.shop-add-list-wrapper {
+	margin-top: 10px;
+	padding: 10px;
+	border: 1px solid #e4e4e4
+}
+.shop-add-list-wrapper ul {
+	height: 315px;
+	overflow-y: auto
+}
+.shop-add-list-wrapper li {
+	padding: 12px 15px
+}
+.shop-add-list-wrapper li.this {
+	background: #f8f8f8
+}
+.shop-map-ol .close-btn {
+	cursor: pointer;
+	position: absolute;
+	right: 3px;
+	top: 3px;
+	z-index: 10000
+}
+.shop-map-ol .gmap-info {
+	border-top: 1px solid #ccc;
+	height: 50px;
+	overflow: hidden;
+	width: 800px
+}
+.shop-map-ol .gmap-shop-info {
+	float: left;
+	margin-top: 4px;
+	overflow: hidden;
+	padding-left: 20px;
+	width: 350px
+}
+.shop-map-ol .gmap-info h1 {
+	color: #c00;
+	font-size: 14px;
+	font-weight: bold
+}
+.shop-map-ol .gmap-fn {
+	float: right;
+	margin-top: 12px;
+	width: 190px
+}
+.shop-map-ol .hint {
+	color: #666;
+	height: 24px;
+	padding-right: 10px;
+	padding-top: 10px;
+	text-align: right;
+	width: 790px
+}
+.msg-wrapper {
+	padding: 100px 0 100px 300px
+}
+.msg-wrapper .msg {
+	padding: 0 0 20px 68px;
+	background-position: 0 -70px
+}
+.msg-wrapper .msg-txt {
+	margin-bottom: 7px;
+	font-size: 1.2em
+}
+.msg-wrapper .msg-misc {
+	color: #999
+}
+.msg-wrapper .msg-misc span {
+	margin-right: 75px
+}
+.msg-wrapper .msg-misc a {
+	color: #66C
+}
+.msg-wrapper .msg-misc a: hover {
+	color: #FFF;
+	background-color: #66C
+}
+.msg-wrapper .msg-win {
+	background: url(add-win.0e0b726d235a58c74d3ea377a9866c63.png) no-repeat 0 6px;
+	margin-left: -100px
+}
+.form-add .btn-fn-h {
+	margin-top: 3px
+}
+.fn-mark {
+	padding-left: 15px;
+	background: url(coupon.b8bb8a07bcc1a0eace9c1a380eb7271b.png) no-repeat -235px -39px;
+	*background-position: -235px -40px
+}
+.msg-win h5 {
+	font-size: 20px;
+	font-family: "Microsoft YaHei";
+	font-weight: bold;
+	padding-bottom: 5px
+}
+.msg-win .msg-txt {
+	font-size: 12px;
+	padding-bottom: 30px
+}
+.msg-win .msg-txt a {
+	color: #66c
+}
+.msg-win .msg-txt a: hover {
+	background-color: #66c;
+	color: #fff
+}
+.msg-win .msg-misc {
+	font-size: 14px;
+	color: #666
+}
+.fb-add .form-txt-m {
+	float: none;
+	width: 370px
+}
+.shop-add-form,.shop-aside-add {
+	position: relative
+}
+.as-right {
+	position: absolute;
+	top: 0;
+	right: 0
+}
+.as-right .qrcode {
+	display: block;
+	width: 202px;
+	border: 4px solid #fff;
+	margin-bottom: 20px
+}
+.as-right .qrcode .con {
+	border: 1px solid #e0e0e0;
+	padding: 30px 0 25px;
+	text-align: center;
+	line-height: 20px;
+	color: #666
+}
+.as-right .qrcode .wx-qrcode {
+	display: block;
+	width: 90px;
+	height: 90px;
+	margin: 0 auto 15px;
+	background-image: url(wx-qrcode.e171dc9fa8ea01642adf6f806f84507f.png);
+	background-repeat: no-repeat
+}
+.claim-enter {
+	border: 4px solid #f8f8f8
+}
+.claim-enter .con {
+	width: 200px;
+	height: 84px;
+	padding-top: 85px;
+	border: 1px solid #e0e0e0;
+	background: url(claim-enter.d1a52382acc4851031099b7080817fb2.png) no-repeat;
+	text-align: center;
+	color: #878787
+}
+.claim-enter p {
+	font-weight: bold;
+	padding: 3px 0 13px
+}
+.page-sa .section-w {
+	width: 100%
+}
+.shop-aside-add .claim-enter {
+	top: 35px
+}
+.separated-block {
+	border-bottom: 0
+}
+.separated-block .shop-add-block {
+	display: none
+}
+.separated-block .shop-add-on {
+	display: block
+}
+.error-option {
+	background-color: #f3f3f3;
+	border: 1px solid #e0e0e0;
+	padding: 15px 20px;
+	margin-bottom: 30px
+}
+.error-option .tit {
+	padding-bottom: 10px
+}
+.error-option .tit em {
+	color: #c00
+}
+.error-lab label,.shop-err-rad label {
+	cursor: pointer
+}
+.error-lab .error {
+	margin-right: 20px
+}
+.error-lab .error .error-radio,.shop-err-rad .error-radio {
+	margin: 0 5px 0 0;
+	*margin: 0 2px 0 0;
+	vertical-align: middle
+}
+.shop-add-form .form-remark {
+	height: 80px
+}
+.shop-err-rad {
+	float: left
+}
+.shop-err-rad p {
+	padding: 4px 0
+}
+.separated {
+	float: left
+}
+.separated-add {
+	overflow: hidden;
+	zoom: 1;
+	padding-bottom: 5px
+}
+.separated-block .f-msg {
+	float: left;
+	margin-top: 3px
+}
+.separated-block .f-msg span {
+	*position: relative;
+	*top: -1px;
+	padding: 4px 10px 5px;
+	border: 1px solid #ececd5;
+	background-color: #fffceb
+}
+.separated-block .f-msg .m-err {
+	padding: 4px 10px 5px;
+	border: 1px solid #ffb6b6;
+	background-color: #fff2f2;
+	color: #ff5243
+}
+.separated-block strong {
+	float: left
+}
+.form-btn-block .f-msg {
+	margin-top: 8px
+}
+.report-err-box {
+	position: absolute;
+	top: 255px;
+	right: 0;
+	width: 210px;
+	text-align: center
+}
+.report-err-box p {
+	padding-bottom: 10px;
+	font-size: 14px;
+	color: #555
+}
+.msg-win .msg-add-shop {
+	padding-bottom: 20px;
+	font-size: 14px;
+	color: #555;
+	vertical-align: middle
+}
+.msg-win .msg-add-shop .medi-btn {
+	margin-left: 15px;
+	vertical-align: middle
+}
+.msg-win .medi-btn em,.report-err-box .medi-btn em {
+	position: relative;
+	top: 2px;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 22px;
+	font-family: 'Microsoft YaHei',sans-serif;
+	*top: 0;
+	*vertical-align: middle
+}
