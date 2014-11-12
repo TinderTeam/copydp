@@ -38,10 +38,20 @@
 		$productIDCondition['product_id']=$productID;
 		$productName=$productDB->where($productIDCondition)->getField('name');
 		$productDscr=$productDB->where($productIDCondition)->getField('describe');
-		$productPrice=$productDB->where($productIDCondition)->getField('price');		
+		$productPrice=$productDB->where($productIDCondition)->getField('price');
+		$endTime=$productDB->where($productIDCondition)->getField('end_date_time');		
 		$productImgsrc=$productDB->where($productIDCondition)->getField('imgsrc');
 		$productImgList=$productDB->where($productIDCondition)->getField('imglist');
 		$infoHtml=$productDB->where($productIDCondition)->getField('basic_infor');
+		
+		//判断产品是否已过期
+		$conditionTime['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));	
+		$Days=round((strtotime($endTime)-strtotime(date('Y-m-d H:i:s',time())))/3600/24);
+		
+		$data['product_status']="已过期";
+		$productDB->where($productIDCondition)->where($conditionTime)->save($data);			
+
+		$productStatus = $productDB->where($productIDCondition)->getField('product_status');
 	?>
 	
 	<!----主界面---->
@@ -128,30 +138,17 @@
 							</div>
 						</div>
 					</div>
-					<div class="func">					
-						<dl class="count-down J_count_down">
-							<dt>剩余</dt>
-							<dd class="time">
-							<?php
-							
-								$Date_1=date("Y-m-d");						
-								$Date_2=$endTime;
-								$Date_List_a1=explode("-",$Date_1);
-								$Date_List_a2=explode("-",$Date_2);
-								$d1=mktime(0,0,0,$Date_List_a1[1],$Date_List_a1[2],$Date_List_a1[0]);
-								$d2=mktime(0,0,0,$Date_List_a2[1],$Date_List_a2[2],$Date_List_a2[0]);	
-								
-								$Days=round(($d2-$d1)/3600/24);
-								
-								if($d2-$d1 < 0)
+					<div class="func" style="margin-top: 20px;">
+						<h2 class="sub-title" style="font-size:22px"> <span><font color="#ff8400">	<b>						
+							<?php						
+								if($productStatus == "已过期")
 								{
-									print("已过期");
+									print("产品已过期！");
 								}else{
-									print($Days . "天");
+									print('剩余'.$Days . "天");
 								}
 							?>
-							
-						</dl>
+						</b></font> 	</span> </h2>	
 					</div>
 				</div>
 			</div>
@@ -163,24 +160,24 @@
 						<div class="box-wrap">
 							<div id="J_tab_mod" data-id="tab_mod">
 								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>基本介绍</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>信息描述</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>购买须知</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>综合评价</span></a> </li>
+									<li class="new"> <a href="#basic"><span>基本介绍</span></a> </li>
+									<li class="new"> <a href="#info"><span>信息描述</span></a> </li>
+									<li class="new"> <a href="#notice"><span>兑换须知</span></a> </li>
+									<li class="new"> <a href="#evaluation"><span>综合评价</span></a> </li>
 								</ul>
 							</div>
 							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
 								<div class="dptg-intro Fix">
 									<!----基本介绍-->
 									<div class="detail">
-										<h3 class="new-tit"><span class="name">基本介绍</span></h3>
+										<h3 id="basic" class="new-tit"><span class="name">基本介绍</span></h3>
 										<?php
 											print($infoHtml);
 										?>
 										{$infoHtml}
 									</div>									
 									<div class="detail J_tab">
-										<h3 class="new-tit"><span class="name">特惠详细</span></h3>
+										<h3 id="info" class="new-tit"><span class="name">信息描述</span></h3>
 										<div class="detail-tit">
 										</div>
 										<table width="100%" cellpadding="0" cellspacing="0" class="detail-table">
@@ -197,19 +194,12 @@
 													<td class="tc">1份</td>
 													<td class="tc">{$productPrice}</td>
 												</tr>
-												<tr class="total">
-													<td></td>
-													<td class="tc">
-														<strong>兑换价</strong></td>
-													<td class="tc">
-														<strong>50积分</strong></td>
-												</tr>
 											</tbody>
 										</table>
 									</div>
 									
 									<div class="detail J_tab" id="tab_show_6">
-										<h3 class="new-tit"><span class="name">购买须知</span></h3>
+										<h3 id="notice" class="new-tit"><span class="name">兑换须知</span></h3>
 										<div class="detail-box">
 											<div class="purchase-notes">
 											
@@ -275,7 +265,7 @@
 									<!-- movie info end -->
 									<div class="detail J_tab J_loadTab">
 										<div class="comment-tab J_comment_tab">
-											<span class="tab-item cur" data-ref="J_site_comment"> <a href="__APP__/Buy/product_list">产品评价<em class="Hide J_total_count"></em></a> </span>
+											<span id="evaluation" class="tab-item cur" data-ref="J_site_comment"> <a href="">综合评价<em class="Hide J_total_count"></em></a> </span>
 										</div>
 										<div class="comment-box J_comment_box">
 											<div class="tab-box J_site_comment" data-loaded="true">
@@ -353,29 +343,6 @@
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="box-buy-bottom Fix">
-							<div class="buy-bottom-btn">
-								<a id="J_downbuy" class="b-rbtn small J_package submit-btn2" href="__APP__/Score/order?productID={$productID}"> <span>立即抢购</span> </a> 
-							</div>
-							<div class="buy-bottom-tab">
-								<table cellpadding="0" cellspacing="0">
-									<tbody>
-										<tr>
-											<th>价值</th>
-											<th width="50"></th>									
-											<th>已购买</th>
-											<th width="50"></th>
-										</tr>
-										<tr>
-											<td class="Price-font">{$productPrice}积分</td>
-											<td width="50"></td>										
-											<td> <span class="J_dealCount"> {$numberBuy}人 </span> </td>
-											<td width="50"></td>
-										</tr>
-									</tbody>
-								</table>
 							</div>
 						</div>
 					</div>

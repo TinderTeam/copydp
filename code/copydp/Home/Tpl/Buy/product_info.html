@@ -50,7 +50,7 @@
 		$infoHtml=$productDB->where($productIDCondition)->getField('basic_infor');
 		//判断产品是否已过期
 		$conditionTime['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));	
-		$Days=round(($endTime-date('Y-m-d H:i:s',time()))/3600/24);
+		$Days=round((strtotime($endTime)-strtotime(date('Y-m-d H:i:s',time())))/3600/24);
 		
 		$data['product_status']="已过期";
 		$productDB->where($productIDCondition)->where($conditionTime)->save($data);			
@@ -195,10 +195,11 @@
 							<div id="J_tab_mod" data-id="tab_mod">
 								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
 									<li class="new"> <a href="#basic"><span>基本介绍</span></a> </li>
-									<li class="new"> <a href="#sseller"><span>商家介绍</span></a> </li>
+									<li class="new"> <a href="#seller"><span>商家介绍</span></a> </li>
 									<li class="new"> <a href="#info"><span>特惠详细</span></a> </li>
 									<li class="new"> <a href="#map"><span>在线地图</span></a> </li>
-									<li class="new"> <a href="#notice"><span>购买须知</span></a> </li>					
+									<li class="new"> <a href="#notice"><span>购买须知</span></a> </li>
+									<li class="new"> <a href="#evaluation"><span>商户评价</span></a> </li>									
 								</ul>
 							</div>
 							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
@@ -319,7 +320,7 @@
 									<!-- movie info end -->
 									<div class="detail J_tab J_loadTab">
 										<div class="comment-tab J_comment_tab">
-											<span class="tab-item cur" data-ref="J_site_comment"> <a href="__APP__/Buy/product_list">商户评价<em class="Hide J_total_count"></em></a> </span>
+											<span id="evaluation" class="tab-item cur" data-ref="J_site_comment"> <a href="__APP__/Buy/product_list">商户评价<em class="Hide J_total_count"></em></a> </span>
 										</div>
 										<div class="comment-box J_comment_box">
 											<div class="tab-box J_site_comment" data-loaded="true">

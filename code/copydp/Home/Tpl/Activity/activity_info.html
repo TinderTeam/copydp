@@ -52,6 +52,16 @@
 		$datetime= $activityDB->where($activityIDCondition)->getField('datetime');
 		$note= $activityDB->where($activityIDCondition)->getField('note');
 		$info= $activityDB->where($activityIDCondition)->getField('info');
+		
+		//判断产品是否已过期
+		$conditionTime['datelimit']=array('LT',date('Y-m-d H:i:s',time()));	
+		$Days=round((strtotime($endTime)-strtotime(date('Y-m-d H:i:s',time())))/3600/24);
+		
+		$data['status']="已过期";
+		$activityDB->where($activityIDCondition)->where($conditionTime)->save($data);			
+
+		$activityStatus = $activityDB->where($activityIDCondition)->getField('status');
+		
 	?>
 	
 	<!----主界面---->
@@ -120,7 +130,13 @@
 						</table>
 					</div>
 					<div class="action-box myblock">
-						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Activity/activityOrderCommit?activityID={$activityID}"> <span>报名参与</span> </a>					
+					<if condition="$activityStatus eq '进行中'">
+						<a class="b-new-rbtn small order-btn J_package"  href="__APP__/Activity/activityOrderCommit?activityID={$activityID}">
+							<span>报名参与</span> 
+						</a>					
+					<else/>
+						<a disabled="true" class="b-new-rbtn small order-btn J_package"><span>报名参与</span></a>
+					</if>
 					</div>
 				</div>	
 				<div class="lbd">
@@ -133,29 +149,18 @@
 							</div>
 						</div>
 					</div>
-					<div class="func">					
-						<dl class="count-down J_count_down">
-							<dd class="time">
-								<?php
-								
-									$Date_1=date("Y-m-d");						
-									$Date_2=$endTime;
-									$Date_List_a1=explode("-",$Date_1);
-									$Date_List_a2=explode("-",$Date_2);
-									$d1=mktime(0,0,0,$Date_List_a1[1],$Date_List_a1[2],$Date_List_a1[0]);
-									$d2=mktime(0,0,0,$Date_List_a2[1],$Date_List_a2[2],$Date_List_a2[0]);	
+					<div class="func" style="margin-top: 20px;">
+						<h2 class="sub-title" style="font-size:22px"> <span><font color="#ff8400">	<b>						
+							<?php						
+								if($activityStatus == "进行中")
+								{
+									print('剩余'.$Days . "天");
 									
-									$Days=round(($d2-$d1)/3600/24);
-									
-									if($d2-$d1 < 0)
-									{
-										print("已过期");
-									}else{
-										print('剩余'.$Days . "天");
-									}
-								?>
-							</dd>
-						</dl>
+								}else{
+									print("活动".$activityStatus."!");
+								}
+							?>
+						</b></font> 	</span> </h2>	
 					</div>
 				</div>
 			</div>
@@ -178,14 +183,6 @@
 										{$info}
 									</div>											
 								</div>
-							</div>
-						</div>
-						<div class="box-buy-bottom Fix">
-							<div class="buy-bottom-btn">
-								<a id="J_downbuy" class="b-rbtn small J_package" href="__APP__/Activity/activityOrderCommit?activityID={$activityID}"> <span>报名参加</span> </a> 
-							</div>
-							<div class="Price-font buy-bottom-price">
-								{$point}积分
 							</div>
 						</div>
 					</div>
