@@ -19,7 +19,7 @@ class IndexAction extends Action {
 			$data['password']=$_POST['newpswd'];
 			$UserDB->where($nameCondition)->save($data);
 			$this->assign("jumpUrl","login");
-			$this->error("操作成功");
+			$this->success("操作成功");
 		}
 		
 		
@@ -72,6 +72,7 @@ class IndexAction extends Action {
 		$pwdtrue = $admin->where($condition)->getField('password');
 		$userID = $admin->where($condition)->getField('user_id');
 		$role = $admin->where($condition)->getField('role');
+		
 		if($userCount==0)		//用户不存在
 		{
 			$this->assign("jumpUrl","login?tabSelect=memberRigist");
@@ -152,6 +153,7 @@ class IndexAction extends Action {
 	//注册Ajax前台验证
 	public function AjaxCheck($data){
 		$array = explode("-",$data);
+		
 		$key=urldecode($array[0]);
 		$value=urldecode($array[1]);
 		if($key=='email'){
@@ -173,6 +175,35 @@ class IndexAction extends Action {
 		}
 		$this->ajaxReturn('true', 'Ajax 成功！', 1);
 	}
+	//商家注册
+	public function SellerRegister(){
+		$admin= M('user');      
+		$condition['username']=$_POST['username'];
+		$userID = $admin->where($condition)->getField('user_id');
+
+		if($userID!=''){
+			$this->assign("jumpUrl","login");
+			$this->error("用户名被注册！");
+		}
+		
+		$userData['username']=$_POST['username'];
+		$userData['password']=$_POST['password'];
+		$userData['role']='SELLER';
+		$admin->add($userData);
+		
+		
+		$userID = $admin->where($condition)->getField('user_id');
+		$sellerDB= M('seller'); 		
+		$sellerData['user_id']=$userID;
+		$sellerData['city_id']=$_POST['city_id'];
+		$sellerData['type_id']=$_POST['type_id'];
+		$sellerData['description']=$_POST['description'];
+		$sellerDB->add($sellerData);
+		
+		$this->assign("jumpUrl","login");
+		$this->success("注册成功！");
+	}
+	
 	//注册校验
 	public function register(){
 	

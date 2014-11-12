@@ -18,7 +18,7 @@ class ActivityAction extends Action {
 		//print('id='.$activityID);
 		
 		if(empty($_SESSION['login_user'])){								
-			$this->assign("jumpUrl","login");
+			$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("请先登录系统!");	
 		}
 		//获取用户信息
@@ -47,9 +47,27 @@ class ActivityAction extends Action {
 			$memberlimit=$activityView->where($activityViewCondition)->getField('memberlimit');
 			$datelimit=$activityView->where($activityViewCondition)->getField('datelimit');
 			
-			//参与的逻辑判断
 			
-			$order = M('activity_order');
+			
+			
+			
+			//参与的逻辑判断			
+			$orderDB = M('activity_order');
+			$orderCondition['activity_id']=$activityID;
+			$num=$orderDB->where($orderCondition)->count();
+			$orderCondition['customer_id']=$customer_id;
+			$order=$orderDB->where($orderCondition)->select();
+			if($order!=null){
+				$this->assign("jumpUrl","activity_info?activityID=".$activityID);
+				$this->error("您已经参与了这个活动，请勿重复参与!");	
+			}
+			
+			if(((int)$num)+1>(int)$memberlimit){
+				$this->assign("jumpUrl","activity_info?activityID=".$activityID);
+				$this->error("该活动已经达到人数上限!".$num."/".$memberlimit);	
+			}
+			
+			
 			$data2['activity_order_id']=$orderID;	
 			$data2['activity_id']=$activityID;			
 			$data2['customer_id']=$customer_id;
@@ -59,7 +77,7 @@ class ActivityAction extends Action {
 			$data2['memberlimit']=$memberlimit;
 			$data2['datelimit']=$datelimit;
 			$data2['datetime']=$datetime;					
-			$order->add($data2);
+			$orderDB->add($data2);
 			
 			$this->assign('activityID',$activityID);
 			$this->assign('customer_id',$customer_id);

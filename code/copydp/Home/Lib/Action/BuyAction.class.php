@@ -4,7 +4,7 @@ class BuyAction extends Action {
 
     public function order($productID=0,$quantity=0){
 		if(empty($_SESSION['login_user'])){								
-			$this->assign("jumpUrl","login");
+			$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("请先登录系统!");	
 		}
 		//获取用户信息

@@ -194,25 +194,24 @@
 						<div class="box-wrap">
 							<div id="J_tab_mod" data-id="tab_mod">
 								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>基本介绍</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>商家介绍</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>信息描述</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>在线地图</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>购买须知</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/product_list"><span>商户评价</span></a> </li>
+									<li class="new"> <a href="#basic"><span>基本介绍</span></a> </li>
+									<li class="new"> <a href="#sseller"><span>商家介绍</span></a> </li>
+									<li class="new"> <a href="#info"><span>特惠详细</span></a> </li>
+									<li class="new"> <a href="#map"><span>在线地图</span></a> </li>
+									<li class="new"> <a href="#notice"><span>购买须知</span></a> </li>					
 								</ul>
 							</div>
 							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
 								<div class="dptg-intro Fix">
 									<!----基本介绍-->
 									<div class="detail">
-										<h3 class="new-tit"><span class="name">基本介绍</span></h3>
+										<h3 id="basic" class="new-tit"><span class="name">基本介绍</span></h3>
 										<?php
 											print($infoHtml);
 										?>
 										{$infoHtml}
 									</div>
-									<div class="detail">
+									<div id="seller" class="detail">
 										<h3 class="new-tit"><span class="name">商家介绍</span></h3>
 										<p class="listitem"></p>
 										<?php
@@ -223,8 +222,8 @@
 										?>
 										<p class="explain">{$sellerDscr}</p>										
 									</div>
-									<div class="detail J_tab">
-										<h3 class="new-tit"><span class="name">信息描述</span></h3>
+									<div id="info" class="detail J_tab">
+										<h3 class="new-tit"><span class="name">特惠详细</span></h3>
 										<div class="detail-tit">
 										</div>
 										<table width="100%" cellpadding="0" cellspacing="0" class="detail-table">
@@ -250,11 +249,11 @@
 											$city=$_SESSION['city'];
 										?>
 										<p id ="city" data="{$city}"></p>
-										<h3 class="new-tit"><span class="name">在线地图</span></h3>	
+										<h3 id="map" class="new-tit"><span class="name">在线地图</span></h3>	
 										<div id="allmap" class="img map"></div>
 									</div>
 									<div class="detail J_tab" id="tab_show_6">
-										<h3 class="new-tit"><span class="name">购买须知</span></h3>
+										<h3 id="notice" class="new-tit"><span class="name">购买须知</span></h3>
 										<div class="detail-box">
 											<div class="purchase-notes">
 											

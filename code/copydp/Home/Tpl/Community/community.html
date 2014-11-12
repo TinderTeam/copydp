@@ -179,7 +179,7 @@ overflow: hidden;
 											$customer_number=$communityUserDB->where($communityViewIDCondition)->getField('customer_number');
 											$username=$communityUserDB->where($communityViewIDCondition)->getField('username');									
 										?>									
-										<a class="J_card" href="__APP__/Admin/userinfo?userID={$userID}" >
+										<a class="J_card">
 											{$username}
 										</a> 
 										<em class="membercount"><span class="misc">{$customer_number}</span>帖子</em>

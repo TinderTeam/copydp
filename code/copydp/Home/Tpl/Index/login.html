@@ -69,6 +69,15 @@
 					});
 		});
 	</script>
+	<script >
+		$(document).ready(function(){
+				$("#SellerForm").validate({ 
+					SubmitHandler:function(){ 
+					alert( "success"); 
+					}
+					});
+		});
+	</script>
 		<style type="text/css">
 			#code
 			{
@@ -157,7 +166,7 @@
 										<ul class="login-new-ul">
 											<li> 
 												<span class="ws">用户名</span>
-												<input id="username" class="text J_login_username focus {required:true} ajaxCheck" style="vertical-align:middle; height: 20px;"
+												<input idtype="username" class="text J_login_username focus {required:true} ajaxCheck" style="vertical-align:middle; height: 20px;"
 													   name="username" type="text" value="" tabindex="1" size="30" placeholder="用户名"/>
 												<label class="name-err"></label>
 
@@ -170,7 +179,7 @@
 											</li>
 											<li>
 												<span class="ws">Email</span>
-												<input id="email" class="text J_login_username focus {required:true,email:true} ajaxCheck"  style="vertical-align:middle; height: 20px;"  name="email" type="text" value="" tabindex="3" size="30" autocomplete="off"  placeholder="Email"/>
+												<input idtype="email" class="text J_login_username focus {required:true,email:true} ajaxCheck"  style="vertical-align:middle; height: 20px;"  name="email" type="text" value="" tabindex="3" size="30" autocomplete="off"  placeholder="Email"/>
 												<label class="email-err"></label>
 											</li>
 											<li>
@@ -195,46 +204,47 @@
 							</div>	
 							
 							<!---商家注册-->
-							<div id="sellerdiv" class="reg-switch-box J_switch_box Hide">
+							<div id="sellerdiv" name="form2" class="reg-switch-box J_switch_box Hide">
 								<div class="J_login Fix">
-									<form action="" method="post">
+									<form id="SellerForm" name="form2" action="__URL__/SellerRegister" method="post">
 										<ul class="login-new-ul">
 											<li> <span class="ws">用户名</span>
-												<input class="text J_login_username focus" style="vertical-align:middle; height: 20px;"   name="username" type="text"
+												<input class="text J_login_username focus ajaxCheck" idtype="username" style="vertical-align:middle; height: 20px;"   name="username" type="text"
                        value="" tabindex="1" size="30" autocomplete="off"
                        placeholder="用户名"/>
-												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
+												<label class="name-err"></label></li>
 												<li><span class="ws">密码</span>
-												<input class="text foc J_login_password focus" name="password" type="password"
-                       tabindex="2" autocomplete="off" style=" height: 20px;"/>
-										   <li> <span class="ws">选择城市</span>
-										   <?php
-												$CityDB= M('city');
-												$cityList=$CityDB->select();
-										   ?>
-												<select>
-												<foreach name='cityList' item='city'>
-													<option>{$city.city}</option>													
-												</foreach>											
-												</select>
-												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
-											<li> <span class="ws">手机号码</span>
-												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"
-                       placeholder="手机号码" style=" height: 20px;" />
-												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>
-												<li> <span class="ws">地址</span>
-												<input class="text J_login_username focus" name="code" type="text" value="" tabindex="1" size="30" autocomplete="off"
-                       placeholder="手机号码" style=" height: 20px;"/>
-												<span class="J_err input-error Hide"></span><span class="prompt J_prmt Hide"></span></li>			   
-											<li class="J_general_err Hide"> '
-												<span class="ws">&nbsp;</span>
-												<span class="J_err input-error Hide"></span>
-												<span class="prompt J_prmt Hide"></span>
-											</li>
+												<input class="text foc J_login_password focus {required:true,minlength:6}" style="vertical-align:middle; height: 20px;"  name="password" type="password" tabindex="1" autocomplete="off"/>
+												</li>
+												<li><span class="ws">描述</span>
+												<textarea class="text" style="vertical-align:middle; height: 60px;"  name="description"></textarea>
+												</li>
+											   <li> <span class="ws">选择城市</span>
+												   <?php
+														$CityDB= M('city');
+														$cityList=$CityDB->select();
+												   ?>
+													<select name="city_id">
+														<foreach name='cityList' item='city'>
+															<option value={$city.city_id}>{$city.city}</option>
+														</foreach>											
+													</select>
+												</li>
+												<li> <span class="ws">选择类型</span>
+												   <?php
+														$typeDB= M('product_type');
+														$typeList=$typeDB->select();
+												   ?>
+													<select name="type_id">
+														<foreach name='typeList' item='type'>
+															<option value={$type.type_id}>{$type.type_name}</option>
+														</foreach>											
+													</select>
+												</li>			
 											<li class="J_action">
 												<span class="ws">&nbsp;</span>
 												<div class="login-btn-new">
-													<a class="b-rbtn mob-login J_user_login"> <span>注 册</span> </a>
+													<input class="b-rbtn mob-login J_user_login" type ="submit" value="注 册"> <span></span> 
 												</div>
 											</li>
 										</ul>
@@ -320,7 +330,7 @@ function findPswd(){
 			$(".find").attr('style',"");
 			$(".sbmt").attr('style',"display:none");
 		}
-$("#find-btn").click(function(){
+		$("#find-btn").click(function(){
 			$(".find-name").val($("#name").val());
 			$(".find-email").val($("#email").val());
 			$("#findForm").submit();
@@ -328,7 +338,7 @@ $("#find-btn").click(function(){
 </script>
 <script>
 	$(".ajaxCheck").change(function(){
-		var key=$(this).attr('id');
+		var key=$(this).attr('idtype');
 		var value =$(this).val();
 		$.ajax({
 			type:"post",
