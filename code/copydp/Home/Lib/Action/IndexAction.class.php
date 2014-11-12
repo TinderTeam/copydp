@@ -97,6 +97,10 @@ class IndexAction extends Action {
 					$this->assign("jumpUrl","login");
 					$this->error("该用户尚未通过管理员审批，请耐心等待！");
 				}
+				if($status=='已拒绝'){
+					$this->assign("jumpUrl","login");
+					$this->error("您的注册申请已被拒绝，请重新注册！");
+				}
 				//处理用户登陆送积分
 				$sysDB= M('sys_config');
 				$sysCondition['key']='login_score';

@@ -46,8 +46,9 @@
 						<ul id="carousel-list" class="promo-wrap J_promo_wrap" data-mode="render" style="position: absolute; left: -366520px;">	
 							<?php
 								$rcmViewDB=new Model('view_recommernd');
-								$rcmViewCondition['city']=$city;							
-								$rcmIDList=$rcmViewDB->where($rcmViewCondition)->getField('product_id',true);
+								$rcmViewCondition['city']=$city;
+								$statusCondition['product_status']="正常";
+								$rcmIDList=$rcmViewDB->where($rcmViewCondition)->where($statusCondition)->getField('product_id',true);
 								$num = count($rcmIDList);
 							?>		
 							<if condition="	$num eq 0">
@@ -132,8 +133,9 @@
 						<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
 							<?php
 								$productViewDB=new Model('view_product');
-								$productCityCondition['city']=$city;							
-								$procuctIDList=$productViewDB->where($productCityCondition)->order('update_date desc')->limit(4)->getField('product_id',true);		
+								$productCityCondition['city']=$city;
+								$statusCondition['product_status']="正常";
+								$procuctIDList=$productViewDB->where($productCityCondition)->where($statusCondition)->order('update_date desc')->limit(4)->getField('product_id',true);		
 								$num = count($rcmIDList);								
 							?>
 							<if condition="	$num eq 0">
@@ -197,8 +199,9 @@
 								$where['_string'] =$where['_string'] . 'OR (type_id = "'. $subtypeid[$j] .'")';
 							}	
 							$where['city']=$city;
+							$statusCondition['product_status']="正常";
 							$productDB=new Model('view_product');
-							$productIDList=$productDB->where($where)->order('rand()')->limit(3)->getField('product_id',true);
+							$productIDList=$productDB->where($where)->where($statusCondition)->order('rand()')->limit(3)->getField('product_id',true);
 							
 						?>
 					<h2> <span>{$maintypenameitem}</span> <img src="__PUBLIC__/img/{$mainKey}.png"></h2>

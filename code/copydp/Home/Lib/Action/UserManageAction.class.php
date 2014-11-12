@@ -234,7 +234,6 @@ class UserManageAction extends Action {
 			$userRequest=$db->where('user_id='.$userID)->getField('request');
 			if(!empty($userRequest))
 			{
-				$this->show($userRequest);
 				switch($userRequest){
 				case "升级":
 						$db->where('user_id='.$userID)->setField('grade','S-VIP');
@@ -267,9 +266,10 @@ class UserManageAction extends Action {
 			
 			$db= M('customer');
 			$userID=$_GET['id'];
-
+			
 			
 			$db->where('user_id='.$userID)->setField('request','null');
+			$db->where('user_id='.$userID)->setField('status','已拒绝');
 			$this->redirect('UserManage/index','',0,'操作成功');
 	
 				
