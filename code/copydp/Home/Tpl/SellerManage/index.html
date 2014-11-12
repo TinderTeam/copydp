@@ -327,7 +327,167 @@ margin-right: 10px;
 						 </div><!---<div class="pay-confirm">--->
 					</div><!---<div class="modebox my-comm J_my_comm" >--->
 				</div><!--<div class="um-con">-->
-				
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4>推荐产品</h4>
+						<span>设置首页推荐产品</span>
+					</div>
+					
+					<form name="formProduct" action="__URL__/searchProduct" method="get">
+						<ul class="tab-filter">
+							<li>
+								<span>商家编号</span><input type="text" name="seller_id"/>
+							</li>
+							<li>
+								<span>产品名称</span><input type="text" name="product_name"/>
+							</li>
+							<li>
+								<?php
+									$citydb= M('city');
+								   $city=$citydb->select();
+								?>
+									<span>城市</span>						
+									<select name="city_id" class="span-select">
+										<option value="" selected>请选择城市</option>
+										<foreach name='city' item='vC'>
+											<option value="{$vC.city_id}">{$vC.city}</option>
+										</foreach>
+									</select>		
+							</li>
+							<li>
+								<span>分类</span>	
+								
+								<select name="type_id" class="span-select">
+									<option value="" selected>请选择分类</option>
+									<foreach name='type' item='v11'>
+									<option value="{$v11.type_id}">{$v11.type_name}</option>
+
+									</foreach>
+								</select>
+							</li>
+						</ul>
+						<div >&nbsp&nbsp</div>
+						<strong class="btn-type-b btn-fn-c">
+							<input id="" type="submit" value="查询" class=" form-btn">
+						</strong>				
+					</form>
+					
+					
+					<div class="pay-confirm">
+					<form method="post" name="box" id="box" action="__URL__/quantityDeal">
+					
+					<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">				
+						<thead>
+							<tr>
+								<th width="5%">
+								<input type="checkbox" name="chkAll" id="chkAll" onclick="selectAll('chkID_[]','chkAll')">
+								</th>
+								<th width="15%">
+									商家编号
+								</th>
+								<th width="25%">
+									产品名称
+								</th>
+								<th width="20%">
+									描述
+								</th>
+								<th width="15%">
+									金额
+								</th>
+	
+								<th width="20%">
+									操作
+								</th>	
+							</tr>
+						</thead>
+						
+						<tbody>
+						<?php 
+						
+							$db = M('view_product');
+							import("ORG.Util.Page");
+							$count = $db->count(); 
+							$Page = new Page($count,5); 
+							$pageProduct = $Page->show();
+							$productInfo=$db->order('update_date desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+						?>
+
+					<foreach name='productInfo' item='vP'>
+							<tr>
+							
+								<td class="t-check">
+								   <input type="checkbox" name="chkID_[]" id="chkID_[{$key+1}]" value="{$vP.product_id}"/>
+								</td>
+								<td class="t-check" style="text-align:center">
+								  {$vP.seller_id}
+								</td>
+								<td class="t-order">
+									<div class="pic">
+										<a href="#"><img src="__PUBLIC__/uploads/img/{$vP.imgsrc}" width="85" height="53" /></a>
+									</div>
+
+                                <div class="txt">
+                                    <h4>
+                                        <a href="/deal/5284492">
+											    {$vP.name}
+                                        </a>
+                                    </h4>
+                                    <h5>
+                                        <span>
+                                                过期时间：{$vP.end_date_time}
+                                        </span>
+                                    </h5>
+                                </div>
+
+                            </td>
+                            <td class="t-time">
+                                {$vP.dscr}
+                            </td>
+                            <td class="t-amount" style="text-align:center">
+                                <span>{$vP.price}</span>
+                            </td>
+
+                            <td class="t-op">
+								<input type="submit" value="审批"  class="form-btn"  onclick="javascript:this.form.action='__URL__/requestDeal?id={$vP.product_id}';"/>
+								<input type="submit" value="退回"  class="form-btn" onclick="javascript:this.form.action='__URL__/requestDelete?id={$vP.product_id}';"/>
+                            </td> 
+					
+                        </tr>
+						
+					</foreach>
+							<tr >
+								<td colspan="6" style=" text-align: center;" ><span>{$pageProduct}</span></td>
+							</tr>
+						 </tbody>
+					
+						 </table>
+						 <strong class="btn-type-b btn-fn-c btnbar">
+							 <input type="submit" value="批量审批" name="subSure" class=" form-btn" /> 
+						</strong>
+						<strong class="btn-type-b btn-fn-c btnbar">
+							<input type="submit" value="批量退回"  class="form-btn" name="subQuit"/>
+						
+						</strong>
+						 
+					</form>
+					
+					<script type="text/javascript">
+						function selectAll(sonName, cbAllId){
+							var arrSon = document.getElementsByName(sonName);
+							var cbAll = document.getElementById(cbAllId);
+							var tempState=cbAll.checked;
+								for(i=0;i<arrSon.length;i++) {
+									if(arrSon[i].checked!=tempState)
+									arrSon[i].click();
+									}
+							}
+
+
+					</script>
+						 </div><!---<div class="pay-confirm">--->
+					</div><!---<div class="modebox my-comm J_my_comm" >--->
+				</div><!--<div class="um-con">-->	
 				
 			</div><!--<div class="user-main">-->
 		</div><!--	<div class="wrap">-->
