@@ -172,7 +172,8 @@
 					
 					//设置总筛选条件
 					$productViewDB=new Model('view_product');
-					$productList =$productViewDB->where($productFilter)->getField('product_id',true);
+					$statusCondition['product_status']="正常";
+					$productList =$productViewDB->where($productFilter)->where($statusCondition)->getField('product_id',true);
 					
 				?>
 				<volist name="productList" id="productID">
@@ -184,7 +185,7 @@
 							$productDscr =$productDB->where($productIDCondition)->getField('describe');		
 							$productPrice =$productDB->where($productIDCondition)->getField('price');	
 							$originalPrice =$productDB->where($productIDCondition)->getField('original_price');		
-
+							
 							$orderDB=new Model('order');
 							$orderProductCondition['product_id']=$productID;
 							$ordnumber=$orderDB->where($orderProductCondition)->count();
