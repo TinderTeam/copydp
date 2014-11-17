@@ -1,0 +1,21 @@
+//
+//  EShoping-Prefix.pch
+//  EShoping
+//
+//  Created by Seven on 14-11-14.
+//  Copyright (c) 2014年 FUEGO. All rights reserved.
+//
+
+#ifndef EShoping_EShoping_Prefix_pch
+#define EShoping_EShoping_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import "ESConfig.h"
+#import <ZBUtilities/UIDevice+ZBUtilites.h>
+#import <ZBUtilities/UIImage+LogN.h>
+#import "FELabel.h"
+#import "FEButton.h"
+#import "FECategories.h"
+
+#endif
