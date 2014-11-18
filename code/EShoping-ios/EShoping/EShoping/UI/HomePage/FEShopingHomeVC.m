@@ -8,8 +8,10 @@
 
 #import "FEShopingHomeVC.h"
 #import "FECitySelectVC.h"
+#import "FEShopingFuncCell.h"
+#import "FEShopingItemCell.h"
 
-@interface FEShopingHomeVC ()
+@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *shopingTableView;
 
 @end
@@ -19,11 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    [self initUI];
+    [self initUI];
 }
 
 -(void)initUI{
-    [self loadNavItemWithTitle:FEString(@"Location") image:nil target:self action:@selector(gotoLocation:) direction:FENavItemLeftDirection];
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+    searchBar.delegate = self;
+    self.navigationItem.titleView = searchBar;
 }
 
 -(void)gotoLocation:(id)sender{
@@ -32,8 +36,77 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"categorySegue"]) {
+        
+    }
+}
+
+#pragma mark - UITableViewDataSource
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        FEShopingFuncCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingCategory" forIndexPath:indexPath];
+        return cell;
+    }else{
+        FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
+        return cell;
+    }
+    return nil;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section == 0) {
+        return 1;
+    }else{
+        return 10;
+    }
+    return 0;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 190;
+    }
+    return 120;
     
 }
+
+#pragma mark - SpSearchbarDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    
+    searchBar.showsScopeBar = YES;
+    [searchBar sizeToFit];
+    [searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
+
+-(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    [self enableCancelButton:searchBar];
+}
+
+- (void)enableCancelButton:(UISearchBar *)searchBar
+{
+    for (UIView *view in searchBar.subviews)
+    {
+        for (id subview in view.subviews)
+        {
+            if ( [subview isKindOfClass:[UIButton class]] )
+            {
+                [subview setEnabled:YES];
+                return;
+            }
+        }
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

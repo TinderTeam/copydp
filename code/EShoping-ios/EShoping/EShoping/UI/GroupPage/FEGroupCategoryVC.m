@@ -1,29 +1,22 @@
 //
-//  FEShopingDiscoverVC.m
+//  FEGroupCategoryVC.m
 //  EShoping
 //
-//  Created by Seven on 14-11-15.
+//  Created by Seven on 14-11-18.
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#import "FEShopingDiscoverVC.h"
+#import "FEGroupCategoryVC.h"
 
-@interface FEShopingDiscoverVC ()<UISearchBarDelegate>
+@interface FEGroupCategoryVC ()
 
 @end
 
-@implementation FEShopingDiscoverVC
+@implementation FEGroupCategoryVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self initUI];
-}
-
--(void)initUI{
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
-    searchBar.delegate = self;
-    self.navigationItem.titleView = searchBar;
 }
 
 - (void)didReceiveMemoryWarning {

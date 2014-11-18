@@ -11,10 +11,13 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="3co-Oo-cHi">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="personal_icon_serve" translatesAutoresizingMaskIntoConstraints="NO" id="wka-8p-GrB">
                     <rect key="frame" x="26" y="45" width="60" height="60"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="common_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Olk-Gd-heM">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="common_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="Olk-Gd-heM">
                     <rect key="frame" x="555" y="55" width="14" height="39"/>
                     <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="557" y="50" width="14" height="39"/>
@@ -69,23 +72,40 @@
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="3co-Oo-cHi" secondAttribute="trailing" id="9mB-e3-eLY"/>
+                <constraint firstItem="3co-Oo-cHi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KmT-8a-XaG"/>
+                <constraint firstItem="3co-Oo-cHi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Mfe-Pn-21D"/>
+                <constraint firstAttribute="bottom" secondItem="3co-Oo-cHi" secondAttribute="bottom" id="ZwB-pb-abu"/>
                 <constraint firstAttribute="trailing" secondItem="Olk-Gd-heM" secondAttribute="trailing" constant="27" id="qUv-Pj-qHO"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="subviews">
+                    <exclude reference="3co-Oo-cHi"/>
                     <exclude reference="raG-Sb-rFr"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="9mB-e3-eLY"/>
+                    <exclude reference="KmT-8a-XaG"/>
+                    <exclude reference="Mfe-Pn-21D"/>
+                    <exclude reference="ZwB-pb-abu"/>
                     <exclude reference="qUv-Pj-qHO"/>
                 </mask>
             </variation>
             <variation key="widthClass=compact">
                 <mask key="subviews">
+                    <include reference="3co-Oo-cHi"/>
                     <include reference="raG-Sb-rFr"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="9mB-e3-eLY"/>
+                    <include reference="KmT-8a-XaG"/>
+                    <include reference="Mfe-Pn-21D"/>
+                    <include reference="ZwB-pb-abu"/>
                     <include reference="qUv-Pj-qHO"/>
                 </mask>
             </variation>
@@ -99,5 +119,6 @@
     <resources>
         <image name="common_arrow" width="8" height="12"/>
         <image name="personal_icon_serve" width="25" height="25"/>
+        <image name="profile" width="320" height="166"/>
     </resources>
 </document>
