@@ -1,40 +1,31 @@
 //
-//  FEShopingDiscoverVC.m
+//  FESiginVC.m
 //  EShoping
 //
-//  Created by Seven on 14-11-15.
+//  Created by Seven on 14-11-19.
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#import "FEShopingDiscoverVC.h"
+#import "FESiginVC.h"
 
-@interface FEShopingDiscoverVC ()<UISearchBarDelegate>
+@interface FESiginVC ()
 
 @end
 
-@implementation FEShopingDiscoverVC
+@implementation FESiginVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self initUI];
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
-}
-
--(void)initUI{
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
-    searchBar.barStyle = UIBarStyleBlack;
-    searchBar.delegate = self;
-    self.navigationItem.titleView = searchBar;
+    self.title = @"登陆";
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)backPress:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*

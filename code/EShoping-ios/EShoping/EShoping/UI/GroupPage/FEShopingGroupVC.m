@@ -25,12 +25,18 @@
 -(void)initUI{
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
     searchBar.delegate = self;
+    searchBar.barStyle = UIBarStyleBlack;
     self.navigationItem.titleView = searchBar;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
 }
 
 #pragma mark - UITableViewDataSource

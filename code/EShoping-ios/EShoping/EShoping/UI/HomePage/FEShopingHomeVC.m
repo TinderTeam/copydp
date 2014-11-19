@@ -21,10 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     [self initUI];
 }
 
 -(void)initUI{
+    self.navigationController.navigationBar.barTintColor = FEThemeColor;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
     searchBar.delegate = self;
     self.navigationItem.titleView = searchBar;
@@ -74,6 +78,10 @@
     
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 20;
+}
+
 #pragma mark - SpSearchbarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     
@@ -107,6 +115,11 @@
     }
 }
 
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

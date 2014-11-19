@@ -11,6 +11,8 @@
 
 @interface FEShopingMeTableVC ()
 
+@property (nonatomic, strong) FEMeView *meView;
+
 @end
 
 @implementation FEShopingMeTableVC
@@ -47,7 +49,14 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return [[[NSBundle mainBundle] loadNibNamed:@"FEMeView" owner:self options:nil] firstObject];
+        if (!self.meView) {
+            _meView = [[[NSBundle mainBundle] loadNibNamed:@"FEMeView" owner:self options:nil] firstObject];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(meTap:)];
+            _meView.userInteractionEnabled = YES;
+            [_meView addGestureRecognizer:tap];
+        }
+        return _meView;
+//        return [[[NSBundle mainBundle] loadNibNamed:@"FEMeView" owner:self options:nil] firstObject];
     }
     return nil;
 }
@@ -59,8 +68,15 @@
     return 0;
 }
 
+-(void)meTap:(UIGestureRecognizer *)ges{
+//    [self performSegueWithIdentifier:@"showPersonProfileSegue" sender:ges.view];
+    [self performSegueWithIdentifier:@"userSiginSegue" sender:ges.view];
+}
+
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 

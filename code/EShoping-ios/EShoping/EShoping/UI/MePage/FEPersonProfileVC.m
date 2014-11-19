@@ -1,35 +1,23 @@
 //
-//  FEShopingDiscoverVC.m
+//  FEPersonProfileVC.m
 //  EShoping
 //
-//  Created by Seven on 14-11-15.
+//  Created by Seven on 14-11-19.
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#import "FEShopingDiscoverVC.h"
+#import "FEPersonProfileVC.h"
 
-@interface FEShopingDiscoverVC ()<UISearchBarDelegate>
+@interface FEPersonProfileVC ()
 
 @end
 
-@implementation FEShopingDiscoverVC
+@implementation FEPersonProfileVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self initUI];
-}
-
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
-}
-
--(void)initUI{
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
-    searchBar.barStyle = UIBarStyleBlack;
-    searchBar.delegate = self;
-    self.navigationItem.titleView = searchBar;
+    self.title = FEString(@"PROFILE");
 }
 
 - (void)didReceiveMemoryWarning {

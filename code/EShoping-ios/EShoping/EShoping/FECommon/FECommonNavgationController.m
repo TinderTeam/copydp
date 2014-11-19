@@ -17,10 +17,10 @@
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+//        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
         self.navigationBar.translucent = NO;
-        self.navigationBar.barTintColor = FEThemeColor;
-        self.navigationBar.tintColor = [UIColor whiteColor];
+//        self.navigationBar.barTintColor = FEThemeColor;
+//        self.navigationBar.tintColor = [UIColor whiteColor];
     }
     return self;
 }

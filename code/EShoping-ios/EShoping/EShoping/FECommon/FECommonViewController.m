@@ -35,9 +35,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.view.backgroundColor = FEColor(229, 229, 229, 1); //[UIColor ];
 }
 
