@@ -7,8 +7,9 @@
 //
 
 #import "FEShopingItemVC.h"
+#import "FEProductImageTableViewCell.h"
 
-@interface FEShopingItemVC ()
+@interface FEShopingItemVC ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
 
@@ -22,6 +23,20 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UITableVieDataSource
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    FEProductImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productImageTableCell" forIndexPath:indexPath];
+    return cell;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
 }
 
 /*

@@ -8,7 +8,8 @@
 
 #import "FECommonViewController.h"
 
-@interface FECommonViewController ()
+@interface FECommonViewController ()<UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic, strong) UISearchDisplayController *searchController;
 
 @end
 
@@ -39,6 +40,13 @@
 //    
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.view.backgroundColor = FEColor(229, 229, 229, 1); //[UIColor ];
+}
+
+-(void)setSearchControllerWithSearchBar:(UISearchBar *)searchbar{
+    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:searchbar contentsController:self];
+    _searchController.searchResultsDelegate= self;
+    _searchController.searchResultsDataSource = self;
+    _searchController.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

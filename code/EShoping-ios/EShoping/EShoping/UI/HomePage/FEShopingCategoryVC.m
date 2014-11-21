@@ -17,6 +17,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:@[FEString(@"Store"),FEString(@"Group")]];
+    seg.frame = CGRectMake(0, 0, 180, 30);
+    seg.selectedSegmentIndex = 0;
+    self.navigationItem.titleView = seg;
 }
 
 - (void)didReceiveMemoryWarning {

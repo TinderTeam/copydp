@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, FENavItemDirection) {
 
 - (UIButton *)loadNavItemWithTitle:(NSString *)title image:(UIImage *)bimage target:(id)target action:(SEL)action direction:(FENavItemDirection)direction;
 
+-(void)setSearchControllerWithSearchBar:(UISearchBar *)searchbar;
+
 //about keyboard
 - (void)keyboardWillShow:(NSNotification *)notification;
 - (void)keyboardWillHide:(NSNotification *)notification;

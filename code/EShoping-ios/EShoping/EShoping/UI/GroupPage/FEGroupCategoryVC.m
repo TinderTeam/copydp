@@ -8,7 +8,8 @@
 
 #import "FEGroupCategoryVC.h"
 
-@interface FEGroupCategoryVC ()
+@interface FEGroupCategoryVC ()<UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *GroupTableView;
 
 @end
 
@@ -17,11 +18,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
+    searchBar.barStyle = UIBarStyleBlack;
+    searchBar.delegate = self;
+    self.navigationItem.titleView = searchBar;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
 }
 
 /*
