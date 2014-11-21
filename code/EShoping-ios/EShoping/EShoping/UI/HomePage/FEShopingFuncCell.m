@@ -17,6 +17,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.pageIndicate.numberOfPages = 3;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -46,6 +47,12 @@
 
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
     return YES;
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView == self.categoryCollectionView) {
+        self.pageIndicate.currentPage = scrollView.contentOffset.x / scrollView.bounds.size.width;
+    }
 }
 
 

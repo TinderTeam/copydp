@@ -9,7 +9,7 @@
 #import "FEProductImageTableViewCell.h"
 #import "FEProductImageShowCell.h"
 
-@interface FEProductImageTableViewCell ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface FEProductImageTableViewCell ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
 @end
 
@@ -17,6 +17,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.pageIndicate.numberOfPages = 2;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -38,5 +39,18 @@
     FEProductImageShowCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"shopingItemImageShowCell" forIndexPath:indexPath];
     return cell;
 }
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(self.bounds.size.width, self.bounds.size.height);
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView == self.imageShowCollectionView) {
+        NSInteger page = scrollView.contentOffset.x / scrollView.bounds.size.width;
+        self.pageIndicate.currentPage = page;
+    }
+}
+
 
 @end

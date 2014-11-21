@@ -13,6 +13,7 @@
 
 @interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *shopingTableView;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -29,9 +30,9 @@
     self.navigationController.navigationBar.barTintColor = FEThemeColor;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
-    searchBar.delegate = self;
-    self.navigationItem.titleView = searchBar;
+//    FESearchBar *searchBar = [[FESearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
+//    searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchBar;
 }
 
 -(void)gotoLocation:(id)sender{

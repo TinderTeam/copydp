@@ -10,5 +10,6 @@
 
 @interface FEShopingFuncCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UICollectionView *categoryCollectionView;
+@property (strong, nonatomic) IBOutlet UIPageControl *pageIndicate;
 
 @end

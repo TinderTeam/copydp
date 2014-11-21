@@ -126,16 +126,24 @@
                                                         <outlet property="delegate" destination="NUD-uQ-7PK" id="cY9-Li-rWG"/>
                                                     </connections>
                                                 </collectionView>
+                                                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="CCb-fl-BUD">
+                                                    <rect key="frame" x="280" y="152" width="39" height="37"/>
+                                                    <color key="pageIndicatorTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="currentPageIndicatorTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </pageControl>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottomMargin" secondItem="LRH-YP-7zV" secondAttribute="bottom" constant="-9" id="9bF-Ev-KLO"/>
+                                                <constraint firstAttribute="centerX" secondItem="CCb-fl-BUD" secondAttribute="centerX" id="C9V-im-SZS"/>
                                                 <constraint firstAttribute="trailing" secondItem="LRH-YP-7zV" secondAttribute="trailing" id="Ji9-So-A6i"/>
                                                 <constraint firstItem="LRH-YP-7zV" firstAttribute="top" secondItem="Fw9-sC-TAC" secondAttribute="top" id="mYs-wb-ZVC"/>
                                                 <constraint firstItem="LRH-YP-7zV" firstAttribute="leading" secondItem="Fw9-sC-TAC" secondAttribute="leading" id="q8E-Hk-rNU"/>
+                                                <constraint firstAttribute="bottom" secondItem="CCb-fl-BUD" secondAttribute="bottom" id="x72-iE-36e"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="categoryCollectionView" destination="LRH-YP-7zV" id="2b7-q0-csZ"/>
+                                            <outlet property="pageIndicate" destination="CCb-fl-BUD" id="t2r-Ni-O4I"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="shopingItem" rowHeight="120" id="2mF-0t-dwh" customClass="FEShopingItemCell">
@@ -190,10 +198,29 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="searchBar" destination="Zie-PD-fLb" id="Bth-yC-ziP"/>
+                        <outlet property="searchDisplayController" destination="gy2-0M-bL2" id="jan-p5-0Ej"/>
                         <outlet property="shopingTableView" destination="mcT-0M-zZr" id="MT8-8m-IvG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q8I-aS-4W8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" id="Zie-PD-fLb" customClass="FESearchBar">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="RUe-m2-cej" id="0m7-Vf-L6c"/>
+                    </connections>
+                </searchBar>
+                <searchDisplayController id="gy2-0M-bL2">
+                    <connections>
+                        <outlet property="delegate" destination="RUe-m2-cej" id="1sM-wB-H85"/>
+                        <outlet property="searchBar" destination="Zie-PD-fLb" id="6QY-iG-PSt"/>
+                        <outlet property="searchContentsController" destination="RUe-m2-cej" id="dD1-kG-B7l"/>
+                        <outlet property="searchResultsDataSource" destination="RUe-m2-cej" id="v0R-bz-NJW"/>
+                        <outlet property="searchResultsDelegate" destination="RUe-m2-cej" id="PTQ-w3-cZI"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1472" y="-967"/>
         </scene>
@@ -256,7 +283,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="190"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_footbar_icon_group" translatesAutoresizingMaskIntoConstraints="NO" id="8hy-1I-tk8">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="history" translatesAutoresizingMaskIntoConstraints="NO" id="8hy-1I-tk8">
                                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="190"/>
                                                                     </imageView>
                                                                 </subviews>
@@ -288,8 +315,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="lgQ-5Z-BNa">
-                                                    <rect key="frame" x="280" y="140" width="39" height="37"/>
+                                                <pageControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="lgQ-5Z-BNa">
+                                                    <rect key="frame" x="280" y="150" width="39" height="37"/>
                                                 </pageControl>
                                             </subviews>
                                             <constraints>
@@ -297,6 +324,7 @@
                                                 <constraint firstAttribute="centerX" secondItem="lgQ-5Z-BNa" secondAttribute="centerX" id="Bn5-IN-gao"/>
                                                 <constraint firstItem="LYx-BM-OaZ" firstAttribute="leading" secondItem="iFN-k7-Pcq" secondAttribute="leading" id="Con-Zt-K1W"/>
                                                 <constraint firstItem="LYx-BM-OaZ" firstAttribute="top" secondItem="iFN-k7-Pcq" secondAttribute="top" id="FKW-bH-aj1"/>
+                                                <constraint firstAttribute="bottom" secondItem="lgQ-5Z-BNa" secondAttribute="bottom" constant="2" id="W4B-ft-iQc"/>
                                                 <constraint firstAttribute="bottom" secondItem="lgQ-5Z-BNa" secondAttribute="bottom" constant="12" id="WRr-E9-8X3"/>
                                                 <constraint firstAttribute="bottom" secondItem="lgQ-5Z-BNa" secondAttribute="bottom" constant="12" id="hm1-U1-tVK"/>
                                                 <constraint firstItem="ggq-zh-TIM" firstAttribute="leading" secondItem="iFN-k7-Pcq" secondAttribute="leadingMargin" constant="22" id="oiK-NS-UNf"/>
@@ -305,6 +333,7 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="WRr-E9-8X3"/>
+                                                    <exclude reference="hm1-U1-tVK"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -625,8 +654,29 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="FV4-6f-MPX" id="XFH-Bm-VjX"/>
+                        <outlet property="searchDisplayController" destination="dsE-T5-zAD" id="6uQ-YX-41X"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z7p-Lr-wmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" id="FV4-6f-MPX" customClass="FESearchBar">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="tid-HR-aFU" id="SMz-ic-Rvl"/>
+                    </connections>
+                </searchBar>
+                <searchDisplayController id="dsE-T5-zAD">
+                    <connections>
+                        <outlet property="delegate" destination="tid-HR-aFU" id="dyM-AR-GTb"/>
+                        <outlet property="searchBar" destination="FV4-6f-MPX" id="uO3-Oh-piZ"/>
+                        <outlet property="searchContentsController" destination="tid-HR-aFU" id="Ofg-rH-xHQ"/>
+                        <outlet property="searchResultsDataSource" destination="tid-HR-aFU" id="7Fw-be-23Z"/>
+                        <outlet property="searchResultsDelegate" destination="tid-HR-aFU" id="bhg-ha-db3"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1472" y="-264"/>
         </scene>
@@ -665,8 +715,29 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="K9B-hV-tAB" id="FcN-yy-5Bh"/>
+                        <outlet property="searchDisplayController" destination="V4f-Pq-bsj" id="lW7-Wm-nGR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZWO-XG-P1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" id="K9B-hV-tAB" customClass="FESearchBar">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="pmO-Z4-PWc" id="hwI-BM-l1O"/>
+                    </connections>
+                </searchBar>
+                <searchDisplayController id="V4f-Pq-bsj">
+                    <connections>
+                        <outlet property="delegate" destination="pmO-Z4-PWc" id="tn1-vl-ofe"/>
+                        <outlet property="searchBar" destination="K9B-hV-tAB" id="y8d-0q-lpL"/>
+                        <outlet property="searchContentsController" destination="pmO-Z4-PWc" id="xfo-P2-9dT"/>
+                        <outlet property="searchResultsDataSource" destination="pmO-Z4-PWc" id="mRy-og-2vS"/>
+                        <outlet property="searchResultsDelegate" destination="pmO-Z4-PWc" id="e3a-xw-UE7"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1472" y="471"/>
         </scene>
@@ -1286,7 +1357,7 @@
         <image name="usersetting" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WI5-vc-442"/>
         <segue reference="8Ed-oy-j1e"/>
+        <segue reference="WI5-vc-442"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,7 +10,9 @@
 #import <ZBarSDK/ZBarSDK.h>
 
 
-@interface FEShopingDiscoverVC ()<UISearchBarDelegate,ZBarReaderDelegate>
+@interface FEShopingDiscoverVC ()<UISearchBarDelegate,ZBarReaderDelegate,UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) UITableView *searchTable;
+@property (strong, nonatomic) IBOutlet FESearchBar *searchBar;
 
 @end
 
@@ -67,15 +69,71 @@
 }
 
 -(void)initUI{
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
-    searchBar.barStyle = UIBarStyleBlack;
-    searchBar.delegate = self;
-    self.navigationItem.titleView = searchBar;
+    self.searchBar.barStyle = UIBarStyleBlack;
+    self.navigationItem.titleView = self.searchBar;
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - UISearchDisplayControllerdelegate methods
+- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+    self.searchBar.transform = CGAffineTransformMakeTranslation(0, - self.searchBar.frame.origin.y);
+}
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
+    [controller.searchResultsTableView setDelegate:self];
+    controller.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+//    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController*)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    //    [self filterContentForSearchText:searchString];
+    return YES;
+}
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+//    self.searchTable = tableView;
+//    [tableView setContentInset:UIEdgeInsetsZero];
+//    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+//    [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - UITableViewDelegate
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == self.searchTable) {
+        static NSString *identifier = @"cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        return cell;
+    }
+    return nil;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (tableView == self.searchTable) {
+        return 1;
+    }
+    return 0;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (tableView == self.searchTable) {
+        return 1;
+    }
+    return 0;
 }
 
 /*

@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
+    FESearchBar *searchBar = [[FESearchBar alloc] initWithFrame:CGRectMake(0, 0, 250, 40)];
     searchBar.barStyle = UIBarStyleBlack;
     searchBar.delegate = self;
     self.navigationItem.titleView = searchBar;

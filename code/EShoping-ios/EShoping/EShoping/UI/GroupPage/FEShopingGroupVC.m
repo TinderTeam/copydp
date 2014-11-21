@@ -11,6 +11,7 @@
 #import "FEGroupProductCell.h"
 
 @interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -23,11 +24,9 @@
 }
 
 -(void)initUI{
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
-    searchBar.backgroundColor = [UIColor clearColor];
-    searchBar.delegate = self;
-    searchBar.barStyle = UIBarStyleBlack;
-    self.navigationItem.titleView = searchBar;
+    self.searchBar.backgroundColor = [UIColor clearColor];
+    self.searchBar.barStyle = UIBarStyleBlack;
+    self.navigationItem.titleView = self.searchBar;
 }
 
 - (void)didReceiveMemoryWarning {

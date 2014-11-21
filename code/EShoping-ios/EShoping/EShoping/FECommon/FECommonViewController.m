@@ -8,8 +8,8 @@
 
 #import "FECommonViewController.h"
 
-@interface FECommonViewController ()<UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate>
-@property (nonatomic, strong) UISearchDisplayController *searchController;
+@interface FECommonViewController ()
+//@property (nonatomic, strong) UISearchDisplayController *searchController;
 
 @end
 
@@ -43,10 +43,11 @@
 }
 
 -(void)setSearchControllerWithSearchBar:(UISearchBar *)searchbar{
-    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:searchbar contentsController:self];
-    _searchController.searchResultsDelegate= self;
-    _searchController.searchResultsDataSource = self;
-    _searchController.delegate = self;
+//    _searchBar = searchbar;
+//    _searchController = [[UISearchDisplayController alloc] initWithSearchBar:searchbar contentsController:self];
+//    _searchController.searchResultsDelegate= self;
+//    _searchController.searchResultsDataSource = self;
+//    _searchController.delegate = self;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

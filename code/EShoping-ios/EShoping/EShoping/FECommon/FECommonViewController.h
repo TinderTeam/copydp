@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FESearchBar.h"
 
 typedef NS_ENUM(NSInteger, FENavItemDirection) {
 	FENavItemLeftDirection,
@@ -14,6 +15,9 @@ typedef NS_ENUM(NSInteger, FENavItemDirection) {
 };
 
 @interface FECommonViewController : UIViewController
+
+//@property (nonatomic, strong) UISearchBar *searchBar;
+//@property (nonatomic, strong) UISearchDisplayController *searchBarDisplayController;
 
 - (void)screenOffset:(CGFloat)offset;
 
