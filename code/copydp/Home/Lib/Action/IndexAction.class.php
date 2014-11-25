@@ -2,7 +2,7 @@
 // 本类由系统自动生成，仅供测试用途
 
 
-class IndexAction extends Action {
+class IndexAction extends IndexServiceAction {
 	public function passwordSetup(){
 		$this->display();
 	}
@@ -21,9 +21,9 @@ class IndexAction extends Action {
 			$this->assign("jumpUrl","login");
 			$this->success("操作成功");
 		}
-		
-		
+ 
 	}
+	
 	
 	public function index(){
 			
@@ -57,8 +57,14 @@ class IndexAction extends Action {
 	public function login($tabSelect=0){
 		$this->assign('tabSelect',$tabSelect);
 		$this->display();
+		
     }
-	
+	public function login_rest()
+	{
+	   parent::login_rest();
+	}
+ 
+ 
 	//登录校验
  	public function check(){
 		session_start();
