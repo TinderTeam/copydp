@@ -33,6 +33,7 @@ public class MISPErrorMessageConst
 
 	public static final int USER_EXISTED = 7;//用户已存在
 	
+	public static final int NET_FAIL = 9;//用户已存在
 
 	public static String getMessageByErrorCode(int errorCode)
 	{

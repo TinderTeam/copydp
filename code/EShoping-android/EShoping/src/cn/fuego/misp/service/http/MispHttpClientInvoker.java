@@ -30,6 +30,7 @@ import org.jboss.resteasy.util.IsHttpMethod;
 import android.os.Handler;
 import android.os.Message;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.misp.constant.MISPErrorMessageConst;
 import cn.fuego.misp.service.MISPException;
 
 /**
@@ -99,9 +100,11 @@ public class MispHttpClientInvoker extends Thread
 			msg.obj = rspObj;
 			handler.sendMessage(msg);
 			 
-		} catch (Exception e)
+		} 
+		catch (Exception e)
 		{
-			throw new MISPException("call http failed",e);
+			log.error("call http failed",e);
+			throw new MISPException(MISPErrorMessageConst.NET_FAIL,e);
 		}
 		
 	}

@@ -1,10 +1,11 @@
 package cn.fuego.eshoping.ui;
 
-import android.R;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import cn.fuego.eshoping.R;
 
 public class MainActivity extends Activity
 {
@@ -13,7 +14,7 @@ public class MainActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_list_item);
+		setContentView(R.layout.activity_main);
 	}
 
 	@Override
