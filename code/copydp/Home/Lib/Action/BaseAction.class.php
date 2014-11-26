@@ -3,16 +3,19 @@
 require 'ErrorCode.class.php';
 class ResultJson
 {
-     protected $errorCode = 0;
-	 protected $errorMsg;
-	 protected $obj;
-	 public function __construct($errorCode,$errorMsg) {
+     public $errorCode = 0;
+	 public $errorMsg;
+	 public $obj;
+	 public function __construct($errorCode) 
+	 {
  
-        $this->errorCode = $errorMsg;
+        $this->errorCode = $errorCode;
  
     }
 
 }
+
+
 
 class BaseAction extends Action 
 {
@@ -27,6 +30,7 @@ class BaseAction extends Action
 	 public function getReqJson()
 	 {
 	   $req = file_get_contents("php://input");
+	   $this->log('the url is '.$_SERVER["REQUEST_URI"] );
 	   $this->log('request is '.$req);
 
 	   return $req;
@@ -44,22 +48,31 @@ class BaseAction extends Action
 	 
 	 public function doAuth()
 	 {
-	  
+	   $req =  $this->getReqObj();
+	   $token = $req->token;
+	   if(true)
+	   {
+	       //$this->returnJson(ERROR_TOKEN_INVALID,null);
+	   }
 	 }
-	 
-	 public function returnJson($data)
+	 public  function  returnJson($errorCode,$data)
 	 {
-	    	   
-		$returnArray = $data;
-		$returnArray[result]=new ResultJson($errorCode,$errorMsg);
- 
- 
-	    $json = json_encode($returnArray);
-	    $this->log('response is '.$json);
-	    echo $json;
-		
-		exit;
+	     if($data!=null)
+	     {
+	        $returnArray = $data; 
+	     }
+
+	     $returnArray['result']= new ResultJson($errorCode);
+	     
+	     $json = json_encode($returnArray);
+	     
+	     $this->log('the url is '.$_SERVER["REQUEST_URI"] );
+	     $this->log('response is '.$json);
+	     echo $json;
+	     
+	     exit;
 	 }
+
 	 
    function uuid($prefix = '')  
    {  

@@ -3,7 +3,6 @@ package cn.fuego.eshoping.webservice.up.rest;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.os.Handler;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.misp.service.http.MispProxyFactory;
 
@@ -13,10 +12,11 @@ public class WebServiceContext
 
 	private static WebServiceContext instance;
 
-	public static String hostURL = "http://192.168.1.103:8080/SmartHome/rest";
+	public static String hostURL = "http://"+"127.0.0.1"+":"+"7000"+"/copydp/index.php";
 	
 	private WebServiceContext()
 	{
+		log.info("the host and base url is "+hostURL);
 
 	}
 
@@ -28,18 +28,18 @@ public class WebServiceContext
 		}
 		return instance;
 	}
-	public ProductManageRest getSensorManageRest(Handler handler)
+	public ProductManageRest getSensorManageRest()
 	{
 		
-		ProductManageRest rest = MispProxyFactory.create( hostURL,ProductManageRest.class, getHttpClient(),handler);
+		ProductManageRest rest = MispProxyFactory.create( hostURL,ProductManageRest.class, getHttpClient());
 		
 		return rest;
 	}
 	
-	public NewsManageRest getNewsManageRest(Handler handler)
+	public NewsManageRest getNewsManageRest()
 	{
  
-		NewsManageRest rest = MispProxyFactory.create( hostURL,NewsManageRest.class, getHttpClient(),handler);
+		NewsManageRest rest = MispProxyFactory.create( hostURL,NewsManageRest.class, getHttpClient());
 
 		return rest;
 	}
@@ -50,10 +50,10 @@ public class WebServiceContext
 		return httpClient;
 
 	}
-	public UserManageRest getUserManageRest(Handler handler)
+	public UserManageRest getUserManageRest()
 	{
  
-		UserManageRest rest = MispProxyFactory.create( hostURL,UserManageRest.class, getHttpClient(),handler);
+		UserManageRest rest = MispProxyFactory.create( hostURL,UserManageRest.class, getHttpClient());
 
 		return rest;
 	}	

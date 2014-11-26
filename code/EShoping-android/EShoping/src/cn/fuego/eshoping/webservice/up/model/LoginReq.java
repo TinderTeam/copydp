@@ -11,18 +11,17 @@ package cn.fuego.eshoping.webservice.up.model;
  */
 public class LoginReq
 {
-	private String userName;
+	private String username;
 	private String password;
 	private String clientType;
 	private String clientVersion;
 	private String devToken;
-	public String getUserName()
-	{
-		return userName;
+ 
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName)
-	{
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword()
 	{
@@ -57,13 +56,12 @@ public class LoginReq
 		this.devToken = devToken;
 	}
 	@Override
-	public String toString()
-	{
-		return "LoginReq [userName=" + userName + ", password=" + password
+	public String toString() {
+		return "LoginReq [username=" + username + ", password=" + password
 				+ ", clientType=" + clientType + ", clientVersion="
 				+ clientVersion + ", devToken=" + devToken + "]";
 	}
-
+ 
 	
 
 }

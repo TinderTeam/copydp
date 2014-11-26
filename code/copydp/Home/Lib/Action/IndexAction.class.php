@@ -23,7 +23,21 @@ class IndexAction extends IndexServiceAction {
 		}
  
 	}
+	//APP修改密码
+	public function modifyPswd_rest()
+	{
+	    $this->doAuth();
+	    $req =  $this->getReqObj();
+	    $userInfo['username']=$req->username;
+	    $userInfo['oldPwd']=$req->oldPwd;
+	    $userInfo['pwdNew']=$req->pwdNew;
+	     
+	    $modifyResult = parent::modifyPswdService($userInfo);
 	
+	
+	    $errorCode = $modifyResult['errorCode'];
+	    $this->returnJson($errorCode,null);
+	}
 	
 	public function index(){
 			
@@ -53,15 +67,37 @@ class IndexAction extends IndexServiceAction {
 		$this->redirect('Index/index');
 		
 	}
-	//登录页面
+	//APP退出
+	public function logout_rest(){
+	  
+	  $req =  $this->getReqObj();
+	  $user['username']=$req->username;
+	  
+	  //退出登录
+	  $errorCode = SUCCESS;
+	  $this->returnJson($errorCode,null);
+	}
+	//显示登录页面
 	public function login($tabSelect=0){
 		$this->assign('tabSelect',$tabSelect);
 		$this->display();
 		
     }
+    //APP登录验证
 	public function login_rest()
 	{
-	   parent::login_rest();
+	  $req =  $this->getReqObj();
+	  $user['username']=$req->username;
+	  $user['password']=$req->password;
+	  
+	  $loginResult = parent::loginService($user);
+	   
+	   
+	  $errorCode = $loginResult['errorCode'];
+	  $Rsp['token'] = $this->uuid();
+	  $Rsp['user'] = $loginResult['user'];
+	  $Rsp['customer'] = $loginResult['customer'];
+	  $this->returnJson($errorCode,$Rsp);
 	}
  
  
@@ -273,7 +309,23 @@ class IndexAction extends IndexServiceAction {
 		$this->assign("jumpUrl","login");
 		$this->success("注册成功！");
     }
-
+    //APP注册校验
+    public function register_rest(){
+        
+        $req =  $this->getReqObj();
+        $newUser['username']=$req->user->username;
+        $newUser['password']=$req->user->password;
+        $newUser['code']=$req->code;
+        $newUser['email']=$req->customer->email;
+        $newUser['car_id']=$req->customer->car_id;
+        $newUser['cellphone']=$req->customer->cellphone;
+        $this->log($req->user->username);
+        $registerResult = parent::registerService($newUser);
+        
+        $errorCode = $registerResult['errorCode'];
+        $this->returnJson($errorCode,null);
+        
+    }
 	
 	public function city(){
 		//获取数据库内容
@@ -305,9 +357,20 @@ class IndexAction extends IndexServiceAction {
 		$this->assign('citySelect',"未选择");
 		$this->display();
     }
+    //APP注册校验
+    public function city_rest(){
+    
+        $this->doAuth();
+        
+        $getCityResult = parent::cityService();
+    
+        $errorCode = $getCityResult['errorCode'];
+        $Rsp['pinyin'] = $getCityResult['pinyin'];
+        $Rsp['cityList'] = $getCityResult['cityList'];
+        $this->returnJson($errorCode,$Rsp);
+    
+    }
 	//引用函数
-	
-	
 	function unescape($str) {
 	     $str = rawurldecode($str);
 	     preg_match_all("/(?:%u.{4})|.{4};|&#\d+;|.+/U",$str,$r);
@@ -424,6 +487,6 @@ class IndexAction extends IndexServiceAction {
 			}
 			return $ret;
 		}
-	
-	
+			
 }
+?>

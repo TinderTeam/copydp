@@ -25,30 +25,30 @@ import cn.fuego.eshoping.webservice.up.model.RegisterRsp;
 *
  */
 
-@Path("/user")
+@Path("/Index")
 @Produces("application/json")  
 @Consumes("application/json")  
 public interface UserManageRest
 {
 	@POST
-	@Path("/login")
+	@Path("/login_rest")
 	LoginRsp login(LoginReq req);
 	
 	@POST
-	@Path("/logout")
+	@Path("/logout_rest")
 	LoginRsp logout(LoginReq req);
 	
 	
 	@POST
-	@Path("/password/modify")
+	@Path("/modifyPswd_rest")
     ModifyPwdRsp modifyPassword(ModifyPwdReq req);
 	
 	@POST
-	@Path("/register")
+	@Path("/register_rest")
 	RegisterRsp registerMemeber(RegisterReq req);
 	
 	@POST
-	@Path("/city/list")
+	@Path("/city_rest")
 	GetCityListRsp getCityList(GetCityListReq req);
  
  

@@ -8,5 +8,5 @@ import cn.fuego.eshoping.webservice.up.model.base.NewsJson;
 
 public class GetNewsListRsp extends BaseJsonRsp
 {
-	List<NewsJson> newsList = new ArrayList<NewsJson>();
+	private List<NewsJson> newsList = new ArrayList<NewsJson>();
 }

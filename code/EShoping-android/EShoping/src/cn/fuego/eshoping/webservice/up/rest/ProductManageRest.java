@@ -5,10 +5,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import cn.fuego.eshoping.webservice.up.model.SetProductOrderReq;
-import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
-import cn.fuego.eshoping.webservice.up.model.GetProductOrderListReq;
-import cn.fuego.eshoping.webservice.up.model.GetProductOrderListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductTypeReq;
@@ -26,7 +22,7 @@ public interface ProductManageRest
 	
 	@POST
 	@Path("/type/list")
-	GetProductTypeRsp getProductList(GetProductTypeReq req);
+	GetProductTypeRsp getProductTye(GetProductTypeReq req);
 	
 	
  

@@ -37,21 +37,6 @@ public interface OrderManageRest
 	@Path("/product/delete")
 	SetProductOrderRsp delete(SetProductOrderReq req);
 	
-	
-	@POST
-	@Path("/activity/list")
-	GetProductOrderListRsp getProductOrderList(GetActivityOrderListReq req);
-	
-	@POST
-	@Path("/activity/create")
-	SetProductOrderRsp create(SetActivityOrderReq req);
-	
-	@POST
-	@Path("/activity/cancel")
-	SetProductOrderRsp cancel(SetActivityOrderReq req);
-	
-	@POST
-	@Path("/activity/delete")
-	SetProductOrderRsp delete(SetActivityOrderReq req);
+
 
 }

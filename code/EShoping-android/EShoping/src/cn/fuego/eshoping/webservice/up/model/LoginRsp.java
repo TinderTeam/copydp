@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.fuego.eshoping.webservice.up.model.base.BaseJsonRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ButtonJson;
+import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.MenuJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
 
@@ -21,6 +22,7 @@ import cn.fuego.eshoping.webservice.up.model.base.UserJson;
 public class LoginRsp extends BaseJsonRsp
 {
 	private UserJson user;
+	private CustomerJson customer;
 	private String token;
 	private List<MenuJson> menuList = new ArrayList<MenuJson>();
 	private List<ButtonJson> buttonList = new ArrayList<ButtonJson>();
@@ -57,9 +59,18 @@ public class LoginRsp extends BaseJsonRsp
 		this.buttonList = buttonList;
 	}
 	
-
-	
-	
+	public CustomerJson getCustomer() {
+		return customer;
+	}
+	public void setCustomer(CustomerJson customer) {
+		this.customer = customer;
+	}
+	@Override
+	public String toString() {
+		return "LoginRsp [user=" + user + ", customer=" + customer + ", token="
+				+ token + ", menuList=" + menuList + ", buttonList="
+				+ buttonList + ", result=" + result + "]";
+	}
  
 
 }

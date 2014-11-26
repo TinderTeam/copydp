@@ -12,6 +12,7 @@ class CommunityAction extends Action {
 	public function cmnty_info($communityID=0){
 		$this->assign('communityID',$communityID);
 		$this->display();
+		
     }
 	
 	public function reply(){

@@ -20,16 +20,15 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 public class ModifyPwdReq extends BaseJsonReq
 {
 	 
-	private String userName;
+	private String username;
 	private String oldPwd;
 	private String pwdNew;
-	public String getUserName()
-	{
-		return userName;
+	
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName)
-	{
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getOldPwd()
 	{
@@ -49,11 +48,11 @@ public class ModifyPwdReq extends BaseJsonReq
 		this.pwdNew = pwdNew;
 	}
 	@Override
-	public String toString()
-	{
-		return "ModifyPwdReq [userName=" + userName + ", oldPwd=" + oldPwd
+	public String toString() {
+		return "ModifyPwdReq [username=" + username + ", oldPwd=" + oldPwd
 				+ ", pwdNew=" + pwdNew + "]";
 	}
+	
  
 	
 
