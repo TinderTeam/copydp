@@ -1,10 +1,20 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
-class NewsAction extends Action {
+class NewsAction extends BaseAction {
     public function newsShow($newsID=0){	
 		$this->assign('newsID',$newsID);	
 		$this->display();
     }
+    //APP获取最新资讯List
+    public function getNewsList_rest(){
+        
+        $newsDB=new Model('news');
+        $newsList=$newsDB->order('rand()')->limit(6)->select();
+        $errorCode = SUCCESS;
+        $Rsp['newsList'] = $newsList;
+        $this->returnJson($errorCode,$Rsp);
+    }
+    
 	public function selectType($typeName=0){
 		$this->assign('typeName',$typeName);
 		$this->display('community');

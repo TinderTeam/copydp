@@ -9,12 +9,12 @@ import cn.fuego.eshoping.webservice.up.model.GetNewsListReq;
 import cn.fuego.eshoping.webservice.up.model.GetNewsListRsp;
 
 
-@Path("/news")
+@Path("/News")
 @Produces("application/json")  
 @Consumes("application/json")  
 public interface NewsManageRest
 {
 	@POST
-	@Path("/list")
+	@Path("/getNewsList_rest")
 	GetNewsListRsp getNewsList(GetNewsListReq req);
 }

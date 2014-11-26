@@ -28,14 +28,7 @@ public class WebServiceContext
 		}
 		return instance;
 	}
-	public ProductManageRest getSensorManageRest()
-	{
-		
-		ProductManageRest rest = MispProxyFactory.create( hostURL,ProductManageRest.class, getHttpClient());
-		
-		return rest;
-	}
-	
+
 	public NewsManageRest getNewsManageRest()
 	{
  
