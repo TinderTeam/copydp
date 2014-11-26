@@ -14,8 +14,10 @@
     define('ERROR_TOKEN_INVALID',10); //token 失效
     
     
-    define('USER_UNCHECKED',10000);         //用户未审核
-    define('USER_APPROVAL_REFUSED',10001);  //用户审核未通过
-    define('CODE_IS_INVALID',10002);       //激活码已失效
+    define('USER_UNCHECKED',10000);             //用户未审核
+    define('USER_APPROVAL_REFUSED',10001);      //用户审核未通过
+    define('CODE_IS_INVALID',10002);            //激活码已失效
+    define('ACTIVITY_ORDER_DUPLICATE',10003);   //活动重复参与
+    define('ACTIVITY_ORDER_MAXIMUM',10004);     //活动订单已达上限
 	
 ?>

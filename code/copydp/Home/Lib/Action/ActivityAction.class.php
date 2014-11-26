@@ -1,9 +1,33 @@
 <?php
-class ActivityAction extends Action {
+class ActivityAction extends ActivityServiceAction {
     public function activity(){
 		$this->display();
     }
-	
+    //APP获取活动列表
+    public function activity_rest(){
+        
+        $req =  $this->getReqObj();
+        $city = $req->city;
+        $this->log($city);
+        $activityListResult = parent::activityService($city);
+        
+        $errorCode = $activityListResult['errorCode'];
+        $Rsp['activityList'] = $activityListResult['activityList'];
+        $this->returnJson($errorCode,$Rsp);
+    }
+    //APP获取个人活动订单列表
+    public function activityOrder_rest(){
+        
+        $this->doAuth();
+        $req =  $this->getReqObj();
+        $userID = $req->userID;
+        $this->log($userID);
+        $activityOrderListResult = parent::activityOrderService($userID);
+        
+        $errorCode = $activityOrderListResult['errorCode'];
+        $Rsp['orderList'] = $activityOrderListResult['activityOrderList'];
+        $this->returnJson($errorCode,$Rsp);
+    }
 	public function activity_manager(){
 		$this->display();
     }
@@ -90,6 +114,34 @@ class ActivityAction extends Action {
 		}	
 		
 	}
+	//APP产生活动订单
+	public function createOrder_rest(){
+	    
+	    $this->doAuth();
+	    $req =  $this->getReqObj();
+	    $orderInfo['userID'] = $req->userID;
+	    $orderInfo['activityID'] = $req->activityID;
+	    $this->log($orderInfo);
+	    $createOrderResult = parent::createOrderService($orderInfo);
+	    
+	    $errorCode = $createOrderResult['errorCode'];
+	    $Rsp['activityOrder'] = $createOrderResult['activityOrder'];
+	    $this->returnJson($errorCode,$Rsp);
+	}
+	//APP取消活动订单
+	public function cancelOrder_rest(){
+	    
+	    $this->doAuth();
+	    $req =  $this->getReqObj();
+	    $orderInfo['userID'] = $req->userID;
+	    $orderInfo['activityID'] = $req->activityID;
+	    $this->log($orderInfo);
+	    $cancelOrderResult = parent::cancelOrderService($orderInfo);
+	     
+	    $errorCode = $cancelOrderResult['errorCode'];
+	    $this->returnJson($errorCode,null);
+	}
+	
 	
 
 }

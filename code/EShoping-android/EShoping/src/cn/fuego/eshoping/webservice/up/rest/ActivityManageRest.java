@@ -8,35 +8,34 @@ import javax.ws.rs.Produces;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListReq;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListReq;
+import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductOrderListRsp;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderReq;
+import cn.fuego.eshoping.webservice.up.model.SetActivityOrderRsp;
 import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
 
 
-@Path("/")
+@Path("/Activity")
 @Produces("application/json")  
 @Consumes("application/json")  
 public interface ActivityManageRest
 {
 	@POST
-	@Path("//list")
+	@Path("/activity_rest")
 	GetActivityListRsp getActivityList(GetActivityListReq req);
 	
 	
 	@POST
-	@Path("/activitya/list")
-	GetProductOrderListRsp getProductOrderList(GetActivityOrderListReq req);
+	@Path("/activityOrder_rest")
+	GetActivityOrderListRsp getActivityOrderList(GetActivityOrderListReq req);
 	
 	@POST
-	@Path("/activity/create")
-	SetProductOrderRsp create(SetActivityOrderReq req);
+	@Path("/createOrder_rest")
+	SetActivityOrderRsp createActivityOrder(SetActivityOrderReq req);
 	
 	@POST
-	@Path("/activity/cancel")
-	SetProductOrderRsp cancel(SetActivityOrderReq req);
+	@Path("/cancelOrder_rest")
+	SetActivityOrderRsp cancelActivityOrder(SetActivityOrderReq req);
 	
-	@POST
-	@Path("/activity/delete")
-	SetProductOrderRsp delete(SetActivityOrderReq req);
 
 }

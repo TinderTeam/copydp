@@ -319,7 +319,6 @@ class IndexAction extends IndexServiceAction {
         $newUser['email']=$req->customer->email;
         $newUser['car_id']=$req->customer->car_id;
         $newUser['cellphone']=$req->customer->cellphone;
-        $this->log($req->user->username);
         $registerResult = parent::registerService($newUser);
         
         $errorCode = $registerResult['errorCode'];
@@ -360,7 +359,7 @@ class IndexAction extends IndexServiceAction {
     //APP注册校验
     public function city_rest(){
     
-        $this->doAuth();
+        //$this->doAuth();
         
         $getCityResult = parent::cityService();
     

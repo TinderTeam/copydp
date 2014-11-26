@@ -57,6 +57,12 @@ public class WebServiceContext
 
 		return rest;
 	}	
-	
+	public ActivityManageRest getActivityManageRest()
+	{
+ 
+		ActivityManageRest rest = MispProxyFactory.create( hostURL,ActivityManageRest.class, getHttpClient());
+
+		return rest;
+	}
 
 }
