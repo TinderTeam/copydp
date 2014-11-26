@@ -82,7 +82,9 @@
 
 #pragma mark - UISearchDisplayControllerdelegate methods
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
-    self.searchBar.transform = CGAffineTransformMakeTranslation(0, - self.searchBar.frame.origin.y);
+    [controller setActive:YES animated:YES];
+    controller.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
+//    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
 }
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
     [controller.searchResultsTableView setDelegate:self];

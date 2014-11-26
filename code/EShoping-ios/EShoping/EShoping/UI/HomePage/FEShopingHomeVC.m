@@ -83,38 +83,38 @@
     return 20;
 }
 
-#pragma mark - SpSearchbarDelegate
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-    
-    searchBar.showsScopeBar = YES;
-    [searchBar sizeToFit];
-    [searchBar setShowsCancelButton:YES animated:YES];
-    return YES;
-}
-
--(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
-    return YES;
-}
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder];
-    [self enableCancelButton:searchBar];
-}
-
-- (void)enableCancelButton:(UISearchBar *)searchBar
-{
-    for (UIView *view in searchBar.subviews)
-    {
-        for (id subview in view.subviews)
-        {
-            if ( [subview isKindOfClass:[UIButton class]] )
-            {
-                [subview setEnabled:YES];
-                return;
-            }
-        }
-    }
-}
+//#pragma mark - SpSearchbarDelegate
+//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+//    
+//    searchBar.showsScopeBar = YES;
+//    [searchBar sizeToFit];
+//    [searchBar setShowsCancelButton:YES animated:YES];
+//    return YES;
+//}
+//
+//-(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
+//    return YES;
+//}
+//
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    [searchBar resignFirstResponder];
+//    [self enableCancelButton:searchBar];
+//}
+//
+//- (void)enableCancelButton:(UISearchBar *)searchBar
+//{
+//    for (UIView *view in searchBar.subviews)
+//    {
+//        for (id subview in view.subviews)
+//        {
+//            if ( [subview isKindOfClass:[UIButton class]] )
+//            {
+//                [subview setEnabled:YES];
+//                return;
+//            }
+//        }
+//    }
+//}
 
 
 -(void)viewDidAppear:(BOOL)animated{

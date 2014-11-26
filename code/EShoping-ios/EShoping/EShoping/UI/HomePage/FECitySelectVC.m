@@ -8,10 +8,14 @@
 
 #import "FECitySelectVC.h"
 
+#define FIRSTLETTER @"key"
+#define CITYS       @"citys"
+
 @interface FECitySelectVC ()<UITableViewDataSource,UITableViewDelegate>{
     NSMutableArray *_city;
 }
 @property (strong, nonatomic) IBOutlet UITableView *cityTableView;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -20,7 +24,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _city = [NSMutableArray arrayWithObjects:@"苏州",@"上海",@"深圳", nil];
+    _city = [NSMutableArray new];
+    NSArray *citys = [NSMutableArray arrayWithObjects:@"苏州",@"上海",@"深圳",@"武汉",@"广州",@"郑州",@"南昌",@"青岛",@"西宁",@"乌鲁木齐",@"天津",@"北京", nil];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    NSMutableArray *sortedarray = [NSMutableArray arrayWithArray:[citys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
+    for (int i = 0; i < 27; i++) {
+        unichar ch = i + 65;
+        NSString *key = [NSString stringWithFormat:@"%c",ch];
+        if (i == 26) {
+            key = @"#";
+        }
+        
+        NSMutableArray *citys = [[NSMutableArray alloc]init];
+        for (NSString *city in sortedarray) {
+            CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)city);CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
+            CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);
+            NSString *pinyin = (__bridge NSString *)string;
+            if (pinyin.length && [[[pinyin substringToIndex:1] uppercaseString] isEqualToString:key]) {
+                [citys addObject:city];
+            }
+//            if (!pinyin.length) {
+//                <#statements#>
+//            }
+//            
+//            if ([[country firstLetterForCompositeName] isEqualToString:key]) {
+//                [countrys addObject:country];
+//            }
+        }
+        if (citys.count) {
+            [_city addObject:@{FIRSTLETTER:key,CITYS:citys}];
+            [sortedarray removeObjectsInArray:citys];
+        }
+        
+//        if (countrys.count > 0) {
+//            _first[key] = countrys;
+//            [_data addObject:key];
+//        }
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -30,7 +71,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    cell.textLabel.text = @"苏州";
+    cell.textLabel.text = _city[indexPath.section][CITYS][indexPath.row];
     return cell;
 }
 
@@ -39,11 +80,38 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _city.count;
+    return [_city[section][CITYS] count];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return _city.count;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    
+//    NSMutableArray *toBeReturned = [[NSMutableArray alloc]init];
+    
+//    for(char c = 'A';c<='Z';c++)
+//        
+//        [toBeReturned addObject:[NSString stringWithFormat:@"%c",c]];
+    
+    return [_city valueForKey:FIRSTLETTER];
+    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    
+    return [_city[index][CITYS] count];
+    
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    return _city[section][FIRSTLETTER];
+    
 }
 
 #pragma mark - UITableViewDelegate
@@ -54,6 +122,35 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UISearchDisplayControllerdelegate methods
+- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
+}
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
+    [controller.searchResultsTableView setDelegate:self];
+    controller.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
+
+- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+    //    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
+    //    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController*)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    //    [self filterContentForSearchText:searchString];
+    return YES;
+}
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+    //    self.searchTable = tableView;
+    //    [tableView setContentInset:UIEdgeInsetsZero];
+    //    [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+    //    [self.searchBar resignFirstResponder];
 }
 
 /*
