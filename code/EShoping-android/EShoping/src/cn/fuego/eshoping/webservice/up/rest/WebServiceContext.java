@@ -57,5 +57,12 @@ public class WebServiceContext
 
 		return rest;
 	}
+	public ProductManageRest getProductManageRest()
+	{
+ 
+		ProductManageRest rest = MispProxyFactory.create( hostURL,ProductManageRest.class, getHttpClient());
+
+		return rest;
+	}
 
 }

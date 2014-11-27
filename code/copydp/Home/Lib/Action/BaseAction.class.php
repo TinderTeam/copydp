@@ -61,15 +61,15 @@ class BaseAction extends Action
 	     {
 	        $returnArray = $data; 
 	     }
-
+	      
 	     $returnArray['result']= new ResultJson($errorCode);
 	     
 	     $json = json_encode($returnArray);
 	     
 	     $this->log('the url is '.$_SERVER["REQUEST_URI"] );
 	     $this->log('response is '.$json);
+	     header('Content-Type:application/json;charset=utf-8');
 	     echo $json;
-	     
 	     exit;
 	 }
 

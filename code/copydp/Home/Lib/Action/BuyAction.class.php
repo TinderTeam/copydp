@@ -1,6 +1,6 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
-class BuyAction extends Action {
+class BuyAction extends BuyServiceAction {
 
     public function order($productID=0,$quantity=0){
 		if(empty($_SESSION['login_user'])){								
@@ -39,7 +39,19 @@ class BuyAction extends Action {
 			$this->display();	
 		}	
     }
-	
+    //APP获取产品订单列表
+    public function ProductOrder_rest(){
+    
+        $this->doAuth();
+        $req =  $this->getReqObj();
+        $userID = $req->userID;
+        $this->log($userID);
+        $productOrderListResult = parent::ProductOrderService($userID);
+    
+        $errorCode = $productOrderListResult['errorCode'];
+        $Rsp['orderList'] = $productOrderListResult['orderList'];
+        $this->returnJson($errorCode,$Rsp);
+    }
 	public function orderCommit(){
 		$customer_id=$_POST['customer_id'];
 		$product_id=$_POST['product_id'];
@@ -78,7 +90,45 @@ class BuyAction extends Action {
 		$this->display();
 		//$this->success("下单成功");
 	}
+	//APP产品下单
+	public function CreateOrder_rest(){
 	
+	    $this->doAuth();
+	    $req =  $this->getReqObj();
+	    $orderInfo['userID'] = $req->userID;
+	    $orderInfo['productID'] = $req->productID;
+	    $orderInfo['quantity'] = $req->quantity;
+	    $this->log($orderInfo);
+	    $createOrderResult = parent::CreateOrderService($orderInfo);
+	
+	    $errorCode = $createOrderResult['errorCode'];
+	    $Rsp['productOrder'] = $createOrderResult['productOrder'];
+	    $this->returnJson($errorCode,$Rsp);
+	}
+	//APP取消订单
+	public function CancelOrder_rest(){
+	
+	    $this->doAuth();
+	    $req =  $this->getReqObj();
+	    $orderInfo['orderID'] = $req->orderID;
+	    $this->log($orderInfo);
+	    $cancelOrderResult = parent::CancelOrderService($orderInfo);
+	
+	    $errorCode = $cancelOrderResult['errorCode'];
+	    $this->returnJson($errorCode,null);
+	}
+	//APP删除订单
+	public function DeleteOrder_rest(){
+	
+	    $this->doAuth();
+	    $req =  $this->getReqObj();
+	    $orderInfo['orderID'] = $req->orderID;
+	    $this->log($orderInfo);
+	    $deleteOrderResult = parent::DeleteOrderService($orderInfo);
+	
+	    $errorCode = $deleteOrderResult['errorCode'];
+	    $this->returnJson($errorCode,null);
+	}
 	public function product_info($productID=0){
 		//最近浏览记录里增加相关内容
 		
@@ -100,17 +150,86 @@ class BuyAction extends Action {
 		$this->assign('productID',$productID);
 		$this->display();
     }
-	
+    //APP获取产品类型列表
+    public function GetProdutType_rest(){
+    
+        $req =  $this->getReqObj();
+        $typeRoot = $req->typeRoot;
+        if($typeRoot!=0){
+            $typeCondition['father_id']=$typeRoot;
+        }else{
+            $typeCondition['father_id']=0;
+        }
+        
+        $productTypeDB = new Model('product_type');
+        $productTypeList = $productTypeDB->where($typeCondition)->select();
+        
+        $errorCode = SUCCESS;
+        $Rsp['typeList'] = $productTypeList;
+        $this->returnJson($errorCode,$Rsp);
+    }
 	public function product_list(){
 		$typeRoot=0;
 		$this->assign('typeRoot',$typeRoot);
 		$this->display();
     }
-	
+    //APP获取所有产品列表
+    public function AllProduct_rest(){
+        
+        $req =  $this->getReqObj();
+        $searchInfo['city'] = $req->city;
+        $searchInfo['typeRoot'] = $req->typeRoot;
+        $searchInfo['keyWord'] = $req->keyWord;
+        $searchInfo['search'] = $req->search;
+        $this->log($searchInfo);
+        
+        $productListResult = parent::AllProductService($searchInfo);
+        
+        $errorCode = $productListResult['errorCode'];
+        $Rsp['productList'] = $productListResult['productList'];
+        $this->returnJson($errorCode,$Rsp);
+        
+    }
 	public function recommend_product_info($id=0){
 		$this->display();
     }
-	
+    //APP获取推荐产品列表
+    public function RecommendProduct_rest(){
+        
+        $req =  $this->getReqObj();
+        $city = $req->city;
+        $this->log($city);
+        $productListResult = parent::recommendProductService($city);
+        
+        $errorCode = $productListResult['errorCode'];
+        $Rsp['productList'] = $productListResult['productList'];
+        $this->returnJson($errorCode,$Rsp);
+    }
+    //APP获取最新特惠产品列表
+    public function NewProduct_rest(){
+    
+        $req =  $this->getReqObj();
+        $city = $req->city;
+        $this->log($city);
+        $productListResult = parent::NewProductService($city);
+    
+        $errorCode = $productListResult['errorCode'];
+        $Rsp['productList'] = $productListResult['productList'];
+        $this->returnJson($errorCode,$Rsp);
+    }
+    //APP获取分类推荐产品列表
+    public function TypeRecProduct_rest(){
+    
+        $req =  $this->getReqObj();
+        $typeInfo['city'] = $req->city;
+        $typeInfo['typeRoot'] = $req->typeRoot;
+        $this->log($typeInfo);
+        $productListResult = parent::TypeRecProductService($typeInfo);
+    
+        $errorCode = $productListResult['errorCode'];
+        $Rsp['productList'] = $productListResult['productList'];
+        $this->returnJson($errorCode,$Rsp);
+    }
 	public function cancelFilter($crtCdtItm=0){
 	
 		if($crtCdtItm!=0){
