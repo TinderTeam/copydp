@@ -64,5 +64,12 @@ public class WebServiceContext
 
 		return rest;
 	}
+	public CommunityManageRest getCommunityManageRest()
+	{
+ 
+		CommunityManageRest rest = MispProxyFactory.create( hostURL,CommunityManageRest.class, getHttpClient());
+
+		return rest;
+	}
 
 }

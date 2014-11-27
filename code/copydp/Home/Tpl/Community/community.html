@@ -84,7 +84,7 @@ overflow: hidden;
 						</div>
 						<?php
 							$communityDiscussViewDB=new Model('view_community_discuss_sum');
-							$communityTopicList=$communityDiscussViewDB->limit(6)->getField('community_id',true);							
+							$communityTopicList=$communityDiscussViewDB->order('discuss_num desc')->limit(6)->getField('community_id',true);							
 						?>
 						<ul class="title-list num-list">
 							<volist name="communityTopicList" id="topicID">
@@ -172,7 +172,7 @@ overflow: hidden;
 							<ul class="figure-list">
 								<?php
 									$communityUserDB=new Model('view_community_customer');
-									$UserIDList=$communityUserDB->limit(10)->getField('customer_id',true);						
+									$UserIDList=$communityUserDB->order('customer_number desc')->limit(10)->getField('customer_id',true);						
 								?>
 								<volist name="UserIDList" id="userID">
 									<li>

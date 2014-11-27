@@ -1,7 +1,5 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
-import java.util.List;
-
 
 /**
  * 

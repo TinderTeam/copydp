@@ -5,9 +5,9 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 public class GetProductListReq extends BaseJsonReq
 {
 	private String city;
-	private int typeRoot;		//typeRoot=0 ±íÊ¾É¸Ñ¡È«²¿·ÖÀàÉÌÆ·
-	private String keyWord;		//¹Ø¼ü´ÊÄ£ºıËÑË÷
-	private boolean search;		//µ±¹Ø¼ü´ÊÎª¿ÕµÄÊ±ºò£¬ĞèÒª½«searchÉèÖÃÎªfalse
+	private int typeRoot;		//typeRoot=0 è¡¨ç¤ºç­›é€‰å…¨éƒ¨åˆ†ç±»å•†å“
+	private String keyWord;		//å…³é”®è¯æ¨¡ç³Šæœç´¢
+	private boolean search;		//å½“å…³é”®è¯ä¸ºç©ºçš„æ—¶å€™ï¼Œéœ€è¦å°†searchè®¾ç½®ä¸ºfalse
 	
 	public String getCity() {
 		return city;
