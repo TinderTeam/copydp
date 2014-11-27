@@ -8,6 +8,18 @@
 
 #import "AFHTTPRequestOperationManager.h"
 
+@class FEUserRegistRequest;
+@class FEUserRegistResponse;
+@class FEUserSigninRequest;
+@class FEUserSigninResponse;
+
 @interface FEShopWebServiceManager : AFHTTPRequestOperationManager
+
++(FEShopWebServiceManager *)sharedInstance;
+
+//regist
+-(AFHTTPRequestOperation *)registWithParam:(FEUserRegistRequest *)rdata response:(void (^)(NSError *error, FEUserRegistResponse *response))block;
+//sign in
+-(AFHTTPRequestOperation *)signinWithParam:(FEUserSigninRequest *)rdata response:(void (^)(NSError *error, FEUserSigninResponse *response))block;
 
 @end
