@@ -10,10 +10,16 @@
 #import "FECitySelectVC.h"
 #import "FEShopingFuncCell.h"
 #import "FEShopingItemCell.h"
+#import "FEShopWebServiceManager.h"
+#import "FEProductAllResponse.h"
+#import "FEProductGetAllRequest.h"
+#import "FEResult.h"
+#import "FEProduct.h"
 
 @interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *shopingTableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, strong) NSArray *productList;
 
 @end
 
@@ -24,6 +30,7 @@
     // Do any additional setup after loading the view.
     
     [self initUI];
+    [self requestAllproduct];
 }
 
 -(void)initUI{
@@ -46,6 +53,19 @@
     }
 }
 
+-(void)requestAllproduct{
+    __weak typeof(self) weakself = self;
+    FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:@"shenzhen" type:0 keyword:nil isSearch:NO];
+    [[FEShopWebServiceManager sharedInstance] productAll:rdate response:^(NSError *error, FEProductAllResponse *response) {
+//        NSLog(@"");
+        if (!error && response.result.errorCode.integerValue == 0) {
+            weakself.productList = response.productList;
+            [weakself.shopingTableView reloadData];
+        }
+    }];
+    
+}
+
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -53,6 +73,7 @@
         return cell;
     }else{
         FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
+        [cell configWithProduct:self.productList[indexPath.row]];
         return cell;
     }
     return nil;
@@ -66,7 +87,7 @@
     if (section == 0) {
         return 1;
     }else{
-        return 10;
+        return self.productList.count;
     }
     return 0;
 }

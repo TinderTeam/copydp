@@ -14,21 +14,35 @@
 #define __METHOD_MODIFY_PASSWORD    @"Index/modifyPswd_rest" //
 #define __METHOD_SIGOUT             @"Index/logout_rest"
 
-#define __METHOD_MARK_LIST          @"user/mark/list"
-#define __METHOD_MARK_ADD           @"user/mark/add"
-#define __METHOD_MARK_DELET         @"user/mark/delet"
+#define __METHOD_CITY               @"Index/city_rest"  
 
+//product
+#define __METHOD_PRODUCT_RECOMMENDPRODUCT   @"Buy/RecommendProduct_rest"
+#define __METHOD_PRODUCT_NEWPRODUCT         @"Buy/NewProduct_rest"
+#define __METHOD_PRODUCT_TYPERECTPRIDUCT    @"Buy/TypeRecProduct_rest"
+#define __METHOD_PRODUCT_ALLPRODUCT         @"Buy/AllProduct_rest"
+#define __METHOD_PRODUCT_GETPRODUCTTYPE     @"Buy/GetProdutType_rest"
+#define __METHOD_PRODUCT_PRODUCTORDER       @"Buy/ProductOrder_rest"
+#define __METHOD_PRODUCT_GREATEORDER        @"Buy/CreateOrder_rest"
+#define __METHOD_PRODUCT_CANCELORDER        @"Buy/CancelOrder_rest"
+#define __METHOD_PRODUCT_DELETEORDER        @"Buy/DeleteOrder_rest"
 
+//order
+#define __METHOD_ORDER_PRODUCT      @"order/product/list"
+#define __METHOD_ORDER_PRODUCT_CREATE   @"order/product/create"
+#define __METHOD_ORDER_CANCEL       @"order/product/cancel"
+#define __METHOD_ORDER_ABOLISH      @"order/product/abolish"
+#define __METHOD_ORDER_DELETE       @"order/product/delete"
 
-#define __METHOD_GET_NEWS           @"news/list"  //news
-#define __METHOD_SEVICE_ORDER       @"order/list" //orders
-#define __METHOD_SEVICE_ORDER_SET   @"order/set" //set order
+//news
+#define __METHOD_NEWS_GETNEWS       @"News/getNewsList_rest"
 
-#define __METHOD_HISTORY_ALARM      @"sensor/alarm"
-#define __METHOD_SENSOR_LIST        @"sensor/list"
-#define __METHOD_SENSOR_SET         @"sensor/set"
-#define __METHOD_SENSOR_ENABLE      @"sensor/batch/enable"
-#define __METHOD_SENSOR_DISABLE     @"sensor/batch/disable"
+//activity manager
+#define __METHOD_ACTIVITY_GETACTIVITY  @"Activity/activity_rest"
+#define __METHOD_ACTIVITY_ACTIVITYORDER @"Activity/activityOrder_rest"
+#define __METHOD_ACTIVITY_CREATEORDER   @"Activity/createOrder_rest"
+#define __METHOD_ACTIVITY_CANCELORDER   @"Activity/cancelOrder_rest"
+
 
 @interface FEBaseRequest : FEObject
 

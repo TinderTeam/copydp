@@ -149,11 +149,11 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2mF-0t-dwh" id="Vgw-vN-mVl">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home_footbar_icon_my" translatesAutoresizingMaskIntoConstraints="NO" id="VOM-nI-cx1">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VOM-nI-cx1">
                                                     <rect key="frame" x="10" y="10" width="100" height="90"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03d-C2-1Kw">
-                                                    <rect key="frame" x="135" y="18" width="42" height="21"/>
+                                                    <rect key="frame" x="135" y="18" width="100" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -161,6 +161,8 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="productImageView" destination="VOM-nI-cx1" id="DOV-Rc-W0E"/>
+                                            <outlet property="productNameLabel" destination="03d-C2-1Kw" id="Emy-Ww-HJj"/>
                                             <segue destination="YvB-bR-mew" kind="show" id="WI5-vc-442"/>
                                         </connections>
                                     </tableViewCell>
@@ -1454,7 +1456,6 @@
         <image name="home_footbar_icon_dianping" width="25" height="25"/>
         <image name="home_footbar_icon_found" width="25" height="25"/>
         <image name="home_footbar_icon_group" width="25" height="25"/>
-        <image name="home_footbar_icon_my" width="25" height="25"/>
         <image name="home_footbar_icon_my_pressed" width="25" height="25"/>
         <image name="oversea_navibar_icon_qr" width="20" height="20"/>
         <image name="usersetting" width="25" height="25"/>

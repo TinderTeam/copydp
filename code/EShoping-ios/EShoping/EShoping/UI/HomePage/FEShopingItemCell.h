@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FEProduct;
 
 @interface FEShopingItemCell : UITableViewCell
+
+-(void)configWithProduct:(FEProduct *)product;
 
 @end

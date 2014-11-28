@@ -27,7 +27,7 @@
     
     FEUser *user = [[FEUser alloc] initWithUserName:@"test" password:[@"123456" MD5]];
     FEUserRegistRequest *rdata = [[FEUserRegistRequest alloc] initWithUser:user customer:nil code:@""];
-    [[FEShopWebServiceManager sharedInstance] registWithParam:rdata response:^(NSError *error, FEUserRegistResponse *response) {
+    [[FEShopWebServiceManager sharedInstance] regist:rdata response:^(NSError *error, FEUserRegistResponse *response) {
         
     }];
     

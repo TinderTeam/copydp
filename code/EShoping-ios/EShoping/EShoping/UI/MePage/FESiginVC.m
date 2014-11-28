@@ -30,7 +30,7 @@
 
 - (IBAction)signin:(id)sender {
     FEUserSigninRequest *rdata = [[FEUserSigninRequest alloc] initWithUname:@"test" password:[@"123456" MD5] clienttype:@"1" clientversion:@"1.0" devtoken:[NSString UUID]];
-    [[FEShopWebServiceManager sharedInstance] signinWithParam:rdata response:^(NSError *error, FEUserSigninResponse *response) {
+    [[FEShopWebServiceManager sharedInstance] signin:rdata response:^(NSError *error, FEUserSigninResponse *response) {
         
     }];
 }
