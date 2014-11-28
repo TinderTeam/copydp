@@ -7,6 +7,10 @@
 //
 
 #import "FEMeView.h"
+#import "AppDelegate.h"
+#import "FECoreDataHandler.h"
+#import "CDUser.h"
+
 
 @implementation FEMeView
 
@@ -20,6 +24,10 @@
 
 -(void)awakeFromNib{
     [super awakeFromNib];
+    CDUser *user = FELoginUser;
+    if (user) {
+        self.nickNameLabel.text = user.username;
+    }
 }
 
 @end

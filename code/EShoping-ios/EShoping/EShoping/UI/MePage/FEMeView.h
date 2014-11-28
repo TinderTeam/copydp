@@ -11,5 +11,6 @@
 @interface FEMeView : UIView
 @property (strong, nonatomic) IBOutlet UIImageView *headerImage;
 @property (strong, nonatomic) IBOutlet UILabel *locationRegionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *nickNameLabel;
 
 @end

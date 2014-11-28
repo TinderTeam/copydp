@@ -8,6 +8,9 @@
 
 #import "FEShopingMeTableVC.h"
 #import "FEMeView.h"
+#import "AppDelegate.h"
+#import "FECoreDataHandler.h"
+#import "FEUser.h"
 
 @interface FEShopingMeTableVC ()
 
@@ -70,7 +73,12 @@
 
 -(void)meTap:(UIGestureRecognizer *)ges{
 //    [self performSegueWithIdentifier:@"showPersonProfileSegue" sender:ges.view];
-    [self performSegueWithIdentifier:@"userSiginSegue" sender:ges.view];
+    if (FELoginUser) {
+        [self performSegueWithIdentifier:@"showPersonProfileSegue" sender:ges.view];
+    }else{
+        [self performSegueWithIdentifier:@"userSiginSegue" sender:ges.view];
+    }
+    
 }
 
 

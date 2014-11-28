@@ -10,4 +10,6 @@
 
 @interface FEProductOrderResponse : FEBaseResponse
 
+@property (nonatomic, strong, readonly) NSArray *orderList;
+
 @end

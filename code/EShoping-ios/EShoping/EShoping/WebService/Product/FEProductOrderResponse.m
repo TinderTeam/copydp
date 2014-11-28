@@ -7,7 +7,23 @@
 //
 
 #import "FEProductOrderResponse.h"
+#import "FEProductOrder.h"
 
 @implementation FEProductOrderResponse
+
+-(id)initWithResponse:(id)response{
+    self = [super initWithResponse:response];
+    if (self) {
+        NSArray *orders = response[@"orderList"];
+        if (orders && ![orders isKindOfClass:[NSNull class]]) {
+            NSMutableArray *orderList = [NSMutableArray new];
+            for (id item in orders) {
+                [orderList addObject:[[FEProductOrder alloc] initWithDictionary:item]];
+            }
+            _orderList = orderList;
+        }
+    }
+    return self;
+}
 
 @end

@@ -55,7 +55,7 @@
 
 -(void)requestAllproduct{
     __weak typeof(self) weakself = self;
-    FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:@"shenzhen" type:0 keyword:nil isSearch:NO];
+    FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:@"深圳" type:0 keyword:nil isSearch:NO];
     [[FEShopWebServiceManager sharedInstance] productAll:rdate response:^(NSError *error, FEProductAllResponse *response) {
 //        NSLog(@"");
         if (!error && response.result.errorCode.integerValue == 0) {

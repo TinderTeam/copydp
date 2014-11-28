@@ -13,6 +13,7 @@
 @end
 
 @implementation AppDelegate
+@synthesize coreDataHandler = _coreDataHandler;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -122,6 +123,18 @@
             abort();
         }
     }
+}
+
++(AppDelegate *)sharedDelegate{
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+- (FECoreDataHandler *)coreDataHandler {
+    
+    if (nil == _coreDataHandler)
+        _coreDataHandler = [[FECoreDataHandler alloc] initWithAppDelegateManagedObjectContext];
+    return _coreDataHandler;
+    
 }
 
 @end

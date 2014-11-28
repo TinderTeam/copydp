@@ -7,8 +7,17 @@
 //
 
 #import "FEPersonProfileVC.h"
+#import "FECoreDataHandler.h"
+#import "AppDelegate.h"
+#import "FEShopWebServiceManager.h"
+#import "FEUserSignoutResquest.h"
+#import "CDUser.h"
+#import "FEResult.h"
+#import "FEUserSignoutResponse.h"
 
-@interface FEPersonProfileVC ()
+@interface FEPersonProfileVC ()<UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic, strong) UIView *footView;
 
 @end
 
@@ -24,6 +33,48 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark - UITableViewDataSource
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section == 2) {
+        if (!self.footView) {
+            UIView *footview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
+            footview.userInteractionEnabled = YES;
+            self.footView = footview;
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setBackgroundImage:[UIImage imageFromColor:FEThemeColor] forState:UIControlStateNormal];
+            btn.layer.cornerRadius = 4;
+            btn.layer.masksToBounds = YES;
+            [btn addTarget:self action:@selector(signout:) forControlEvents:UIControlEventTouchUpInside];
+            btn.frame = CGRectMake(40, (footview.bounds.size.height - 40.0) / 2.0f, self.view.bounds.size.width - 40.0 * 2, 40);
+            [btn setTitle:FEString(@"退出账号") forState:UIControlStateNormal];
+            [footview addSubview:btn];
+        }
+        return self.footView;
+        
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section == 2) {
+        return 80;
+    }
+    return 0;
+}
+
+-(void)signout:(id)sender{
+    __weak typeof(self) weakself = self;
+    FEUserSignoutResquest *rdate = [[FEUserSignoutResquest alloc] initWithUname:FELoginUser.username];
+    [[FEShopWebServiceManager sharedInstance] signout:rdate response:^(NSError *error, FEUserSignoutResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            [weakself.navigationController popViewControllerAnimated:YES];
+            [FECoreData deleteCoreData:@[FELoginUser]];
+        }
+    }];
+}
+
 
 /*
 #pragma mark - Navigation

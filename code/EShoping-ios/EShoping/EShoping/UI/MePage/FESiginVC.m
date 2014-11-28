@@ -10,8 +10,16 @@
 #import "FEShopWebServiceManager.h"
 #import "FEUserSigninRequest.h"
 #import "FEUserSigninResponse.h"
+#import "FEResult.h"
+#import "FEUser.h"
+#import "AppDelegate.h"
+#import "FECoreDataHandler.h"
+#import "CDUser.h"
 
-@interface FESiginVC ()
+
+@interface FESiginVC ()<UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UITextField *userName;
+@property (strong, nonatomic) IBOutlet UITextField *passWord;
 
 @end
 
@@ -29,14 +37,47 @@
 }
 
 - (IBAction)signin:(id)sender {
-    FEUserSigninRequest *rdata = [[FEUserSigninRequest alloc] initWithUname:@"test" password:[@"123456" MD5] clienttype:@"1" clientversion:@"1.0" devtoken:[NSString UUID]];
-    [[FEShopWebServiceManager sharedInstance] signin:rdata response:^(NSError *error, FEUserSigninResponse *response) {
-        
-    }];
+    [self dismisskeyboard];
+    if (![self.userName.text isEqualToString:@""] && ![self.passWord.text isEqualToString:@""]) {
+        __weak typeof(self) weakself = self;
+        FEUserSigninRequest *rdata = [[FEUserSigninRequest alloc] initWithUname:self.userName.text password:self.passWord.text clienttype:@"1" clientversion:@"1.0" devtoken:[NSString UUID]];
+        [[FEShopWebServiceManager sharedInstance] signin:rdata response:^(NSError *error, FEUserSigninResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                [weakself dismissViewControllerAnimated:YES completion:^{
+                    FEUser *wuser = response.user;
+                    CDUser *user = [FECoreData touchUserByIdentifier:@(59)];
+                    user.password = wuser.password;
+                    user.username = wuser.username;
+                    user.role = wuser.role;
+                    [FECoreData saveCoreData];
+                }];
+            }
+            
+        }];
+    }
+    
 }
 
 - (IBAction)backPress:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+-(void)dismisskeyboard{
+    [self.userName resignFirstResponder];
+    [self.passWord resignFirstResponder];
+}
+
+#pragma mark - UITextFieldDelegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == self.userName) {
+        [textField resignFirstResponder];
+        [self.passWord becomeFirstResponder];
+    }else if(textField == self.passWord){
+        [textField resignFirstResponder];
+        [self signin:nil];
+    }
+    return YES;
 }
 
 /*

@@ -13,18 +13,24 @@
 @interface FEShopingItemCell ()
 @property (strong, nonatomic) IBOutlet UIImageView *productImageView;
 @property (strong, nonatomic) IBOutlet UILabel *productNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *productDescriptionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *productValueLabel;
 
 @end
 
 @implementation FEShopingItemCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    // Initialization cod
+    self.productImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 -(void)configWithProduct:(FEProduct *)product{
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://163.125.247.80:7000/copydp/%@",product.imgsrc]] placeholderImage:nil];
+    
+    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/copydp/Public/uploads/img/%@",__WEB_SERVICE_IP,product.imgsrc]] placeholderImage:[UIImage imageNamed:@"profile.png"]];
     self.productNameLabel.text = product.name;
+    self.productDescriptionLabel.text = product.dscr;
+    self.productValueLabel.text = [NSString stringWithFormat:@"￥%@",product.price];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

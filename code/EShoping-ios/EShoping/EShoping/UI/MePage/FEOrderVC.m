@@ -7,8 +7,10 @@
 //
 
 #import "FEOrderVC.h"
+#import "AppDelegate.h"
+#import "FECoreDataHandler.h"
 
-@interface FEOrderVC ()
+@interface FEOrderVC ()<UITableViewDelegate>
 
 @end
 
@@ -22,6 +24,18 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UITableViewDelegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (indexPath.section == 0 && indexPath.row == 0) {
+    if (!FELoginUser) {
+        [self performSegueWithIdentifier:@"orderToSigninSegue" sender:tableView];
+    }else{
+        [self performSegueWithIdentifier:@"orderDetailSegue" sender:tableView];
+    }
+    
+//    }else if(indexPath.section)
 }
 
 /*
