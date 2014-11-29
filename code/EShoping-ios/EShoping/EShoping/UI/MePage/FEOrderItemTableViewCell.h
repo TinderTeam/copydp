@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FEProductOrder;
 
 @interface FEOrderItemTableViewCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *orderProductImageView;
 @property (strong, nonatomic) IBOutlet UILabel *orderProductNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *orderProductDescription;
 @property (strong, nonatomic) IBOutlet UILabel *orderProductStatusLabel;
+
+-(void)configWithProduct:(FEProductOrder *)product;
 
 @end

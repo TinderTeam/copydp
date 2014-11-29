@@ -24,44 +24,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     _city = [NSMutableArray new];
     NSArray *citys = [NSMutableArray arrayWithObjects:@"苏州",@"上海",@"深圳",@"武汉",@"广州",@"郑州",@"南昌",@"青岛",@"西宁",@"乌鲁木齐",@"天津",@"北京", nil];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    NSMutableArray *sortedarray = [NSMutableArray arrayWithArray:[citys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
-    for (int i = 0; i < 27; i++) {
-        unichar ch = i + 65;
-        NSString *key = [NSString stringWithFormat:@"%c",ch];
-        if (i == 26) {
-            key = @"#";
-        }
-        
-        NSMutableArray *citys = [[NSMutableArray alloc]init];
-        for (NSString *city in sortedarray) {
-            CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)city);CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
-            CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);
-            NSString *pinyin = (__bridge NSString *)string;
-            if (pinyin.length && [[[pinyin substringToIndex:1] uppercaseString] isEqualToString:key]) {
-                [citys addObject:city];
+    __weak typeof(self) weakself = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSMutableArray *sortedarray = [NSMutableArray arrayWithArray:[citys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
+        for (int i = 0; i < 27; i++) {
+            unichar ch = i + 65;
+            NSString *key = [NSString stringWithFormat:@"%c",ch];
+            if (i == 26) {
+                key = @"#";
             }
-//            if (!pinyin.length) {
-//                <#statements#>
-//            }
-//            
-//            if ([[country firstLetterForCompositeName] isEqualToString:key]) {
-//                [countrys addObject:country];
-//            }
+            
+            NSMutableArray *citys = [[NSMutableArray alloc]init];
+            for (NSString *city in sortedarray) {
+                CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)city);CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
+                CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);
+                NSString *pinyin = (__bridge NSString *)string;
+                if (pinyin.length && [[[pinyin substringToIndex:1] uppercaseString] isEqualToString:key]) {
+                    [citys addObject:city];
+                }
+            }
+            if (citys.count) {
+                [_city addObject:@{FIRSTLETTER:key,CITYS:citys}];
+                [sortedarray removeObjectsInArray:citys];
+            }
         }
-        if (citys.count) {
-            [_city addObject:@{FIRSTLETTER:key,CITYS:citys}];
-            [sortedarray removeObjectsInArray:citys];
-        }
-        
-//        if (countrys.count > 0) {
-//            _first[key] = countrys;
-//            [_data addObject:key];
-//        }
-    }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakself.cityTableView reloadData];
+        });
+    
+    });
+   
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
 }
 
 #pragma mark - UITableViewDataSource
@@ -116,7 +117,10 @@
 
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if ([self.delegate respondsToSelector:@selector(cityDidSelectedCode:)]) {
+        [self.delegate cityDidSelectedCode:_city[indexPath.section][CITYS][indexPath.row]];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

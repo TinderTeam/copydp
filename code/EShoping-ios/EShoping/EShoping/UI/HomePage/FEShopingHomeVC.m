@@ -13,13 +13,17 @@
 #import "FEShopWebServiceManager.h"
 #import "FEProductAllResponse.h"
 #import "FEProductGetAllRequest.h"
+#import "FECommonNavgationController.h"
+#import "FEShopingItemVC.h"
+#import "FECitySelectVC.h"
 #import "FEResult.h"
 #import "FEProduct.h"
 
-@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
+@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,FECitySelectVCDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *shopingTableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSArray *productList;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *regionBarItem;
 
 @end
 
@@ -34,7 +38,8 @@
 }
 
 -(void)initUI{
-    self.navigationController.navigationBar.barTintColor = FEThemeColor;
+    [self.regionBarItem setTitle:FEUserDefaultsObjectForKey(FEShopRegionKey)];
+    self.navigationController.navigationBar.barTintColor = FEThemeOrange;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
 //    FESearchBar *searchBar = [[FESearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
@@ -48,14 +53,21 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"segue identifier %@",segue.identifier);
     if ([segue.identifier isEqualToString:@"categorySegue"]) {
         
+    }else if([segue.identifier isEqualToString:@"showProductItem"]){
+        FEShopingItemVC *productVC = (FEShopingItemVC *)segue.destinationViewController;
+        productVC.product = ((FEShopingItemCell *)sender).product;
+    }else if(sender == self.regionBarItem){
+        FECitySelectVC *city = (FECitySelectVC *)((FECommonNavgationController *)segue.destinationViewController).topViewController;
+        city.delegate =self;
     }
 }
 
 -(void)requestAllproduct{
     __weak typeof(self) weakself = self;
-    FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:@"深圳" type:0 keyword:nil isSearch:NO];
+    FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
     [[FEShopWebServiceManager sharedInstance] productAll:rdate response:^(NSError *error, FEProductAllResponse *response) {
 //        NSLog(@"");
         if (!error && response.result.errorCode.integerValue == 0) {
@@ -104,39 +116,14 @@
     return 20;
 }
 
-//#pragma mark - SpSearchbarDelegate
-//- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
-//    
-//    searchBar.showsScopeBar = YES;
-//    [searchBar sizeToFit];
-//    [searchBar setShowsCancelButton:YES animated:YES];
-//    return YES;
-//}
-//
-//-(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
-//    return YES;
-//}
-//
-//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-//    [searchBar resignFirstResponder];
-//    [self enableCancelButton:searchBar];
-//}
-//
-//- (void)enableCancelButton:(UISearchBar *)searchBar
-//{
-//    for (UIView *view in searchBar.subviews)
-//    {
-//        for (id subview in view.subviews)
-//        {
-//            if ( [subview isKindOfClass:[UIButton class]] )
-//            {
-//                [subview setEnabled:YES];
-//                return;
-//            }
-//        }
-//    }
-//}
 
+#pragma mark - FECitySelectVCDelegate
+-(void)cityDidSelectedCode:(NSString *)city{
+    FEUserDefaultsSetObjectForKey(city, FEShopRegionKey);
+    FEUserDefaultsSync;
+    self.regionBarItem.title = city;
+    [self requestAllproduct];
+}
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

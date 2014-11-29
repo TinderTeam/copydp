@@ -47,6 +47,7 @@
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FEOrderItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderProductCell" forIndexPath:indexPath];
+    [cell configWithProduct:self.orderDatas[indexPath.row]];
     return cell;
 }
 

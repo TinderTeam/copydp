@@ -11,6 +11,8 @@
 
 @interface FEShopingItemCell : UITableViewCell
 
+@property (nonatomic, strong, readonly) FEProduct *product;
+
 -(void)configWithProduct:(FEProduct *)product;
 
 @end

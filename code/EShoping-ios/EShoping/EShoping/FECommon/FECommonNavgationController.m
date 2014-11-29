@@ -17,10 +17,9 @@
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
-//        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
         self.navigationBar.translucent = NO;
-//        self.navigationBar.barTintColor = FEThemeColor;
-//        self.navigationBar.tintColor = [UIColor whiteColor];
+        self.navigationController.navigationBar.barTintColor = FEThemeWhite;
+        self.navigationController.navigationBar.tintColor = FEThemeOrange;
     }
     return self;
 }
@@ -30,10 +29,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-        self.navigationBar.translucent = NO;
-        self.navigationBar.barTintColor = FEThemeColor;
-        self.navigationBar.tintColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -41,10 +36,7 @@
 -(instancetype)init{
     self = [super init];
     if (self) {
-        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-        self.navigationBar.translucent = NO;
-        self.navigationBar.barTintColor = FEThemeColor;
-        self.navigationBar.tintColor = [UIColor whiteColor];
+
     }
     return self;
 }
@@ -52,10 +44,7 @@
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController{
     self = [super initWithRootViewController:rootViewController];
     if (self) {
-        self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
-        self.navigationBar.translucent = NO;
-        self.navigationBar.barTintColor = FEThemeColor;
-        self.navigationBar.tintColor = [UIColor whiteColor];
+    
     }
     return self;
 }

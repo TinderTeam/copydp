@@ -54,13 +54,18 @@ return shared##className; \
 //never grade
 #define FERateNever                            @"rateNever"
 
+//region
+#define FEShopRegionKey                         @"region"
+
 //itunes url
 #define FEItunesUrlString(_ID)                  [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",_ID]
 
 //uicolor
 #define FEColor(_R,_G,_B,_A)                    [UIColor colorWithRed:_R / 255.0f green:_G / 255.0f blue: _B / 255.0f alpha:_A]
 
-#define FEThemeColor                            FEColor(252, 156, 56, 1)
+//#define FEThemeColor                            FEColor(252, 156, 56, 1)
+#define FEThemeOrange                           FEColor(255, 126, 46, 1)
+#define FEThemeWhite                            FEColor(252, 252, 252, 1)
 #define FEButtonColor                           FEColor(250, 177, 60, 1)
 #define FEGrayButtonColor                       FEColor(202,202,202,1)
 

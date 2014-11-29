@@ -18,6 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NSString *region = FEUserDefaultsObjectForKey(FEShopRegionKey);
+    if (!region) {
+        FEUserDefaultsSetObjectForKey(@"深圳", FEShopRegionKey);
+        FEUserDefaultsSync;
+    }
     return YES;
 }
 

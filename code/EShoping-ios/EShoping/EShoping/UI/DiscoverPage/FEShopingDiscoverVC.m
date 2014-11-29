@@ -69,6 +69,9 @@
 }
 
 -(void)initUI{
+    
+    self.navigationController.navigationBar.barTintColor = FEThemeWhite;
+    self.navigationController.navigationBar.tintColor = FEThemeOrange;
     self.searchBar.barStyle = UIBarStyleBlack;
     self.navigationItem.titleView = self.searchBar;
 

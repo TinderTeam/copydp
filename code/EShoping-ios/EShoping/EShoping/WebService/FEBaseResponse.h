@@ -6,9 +6,8 @@
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-//#import <Foundation/Foundation.h>
 #import "FEObject.h"
-@class FEResult;
+#import "FEResult.h"
 
 @interface FEBaseResponse : FEObject
 

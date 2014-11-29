@@ -11,9 +11,15 @@
 #import "FEUser.h"
 #import "FEUserRegistRequest.h"
 #import "FEUserRegistResponse.h"
+#import "FEResult.h"
 
 
-@interface FERegistVC ()
+
+@interface FERegistVC ()<UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UITextField *userIdentifierTextField;
+@property (strong, nonatomic) IBOutlet UITextField *userPasswordTextField;
+@property (strong, nonatomic) IBOutlet UIButton *registButton;
+@property (strong, nonatomic) IBOutlet UIButton *checkButton;
 
 @end
 
@@ -22,20 +28,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self.registButton setBackgroundImage:[UIImage imageFromColor:FEColor(255, 100, 63, 1)] forState:UIControlStateNormal];
+    self.registButton.layer.cornerRadius = 4;
+    self.registButton.layer.masksToBounds = YES;
 }
 - (IBAction)regist:(id)sender {
+    if (![self.userIdentifierTextField.text isEqualToString:@""] && ![self.userPasswordTextField.text isEqualToString:@""]) {
+        __weak typeof(self) weakself = self;
+        [self displayHUD:FEString(@"加载中...")];
+        FEUser *user = [[FEUser alloc] initWithUserName:self.userIdentifierTextField.text password:self.userPasswordTextField.text];
+        FEUserRegistRequest *rdata = [[FEUserRegistRequest alloc] initWithUser:user customer:nil code:@""];
+        [[FEShopWebServiceManager sharedInstance] regist:rdata response:^(NSError *error, FEUserRegistResponse *response) {
+            [weakself hideHUD:YES];
+            if (!error && response.result.errorCode.integerValue == 0) {
+                [weakself.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+    }
     
-    FEUser *user = [[FEUser alloc] initWithUserName:@"test" password:[@"123456" MD5]];
-    FEUserRegistRequest *rdata = [[FEUserRegistRequest alloc] initWithUser:user customer:nil code:@""];
-    [[FEShopWebServiceManager sharedInstance] regist:rdata response:^(NSError *error, FEUserRegistResponse *response) {
-        
-    }];
     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)userRight:(id)sender {
+    
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == self.userIdentifierTextField) {
+        [textField resignFirstResponder];
+        [self.userPasswordTextField becomeFirstResponder];
+    }else if(textField == self.userPasswordTextField){
+        [textField resignFirstResponder];
+        [self regist:nil];
+    }
+    return YES;
 }
 
 /*

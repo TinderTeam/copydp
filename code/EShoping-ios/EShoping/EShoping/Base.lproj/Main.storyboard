@@ -185,7 +185,7 @@
                                             <outlet property="productImageView" destination="VOM-nI-cx1" id="DOV-Rc-W0E"/>
                                             <outlet property="productNameLabel" destination="03d-C2-1Kw" id="Emy-Ww-HJj"/>
                                             <outlet property="productValueLabel" destination="GEV-1B-jkw" id="jNn-5G-XIa"/>
-                                            <segue destination="YvB-bR-mew" kind="show" id="WI5-vc-442"/>
+                                            <segue destination="YvB-bR-mew" kind="show" identifier="showProductItem" id="WI5-vc-442"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -207,12 +207,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nJn-Zx-Evg">
-                        <barButtonItem key="leftBarButtonItem" title="苏州" id="JfT-Wp-Z8g">
+                        <barButtonItem key="leftBarButtonItem" title="苏州" style="plain" id="JfT-Wp-Z8g">
                             <connections>
                                 <segue destination="ymT-uO-sb5" kind="presentation" id="8Ed-oy-j1e"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Mail" style="plain" id="Mko-9T-lTu">
+                        <barButtonItem key="rightBarButtonItem" image="mail_nav" style="plain" id="Mko-9T-lTu">
                             <connections>
                                 <segue destination="WlZ-HF-EZC" kind="show" id="JjS-w5-sxb"/>
                             </connections>
@@ -220,6 +220,7 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="regionBarItem" destination="JfT-Wp-Z8g" id="WUz-Rd-UGD"/>
                         <outlet property="searchBar" destination="Zie-PD-fLb" id="Bth-yC-ziP"/>
                         <outlet property="searchDisplayController" destination="gy2-0M-bL2" id="jan-p5-0Ej"/>
                         <outlet property="shopingTableView" destination="mcT-0M-zZr" id="MT8-8m-IvG"/>
@@ -380,10 +381,47 @@
                             <constraint firstAttribute="bottom" secondItem="vSh-w9-bu4" secondAttribute="bottom" id="uU8-ZU-ozv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="DO1-i9-gZv" kind="show" identifier="productOrderSegue" id="qcq-hq-pSc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nXf-sX-1sv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2190" y="-914"/>
+        </scene>
+        <!--Product OrderVC-->
+        <scene sceneID="m7W-Ag-MPT">
+            <objects>
+                <viewController id="DO1-i9-gZv" customClass="FEProductOrderVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MnB-20-aUr"/>
+                        <viewControllerLayoutGuide type="bottom" id="j04-aE-zv2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bBh-G6-1uE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3o2-Zu-r3V">
+                                <rect key="frame" x="20" y="250" width="280" height="30"/>
+                                <state key="normal" title="提交订单">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitOrder:" destination="DO1-i9-gZv" eventType="touchUpInside" id="xmr-RZ-FQI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="submitButton" destination="3o2-Zu-r3V" id="hrn-hn-v2Q"/>
+                        <segue destination="bj7-iv-YW5" kind="presentation" identifier="productOrderToSignin" id="aRE-qo-BYT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="74D-Jr-uSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2840" y="-914"/>
         </scene>
         <!--Group CategoryVC-->
         <scene sceneID="7jQ-3D-RKe">
@@ -673,7 +711,7 @@
                     <navigationItem key="navigationItem" id="D2T-yQ-CKM">
                         <barButtonItem key="leftBarButtonItem" title="苏州" id="Erx-gP-Txu">
                             <connections>
-                                <segue destination="ymT-uO-sb5" kind="presentation" id="ZaT-4Z-8p3"/>
+                                <segue destination="ymT-uO-sb5" kind="presentation" identifier="selectCityReginSegue" id="ZaT-4Z-8p3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1187,20 +1225,21 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="用户名：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ady-rb-cCU">
-                                        <rect key="frame" x="20" y="100" width="71" height="20"/>
+                                        <rect key="frame" x="20" y="80" width="71" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="密    码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13E-Jj-W4O">
-                                        <rect key="frame" x="20" y="135" width="71" height="20"/>
+                                        <rect key="frame" x="20" y="120" width="71" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eg1-Sd-urM">
-                                        <rect key="frame" x="80" y="180" width="160" height="30"/>
+                                        <rect key="frame" x="40" y="165" width="240" height="40"/>
                                         <state key="normal" title="登          陆">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1208,7 +1247,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zge-WW-xmF">
-                                        <rect key="frame" x="90" y="95" width="200" height="30"/>
+                                        <rect key="frame" x="90" y="75" width="200" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
                                         <connections>
@@ -1216,7 +1255,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qy3-Y9-pPv">
-                                        <rect key="frame" x="90" y="130" width="200" height="30"/>
+                                        <rect key="frame" x="90" y="115" width="200" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                         <connections>
@@ -1251,6 +1290,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="passWord" destination="Qy3-Y9-pPv" id="6St-pG-my5"/>
+                        <outlet property="signinButton" destination="eg1-Sd-urM" id="Rib-NC-KXZ"/>
                         <outlet property="userName" destination="zge-WW-xmF" id="PvG-X2-Wu0"/>
                     </connections>
                 </viewController>
@@ -1273,28 +1313,52 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJe-ZT-NkD">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eLT-7b-oGP">
-                                        <rect key="frame" x="70" y="131" width="173" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入真实的邮箱" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eLT-7b-oGP">
+                                        <rect key="frame" x="20" y="75" width="280" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="iVq-wM-EtG" id="rGt-Im-tF1"/>
+                                        </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1JY-Jk-biw">
-                                        <rect key="frame" x="70" y="169" width="173" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="6-32位密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1JY-Jk-biw">
+                                        <rect key="frame" x="20" y="120" width="280" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jpp-Iq-sDt">
-                                        <rect key="frame" x="70" y="207" width="173" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="iVq-wM-EtG" id="k2l-ms-hKu"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTt-6r-dFc">
-                                        <rect key="frame" x="70" y="285" width="183" height="30"/>
+                                        <rect key="frame" x="40" y="185" width="240" height="40"/>
                                         <state key="normal" title="注               册">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="regist:" destination="iVq-wM-EtG" eventType="touchUpInside" id="5xh-NH-ctn"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我已看过并通过EShoping" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIQ-Ie-dL9">
+                                        <rect key="frame" x="45" y="155" width="150" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Is-7V-qFz">
+                                        <rect key="frame" x="20" y="155" width="20" height="20"/>
+                                        <state key="normal" title="1">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qxS-WT-If8">
+                                        <rect key="frame" x="200" y="155" width="100" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="《用户协议》">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="userRight:" destination="iVq-wM-EtG" eventType="touchUpInside" id="uOY-Wn-VpS"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1308,6 +1372,12 @@
                             <constraint firstItem="hJe-ZT-NkD" firstAttribute="top" secondItem="zEm-lL-uG9" secondAttribute="top" id="QjD-6n-zQp"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="checkButton" destination="5Is-7V-qFz" id="7a4-by-Prn"/>
+                        <outlet property="registButton" destination="iTt-6r-dFc" id="PEX-jI-BOU"/>
+                        <outlet property="userIdentifierTextField" destination="eLT-7b-oGP" id="U5G-2V-uuu"/>
+                        <outlet property="userPasswordTextField" destination="1JY-Jk-biw" id="1E2-BC-P8c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWI-Qd-MU8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1775,12 +1845,13 @@
         <image name="home_footbar_icon_found" width="25" height="25"/>
         <image name="home_footbar_icon_group" width="25" height="25"/>
         <image name="home_footbar_icon_my_pressed" width="25" height="25"/>
+        <image name="mail_nav" width="27" height="27"/>
         <image name="oversea_navibar_icon_qr" width="20" height="20"/>
         <image name="usersetting" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="WI5-vc-442"/>
         <segue reference="8Ed-oy-j1e"/>
-        <segue reference="zMf-FI-zUd"/>
+        <segue reference="aRE-qo-BYT"/>
     </inferredMetricsTieBreakers>
 </document>

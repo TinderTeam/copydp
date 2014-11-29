@@ -26,6 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationController.navigationBar.barTintColor = FEThemeWhite;
+    self.navigationController.navigationBar.tintColor = FEThemeOrange;
     self.title = FEString(@"PROFILE");
 }
 
@@ -43,7 +45,7 @@
             footview.userInteractionEnabled = YES;
             self.footView = footview;
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [btn setBackgroundImage:[UIImage imageFromColor:FEThemeColor] forState:UIControlStateNormal];
+            [btn setBackgroundImage:[UIImage imageFromColor:FEColor(255, 100, 63, 1)] forState:UIControlStateNormal];
             btn.layer.cornerRadius = 4;
             btn.layer.masksToBounds = YES;
             [btn addTarget:self action:@selector(signout:) forControlEvents:UIControlEventTouchUpInside];
@@ -71,6 +73,7 @@
         if (!error && response.result.errorCode.integerValue == 0) {
             [weakself.navigationController popViewControllerAnimated:YES];
             [FECoreData deleteCoreData:@[FELoginUser]];
+            [FECoreData saveCoreData];
         }
     }];
 }

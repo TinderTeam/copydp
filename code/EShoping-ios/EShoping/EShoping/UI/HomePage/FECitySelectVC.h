@@ -11,11 +11,12 @@
 @protocol FECitySelectVCDelegate <NSObject>
 
 @optional
--(void)cityDidSelectedCode:(NSInteger)code;
+-(void)cityDidSelectedCode:(NSString *)city;
 
 @end
 
 @interface FECitySelectVC : FECommonViewController
+@property (nonatomic, weak) id<FECitySelectVCDelegate> delegate;
 - (IBAction)backPress:(UIBarButtonItem *)sender;
 
 @end

@@ -8,8 +8,13 @@
 
 #import "FEShopingItemVC.h"
 #import "FEProductImageTableViewCell.h"
+#import "FEProductOrderView.h"
+#import "FEProductOrderVC.h"
+#import "FEProduct.h"
 
-@interface FEShopingItemVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface FEShopingItemVC ()<UITableViewDelegate,UITableViewDataSource,FEProductOrderViewDelegate>
+
+@property (nonatomic, strong) FEProductOrderView *orderView;
 
 @end
 
@@ -27,16 +32,56 @@
 
 #pragma mark - UITableVieDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FEProductImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productImageTableCell" forIndexPath:indexPath];
-    return cell;
+//    if (indexPath.section == 0) {
+        FEProductImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productImageTableCell" forIndexPath:indexPath];
+        return cell;
+//    }
+    return nil;
+    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    if (section == 0) {
+        return 1;
+    }
+    return 3;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        if (!self.orderView) {
+            _orderView = [[FEProductOrderView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
+            [_orderView configWithProduct:self.product];
+            _orderView.delegate = self;
+        }
+        return self.orderView;
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return 50;
+    }
+    return 0;
+}
+
+#pragma mark - FEProductOrderViewDelegate
+-(void)productOrderViewOrderSelect:(FEProductOrderView *)oview{
+    [self performSegueWithIdentifier:@"productOrderSegue" sender:self.orderView];
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"productOrderSegue"]) {
+        FEProductOrderVC *ovc = (FEProductOrderVC *)segue.destinationViewController;
+        ovc.product = ((FEProductOrderView *)sender).product;
+    }
 }
 
 /*
