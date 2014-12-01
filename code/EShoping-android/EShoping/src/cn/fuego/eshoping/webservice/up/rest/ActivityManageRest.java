@@ -20,19 +20,22 @@ import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
 @Consumes("application/json")  
 public interface ActivityManageRest
 {
+	//APP获取活动列表
 	@POST
 	@Path("/activity_rest")
 	GetActivityListRsp getActivityList(GetActivityListReq req);
 	
-	
+	//APP获取个人活动订单列表
 	@POST
 	@Path("/activityOrder_rest")
 	GetActivityOrderListRsp getActivityOrderList(GetActivityOrderListReq req);
 	
+	//APP产生活动订单
 	@POST
 	@Path("/createOrder_rest")
 	SetActivityOrderRsp createActivityOrder(SetActivityOrderReq req);
 	
+	//APP取消活动订单
 	@POST
 	@Path("/cancelOrder_rest")
 	SetActivityOrderRsp cancelActivityOrder(SetActivityOrderReq req);

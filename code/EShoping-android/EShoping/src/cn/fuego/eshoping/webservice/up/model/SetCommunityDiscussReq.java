@@ -4,9 +4,9 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 
 public class SetCommunityDiscussReq extends BaseJsonReq
 {
-	private int community_id;		//总共可传递4种类型，“全部分类”、“房介信息”、“应聘信息”、“招聘信息”
-	private int userID;
-	private String content;
+	private int community_id;		//帖子ID
+	private int userID;			//回帖人ID
+	private String content;		//回帖内容
 	
 	public int getCommunity_id() {
 		return community_id;

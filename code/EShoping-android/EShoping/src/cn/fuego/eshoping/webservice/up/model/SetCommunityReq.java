@@ -5,9 +5,9 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 public class SetCommunityReq extends BaseJsonReq
 {
 	private String communityType;		//总共可传递4种类型，“全部分类”、“房介信息”、“应聘信息”、“招聘信息”
-	private int userID;
-	private String context;
-	private String title;
+	private int userID;				//创建者ID
+	private String context;			//帖子内容
+	private String title;				//帖子标题
 	public String getCommunityType() {
 		return communityType;
 	}

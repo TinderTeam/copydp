@@ -11,10 +11,10 @@ package cn.fuego.eshoping.webservice.up.model;
  */
 public class LoginReq
 {
-	private String username;
-	private String password;
-	private String clientType;
-	private String clientVersion;
+	private String username;		//用户名
+	private String password;		//密码
+	private String clientType;		//用户类型
+	private String clientVersion;	//用户级别VIP或者SVIP
 	private String devToken;
  
 	public String getUsername() {

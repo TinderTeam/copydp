@@ -30,23 +30,27 @@ import cn.fuego.eshoping.webservice.up.model.RegisterRsp;
 @Consumes("application/json")  
 public interface UserManageRest
 {
+	//APP登录验证
 	@POST
 	@Path("/login_rest")
 	LoginRsp login(LoginReq req);
 	
+	//APP退出
 	@POST
 	@Path("/logout_rest")
 	LoginRsp logout(LoginReq req);
 	
-	
+	//APP修改密码
 	@POST
 	@Path("/modifyPswd_rest")
     ModifyPwdRsp modifyPassword(ModifyPwdReq req);
 	
+	//APP注册校验
 	@POST
 	@Path("/register_rest")
 	RegisterRsp registerMemeber(RegisterReq req);
 	
+	//APP获取城市列表
 	@POST
 	@Path("/city_rest")
 	GetCityListRsp getCityList(GetCityListReq req);

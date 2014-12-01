@@ -4,15 +4,21 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 
 public class GetActivityOrderListReq extends BaseJsonReq
 {
-	private String userID;
+	private int userID;			//根据用户ID获取活动订单列表
 
-	public String getUserID() {
+	
+
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+
+
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
+
+
 
 	@Override
 	public String toString() {

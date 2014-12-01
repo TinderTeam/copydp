@@ -20,9 +20,9 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 public class ModifyPwdReq extends BaseJsonReq
 {
 	 
-	private String username;
-	private String oldPwd;
-	private String pwdNew;
+	private String username;		//用户名
+	private String oldPwd;			//原密码
+	private String pwdNew;			//新密码
 	
 	public String getUsername() {
 		return username;
