@@ -18,8 +18,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.navigationBar.translucent = NO;
-        self.navigationController.navigationBar.barTintColor = FEThemeWhite;
-        self.navigationController.navigationBar.tintColor = FEThemeOrange;
+        self.navigationBar.barTintColor = FEThemeWhite;
+        self.navigationBar.tintColor = FEThemeOrange;
     }
     return self;
 }

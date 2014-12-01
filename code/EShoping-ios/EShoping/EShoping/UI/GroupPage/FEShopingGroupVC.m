@@ -12,6 +12,7 @@
 
 @interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *regionBarItem;
 
 @end
 
@@ -21,9 +22,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initUI];
+    
+    __weak typeof(self) weakself = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
+    }];
 }
 
 -(void)initUI{
+    self.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
     self.navigationController.navigationBar.barTintColor = FEThemeWhite;
     self.navigationController.navigationBar.tintColor = FEThemeOrange;
     self.searchBar.backgroundColor = [UIColor clearColor];

@@ -25,7 +25,7 @@
         self.userInteractionEnabled = YES;
         _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 100, 40)];
         _priceLabel.textColor = FEThemeOrange;
-        _priceLabel.font = [UIFont systemFontOfSize:30];
+        _priceLabel.font = [UIFont systemFontOfSize:20];
         [self addSubview:_priceLabel];
         
         _orderButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -33,7 +33,7 @@
         [_orderButton setBackgroundImage:[UIImage imageFromColor:FEThemeOrange] forState:UIControlStateNormal];
         [_orderButton setTitle:FEString(@"立即抢购") forState:UIControlStateNormal];
         [_orderButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _orderButton.titleLabel.font = [UIFont systemFontOfSize:20];
+        _orderButton.titleLabel.font = [UIFont systemFontOfSize:18];
         [_orderButton addTarget:self action:@selector(orderPress:) forControlEvents:UIControlEventTouchUpInside];
         _orderButton.layer.cornerRadius = 4;
         _orderButton.layer.masksToBounds = YES;

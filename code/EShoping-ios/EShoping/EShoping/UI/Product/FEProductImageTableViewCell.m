@@ -8,8 +8,11 @@
 
 #import "FEProductImageTableViewCell.h"
 #import "FEProductImageShowCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "FEProduct.h"
 
 @interface FEProductImageTableViewCell ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@property (nonatomic, strong) NSArray *imageArray;
 
 @end
 
@@ -17,7 +20,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    self.pageIndicate.numberOfPages = 2;
+//    self.pageIndicate.numberOfPages = 1;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -26,17 +29,25 @@
     // Configure the view for the selected state
 }
 
+-(void)configWithProduct:(FEProduct *)product{
+    _product = product;
+    _imageArray = [NSArray arrayWithObjects:product.imgsrc,product.imgsrc, nil];
+    self.pageIndicate.numberOfPages = self.imageArray.count;
+    [self.imageShowCollectionView reloadData];
+}
+
 #pragma mark - UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 2;
+    return self.imageArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     FEProductImageShowCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"shopingItemImageShowCell" forIndexPath:indexPath];
+    [cell.showImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(self.imageArray[indexPath.row])]];
     return cell;
 }
 

@@ -73,4 +73,9 @@ return shared##className; \
 
 #define FELoginUser                             [FECoreData fetchUser]
 
+#define FEShopImageUrlSring(_A)                 [NSString stringWithFormat:@"%@/copydp/Public/uploads/img/%@",__WEB_SERVICE_IP,_A]
+
+//notification
+#define FERegionCityDidChang                    @"RegionCityDidChange"
+
 #endif

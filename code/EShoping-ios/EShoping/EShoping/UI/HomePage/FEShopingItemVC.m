@@ -32,10 +32,14 @@
 
 #pragma mark - UITableVieDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if (indexPath.section == 0) {
+    if (indexPath.section == 0) {
         FEProductImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productImageTableCell" forIndexPath:indexPath];
+        [cell configWithProduct:self.product];
         return cell;
-//    }
+    }else{
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"spaceCell" forIndexPath:indexPath];
+        return cell;
+    }
     return nil;
     
 }

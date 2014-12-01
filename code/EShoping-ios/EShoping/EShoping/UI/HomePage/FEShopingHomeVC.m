@@ -34,17 +34,24 @@
     // Do any additional setup after loading the view.
     
     [self initUI];
+    __weak typeof(self) weakself = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
+        [weakself requestAllproduct];
+    }];
+    
     [self requestAllproduct];
 }
 
 -(void)initUI{
     [self.regionBarItem setTitle:FEUserDefaultsObjectForKey(FEShopRegionKey)];
+    self.navigationItem.titleView = self.searchBar;
     self.navigationController.navigationBar.barTintColor = FEThemeOrange;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
+//    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
 //    FESearchBar *searchBar = [[FESearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
 //    searchBar.delegate = self;
-    self.navigationItem.titleView = self.searchBar;
+//    self.navigationItem.titleView = self.searchBar;
 }
 
 -(void)gotoLocation:(id)sender{
@@ -80,27 +87,46 @@
 
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        FEShopingFuncCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingCategory" forIndexPath:indexPath];
-        return cell;
-    }else{
-        FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
-        [cell configWithProduct:self.productList[indexPath.row]];
+    if (tableView == self.shopingTableView) {
+        if (indexPath.section == 0) {
+            FEShopingFuncCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingCategory" forIndexPath:indexPath];
+            return cell;
+        }else{
+            FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
+            [cell configWithProduct:self.productList[indexPath.row]];
+            return cell;
+        }
+    }else if(tableView == self.searchDisplayController.searchResultsTableView){
+        static NSString *identifier = @"search";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        cell.textLabel.text = @"1";
         return cell;
     }
     return nil;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    if (tableView == self.shopingTableView) {
+        return 2;
+    }else{
+        return 1;
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
+    if (tableView == self.shopingTableView) {
+        if (section == 0) {
+            return 1;
+        }else{
+            return self.productList.count;
+        }
+    }else if(tableView == self.searchDisplayController.searchResultsTableView){
         return 1;
-    }else{
-        return self.productList.count;
     }
+    
     return 0;
 }
 
@@ -113,16 +139,51 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 20;
+    if (tableView == self.shopingTableView) {
+        return 20;
+    }
+    return 0;
 }
 
+#pragma mark - UISearchDisplayControllerdelegate methods
+- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+//    self.navigationItem.titleView = nil;
+//    [self.view addSubview:self.searchBar];
+//    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 64);
+}
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
+    //    [controller.searchResultsTableView setDelegate:self];
+    //    controller.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+}
 
-#pragma mark - FECitySelectVCDelegate
--(void)cityDidSelectedCode:(NSString *)city{
-    FEUserDefaultsSetObjectForKey(city, FEShopRegionKey);
-    FEUserDefaultsSync;
-    self.regionBarItem.title = city;
-    [self requestAllproduct];
+- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+    //    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    self.navigationItem.titleView = self.searchBar;
+//    [self.searchBar removeFromSuperview];
+//    self.navigationItem.titleView = self.searchBar;
+//    [self.navigationController.navigationBar setNeedsDisplay];
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController*)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    [self filterContentForSearchText:searchString];
+    return YES;
+}
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+    //    self.searchTable = tableView;
+    //        [tableView setContentInset:UIEdgeInsetsZero];
+    //        [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+    //        [self.searchBar resignFirstResponder];
+}
+
+-(void)filterContentForSearchText:(NSString*)searchText {
+//    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"SELF contains[cd] %@",searchText];
+//    self.searchResult = [_allcitys filteredArrayUsingPredicate:userPredicate];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
