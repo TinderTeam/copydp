@@ -13,6 +13,8 @@
 #import "FEShopWebServiceManager.h"
 #import "FEProductAllResponse.h"
 #import "FEProductGetAllRequest.h"
+#import "FEProductRecommendResponse.h"
+#import "FEProductRecommendRequest.h"
 #import "FECommonNavgationController.h"
 #import "FEShopingItemVC.h"
 #import "FECitySelectVC.h"
@@ -74,6 +76,14 @@
 
 -(void)requestAllproduct{
     __weak typeof(self) weakself = self;
+//    FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+//    [[FEShopWebServiceManager sharedInstance] productRecommedProduct:rdata response:^(NSError *error, FEProductRecommendResponse *response) {
+//        if (!error && response.result.errorCode.integerValue == 0) {
+//            weakself.productList = response.productList;
+//            [weakself.shopingTableView reloadData];
+//        }
+//
+//    }];
     FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
     [[FEShopWebServiceManager sharedInstance] productAll:rdate response:^(NSError *error, FEProductAllResponse *response) {
 //        NSLog(@"");
@@ -130,6 +140,21 @@
     return 0;
 }
 
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return FEString(@"猜你喜欢");
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return 20;
+    }
+    return 0;
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         return 190;
@@ -138,12 +163,12 @@
     
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (tableView == self.shopingTableView) {
-        return 20;
-    }
-    return 0;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+//    if (tableView == self.shopingTableView) {
+//        return 20;
+//    }
+//    return 0;
+//}
 
 #pragma mark - UISearchDisplayControllerdelegate methods
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {

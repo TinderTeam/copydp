@@ -69,6 +69,8 @@ return shared##className; \
 #define FEButtonColor                           FEColor(250, 177, 60, 1)
 #define FEGrayButtonColor                       FEColor(202,202,202,1)
 
+#define FEFont(_S)                              [UIFont systemFontOfSize:_S]
+
 #define FECoreData                              ([AppDelegate sharedDelegate].coreDataHandler)
 
 #define FELoginUser                             [FECoreData fetchUser]

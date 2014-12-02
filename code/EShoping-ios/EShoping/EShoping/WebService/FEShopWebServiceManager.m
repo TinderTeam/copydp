@@ -19,7 +19,7 @@
 #import "FEUserSignoutResquest.h"
 #import "FEUserModifyPswRequest.h"
 #import "FEUserModifyPswResponse.h"
-#import "FEProductListRequest.h"
+#import "FEProductRecommendRequest.h"
 #import "FEProductNewRequest.h"
 #import "FEProductTypeRecRequest.h"
 #import "FEProductTypeRequest.h"
@@ -68,7 +68,7 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(modifyPassword, FEUserModifyPswRequest, FEUse
 
 
 //product recommed
-DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productRecommedProduct, FEProductListRequest, FEProductRecommendResponse)
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productRecommedProduct, FEProductRecommendRequest, FEProductRecommendResponse)
 //product new
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productNew, FEProductNewRequest, FEProductNewResponse);
 //product recommed type
