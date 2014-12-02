@@ -54,7 +54,7 @@
             if (!error && response.result.errorCode.integerValue == 0) {
                 [weakself dismissViewControllerAnimated:YES completion:^{
                     FEUser *wuser = response.user;
-                    CDUser *user = [FECoreData touchUserByIdentifier:@([wuser.user_id integerValue])];
+                    CDUser *user = [FECoreData touchUserByIdentifier:wuser.user_id];
                     user.password = wuser.password;
                     user.username = wuser.username;
                     user.role = wuser.role;

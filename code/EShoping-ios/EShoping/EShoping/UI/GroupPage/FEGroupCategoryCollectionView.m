@@ -18,7 +18,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 0.5);
     
-    CGContextSetStrokeColorWithColor(context, [[UIColor lightGrayColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, FEColor(225, 225, 225, 1).CGColor);
     
     for (int i = 0; i<2; i++) {
         CGContextMoveToPoint(context, self.bounds.size.width / 3.0f * (i+1), 0.0f);

@@ -8,6 +8,7 @@
 
 #import "FEObject.h"
 #import <objc/runtime.h>
+#import "NSString+Attribute.h"
 
 @implementation FEObject
 
@@ -15,11 +16,19 @@
     if (dictionary && ![dictionary isKindOfClass:[NSNull class]]) {
         self = [super init];
         if (self) {
-            NSArray *property = [self getAllProperty];
+            NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+            NSArray *attributes = NULL;
+            NSArray *property = [self getAllProperty:&attributes];
             for (NSString *key in property) {
                 if (![dictionary[key] isKindOfClass:[NSNull class]] && dictionary[key] != nil) {
                     @try {
-                        [self setValue:dictionary[key] forKey:key];
+                        if (NSClassFromString([attributes[[property indexOfObject:key]] attribute]) == [NSNumber class] && ![dictionary[key] isKindOfClass:[NSNumber class]]) {
+                            NSNumber *number = [f numberFromString:dictionary[key]];
+                            [self setValue:number forKey:key];
+                        }else{
+                            [self setValue:dictionary[key] forKey:key];
+                        }
+                        
                     }
                     @catch (NSException *exception) {
                         NSLog(@"error create object %@",exception);
@@ -38,7 +47,8 @@
 }
 
 - (NSDictionary *)dictionary{
-    NSArray *property = [self getAllProperty];
+    NSArray *attributes = NULL;
+    NSArray *property = [self getAllProperty:&attributes];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
     
     for (NSString *name in property) {
@@ -57,19 +67,22 @@
 }
 
 //获取类的所有的 属性的名字
--(NSArray *)getAllProperty
+-(NSArray *)getAllProperty:(NSArray **)attributes
 {
     unsigned int count;
     objc_property_t *properties = class_copyPropertyList([self class], &count);
     NSMutableArray *rv = [NSMutableArray array];
-    
+    NSMutableArray *av = [NSMutableArray array];
     unsigned int i;
     for (i = 0; i < count; i++)
     {
         objc_property_t property = properties[i];
         NSString *name = @(property_getName(property));
         [rv addObject:name];
+        [av addObject:@(property_getAttributes(property))];
+//         NSString *attributes = @(property_getAttributes(property));//获取属性类型
     }
+    *attributes = av;
     free(properties);
     return rv;
 }

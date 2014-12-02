@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - HMSegmentedControl (1.4.0)
   - HockeySDK (3.6.2)
   - libPhoneNumber-iOS (0.7.3)
   - MBProgressHUD (0.9)
@@ -32,6 +33,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - HMSegmentedControl (~> 1.4.0)
   - HockeySDK
   - libPhoneNumber-iOS (~> 0.7.3)
   - SDWebImage
@@ -40,6 +42,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
+  HMSegmentedControl: c0517a8d4b80c978b8386f863f1c44729cfd7d6f
   HockeySDK: bfd1f5ac75938b07499c4ac12932244b72a2e70b
   libPhoneNumber-iOS: 98fc07d70c8fdb5e6a8e3442c37e97353065c20e
   MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8

@@ -17,14 +17,14 @@
 #define __METHOD_CITY               @"Index/city_rest"  
 
 //product
-#define __METHOD_PRODUCT_RECOMMENDPRODUCT   @"Buy/RecommendProduct_rest"
-#define __METHOD_PRODUCT_NEWPRODUCT         @"Buy/NewProduct_rest"
+#define __METHOD_PRODUCT_RECOMMENDPRODUCT   @"Buy/RecommendProduct_rest" //推荐列表
+#define __METHOD_PRODUCT_NEWPRODUCT         @"Buy/NewProduct_rest"      //最新特惠
 #define __METHOD_PRODUCT_TYPERECTPRIDUCT    @"Buy/TypeRecProduct_rest"
-#define __METHOD_PRODUCT_ALLPRODUCT         @"Buy/AllProduct_rest"
-#define __METHOD_PRODUCT_GETPRODUCTTYPE     @"Buy/GetProdutType_rest"
-#define __METHOD_PRODUCT_PRODUCTORDER       @"Buy/ProductOrder_rest"
-#define __METHOD_PRODUCT_GREATEORDER        @"Buy/CreateOrder_rest"
-#define __METHOD_PRODUCT_CANCELORDER        @"Buy/CancelOrder_rest"
+#define __METHOD_PRODUCT_ALLPRODUCT         @"Buy/AllProduct_rest"      //
+#define __METHOD_PRODUCT_GETPRODUCTTYPE     @"Buy/GetProdutType_rest"   //
+#define __METHOD_PRODUCT_PRODUCTORDER       @"Buy/ProductOrder_rest"    //
+#define __METHOD_PRODUCT_GREATEORDER        @"Buy/CreateOrder_rest"     //
+#define __METHOD_PRODUCT_CANCELORDER        @"Buy/CancelOrder_rest"     //
 #define __METHOD_PRODUCT_DELETEORDER        @"Buy/DeleteOrder_rest"
 
 //order
