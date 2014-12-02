@@ -127,9 +127,12 @@ margin-right: 10px;
 									<td align="center" >{$v1.cellphone}</td>
 									<td align="center">{$v1.status}</td >		
 									<td valign="middle">
-									<input type="submit" value="冻结"  onclick="javascript:this.form.action='__URL__/freeze?id={$v1.user_id}';"/>
-									<input type="submit" value="升级"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
-
+										<if condition="$v1.status eq '冻结' ">
+											<input type="submit" value="解冻"  onclick="javascript:this.form.action='__URL__/unfreeze?id={$v1.user_id}';"/>
+										<else/>
+											<input type="submit" value="冻结"  onclick="javascript:this.form.action='__URL__/freeze?id={$v1.user_id}';"/>
+										</if>
+										<input type="submit" value="升级"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
 									</td>
 								</tr>
 						</foreach>
@@ -150,7 +153,7 @@ margin-right: 10px;
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
 						<h4>用户请求处理</h4>
-						<span>处理用户的升级、解冻、审核请求</span>
+						<span>处理用户的升级、审核请求</span>
 					</div>
 					<div class="pay-confirm">
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">

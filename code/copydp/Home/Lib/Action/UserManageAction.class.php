@@ -151,6 +151,17 @@ class UserManageAction extends Action {
 			}
 			
 		}
+		//解冻账户
+		public function unfreeze(){
+		
+		    $customer = M('customer');
+		    $userID=$_GET['id'];
+		    $condition['user_id']=$userID;
+		    $customer->where($condition)->setField('status','正常');
+		    $this->assign("jumpUrl","index");
+		    $this->success("用户解冻成功！");
+		
+		}
 		//冻结账户
 		public function freeze(){
 		
@@ -237,10 +248,6 @@ class UserManageAction extends Action {
 				switch($userRequest){
 				case "升级":
 						$db->where('user_id='.$userID)->setField('grade','S-VIP');
-						$db->where('user_id='.$userID)->setField('request','null');
-						break;
-				case "解冻":
-						$db->where('user_id='.$userID)->setField('status','正常');
 						$db->where('user_id='.$userID)->setField('request','null');
 						break;				
 				case "审批":
