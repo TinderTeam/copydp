@@ -4,8 +4,8 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 
 public class SetActivityOrderReq extends BaseJsonReq
 {
-	private int userID;					//产生订单的用户ID
-	private int activityID;				//产生订单的活动ID
+	private int userID;					//浜х敓璁㈠崟鐨勭敤鎴稩D
+	private int activityID;				//浜х敓璁㈠崟鐨勬椿鍔↖D
 	
 	public int getUserID() {
 		return userID;

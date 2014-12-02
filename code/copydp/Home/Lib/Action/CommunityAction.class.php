@@ -11,6 +11,10 @@ class CommunityAction extends CommunityServiceAction {
 		$communityList=$communityDB->order('rand()')->limit(6)->select();
     
         $errorCode = SUCCESS;
+        if($communityList == false)
+        {
+            $communityList = null;
+        }
         $Rsp['communityList'] = $communityList;
         $this->returnJson($errorCode,$Rsp);
     }
@@ -21,6 +25,10 @@ class CommunityAction extends CommunityServiceAction {
 		$communityDiscussSum=$communityDiscussViewDB->order('discuss_num desc')->limit(6)->select();
     
         $errorCode = SUCCESS;
+        if($communityDiscussSum == false)
+        {
+            $communityDiscussSum = null;
+        }
         $Rsp['communityDiscussSum'] = $communityDiscussSum;
         $this->returnJson($errorCode,$Rsp);
     }
@@ -34,6 +42,10 @@ class CommunityAction extends CommunityServiceAction {
         $allCommunityListResult = parent::AllCommunityService($communityType);
         
         $errorCode = $allCommunityListResult['errorCode'];
+        if($allCommunityListResult['communityList'] == false)
+        {
+            $allCommunityListResult['communityList'] = null;
+        }
         $Rsp['communityList'] = $allCommunityListResult['communityList'];
         
         $this->returnJson($errorCode,$Rsp);
@@ -46,6 +58,7 @@ class CommunityAction extends CommunityServiceAction {
         if($communityList==false)
         {
             $errorCode = RESULT_NULL;
+            $communityList == null;
         }
         else{
             $errorCode = SUCCESS;

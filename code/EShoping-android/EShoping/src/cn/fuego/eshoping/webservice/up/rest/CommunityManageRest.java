@@ -17,32 +17,32 @@ import cn.fuego.eshoping.webservice.up.model.SetCommunityRsp;
 @Consumes("application/json")  
 public interface CommunityManageRest
 {
-	//APP»ñÈ¡ÈÈµãÍÆ¼öÌû×ÓÁĞ±í
+	//APPè·å–çƒ­ç‚¹æ¨èå¸–å­åˆ—è¡¨
 	@POST
 	@Path("/HotRecommend_rest")
 	GetCommunityListRsp getHotRecommendList(GetCommunityListReq req);
 	
-	//APP»ñÈ¡ÈÈÃÅ»°ÌâÌû×ÓÁĞ±í
+	//APPè·å–çƒ­é—¨è¯é¢˜å¸–å­åˆ—è¡¨
 	@POST
 	@Path("/HotTopic_rest")
 	GetCommunityDiscussSumRsp getHotTopicList(GetCommunityListReq req);
 	
-	//APP»ñÈ¡ËùÓĞÌû×ÓÁĞ±í
+	//APPè·å–æ‰€æœ‰å¸–å­åˆ—è¡¨
 	@POST
 	@Path("/AllCommunity_rest")
 	GetCommunityListRsp getAllCommunityList(GetCommunityListReq req);
 	
-	//APP»ñÈ¡»áÔ±ÈÈ°ñÁĞ±í
+	//APPè·å–ä¼šå‘˜çƒ­æ¦œåˆ—è¡¨
 	@POST
 	@Path("/HotUser_rest")
 	GetCommunityListRsp getHotUserList(GetCommunityListReq req);
 	
-	//APP´´½¨ĞÂÌû×Ó
+	//APPåˆ›å»ºæ–°å¸–å­
 	@POST
 	@Path("/CreateTopic_rest")
 	SetCommunityRsp createTopic(SetCommunityReq req);
 	
-	//APP»Ø¸´Ìû×Ó
+	//APPå›å¤å¸–å­
 	@POST
 	@Path("/CreateReply_rest")
 	SetCommunityRsp createReply(SetCommunityDiscussReq req);

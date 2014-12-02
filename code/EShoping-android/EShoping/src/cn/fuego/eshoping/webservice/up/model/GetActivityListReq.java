@@ -4,7 +4,7 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 
 public class GetActivityListReq extends BaseJsonReq
 {
-	private String city;		//根据城市获取活动列表
+	private String city;		//鏍规嵁鍩庡競鑾峰彇娲诲姩鍒楄〃
 
 	public String getCity() {
 		return city;

@@ -20,47 +20,47 @@ import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
 @Consumes("application/json")  
 public interface ProductManageRest
 {
-	//APP»ñÈ¡ÍÆ¼ö²úÆ·ÁĞ±í
+	//APPè·å–æ¨èäº§å“åˆ—è¡¨
 	@POST
 	@Path("/RecommendProduct_rest")
 	GetProductListRsp getRecommendProductList(GetProductListReq req);
 	
-	//APP»ñÈ¡×îĞÂÌØ»İ²úÆ·ÁĞ±í
+	//APPè·å–æœ€æ–°ç‰¹æƒ äº§å“åˆ—è¡¨
 	@POST
 	@Path("/NewProduct_rest")
 	GetProductListRsp getNewProductList(GetProductListReq req);
 	
-	//APP»ñÈ¡·ÖÀàÍÆ¼ö²úÆ·ÁĞ±í
+	//APPè·å–åˆ†ç±»æ¨èäº§å“åˆ—è¡¨
 	@POST
 	@Path("/TypeRecProduct_rest")
 	GetProductListRsp getTypeRecProductList(GetProductListReq req);
 	
-	//APP»ñÈ¡ËùÓĞ²úÆ·ÁĞ±í
+	//APPè·å–æ‰€æœ‰äº§å“åˆ—è¡¨
 	@POST
 	@Path("/AllProduct_rest")
 	GetProductListRsp getAllProductList(GetProductListReq req);
 	
-	//APP»ñÈ¡²úÆ·ÀàĞÍÁĞ±í
+	//APPè·å–äº§å“ç±»å‹åˆ—è¡¨
 	@POST
 	@Path("/GetProdutType_rest")
 	GetProductTypeRsp getProductType(GetProductTypeReq req);
 	
-	//APP»ñÈ¡²úÆ·¶©µ¥ÁĞ±í
+	//APPè·å–äº§å“è®¢å•åˆ—è¡¨
 	@POST
 	@Path("/ProductOrder_rest")
 	GetProductOrderListRsp getProductOrderList(GetProductOrderListReq req);
 	
-	//APP²úÆ·ÏÂµ¥
+	//APPäº§å“ä¸‹å•
 	@POST
 	@Path("/CreateOrder_rest")
 	SetProductOrderRsp createProductOrder(SetProductOrderReq req);
 	
-	//APPÈ¡Ïû¶©µ¥
+	//APPå–æ¶ˆè®¢å•
 	@POST
 	@Path("/CancelOrder_rest")
 	SetProductOrderRsp cancelProductOrder(SetProductOrderReq req);
 	
-	//APPÉ¾³ı¶©µ¥
+	//APPåˆ é™¤è®¢å•
 	@POST
 	@Path("/DeleteOrder_rest")
 	SetProductOrderRsp deleteProductOrder(SetProductOrderReq req);

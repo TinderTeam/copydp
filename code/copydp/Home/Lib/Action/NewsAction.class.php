@@ -11,6 +11,10 @@ class NewsAction extends BaseAction {
         $newsDB=new Model('news');
         $newsList=$newsDB->order('rand()')->limit(6)->select();
         $errorCode = SUCCESS;
+        if($newsList==false)
+        {
+            $newsList = null;
+        }
         $Rsp['newsList'] = $newsList;
         $this->returnJson($errorCode,$Rsp);
     }
