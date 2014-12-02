@@ -143,6 +143,10 @@ class IndexAction extends IndexServiceAction {
 					$this->assign("jumpUrl","login");
 					$this->error("您的注册申请已被拒绝，请重新注册！");
 				}
+				if($status=='冻结'){
+				    $this->assign("jumpUrl","login");
+				    $this->error("您的账户已被冻结，请联系管理员！");
+				}
 				//处理用户登陆送积分
 				$sysDB= M('sys_config');
 				$sysCondition['key']='login_score';

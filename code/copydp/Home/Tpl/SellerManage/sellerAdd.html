@@ -125,10 +125,19 @@
 												<span class="label label_required">类型：<em>*</em></span>
 												<?php
 														$productType=M('product_type');
-														$type=$productType->select();
-												?>										
+														$condition['father_id'] = 0;
+														$type=$productType->where($condition)->select();
+												?>
+																						
 												<select  name="type_id" class="form-select-sim">
-													<option selected="selected" value="">请选择类型</option>
+													<option selected="selected" value="">请选择主类型</option>
+													<foreach name='type' item='vt'>
+														<option value="{$vt.type_id}" >{$vt.type_name}</option>	
+													</foreach>											
+												</select>
+
+												<select  name="type_id" class="form-select-sim">
+													<option selected="selected" value="">请选择子类型</option>
 													<foreach name='type' item='vt'>
 														<option value="{$vt.type_id}">{$vt.type_name}</option>	
 													</foreach>											
