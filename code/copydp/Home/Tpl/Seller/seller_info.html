@@ -124,16 +124,23 @@
 					<div class="tit">
 						<h3>商家产品</h3>
 					</div>
-					<div class="cont">
-						<ul class="other-deal-list">
-							<li > <a class="Fix" target="_blank" href="/deal/6489407"> <span class="price Price-font">&#165;41</span> <span class="sellprice">价值79元</span> <span class="infor">[多商区]  棒约翰比萨:卷边小装腊肠比萨1个</span> <span class="num">7410人已购买</span> </a> </li>
-						</ul>
-					</div>
-					<div class="cont">
-						<ul class="other-deal-list">
-							<li > <a class="Fix" target="_blank" href="/deal/6489407"> <span class="price Price-font">&#165;41</span> <span class="sellprice">价值79元</span> <span class="infor">[多商区]  棒约翰比萨:卷边小装腊肠比萨1个</span> <span class="num">7410人已购买</span> </a> </li>
-						</ul>
-					</div>
+					<?php
+						$productViewDB=new Model('view_product');
+						$productViewCondition['seller_id']=$sellerID;
+						$procuctIDList=$productViewDB->where($productViewCondition)->select();		
+					?>
+					<volist name="procuctIDList" id="product">
+						<div class="cont">
+							<ul class="other-deal-list">
+								<li > 
+									<a class="Fix" href="__APP__/Buy/product_info?productID={$product['product_id']}" >
+										<span class="price Price-font">&#165;{$product["price"]}</span>
+										<span class="infor">{$product["name"]}:{$product["dscr"]}</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</volist>
 				</div>
 				<div class="box content J_tab_container">
 					<div class="box Tabs-box switch-box">

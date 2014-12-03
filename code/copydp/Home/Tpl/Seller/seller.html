@@ -147,7 +147,7 @@
 											$p_img=$sellerViewDB->where($sellerIDCondition)->getField('img');
 											$p_dscr=$sellerViewDB->where($sellerIDCondition)->getField('description');
 										?>
-										<a title="{$p_name}" href="__APP__/Buy/seller_info?sellerID={$sellerID}"> <img src="__PUBLIC__/uploads/img/{$p_img}" width="180" height="112" style="float:left;" >
+										<a title="{$p_name}" href="__APP__/Seller/seller_info?sellerID={$sellerID}"> <img src="__PUBLIC__/uploads/img/{$p_img}" width="180" height="112" style="float:left;" >
 											<div class="window-title">
 												<h3>{$p_name}</h3>
 												<h4>{$p_dscr}</h4>												
@@ -173,37 +173,34 @@
 				</div>
 				<div class="promo-list-item J_promo_list_item Hide on">
 					<div class="promo-window J_promo_window">
-						<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
-							<li class="promo-window-item J_promo_window_item"> <a title="大树餐厅" target="_blank" href="__APP__/Buy/seller_list"> <img src="__PUBLIC__/img/4.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [多商区]  大树餐厅 </h3>
-									<h4>代金券，无需预约，节假日通用！ </h4>						
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item"> <a title="缪氏川菜" target="_blank" href="/deal/8027897"> <img src="__PUBLIC__/img/5.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3>[多商区]缪氏川菜</h3>
-									<h4>代金券，不限时段通用，节假日通用！贺缪氏川菜进驻龙华九方购物中心！（另有其他套餐可选）</h4>							
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="马家烧麦馆" target="_blank" href="__APP__/Buy/seller_list"> <img src="__PUBLIC__/img/6.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [3店通用] 马家烧麦馆 </h3>
-									<h4>代金券，节假日通用！ </h4>		
-								</div>
-								</a> </li>
-							<li class="promo-window-item J_promo_window_item" data-track-lock="1"> <a title="黑姆奇时尚韩餐" target="_blank" href="__APP__/Buy/product_list"> <img src="__PUBLIC__/img/7.jpg" width="180" height="112" style="float:left;" >
-								<div class="window-title">
-									<h3> [东中街]  黑姆奇时尚韩餐 </h3>
-									<h4>超值双人套餐，无需预约，节假日通用！ </h4>
-								</div>
-								</a> </li>
+					<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
+						<?php
+							$productViewDB=new Model('view_seller');
+							$sellerCityCondition['city']=$city;
+							$procuctIDList=$sellerViewDB->where($sellerCityCondition)->order('user_id desc')->limit(4)->getField('user_id',true);		
+							$num = count($procuctIDList);								
+						?>
+						<if condition="	$num eq 0">
+							<li class="promo-window-item J_promo_window_item">暂无商家</li>
+						<else/>
+							<volist name="procuctIDList" id="sellerID">
+							<li class="promo-window-item J_promo_window_item">
+									<?php>											
+										$sellerIDCondition['user_id']=$sellerID;								
+										$p_name=$sellerViewDB->where($sellerIDCondition)->getField('title');
+										$p_img=$sellerViewDB->where($sellerIDCondition)->getField('img');
+										$p_dscr=$sellerViewDB->where($sellerIDCondition)->getField('description');
+									?>
+									<a title="{$p_name}" href="__APP__/Seller/seller_info?sellerID={$sellerID}"> <img src="__PUBLIC__/uploads/img/{$p_img}" width="180" height="112" style="float:left;" >
+										<div class="window-title">
+											<h3>{$p_name}</h3>
+											<h4>{$p_dscr}</h4>												
+										</div>
+									</a>
+								</li>						
+							</volist>	
+						</if>												
 						</ul>
-					</div>
-					<div class="panel-foot">
-						<div class="promo-window-ctrl panel-ctrl J_promo_window_ctrl">
-							<a href="__APP__/Buy/product_list">查看全部»</a>						
-						</div>
 					</div>
 				</div>
 			</div><!----新进商家---->
