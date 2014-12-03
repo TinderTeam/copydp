@@ -7,12 +7,21 @@
 //
 
 #import "FEGroupCategoryProductCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "FEProduct.h"
 
 @implementation FEGroupCategoryProductCell
 
 - (void)awakeFromNib {
     // Initialization code
     self.productPriceLabel.textColor = FEThemeOrange;
+}
+
+-(void)configWithProduct:(FEProduct *)product{
+    _product = product;
+    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(product.imgsrc)]];
+    self.productDescriptionLabel.text = product.dscr;
+    self.productPriceLabel.text = [NSString stringWithFormat:@"￥%@",product.price];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

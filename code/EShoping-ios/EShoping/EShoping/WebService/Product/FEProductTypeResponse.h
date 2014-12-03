@@ -7,7 +7,8 @@
 //
 
 #import "FEBaseResponse.h"
+@class FEProductType;
 
 @interface FEProductTypeResponse : FEBaseResponse
-
+@property (nonatomic, strong, readonly) NSArray *typeList;
 @end

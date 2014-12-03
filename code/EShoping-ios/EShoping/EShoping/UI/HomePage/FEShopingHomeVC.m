@@ -21,11 +21,12 @@
 #import "FEResult.h"
 #import "FEProduct.h"
 
-@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,FECitySelectVCDelegate>
+@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,FECitySelectVCDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *shopingTableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) NSArray *productList;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *regionBarItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *messageBarItem;
 
 @end
 
@@ -47,13 +48,13 @@
 
 -(void)initUI{
     [self.regionBarItem setTitle:FEUserDefaultsObjectForKey(FEShopRegionKey)];
-    self.navigationItem.titleView = self.searchBar;
-    self.navigationController.navigationBar.barTintColor = FEThemeOrange;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
+//    self.navigationItem.titleView = self.searchBar;
+    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
 //    FESearchBar *searchBar = [[FESearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 40)];
 //    searchBar.delegate = self;
 //    self.navigationItem.titleView = self.searchBar;
+    self.navigationItem.leftBarButtonItem = self.regionBarItem;
+    self.navigationItem.rightBarButtonItem = self.messageBarItem;
 }
 
 -(void)gotoLocation:(id)sender{
@@ -76,22 +77,21 @@
 
 -(void)requestAllproduct{
     __weak typeof(self) weakself = self;
-//    FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
-//    [[FEShopWebServiceManager sharedInstance] productRecommedProduct:rdata response:^(NSError *error, FEProductRecommendResponse *response) {
-//        if (!error && response.result.errorCode.integerValue == 0) {
-//            weakself.productList = response.productList;
-//            [weakself.shopingTableView reloadData];
-//        }
-//
-//    }];
-    FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
-    [[FEShopWebServiceManager sharedInstance] productAll:rdate response:^(NSError *error, FEProductAllResponse *response) {
-//        NSLog(@"");
+    FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+    [[FEShopWebServiceManager sharedInstance] productRecommedProduct:rdata response:^(NSError *error, FEProductRecommendResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
             weakself.productList = response.productList;
             [weakself.shopingTableView reloadData];
         }
+
     }];
+//    FEProductGetAllRequest *rdate = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+//    [[FEShopWebServiceManager sharedInstance] productAll:rdate response:^(NSError *error, FEProductAllResponse *response) {
+//        if (!error && response.result.errorCode.integerValue == 0) {
+//            weakself.productList = response.productList;
+//            [weakself.shopingTableView reloadData];
+//        }
+//    }];
     
 }
 
@@ -172,22 +172,15 @@
 
 #pragma mark - UISearchDisplayControllerdelegate methods
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
-//    self.navigationItem.titleView = nil;
-//    [self.view addSubview:self.searchBar];
-//    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 64);
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = nil;
 }
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
-    //    [controller.searchResultsTableView setDelegate:self];
-    //    controller.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
 }
 
 - (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
-    //    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
-//    [self.navigationController setNavigationBarHidden:NO animated:YES];
-//    self.navigationItem.titleView = self.searchBar;
-//    [self.searchBar removeFromSuperview];
-//    self.navigationItem.titleView = self.searchBar;
-//    [self.navigationController.navigationBar setNeedsDisplay];
+
 }
 
 -(BOOL)searchDisplayController:(UISearchDisplayController*)controller shouldReloadTableForSearchString:(NSString *)searchString {
@@ -196,12 +189,12 @@
 }
 
 -(void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
-    //    self.searchTable = tableView;
-    //        [tableView setContentInset:UIEdgeInsetsZero];
-    //        [tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
+    
 }
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+    self.navigationItem.rightBarButtonItem = self.messageBarItem;
+    self.navigationItem.leftBarButtonItem = self.regionBarItem;
     //        [self.searchBar resignFirstResponder];
 }
 
@@ -214,6 +207,12 @@
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.barTintColor = FEThemeOrange;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -47,7 +47,7 @@
         <!--Shoping HomeVC-->
         <scene sceneID="pHP-uM-oho">
             <objects>
-                <viewController id="RUe-m2-cej" customClass="FEShopingHomeVC" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="RUe-m2-cej" customClass="FEShopingHomeVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dxl-63-cyx"/>
                         <viewControllerLayoutGuide type="bottom" id="RM9-RP-p1A"/>
@@ -56,7 +56,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mcT-0M-zZr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mcT-0M-zZr" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -220,6 +220,7 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
+                        <outlet property="messageBarItem" destination="Mko-9T-lTu" id="D0F-8Z-YlK"/>
                         <outlet property="regionBarItem" destination="JfT-Wp-Z8g" id="WUz-Rd-UGD"/>
                         <outlet property="searchBar" destination="Zie-PD-fLb" id="Bth-yC-ziP"/>
                         <outlet property="searchDisplayController" destination="gy2-0M-bL2" id="jan-p5-0Ej"/>
@@ -436,7 +437,7 @@
         <!--Group CategoryVC-->
         <scene sceneID="7jQ-3D-RKe">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="xk9-Qi-GgG" customClass="FEGroupCategoryVC" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="xk9-Qi-GgG" customClass="FEGroupCategoryVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZXW-tQ-2cP"/>
                         <viewControllerLayoutGuide type="bottom" id="79t-pY-9y1"/>
@@ -445,7 +446,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fkn-by-Wti">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fkn-by-Wti" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="104" width="600" height="496"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -462,7 +463,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wv6-ME-VNA">
-                                                    <rect key="frame" x="117" y="8" width="443" height="40"/>
+                                                    <rect key="frame" x="110" y="8" width="443" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="tTo-6v-rOJ"/>
                                                     </constraints>
@@ -471,9 +472,9 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4P-rK-ffi">
-                                                    <rect key="frame" x="117" y="51" width="42" height="21"/>
+                                                    <rect key="frame" x="110" y="51" width="100" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="42" id="hQi-jh-tuY"/>
+                                                        <constraint firstAttribute="width" constant="100" id="hQi-jh-tuY"/>
                                                         <constraint firstAttribute="height" constant="21" id="pZ8-gV-glO"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -489,14 +490,14 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="N4P-rK-ffi" firstAttribute="leading" secondItem="76Z-5M-Jbd" secondAttribute="trailing" constant="17" id="5aA-m1-hFV"/>
-                                                <constraint firstAttribute="trailing" secondItem="wv6-ME-VNA" secondAttribute="trailing" constant="40" id="8Bw-eZ-THl"/>
+                                                <constraint firstItem="N4P-rK-ffi" firstAttribute="leading" secondItem="76Z-5M-Jbd" secondAttribute="trailing" constant="10" id="5aA-m1-hFV"/>
+                                                <constraint firstAttribute="trailing" secondItem="wv6-ME-VNA" secondAttribute="trailing" constant="47" id="8Bw-eZ-THl"/>
                                                 <constraint firstItem="N4P-rK-ffi" firstAttribute="top" secondItem="wv6-ME-VNA" secondAttribute="bottom" constant="3" id="L15-GY-zF3"/>
                                                 <constraint firstItem="76Z-5M-Jbd" firstAttribute="top" secondItem="lQD-gB-m4o" secondAttribute="top" constant="7" id="RlN-B4-36H"/>
                                                 <constraint firstItem="cPp-6q-F6c" firstAttribute="top" secondItem="lQD-gB-m4o" secondAttribute="top" constant="40" id="dpy-pW-6Ml"/>
                                                 <constraint firstItem="76Z-5M-Jbd" firstAttribute="leading" secondItem="lQD-gB-m4o" secondAttribute="leading" constant="10" id="fen-KA-yVP"/>
                                                 <constraint firstAttribute="trailing" secondItem="cPp-6q-F6c" secondAttribute="trailing" constant="25" id="i2k-KV-plC"/>
-                                                <constraint firstItem="wv6-ME-VNA" firstAttribute="leading" secondItem="76Z-5M-Jbd" secondAttribute="trailing" constant="17" id="pH0-sz-oki"/>
+                                                <constraint firstItem="wv6-ME-VNA" firstAttribute="leading" secondItem="76Z-5M-Jbd" secondAttribute="trailing" constant="10" id="pH0-sz-oki"/>
                                                 <constraint firstItem="wv6-ME-VNA" firstAttribute="top" secondItem="lQD-gB-m4o" secondAttribute="top" constant="8" id="vJ9-ma-Gkx"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -532,10 +533,28 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="GroupTableView" destination="fkn-by-Wti" id="ibO-Vb-hLS"/>
+                        <outlet property="groupTableView" destination="fkn-by-Wti" id="AaQ-JP-Csa"/>
+                        <outlet property="searchDisplayController" destination="dWO-VE-9rb" id="anr-8u-OHT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dub-p9-8Rn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" barStyle="black" id="Bgy-uF-DL7">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="xk9-Qi-GgG" id="mtR-ND-3S5"/>
+                    </connections>
+                </searchBar>
+                <searchDisplayController id="dWO-VE-9rb">
+                    <connections>
+                        <outlet property="delegate" destination="xk9-Qi-GgG" id="OKv-Rj-fDh"/>
+                        <outlet property="searchBar" destination="Bgy-uF-DL7" id="we2-jE-dUe"/>
+                        <outlet property="searchContentsController" destination="xk9-Qi-GgG" id="Oa0-Cq-wUf"/>
+                        <outlet property="searchResultsDataSource" destination="xk9-Qi-GgG" id="0Se-dp-3FQ"/>
+                        <outlet property="searchResultsDelegate" destination="xk9-Qi-GgG" id="qdD-Jb-FS1"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2190" y="-264"/>
         </scene>
@@ -551,7 +570,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmD-Lt-DAL">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmD-Lt-DAL" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
@@ -591,7 +610,7 @@
         <!--City SelectVC-->
         <scene sceneID="ucr-S5-RzW">
             <objects>
-                <viewController id="50K-fe-M1r" customClass="FECitySelectVC" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="50K-fe-M1r" customClass="FECitySelectVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3dO-LG-Msi"/>
                         <viewControllerLayoutGuide type="bottom" id="JaP-gP-e4q"/>
@@ -610,7 +629,7 @@
                                     <outlet property="delegate" destination="50K-fe-M1r" id="tHg-Rk-QaQ"/>
                                 </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="WSd-dt-2P1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="WSd-dt-2P1" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -659,7 +678,7 @@
         <!--Shoping GroupVC-->
         <scene sceneID="Smn-zH-Erb">
             <objects>
-                <viewController id="tid-HR-aFU" customClass="FEShopingGroupVC" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="tid-HR-aFU" customClass="FEShopingGroupVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JZY-yL-ibE"/>
                         <viewControllerLayoutGuide type="bottom" id="1yH-tE-PMh"/>
@@ -668,7 +687,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UYc-Pb-rVd">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UYc-Pb-rVd" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -695,13 +714,13 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ee8-AF-LBE">
-                                                                        <rect key="frame" x="46" y="14" width="53" height="21"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <rect key="frame" x="40" y="15" width="65" height="20"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="history" translatesAutoresizingMaskIntoConstraints="NO" id="1nU-jp-Z8Q">
-                                                                        <rect key="frame" x="8" y="10" width="30" height="30"/>
+                                                                        <rect key="frame" x="5" y="10" width="30" height="30"/>
                                                                     </imageView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -752,7 +771,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8iD-b1-dBQ">
-                                                    <rect key="frame" x="140" y="89" width="42" height="21"/>
+                                                    <rect key="frame" x="140" y="88" width="100" height="25"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -800,7 +819,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z7p-Lr-wmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchBar contentMode="redraw" id="FV4-6f-MPX" customClass="FESearchBar">
+                <searchBar contentMode="redraw" barStyle="black" id="FV4-6f-MPX" customClass="FESearchBar">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <textInputTraits key="textInputTraits"/>
@@ -823,7 +842,7 @@
         <!--Shoping DiscoverVC-->
         <scene sceneID="iPq-88-eeS">
             <objects>
-                <viewController id="pmO-Z4-PWc" customClass="FEShopingDiscoverVC" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="pmO-Z4-PWc" customClass="FEShopingDiscoverVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uch-vq-dff"/>
                         <viewControllerLayoutGuide type="bottom" id="wA2-n9-F3F"/>
@@ -832,12 +851,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="u5t-zL-OAK">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="u5t-zL-OAK" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="discoverCell" rowHeight="150" id="ya3-p0-PFI">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ya3-p0-PFI" id="C5g-Ng-iGQ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zbar-samples.png" translatesAutoresizingMaskIntoConstraints="NO" id="AIi-k0-eFN">
+                                                    <rect key="frame" x="10" y="0.0" width="580" height="139"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AIi-k0-eFN" firstAttribute="top" secondItem="C5g-Ng-iGQ" secondAttribute="top" id="1R8-xA-KhT"/>
+                                                <constraint firstAttribute="bottom" secondItem="AIi-k0-eFN" secondAttribute="bottom" constant="10" id="Zhh-GC-vZW"/>
+                                                <constraint firstItem="AIi-k0-eFN" firstAttribute="leading" secondItem="C5g-Ng-iGQ" secondAttribute="leading" constant="10" id="mNg-cD-Iy0"/>
+                                                <constraint firstAttribute="trailing" secondItem="AIi-k0-eFN" secondAttribute="trailing" constant="10" id="tZe-As-XRa"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                                 </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="pmO-Z4-PWc" id="1Oy-BZ-v3G"/>
+                                    <outlet property="delegate" destination="pmO-Z4-PWc" id="i2t-TT-xCX"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -856,12 +898,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchBar" destination="K9B-hV-tAB" id="ud8-lM-WOr"/>
+                        <outlet property="QRBarItem" destination="WUt-dy-t6T" id="7rT-lI-pCd"/>
+                        <outlet property="discoverTableView" destination="u5t-zL-OAK" id="V1M-HZ-VBo"/>
                         <outlet property="searchDisplayController" destination="V4f-Pq-bsj" id="lW7-Wm-nGR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZWO-XG-P1t" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchBar contentMode="redraw" id="K9B-hV-tAB" customClass="FESearchBar">
+                <searchBar contentMode="redraw" barStyle="black" id="K9B-hV-tAB" customClass="FESearchBar">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <textInputTraits key="textInputTraits"/>
@@ -1105,7 +1148,7 @@
         <scene sceneID="VC4-lF-Puw">
             <objects>
                 <tableViewController id="yqg-tY-R9j" customClass="FEPersonProfileVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="5Om-Lu-svB">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="5Om-Lu-svB" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1466,7 +1509,7 @@
         <scene sceneID="bOa-Bx-vbw">
             <objects>
                 <tableViewController title="Order" hidesBottomBarWhenPushed="YES" id="klr-n1-dTM" customClass="FEOrderVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Hhl-E4-fRa">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Hhl-E4-fRa" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1548,7 +1591,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="104" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8vN-mZ-bLq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="104" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="8vN-mZ-bLq" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="40" width="600" height="560"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1622,7 +1665,7 @@
         <scene sceneID="mfF-zL-uxP">
             <objects>
                 <tableViewController title="Ticket" hidesBottomBarWhenPushed="YES" id="lbh-mX-oPx" customClass="FETicketVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="R5l-Y1-6NY">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="R5l-Y1-6NY" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1640,7 +1683,7 @@
         <scene sceneID="Xlw-zD-HS1">
             <objects>
                 <tableViewController title="Favourite" hidesBottomBarWhenPushed="YES" id="DGM-vZ-03s" customClass="FEFavouriteVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wFY-UL-5uf">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wFY-UL-5uf" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1658,7 +1701,7 @@
         <scene sceneID="aNm-ru-8BA">
             <objects>
                 <tableViewController title="History" hidesBottomBarWhenPushed="YES" id="W7a-Mh-18A" customClass="FEHistoryVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="S1c-Ab-Etg">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="S1c-Ab-Etg" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1676,7 +1719,7 @@
         <scene sceneID="MHI-ZN-KQe">
             <objects>
                 <tableViewController title="Comment" hidesBottomBarWhenPushed="YES" id="amZ-ig-F5t" customClass="FECommentVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="oBu-D0-wXU">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="oBu-D0-wXU" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1694,7 +1737,7 @@
         <scene sceneID="hXX-nI-ynH">
             <objects>
                 <tableViewController title="Sevice" hidesBottomBarWhenPushed="YES" id="DWY-wm-N5g" customClass="FEServiceCenterVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Qku-ML-ioa">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Qku-ML-ioa" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1712,7 +1755,7 @@
         <scene sceneID="4yL-or-2gl">
             <objects>
                 <tableViewController title="Setting" hidesBottomBarWhenPushed="YES" id="28v-dk-Nng" customClass="FESettingVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="PTk-Z3-JTx">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="PTk-Z3-JTx" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1862,7 +1905,7 @@
         <scene sceneID="FRW-Z2-VYR">
             <objects>
                 <tableViewController title="Wallet" hidesBottomBarWhenPushed="YES" id="bgU-7y-4tQ" customClass="FEWalletVC" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="PyE-D1-eNh">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="PyE-D1-eNh" customClass="FETableView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1887,10 +1930,11 @@
         <image name="mail_nav" width="27" height="27"/>
         <image name="oversea_navibar_icon_qr" width="20" height="20"/>
         <image name="usersetting" width="25" height="25"/>
+        <image name="zbar-samples.png" width="214" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gna-YL-NED"/>
         <segue reference="ZaT-4Z-8p3"/>
-        <segue reference="aRE-qo-BYT"/>
+        <segue reference="SMN-cG-FWi"/>
+        <segue reference="yvT-If-Rl9"/>
     </inferredMetricsTieBreakers>
 </document>

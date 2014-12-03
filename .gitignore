@@ -22,3 +22,7 @@ DerivedData
 Pods/
 project.pbxproj
 *.class
+
+code/EShoping-android/EShoping/bin/
+
+code/EShoping-android/EShoping/.settings/org.eclipse.jdt.core.prefs

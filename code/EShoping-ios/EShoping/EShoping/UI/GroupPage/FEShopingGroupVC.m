@@ -12,6 +12,9 @@
 #import "FESegmentControl.h"
 #import "FEProductNewRequest.h"
 #import "FEProductNewResponse.h"
+#import "FEProductType.h"
+#import "FEProductTypeRequest.h"
+#import "FEProductTypeResponse.h"
 #import "FEProduct.h"
 #import "FEShopWebServiceManager.h"
 #import "FEShopingItemVC.h"
@@ -33,6 +36,7 @@
     // Do any additional setup after loading the view.
     [self initUI];
     [self requestNewProduct];
+    [self requestProductType];
     __weak typeof(self) weakself = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
@@ -46,6 +50,8 @@
     self.searchBar.backgroundColor = [UIColor clearColor];
     self.searchBar.barStyle = UIBarStyleBlack;
     self.navigationItem.titleView = self.searchBar;
+    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
+    self.navigationItem.leftBarButtonItem = self.regionBarItem;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -66,6 +72,15 @@
     }];
 }
 
+-(void)requestProductType{
+    FEProductTypeRequest *rdata = [[FEProductTypeRequest alloc] initWithTypeRoot:0];
+    [[FEShopWebServiceManager sharedInstance] productType:rdata response:^(NSError *error, FEProductTypeResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            NSLog(@"product type success!");
+        }
+    }];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -78,67 +93,132 @@
 
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        FEGroupCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingGoupCategoryCell" forIndexPath:indexPath];
-        return cell;
-    }else{
-        FEGroupProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupProductCell" forIndexPath:indexPath];
-        [cell configWithProduct:self.productNew[indexPath.row]];
+    if (tableView == self.productsTableView) {
+        if (indexPath.section == 0) {
+            FEGroupCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingGoupCategoryCell" forIndexPath:indexPath];
+            return cell;
+        }else{
+            FEGroupProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupProductCell" forIndexPath:indexPath];
+            [cell configWithProduct:self.productNew[indexPath.row]];
+            return cell;
+        }
+    }else if(tableView == self.searchDisplayController.searchResultsTableView){
+        static NSString *identifier = @"cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+        cell.textLabel.text = @"1";
         return cell;
     }
+    
     return nil;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
+    if (tableView == self.productsTableView) {
+        if (section == 0) {
+            return 1;
+        }else if(section == 1){
+            return self.productNew.count;
+        }
+    }else if(tableView == self.searchDisplayController.searchResultsTableView){
         return 1;
-    }else if(section == 1){
-        return self.productNew.count;
     }
+    
     return 0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    if (tableView == self.productsTableView) {
+        return 2;
+    }else{
+        return 1;
+    }
+    return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
-        if (!self.segment) {
-            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"离你最近",@"最新上架",@"搜索热门"]];
-            _segment.font = FEFont(14);//[UIFont systemFontOfSize:14];
-            _segment.selectedTextColor = FEThemeOrange;
-            _segment.selectionIndicatorColor = FEThemeOrange;
-            _segment.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
-            _segment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-            _segment.selectionIndicatorHeight = 2;
+    if (tableView == self.productsTableView) {
+        if (section == 1) {
+            if (!self.segment) {
+                _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"离你最近",@"最新上架",@"搜索热门"]];
+                _segment.font = FEFont(14);//[UIFont systemFontOfSize:14];
+                _segment.selectedTextColor = FEThemeOrange;
+                _segment.selectionIndicatorColor = FEThemeOrange;
+                _segment.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+                _segment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+                _segment.selectionIndicatorHeight = 2;
+            }
+            return self.segment;
         }
-        return self.segment;
     }
     return nil;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
-        return 44;
+    if (tableView == self.productsTableView) {
+        if (section == 1) {
+            return 44;
+        }
     }
     return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 1) {
-        return 0;
+    if (tableView == self.productsTableView) {
+        if (section == 1) {
+            return 0;
+        }else{
+            return 20;
+        }
     }
-    return 20;
+    return 0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat height = 0;
-    if (indexPath.section == 0) {
-        height = 150;
-    }else if(indexPath.section == 1){
-        height = 120;
+    if (tableView == self.productsTableView) {
+        CGFloat height = 0;
+        if (indexPath.section == 0) {
+            height = 150;
+        }else if(indexPath.section == 1){
+            height = 120;
+        }
+        return height;
+    }else if(tableView == self.searchDisplayController.searchResultsTableView){
+        return 44;
     }
-    return height;
+    return 44;
+}
+
+#pragma mark - UISearchDisplayControllerdelegate methods
+- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+    self.navigationItem.leftBarButtonItem = nil;
+}
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
+    
+}
+
+- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+   
+}
+
+-(BOOL)searchDisplayController:(UISearchDisplayController*)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    [self filterContentForSearchText:searchString];
+    return YES;
+}
+
+-(void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView {
+    
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+    self.navigationItem.leftBarButtonItem = self.regionBarItem;
+    
+}
+
+-(void)filterContentForSearchText:(NSString*)searchText {
+   
+    
 }
 
 /*

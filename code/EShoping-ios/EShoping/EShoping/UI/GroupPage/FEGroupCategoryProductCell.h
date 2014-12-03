@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class FEProduct;
 @interface FEGroupCategoryProductCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *productImageView;
 @property (strong, nonatomic) IBOutlet UILabel *productDescriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *productPriceLabel;
+
+@property (strong, nonatomic, readonly) FEProduct *product;
+
+-(void)configWithProduct:(FEProduct *)product;
 
 @end

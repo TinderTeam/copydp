@@ -11,8 +11,8 @@
 
 
 @interface FEShopingDiscoverVC ()<UISearchBarDelegate,ZBarReaderDelegate,UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate>
-@property (weak, nonatomic) UITableView *searchTable;
-@property (strong, nonatomic) IBOutlet FESearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *QRBarItem;
+@property (strong, nonatomic) IBOutlet UITableView *discoverTableView;
 
 @end
 
@@ -72,8 +72,8 @@
     
     self.navigationController.navigationBar.barTintColor = FEThemeWhite;
     self.navigationController.navigationBar.tintColor = FEThemeOrange;
-    self.searchBar.barStyle = UIBarStyleBlack;
-    self.navigationItem.titleView = self.searchBar;
+    self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
+    self.navigationItem.rightBarButtonItem = self.QRBarItem;
 
 }
 
@@ -86,12 +86,13 @@
 #pragma mark - UISearchDisplayControllerdelegate methods
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
     [controller setActive:YES animated:YES];
-    controller.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
+    self.navigationItem.rightBarButtonItem = nil;
+//    controller.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
 //    self.searchBar.transform = CGAffineTransformMakeTranslation(0, 0);
 }
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
     [controller.searchResultsTableView setDelegate:self];
-    controller.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    controller.searchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
@@ -111,31 +112,40 @@
 }
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+    self.navigationItem.rightBarButtonItem = self.QRBarItem;
 //    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - UITableViewDelegate
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (tableView == self.searchTable) {
+    if (tableView == self.discoverTableView) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"discoverCell" forIndexPath:indexPath];
+        return cell;
+    }else if(tableView == self.searchDisplayController.searchResultsTableView){
         static NSString *identifier = @"cell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
+        cell.textLabel.text = @"1";
         return cell;
     }
     return nil;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (tableView == self.searchTable) {
+    if (tableView == self.discoverTableView) {
+        return 1;
+    }else if (tableView == self.searchDisplayController.searchResultsTableView){
         return 1;
     }
     return 0;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (tableView == self.searchTable) {
+    if (tableView == self.discoverTableView) {
+        return 1;
+    }else if(tableView == self.searchDisplayController.searchResultsTableView){
         return 1;
     }
     return 0;
