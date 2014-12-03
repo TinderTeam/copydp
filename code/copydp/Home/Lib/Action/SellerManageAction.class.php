@@ -14,6 +14,28 @@ class SellerManageAction extends Action {
 		}
 		
     }
+	public function recommend($id=0){
+		$recDB=M('recommend_product');
+		$rcondition['product_id']=$id;
+		$recDB->add($rcondition);
+		$this->assign("jumpUrl","index");
+		$this->success("推荐成功！");
+	}
+	public function cancelRecomend($id=0){
+		$recDB=M('recommend_product');
+		$rcondition['product_id']=$id;
+		$recDB->where($rcondition)->delete();
+		$this->assign("jumpUrl","index");
+		$this->success("取消成功！");
+	}
+	
+	public function sellerDelete($sellerID=0){
+		//首先删除
+		$sellerDB = M('view_seller');
+		$sellerIdCondition['user_id']=$sellerID;
+		$seller=$sellerDB->where($sellerIdCondition)->select();
+		$this->assign("seller",$seller[0]);
+	}
 	public function sellerEditView($type=0,$sellerID=0){
 		$pageType = "create";
 		if($type=="edit"){
