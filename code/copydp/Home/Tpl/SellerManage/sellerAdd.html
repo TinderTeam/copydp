@@ -105,11 +105,17 @@
 					<!--标题-->
 					<div class="modebox my-booking J_my_booking">
 						<div class="hd">
-							<h4>商家新增</h4>	
+							<if condition="$pageType eq 'edit'">
+								<h4>商家修改</h4>
+							<else/>
+								<h4>商家新增</h4>
+							</if>
+								
 						</div> 	
 					</div> 	<!--标题--> 
 					<!--表单-->
-					<form id="form" name="form" action="__URL__/add" method="post" enctype="multipart/form-data">
+				<form id="addForm" name="form" action="__URL__/add" method="post" enctype="multipart/form-data">
+				
 						<div class="con">
 							<div class="main page-sa page-sa-col Fix">
 								<div class="block shop-add-form">
@@ -117,7 +123,8 @@
 										<div class="form-inner">
 											<div class="form-block">
 												<label class="label label_required" >商户名：<em>*</em></label>
-												<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="" name="seller_name">
+							
+												<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" readonly="readonly" name="seller_name">
 												<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
 											</div>    
 														
@@ -127,26 +134,35 @@
 														$productType=M('product_type');
 														$condition['father_id'] = 0;
 														$type=$productType->where($condition)->select();
+														
 												?>
-																						
-												<select  name="type_id" class="form-select-sim">
+												<select class="form-select-sim type-select" >
 													<option selected="selected" value="">请选择主类型</option>
 													<foreach name='type' item='vt'>
-														<option value="{$vt.type_id}" >{$vt.type_name}</option>	
+														<option value="{$vt.type_id}" class="fathertype{$vt.type_id}" >{$vt.type_name}</option>	
 													</foreach>											
 												</select>
-
+												<?php
+														$productTypeDB=M('product_type');
+														$allType=$productTypeDB->select();
+														
+												?>
 												<select  name="type_id" class="form-select-sim">
 													<option selected="selected" value="">请选择子类型</option>
-													<foreach name='type' item='vt'>
-														<option value="{$vt.type_id}">{$vt.type_name}</option>	
+													<foreach name='allType' item='allvt'>
+														<if condition="$allvt.father_id eq '0'">
+															<option class="type-suboption typeGroup{$allvt.type_id} typeid{$allvt.type_id}" value="{$allvt.type_id}">{$allvt.type_name}</option>	
+														<else/>
+															<option class="type-suboption typeGroup{$allvt.father_id} typeid{$allvt.type_id}" value="{$allvt.type_id}">{$allvt.type_name}</option>	
+														</if>
+														
 													</foreach>											
 												</select>
 
 											</div>
 											<div class="form-block">
 												<span class="label">概述：</span>
-												<textarea name="description" rows="7" cols="50"  class="form-textarea form-default"></textarea>
+												<textarea name="description" rows="7" cols="50"  class="form-textarea form-default" value="" >{$seller.description}</textarea>
 												<span id="fv_TrafficInfo"  class="fv-def"></span>
 											</div> 
 											<div id="trPriceInfo"  class="form-block">
@@ -158,7 +174,7 @@
 												<select id="citySelect"  class="form-select-sim selectTarget" name="city_id">
 													<option  value="">请选择城市</option>	
 												<foreach name='city' item='vc'>
-													<option value="{$vc.city_id}">{$vc.city}</option>	
+													<option class="cityid{$vc.city_id}" value="{$vc.city_id}">{$vc.city}</option>	
 												</foreach>											
 												</select>
 											<div id="result"></div>
@@ -170,7 +186,7 @@
 													?>
 													<option value="">请选择区域</option>									
 													<foreach name='Zone' item='vz'>
-														<option value="{$vz.zone_id}" data="{$vz.city_id}"  class="Hide city-option">{$vz.zone_name}</option>
+														<option value="{$vz.zone_id}" data="{$vz.city_id}"  class="Hide city-option zoneid{$vz.zone_id}">{$vz.zone_name}</option>
 													</foreach>									
 												</select>
 											</div>
@@ -181,12 +197,20 @@
 											</div>
 											
 											<div class="form-block">
-												<span class="label">封面上传：</span>										
-												<input name="img[]" type="file" id="up0" onchange="viewmypic(showimg,this.form.up0);"/>(推荐大小 350*200)																						
+												<span class="label">封面上传：</span>		
+
+												
+												<input name="img[]" type="file" id="up0" onchange="viewmypic(showimg,this.form.up0);"/>(推荐大小 350*200)																					
 											</div>
 											
-											<div class="form-block">											
-												<img name="img0" src="" alt="请上传活动封面" style="margin-left:90px;height:200px;width:350px;" id="img0">											
+											<div class="form-block">
+												<if condition="$pageType eq 'edit'">
+													<img name="img0" src="/copydp/Public/uploads/img/{$seller.img}" alt="请上传活动封面" style="margin-left:90px;height:200px;width:350px;" id="img0">
+												<else/>
+											
+													<img name="img0" src="" alt="请上传活动封面" style="margin-left:90px;height:200px;width:350px;" id="img0">
+												</if>											
+																							
 											</div> 	
 											
 											<div class="form-block">
@@ -201,15 +225,19 @@
 								 <!--提交区域-->
 									<div class="block form-btn-block form-block form-content-block">							
 										<strong class="btn-type-b btn-fn-c">
+										
+											<input name="editSellerID" type="hidden" value="{$seller.user_id}" class="Hide"/>
+										
 											<input id="btnAdd" type="button" value="提交审批" class="Hide"/>
+
 											<input id="position" name="position" type="hidden" class="Hide"/>
 											<button type="button" class="form-btn submit-btn">提交审批</button>
 										</strong> 
 									</div><!--提交区域-->
 								</div>
 							</div>		
-						</div><!--表单-->
-					</form>				
+						</div><!--表单-->				
+				</form>	
             </div><!---产品信息编辑--->
 		</div>
 	</div><!---中间主要内容--->
@@ -219,21 +247,101 @@
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
 	
-	<!---城市坐标--->
+	
 	<div class="Hide">
+		<!---城市坐标--->
 		<foreach name='city' item='vc'>
 			<p id="city_{$vc.city_id}" city="{$vc.city}"  x="{$vc.x}" y="{$vc.y}"></p>
 		</foreach>	
+		<p id ="pageType" data="{$pageType}"></p>
+		<?php
+			$typeDB=M('product_type');
+			$tpyeIDCondition['type_id']=$seller['type_id'];
+			$type = $typeDB->where($tpyeIDCondition)->find();
+		?>		
+		<p id = "SellerType" type_id="{$type.type_id}" father_id ="{$type.father_id}"></p>
+		<p id = "SellerCity" city_id="{$seller.city_id}" zone_id ="{$seller.zone_id}"></p>
+		<div id ="html-info">{$seller.info}</div>
+		<p id = "action-eidt"  action="__URL__/edit" ></p>
 	<div>
+	
+	<script>
+		//初始化
+		 $(function () {
+			if($('#pageType').attr('data')=="edit"){
+				//初始化类型
+					var id =$('#SellerType').attr('type_id');
+					var father_id=$('#SellerType').attr('father_id');
+					
+					if(father_id != 0){					
+						$(".type-suboption").addClass("Hide");
+						$(".typeGroup"+father_id).removeClass("Hide");
+						$(".typeid"+id).attr("selected",true);					
+					}			
+					//选中
+					$(".fathertype"+father_id).attr("selected",true);
+				//初始化城市
+					var cityid =$('#SellerCity').attr('city_id');
+					var zoneid=$('#SellerCity').attr('zone_id');
+					
+					$(".city-option").addClass("Hide");
+					$(".cityid"+cityid).attr("selected",true);
+					$("[data='"+cityid+"']").removeClass("Hide");				
+					$(".zoneid"+zoneid).attr("selected",true);
+					
+					
+					
+			//地图组件重新加载
+			var x=$("#city_"+cityid).attr("x");
+			var y=$("#city_"+cityid).attr("y");
+			// 百度地图API功能	
+			var map = new BMap.Map("allmap");    // 创建Map实例
+			
+			map.addEventListener("click",function(e){
+				$("#y-value").html(e.point.lat);
+				$("#x-value").html(e.point.lng);
+				var position=e.point.lng+","+e.point.lat;
+				$("#position").val(position);
+			});
+			
+			var top_left_control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_TOP_LEFT});// 左上角，添加比例尺
+			var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+			var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}); //右上角，仅包含平移和缩放按钮
+			map.addControl(top_left_control);        
+			map.addControl(top_left_navigation);     
+			map.addControl(top_right_navigation);    
+			
+			map.centerAndZoom(new BMap.Point(x,y), 11);  // 初始化地图,设置中心点坐标和地图级别
+			
+			}
+        });
+		
+    </script>
 	
 	<script type="text/javascript">	
 	  //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 		var um = UM.getEditor('editor');
 
-		$(".submit-btn").click(function(){			
-			$("#info-text").val(UM.getEditor('editor').getContent());			
-			$("#form").submit();
+		um.setContent($('#html-info').html());
+		
+		$(".submit-btn").click(function(){
+			
+			
+			$("#info-text").val(UM.getEditor('editor').getContent());	
+			
+			var type=$('#pageType').attr('data');
+			
+			if(type=="edit"){
+				var editurl=$("#action-eidt").attr("action");
+				$("#addForm").attr("action",editurl);
+				$("#addForm").submit();
+			}else{
+		
+				$("#addForm").submit();
+			}
+			
+			
 		});
 
 		$(".selectTarget").change(function(){				
@@ -269,6 +377,16 @@
 		});
 		
 	</script>
+	
+	<script>
+	//类别联动
+		$('.type-select').change(function(){	
+			$(".type-suboption").addClass("Hide");
+			var type_id=$(".type-select").val();
+			$(".typeGroup"+type_id).removeClass("Hide");
+		});
+    </script>
+	
 	<script>
         $(function () {
             $("#up0").uploadPreview({ Img: "img0"});		

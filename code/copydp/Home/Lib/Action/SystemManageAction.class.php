@@ -6,9 +6,18 @@ class SystemManageAction extends Action {
 			$this->display();
 	}
 
+	public function cityEdit($cityID=0){
+	
+		$zoneDB=M('view_zone');
+		$zoneIDCondition['city_id']=$cityID;
+		$zoneList= $zoneDB->where($zoneIDCondition)->select();
+		$this->assign("zoneList",$zoneList);
+		$this->assign("cityID",$cityID);
+		$this->display();
+	}
 	
 	
-	
+
 	public function NewsEdit(){
 		$this->display();
 	}
@@ -74,6 +83,15 @@ class SystemManageAction extends Action {
 		$this->success("操作成功");
 	}
 	
+	public function newZone($cityID){
+		$ZoneDB= M('city_zone');
+		$newZone['city_id']=$cityID;
+		$newZone['zone_name']=$_POST['zoneName'];
+		$ZoneDB->add($newZone);
+		$this->assign("jumpUrl","index");
+		$this->success("操作成功");
+	}
+	
 	public function deleteCity($CityID=0){
 		$CityDB= M('city');
 		$deleteCityCondition['city_id']=$CityID;
@@ -123,6 +141,19 @@ class SystemManageAction extends Action {
 		
 		$this->ajaxReturn($conditionlink['name'], 'Ajax 成功！', 1);
 	}
+	public function zoneEdit($data){
+		$array = explode("~",$data);
+		$zoneid=urldecode($array[0]);
+		$name=urldecode($array[1]);	
+		
+		$zoneDB=M('city_zone');
+		$zoneIDCondition['zone_id']=$zoneid;
+		$zoneData['zone_name']=$name;
+		$zoneDB->where($zoneIDCondition)->save($zoneData);
+		$this->ajaxReturn($data, 'Ajax 成功！', 1);
+	}
+	
+	
 	
 	public function helpEdit($data){
 	

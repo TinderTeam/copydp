@@ -234,14 +234,37 @@
 														</foreach>											
 													</select>
 												</li>
-												<li> <span class="ws">选择类型</span>
-												   <?php
-														$typeDB= M('product_type');
-														$typeList=$typeDB->select();
-												   ?>
-													<select name="type_id">
-														<foreach name='typeList' item='type'>
-															<option value={$type.type_id}>{$type.type_name}</option>
+												<li> 
+													<span class="ws" >类型：<em>*</em></span>
+													<?php
+															$productType=M('product_type');
+															$condition['father_id'] = 0;
+															$type=$productType->where($condition)->select();
+													?>
+																							
+													<select id="typeSelect"  class="form-select-sim selectTarget">
+														<option  value="">请选择类型</option>	
+													<foreach name='type' item='mainType'>
+														<option value="{$mainType.type_id}">{$mainType.type_name}</option>	
+													</foreach>											
+													</select>
+
+													<?php
+															$productType=M('product_type');
+															$all_type=$productType->select();
+													?>
+													<select  name="type_id" class="form-select-sim form-select-sim-m zone-select">
+														<option selected="selected" value="">请选择子类型</option>
+														<foreach name='all_type' item='subtype'>
+															<if condition="$subtype.father_id eq 0">
+																<option value="{$subtype.type_id}" class="tpyeGroup{$subtype.type_id} subtype-option";
+															>{$subtype.type_name}</option>
+																<else/>
+																<option value="{$subtype.type_id}"
+															 class="tpyeGroup{$subtype.father_id} subtype-option";
+															>{$subtype.type_name}</option>
+															</if>
+																																
 														</foreach>											
 													</select>
 												</li>			
@@ -375,5 +398,11 @@ function findPswd(){
 			}		  
 		});		
 	});
+	
+	$(".selectTarget").change(function(){				
+			$(".subtype-option").addClass("Hide");
+			var id=$(".selectTarget").val();	
+			$(".tpyeGroup"+id).removeClass("Hide");		
+		});
 </script>
 </html>

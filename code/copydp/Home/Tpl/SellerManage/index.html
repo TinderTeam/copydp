@@ -150,7 +150,10 @@ margin-right: 10px;
 									<td align="center"> {$v1.city}</td>
 									<td align="center" >{$v1.description}</td>
 									<td align="center" >
-										<input type="submit" value="编辑"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
+										<input type="submit" value="编辑"  onclick="javascript:this.form.action='__URL__/sellerEditView?type=edit&sellerID={$v1.user_id}';"/>
+										<!----
+										<input type="submit" value="删除"  onclick="javascript:this.form.action='__URL__/sellerDelete?sellerID={$v1.user_id}';"/>
+										--->
 									</td>
 								</tr>
 						

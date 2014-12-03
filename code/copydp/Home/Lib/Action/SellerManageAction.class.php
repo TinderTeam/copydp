@@ -53,10 +53,13 @@ class SellerManageAction extends Action {
 			$this->display('index');
 			
 		}else{	
-
-			$this->assign("jumpUrl","index");
-			$this->error("请输入关键搜索信息！");
-			
+			$count = $db->where($condition)->count(); 
+			$Page = new Page($count,5); 
+			$show = $Page->show();
+			$list=$db->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
+			$this->assign('page1',$show);
+			$this->assign('sellerInfo',$list);
+			$this->display('index');	
 		}
 
 		}else{
@@ -121,6 +124,46 @@ class SellerManageAction extends Action {
 				}
 			}
 			
+		}
+		
+		 //新增商家
+		public function edit(){
+			$user = M('user');			
+			$sellerID=$_POST['editSellerID'];
+			$condition['user_id'] = $sellerID;
+			
+					//导入图片上传类  
+					import("ORG.Net.UploadFile");  
+					//实例化上传类  
+					$upload = new UploadFile();  
+					$upload->maxSize = 4145728; 
+					//$upload->saveRule=time; 
+					//设置文件上传类型  
+					$upload->allowExts = array('jpg','gif','png','jpeg');  
+					//设置文件上传位置  
+					$upload->savePath = "./Public/uploads/img/";//这里说明一下，由于ThinkPHP是有入口文件的，所以这里的./Public是指网站根目录下的Public文件夹  
+					//设置文件上传名(按照时间)  
+					//$upload->saveRule = "time";  
+					if (!$upload->upload()){  
+						$errMsg=($upload->getErrorMsg());	
+						
+					}else{  
+						//上传成功，获取上传信息  
+						$info = $upload->getUploadFileInfo();  
+						$data2['img']=$info[0]['savename'];					
+					}    					
+					$seller = M('seller');
+			
+					$data2['type_id']=$_POST['type_id'];
+					$data2['description']=$_POST['description'];
+					$data2['position']=$_POST['position'];
+					$data2['city_id']=$_POST['city_id'];
+					$data2['zone_id']=$_POST['zone_id'];
+					$data2['info']=$_POST['info'];
+					print_r($data2);
+					$seller->where($condition)->save($data2);
+					$this->assign("jumpUrl","index");
+					$this->success("用户编辑成功！");
 		}
 		public function searchProduct(){
 		
