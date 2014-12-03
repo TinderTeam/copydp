@@ -123,8 +123,12 @@
 										<div class="form-inner">
 											<div class="form-block">
 												<label class="label label_required" >商户名：<em>*</em></label>
-							
-												<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" readonly="readonly" name="seller_name">
+												<if condition="$pageType eq 'edit'">
+													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" readonly="readonly" name="seller_name">
+												<else/>
+													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" name="seller_name">
+												</if>
+												
 												<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
 											</div>    
 														
