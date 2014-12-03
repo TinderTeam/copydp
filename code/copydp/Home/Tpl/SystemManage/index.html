@@ -247,7 +247,6 @@ margin-right: 10px;
 									<td align="center" class="deal">({$city.x},{$city.y})</td>
 									<td align="center" class="deal">
 										<input type="button" value="删除" onclick="show_delete_confirm({$city.city_id})"/>
-										<input type="button" value="编辑" onclick="showCityEdit({$city.city_id})"/>
 									</td>									
 								</tr>
 							</foreach>
@@ -524,10 +523,6 @@ function show_delete_confirm_news(id)
 function showPrivilege(admin){
 	top.location="__URL__/privilege?UserID="+admin;
 }
-function showCityEdit(cityid){
-	top.location="__URL__/cityEdit?cityID="+cityid;
-}
-
 </script>
 </body>
 </html>
