@@ -12,6 +12,10 @@ class ActivityAction extends ActivityServiceAction {
         $activityListResult = parent::activityService($city);
         
         $errorCode = $activityListResult['errorCode'];
+        if($activityListResult['activityList'] == false)
+        {
+            $activityListResult['activityList'] = null;
+        }
         $Rsp['activityList'] = $activityListResult['activityList'];
         $this->returnJson($errorCode,$Rsp);
     }
@@ -25,6 +29,10 @@ class ActivityAction extends ActivityServiceAction {
         $activityOrderListResult = parent::activityOrderService($userID);
         
         $errorCode = $activityOrderListResult['errorCode'];
+        if($activityOrderListResult['activityOrderList'] == false)
+        {
+            $activityOrderListResult['activityOrderList'] = null;
+        }
         $Rsp['orderList'] = $activityOrderListResult['activityOrderList'];
         $this->returnJson($errorCode,$Rsp);
     }
@@ -125,6 +133,10 @@ class ActivityAction extends ActivityServiceAction {
 	    $createOrderResult = parent::createOrderService($orderInfo);
 	    
 	    $errorCode = $createOrderResult['errorCode'];
+	    if($createOrderResult['activityOrder'] == false)
+	    {
+	        $createOrderResult['activityOrder'] = null;
+	    }
 	    $Rsp['activityOrder'] = $createOrderResult['activityOrder'];
 	    $this->returnJson($errorCode,$Rsp);
 	}

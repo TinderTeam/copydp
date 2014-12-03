@@ -6,6 +6,7 @@ public class SetProductOrderReq extends BaseJsonReq
 	private int userID;			//下单用户ID
 	private int productID;			//下单产品ID
 	private int quantity;			//下单数量
+	private String orderID;           //订单号
 	
 	public int getUserID() {
 		return userID;
@@ -25,12 +26,20 @@ public class SetProductOrderReq extends BaseJsonReq
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	
+	public String getOrderID() {
+		return orderID;
+	}
+	public void setOrderID(String orderID) {
+		this.orderID = orderID;
+	}
 	@Override
 	public String toString() {
 		return "SetProductOrderReq [userID=" + userID + ", productID="
-				+ productID + ", quantity=" + quantity + ", token=" + token
-				+ "]";
+				+ productID + ", quantity=" + quantity + ", orderID=" + orderID
+				+ ", token=" + token + "]";
 	}
+	
 
 	
 	

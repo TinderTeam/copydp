@@ -49,6 +49,10 @@ class BuyAction extends BuyServiceAction {
         $productOrderListResult = parent::ProductOrderService($userID);
     
         $errorCode = $productOrderListResult['errorCode'];
+        if($productOrderListResult['orderList']==false)
+        {
+            $productOrderListResult['orderList'] = null;
+        }
         $Rsp['orderList'] = $productOrderListResult['orderList'];
         $this->returnJson($errorCode,$Rsp);
     }
@@ -102,6 +106,10 @@ class BuyAction extends BuyServiceAction {
 	    $createOrderResult = parent::CreateOrderService($orderInfo);
 	
 	    $errorCode = $createOrderResult['errorCode'];
+	    if($createOrderResult['productOrder']==false)
+	    {
+	        $createOrderResult['productOrder'] = null;
+	    }
 	    $Rsp['productOrder'] = $createOrderResult['productOrder'];
 	    $this->returnJson($errorCode,$Rsp);
 	}
@@ -125,7 +133,7 @@ class BuyAction extends BuyServiceAction {
 	    $orderInfo['orderID'] = $req->orderID;
 	    $this->log($orderInfo);
 	    $deleteOrderResult = parent::DeleteOrderService($orderInfo);
-	
+	    
 	    $errorCode = $deleteOrderResult['errorCode'];
 	    $this->returnJson($errorCode,null);
 	}
@@ -165,6 +173,10 @@ class BuyAction extends BuyServiceAction {
         $productTypeList = $productTypeDB->where($typeCondition)->select();
         
         $errorCode = SUCCESS;
+        if($productTypeList==false)
+        {
+            $productTypeList = null;
+        }
         $Rsp['typeList'] = $productTypeList;
         $this->returnJson($errorCode,$Rsp);
     }
@@ -186,6 +198,10 @@ class BuyAction extends BuyServiceAction {
         $productListResult = parent::AllProductService($searchInfo);
         
         $errorCode = $productListResult['errorCode'];
+        if($productListResult['productList']==false)
+        {
+            $productListResult['productList']=null;
+        }
         $Rsp['productList'] = $productListResult['productList'];
         $this->returnJson($errorCode,$Rsp);
         
@@ -202,6 +218,10 @@ class BuyAction extends BuyServiceAction {
         $productListResult = parent::recommendProductService($city);
         
         $errorCode = $productListResult['errorCode'];
+        if($productListResult['productList']==false)
+        {
+            $productListResult['productList']=null;
+        }
         $Rsp['productList'] = $productListResult['productList'];
         $this->returnJson($errorCode,$Rsp);
     }
@@ -214,6 +234,10 @@ class BuyAction extends BuyServiceAction {
         $productListResult = parent::NewProductService($city);
     
         $errorCode = $productListResult['errorCode'];
+        if($productListResult['productList']==false)
+        {
+            $productListResult['productList']=null;
+        }
         $Rsp['productList'] = $productListResult['productList'];
         $this->returnJson($errorCode,$Rsp);
     }
@@ -227,6 +251,10 @@ class BuyAction extends BuyServiceAction {
         $productListResult = parent::TypeRecProductService($typeInfo);
     
         $errorCode = $productListResult['errorCode'];
+        if($productListResult['productList']==false)
+        {
+            $productListResult['productList']=null;
+        }
         $Rsp['productList'] = $productListResult['productList'];
         $this->returnJson($errorCode,$Rsp);
     }

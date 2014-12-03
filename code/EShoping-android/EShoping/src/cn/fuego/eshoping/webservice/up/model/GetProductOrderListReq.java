@@ -4,7 +4,7 @@ import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 
 public class GetProductOrderListReq extends BaseJsonReq
 {
-	private int userID;				//根据用户ID获取订单列表
+	private int userID;				//鏍规嵁鐢ㄦ埛ID鑾峰彇璁㈠崟鍒楄〃
 
 	public int getUserID() {
 		return userID;

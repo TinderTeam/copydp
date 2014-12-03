@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#import "FEProductListRequest.h"
+#import "FEProductRecommendRequest.h"
 
-@implementation FEProductListRequest
+@implementation FEProductRecommendRequest
 
 -(id)initWithCity:(NSString *)city type:(NSInteger)type keyword:(NSString *)key isSearch:(BOOL)search{
     self = [super initWithMothed:__METHOD_PRODUCT_RECOMMENDPRODUCT];

@@ -24,7 +24,7 @@
 
 -(void)configWithProduct:(FEProductOrder *)product{
     self.orderProductDescription.text = product.product_description;
-    [self.orderProductImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/copydp/Public/uploads/img/%@",__WEB_SERVICE_IP,product.imgsrc]]];
+    [self.orderProductImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(product.imgsrc)]];
     self.orderProductNameLabel.text = product.product_name;
     self.orderProductStatusLabel.text = product.order_status;
     

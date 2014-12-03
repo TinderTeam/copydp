@@ -6,9 +6,9 @@ import cn.fuego.eshoping.webservice.up.model.base.UserJson;
 
 public class RegisterReq extends BaseJsonReq
 {
-	private UserJson user;				//ÓÃ»§ĞÅÏ¢
-	private CustomerJson customer;		//Ïû·ÑÕßĞÅÏ¢
-	private String code;				//×¢²áÂë
+	private UserJson user;				//ç”¨æˆ·ä¿¡æ¯
+	private CustomerJson customer;		//æ¶ˆè´¹è€…ä¿¡æ¯
+	private String code;				//æ³¨å†Œç 
 	
 	public UserJson getUser() {
 		return user;

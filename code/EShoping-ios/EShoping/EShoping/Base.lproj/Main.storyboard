@@ -56,7 +56,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mcT-0M-zZr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mcT-0M-zZr">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -760,7 +760,11 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="YvB-bR-mew" kind="show" id="Gna-YL-NED"/>
+                                            <outlet property="productDescriptionLabel" destination="WZr-ZX-YWz" id="GP2-oD-USt"/>
+                                            <outlet property="productImageView" destination="hNE-qg-fZY" id="6MS-u0-whI"/>
+                                            <outlet property="productPriceLabel" destination="8iD-b1-dBQ" id="NWr-zL-Ym5"/>
+                                            <outlet property="productTitleLabel" destination="uNv-fy-sLy" id="n07-Ke-lKj"/>
+                                            <segue destination="YvB-bR-mew" kind="show" identifier="showProductItem" id="Gna-YL-NED"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -789,6 +793,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="productsTableView" destination="UYc-Pb-rVd" id="D7c-0X-1MP"/>
                         <outlet property="regionBarItem" destination="Erx-gP-Txu" id="CYj-GD-OMS"/>
                         <outlet property="searchBar" destination="FV4-6f-MPX" id="XFH-Bm-VjX"/>
                         <outlet property="searchDisplayController" destination="dsE-T5-zAD" id="6uQ-YX-41X"/>
@@ -1884,8 +1889,8 @@
         <image name="usersetting" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="SMN-cG-FWi"/>
+        <segue reference="Gna-YL-NED"/>
+        <segue reference="ZaT-4Z-8p3"/>
         <segue reference="aRE-qo-BYT"/>
-        <segue reference="8Ed-oy-j1e"/>
     </inferredMetricsTieBreakers>
 </document>

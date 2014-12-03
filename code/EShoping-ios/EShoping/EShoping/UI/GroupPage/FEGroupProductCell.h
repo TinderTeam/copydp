@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class FEProduct;
 @interface FEGroupProductCell : UITableViewCell
+@property (nonatomic, strong, readonly) FEProduct *product;
+-(void)configWithProduct:(FEProduct *)product;
 
 @end

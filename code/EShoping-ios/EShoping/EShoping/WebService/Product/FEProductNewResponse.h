@@ -9,5 +9,6 @@
 #import "FEBaseResponse.h"
 
 @interface FEProductNewResponse : FEBaseResponse
+@property (nonatomic, strong, readonly) NSArray *productList;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  FEProductListRequest.h
+//  FEProductRecommendRequest.h
 //  EShoping
 //
 //  Created by Seven on 14-11-28.
@@ -8,7 +8,7 @@
 
 #import "FEBaseRequest.h"
 
-@interface FEProductListRequest : FEBaseRequest
+@interface FEProductRecommendRequest : FEBaseRequest
 
 @property (nonatomic, strong, readonly) NSString *city;
 @property (nonatomic, strong, readonly) NSNumber *typeRoot;

@@ -25,7 +25,7 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 @class FEUserSignoutResponse;
 @class FEUserModifyPswRequest;
 @class FEUserModifyPswResponse;
-@class FEProductListRequest;
+@class FEProductRecommendRequest;
 @class FEProductNewRequest;
 @class FEProductTypeRecRequest;
 @class FEProductTypeRequest;
@@ -66,7 +66,7 @@ DEFINE_WEBSERVICE_METHOD_HEADER(signout, FEUserSignoutResquest, FEUserSignoutRes
  ;
  --------------------------------------------*/
 //product recommed
-DEFINE_WEBSERVICE_METHOD_HEADER(productRecommedProduct, FEProductListRequest, FEProductRecommendResponse)
+DEFINE_WEBSERVICE_METHOD_HEADER(productRecommedProduct, FEProductRecommendRequest, FEProductRecommendResponse)
 //product new
 DEFINE_WEBSERVICE_METHOD_HEADER(productNew, FEProductNewRequest, FEProductNewResponse);
 //product recommed type

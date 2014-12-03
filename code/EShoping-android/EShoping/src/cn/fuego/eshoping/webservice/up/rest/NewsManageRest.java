@@ -14,7 +14,7 @@ import cn.fuego.eshoping.webservice.up.model.GetNewsListRsp;
 @Consumes("application/json")  
 public interface NewsManageRest
 {
-	//APP获取最新资讯List
+	//APP鑾峰彇鏈�鏂拌祫璁疞ist
 	@POST
 	@Path("/getNewsList_rest")
 	GetNewsListRsp getNewsList(GetNewsListReq req);

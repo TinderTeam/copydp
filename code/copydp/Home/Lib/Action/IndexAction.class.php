@@ -360,15 +360,19 @@ class IndexAction extends IndexServiceAction {
 		$this->assign('citySelect',"未选择");
 		$this->display();
     }
-    //APP注册校验
+    //APP获取城市列表
     public function city_rest(){
     
         //$this->doAuth();
         
-        $getCityResult = parent::cityService();
+        $getCityResult['cityList'] = parent::cityService();
     
         $errorCode = $getCityResult['errorCode'];
         $Rsp['pinyin'] = $getCityResult['pinyin'];
+        if($getCityResult['cityList']==false)
+        {
+            $getCityResult['cityList'] = null;
+        }
         $Rsp['cityList'] = $getCityResult['cityList'];
         $this->returnJson($errorCode,$Rsp);
     
