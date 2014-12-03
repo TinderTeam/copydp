@@ -14,6 +14,21 @@ class SellerManageAction extends Action {
 		}
 		
     }
+	public function sellerEditView($type=0,$sellerID=0){
+		$pageType = "create";
+		if($type=="edit"){
+			$pageType = $type;
+			$sellerDB = M('view_seller');
+			$sellerIdCondition['user_id']=$sellerID;
+			$seller=$sellerDB->where($sellerIdCondition)->select();
+			$this->assign("seller",$seller[0]);
+		}
+		$this->assign("pageType",$pageType);
+		$this->assign("sellerID",$sellerID);
+		$this->display("sellerAdd");
+		
+	}
+	
 	//搜索
 	public function searchSeller(){
 		if($_SESSION['login_user']!=""){
