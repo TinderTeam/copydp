@@ -18,6 +18,8 @@
 #import "FEProduct.h"
 #import "FEShopWebServiceManager.h"
 #import "FEShopingItemVC.h"
+#import "FEProductTypeRecRequest.h"
+#import "FEProductTypeRecResponse.h"
 
 @interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -26,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *productsTableView;
 
 @property (strong, nonatomic) NSArray *productNew;
+@property (strong, nonatomic) NSArray *productTypeRecommed;
 
 @end
 
@@ -37,9 +40,11 @@
     [self initUI];
     [self requestNewProduct];
     [self requestProductType];
+    [self requestTypeRecommend];
     __weak typeof(self) weakself = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
+        [weakself requestNewProduct];
     }];
 }
 
@@ -72,6 +77,16 @@
     }];
 }
 
+-(void)requestTypeRecommend{
+    __weak typeof(self) weakself = self;
+    FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+    [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            weakself.productTypeRecommed = response.productList;
+        }
+    }];
+}
+
 -(void)requestProductType{
     FEProductTypeRequest *rdata = [[FEProductTypeRequest alloc] initWithTypeRoot:0];
     [[FEShopWebServiceManager sharedInstance] productType:rdata response:^(NSError *error, FEProductTypeResponse *response) {
@@ -99,7 +114,21 @@
             return cell;
         }else{
             FEGroupProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupProductCell" forIndexPath:indexPath];
-            [cell configWithProduct:self.productNew[indexPath.row]];
+            FEProduct *product;
+            switch (self.segment.selectedSegmentIndex) {
+                case 0:
+                    product = self.productNew[indexPath.row];
+                    break;
+                case 1:
+                    product = self.productTypeRecommed[indexPath.row];
+                    break;
+                case 2:
+                    product = self.productTypeRecommed[indexPath.row];
+                    break;
+                default:
+                    break;
+            }
+            [cell configWithProduct:product];
             return cell;
         }
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
@@ -120,7 +149,16 @@
         if (section == 0) {
             return 1;
         }else if(section == 1){
-            return self.productNew.count;
+            switch (self.segment.selectedSegmentIndex) {
+                case 0:
+                    return self.productNew.count;
+                case 1:
+                    return self.productTypeRecommed.count;
+                case 2:
+                    return self.productTypeRecommed.count;
+                default:
+                    return 0;
+            }
         }
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
         return 1;
@@ -142,13 +180,14 @@
     if (tableView == self.productsTableView) {
         if (section == 1) {
             if (!self.segment) {
-                _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"离你最近",@"最新上架",@"搜索热门"]];
+                _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"最新上架",@"分类推荐",@"搜索热门"]];
                 _segment.font = FEFont(14);//[UIFont systemFontOfSize:14];
                 _segment.selectedTextColor = FEThemeOrange;
                 _segment.selectionIndicatorColor = FEThemeOrange;
                 _segment.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
                 _segment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
                 _segment.selectionIndicatorHeight = 2;
+                [_segment addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
             }
             return self.segment;
         }
@@ -188,6 +227,10 @@
         return 44;
     }
     return 44;
+}
+
+-(void)segmentedControlChangedValue:(FESegmentControl *)seg{
+    [self.productsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - UISearchDisplayControllerdelegate methods

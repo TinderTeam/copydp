@@ -23,6 +23,7 @@
 - (void)awakeFromNib {
     // Initialization code
     self.productPriceLabel.textColor = FEThemeOrange;
+    self.productDescriptionLabel.numberOfLines = 0;
 }
 
 -(void)configWithProduct:(FEProduct *)product{

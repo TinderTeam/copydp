@@ -59,6 +59,7 @@
                     user.username = wuser.username;
                     user.role = wuser.role;
                     [FECoreData saveCoreData];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
                 }];
             }
             

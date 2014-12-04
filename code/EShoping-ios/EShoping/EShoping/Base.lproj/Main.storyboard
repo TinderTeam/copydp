@@ -505,7 +505,7 @@
                                             <outlet property="productDescriptionLabel" destination="wv6-ME-VNA" id="Evy-6X-9Rh"/>
                                             <outlet property="productImageView" destination="76Z-5M-Jbd" id="t6C-Jr-U3f"/>
                                             <outlet property="productPriceLabel" destination="N4P-rK-ffi" id="lQH-eh-azn"/>
-                                            <segue destination="YvB-bR-mew" kind="show" id="SMN-cG-FWi"/>
+                                            <segue destination="YvB-bR-mew" kind="show" identifier="showProductItem" id="SMN-cG-FWi"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -766,8 +766,8 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZr-ZX-YWz">
                                                     <rect key="frame" x="140" y="50" width="200" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8iD-b1-dBQ">
@@ -1600,7 +1600,9 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQU-Mm-gS5" id="u9m-gg-7MB">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HVr-yf-SYk"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HVr-yf-SYk">
+                                                    <rect key="frame" x="5" y="5" width="90" height="70"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95o-VG-zAP">
                                                     <rect key="frame" x="100" y="5" width="200" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -1933,8 +1935,8 @@
         <image name="zbar-samples.png" width="214" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Gna-YL-NED"/>
         <segue reference="ZaT-4Z-8p3"/>
-        <segue reference="SMN-cG-FWi"/>
         <segue reference="yvT-If-Rl9"/>
     </inferredMetricsTieBreakers>
 </document>

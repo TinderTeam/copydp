@@ -10,4 +10,6 @@
 
 @interface FEProductTypeRecResponse : FEBaseResponse
 
+@property (nonatomic, strong, readonly) NSArray *productList;
+
 @end

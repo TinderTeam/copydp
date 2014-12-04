@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FEUser;
 
 @interface FEMeView : UIView
 @property (strong, nonatomic) IBOutlet UIImageView *headerImage;
 @property (strong, nonatomic) IBOutlet UILabel *locationRegionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nickNameLabel;
+
+-(void)updateWithUser:(FEUser *)user;
 
 @end

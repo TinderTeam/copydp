@@ -28,6 +28,10 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    __weak typeof(self) weakself = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:FEUserStatDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [weakself.meView updateWithUser:nil];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,6 +90,10 @@
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:FEUserStatDidChang object:nil];
 }
 
 /*

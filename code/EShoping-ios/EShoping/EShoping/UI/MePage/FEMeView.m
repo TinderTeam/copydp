@@ -24,9 +24,15 @@
 
 -(void)awakeFromNib{
     [super awakeFromNib];
-    CDUser *user = FELoginUser;
-    if (user) {
-        self.nickNameLabel.text = user.username;
+    [self updateWithUser:nil];
+}
+
+-(void)updateWithUser:(FEUser *)user{
+    CDUser *cuser = FELoginUser;
+    if (cuser) {
+        self.nickNameLabel.text = cuser.username;
+    }else{
+        self.nickNameLabel.text = FEString(@"点击登陆");
     }
 }
 

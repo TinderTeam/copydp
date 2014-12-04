@@ -12,6 +12,7 @@
 #import "FEProductAllResponse.h"
 #import "FEProductGetAllRequest.h"
 #import "FEShopWebServiceManager.h"
+#import "FEShopingItemVC.h"
 
 @interface FEGroupCategoryVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *groupTableView;
@@ -63,6 +64,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"showProductItem"]){
+        FEShopingItemVC *productVC = (FEShopingItemVC *)segue.destinationViewController;
+        productVC.product = ((FEGroupCategoryProductCell *)sender).product;
+    }
 }
 
 #pragma mark - DOPDropDownMenuDataSource

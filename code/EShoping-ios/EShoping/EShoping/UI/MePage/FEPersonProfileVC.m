@@ -74,6 +74,7 @@
             [weakself.navigationController popViewControllerAnimated:YES];
             [FECoreData deleteCoreData:@[FELoginUser]];
             [FECoreData saveCoreData];
+            [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
         }
     }];
 }

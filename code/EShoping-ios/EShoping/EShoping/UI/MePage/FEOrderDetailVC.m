@@ -14,10 +14,12 @@
 #import "FEProductOrderResponse.h"
 #import "FEResult.h"
 #import "CDUser.h"
+#import "FESegmentControl.h"
 
 @interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *orderList;
 @property (nonatomic,strong) NSArray *orderDatas;
+@property (nonatomic, strong) FESegmentControl *orderTypeSeg;
 @end
 
 @implementation FEOrderDetailVC
@@ -25,7 +27,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self initUI];
     [self requestOrder];
+}
+
+-(void)initUI{
+    _orderTypeSeg = [[FESegmentControl alloc] initWithSectionTitles:@[@"全部",@"待付款",@"未消费",@"退款单"]];
+    _orderTypeSeg.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
+    _orderTypeSeg.font = FEFont(14);//[UIFont systemFontOfSize:14];
+    _orderTypeSeg.selectedTextColor = FEThemeOrange;
+    _orderTypeSeg.selectionIndicatorColor = FEThemeOrange;
+    _orderTypeSeg.selectionStyle = HMSegmentedControlSelectionStyleArrow;
+    _orderTypeSeg.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    _orderTypeSeg.selectionIndicatorHeight = 8;
+    [_orderTypeSeg addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:_orderTypeSeg];
+}
+
+-(void)segmentedControlChangedValue:(FESegmentControl *)seg{
+    
 }
 
 -(void)requestOrder{

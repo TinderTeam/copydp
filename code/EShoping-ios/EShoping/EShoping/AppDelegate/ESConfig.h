@@ -80,4 +80,6 @@ return shared##className; \
 //notification
 #define FERegionCityDidChang                    @"RegionCityDidChange"
 
+#define FEUserStatDidChang                      @"userStatDidChang"
+
 #endif

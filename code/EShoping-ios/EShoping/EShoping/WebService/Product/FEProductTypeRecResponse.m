@@ -7,7 +7,23 @@
 //
 
 #import "FEProductTypeRecResponse.h"
+#import "FEProduct.h"
 
 @implementation FEProductTypeRecResponse
+
+-(id)initWithResponse:(id)response{
+    self = [super initWithResponse:response];
+    if (self) {
+        NSArray *products = response[@"productList"];
+        if (products && ![products isKindOfClass:[NSNull class]]) {
+            NSMutableArray *productList = [NSMutableArray new];
+            for (id item in products) {
+                [productList addObject:[[FEProduct alloc] initWithDictionary:item]];
+            }
+            _productList = productList;
+        }
+    }
+    return self;
+}
 
 @end
