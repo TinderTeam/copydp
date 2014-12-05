@@ -43,6 +43,13 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 @class FEProductCreateOrderResponse;
 @class FEProductOrderCancelResponse;
 @class FEProductDeleteOrderResponse;
+@class FEActivityListRequest;
+@class FEActivityListResponse;
+@class FEActivityOrderCancelRequest;
+@class FEActivityOrderCreateRequest;
+@class FEActivityOrderCreateResponse;
+@class FEActivityOrderListRequest;
+@class FEActivityOrderListResponse;
 
 @interface FEShopWebServiceManager : AFHTTPRequestOperationManager
 
@@ -83,5 +90,18 @@ DEFINE_WEBSERVICE_METHOD_HEADER(productOrderCreate, FEProductCreateOrderRequest,
 DEFINE_WEBSERVICE_METHOD_HEADER(productOrderCancel, FEProductCancelOrderRequest, FEProductOrderCancelResponse)
 //product order delete
 DEFINE_WEBSERVICE_METHOD_HEADER(productOrderDelete, FEProductDeleteOrderRequest, FEProductDeleteOrderResponse)
+
+/*-------------------------------------------
+ ;Activity service interface
+ ;
+ --------------------------------------------*/
+//activity list
+DEFINE_WEBSERVICE_METHOD_HEADER(activityList, FEActivityListRequest, FEActivityListResponse);
+//activity order list
+DEFINE_WEBSERVICE_METHOD_HEADER(activityOrderList, FEActivityOrderListRequest, FEActivityOrderListResponse);
+//activity order create
+DEFINE_WEBSERVICE_METHOD_HEADER(activityOrderCreate, FEActivityOrderCreateRequest, FEActivityOrderCreateResponse);
+//activity order cancel
+DEFINE_WEBSERVICE_METHOD_HEADER(activityOrderCancel, FEActivityOrderCancelRequest, FEActivityOrderCreateResponse);
 
 @end

@@ -7,8 +7,14 @@
 //
 
 #import "FEMessageVC.h"
+#import "FESegmentControl.h"
+#import "FETableView.h"
+//#import "FEProductNewRequest.h"
 
-@interface FEMessageVC ()
+
+@interface FEMessageVC ()<UITableViewDataSource, UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet FESegmentControl *messageTypeSeg;
+@property (strong, nonatomic) IBOutlet FETableView *messageTableView;
 
 @end
 
@@ -17,12 +23,50 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = FEString(@"全部广播");
+    self.messageTypeSeg.sectionTitles = @[FEString(@"用户消息"),@"系统消息",@"广播"];
+    self.messageTypeSeg.selectionStyle = HMSegmentedControlSelectionStyleArrow;
+    self.messageTypeSeg.font = [UIFont appFontWithSize:14];
+    self.messageTypeSeg.backgroundColor = FEThemeWhite;
+    self.messageTypeSeg.selectedTextColor = FEThemeOrange;
+    self.messageTypeSeg.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+}
+
+-(void)requestNews{
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = FEThemeOrange;
+}
+
+#pragma mark - UITableViewDateSource
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    switch (self.messageTypeSeg.selectedSegmentIndex) {
+        case 0:
+            return [tableView dequeueReusableCellWithIdentifier:@"messageCell" forIndexPath:indexPath];
+            
+        default:
+            return [tableView dequeueReusableCellWithIdentifier:@"messageCell" forIndexPath:indexPath];
+    }
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
+}
+
 
 /*
 #pragma mark - Navigation

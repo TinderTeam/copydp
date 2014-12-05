@@ -27,7 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _city = [NSMutableArray new];
-    _allcitys = [NSMutableArray arrayWithObjects:@"苏州",@"上海",@"深圳",@"武汉",@"广州",@"郑州",@"南昌",@"青岛",@"西宁",@"乌鲁木齐",@"天津",@"北京", nil];
+    _allcitys = [NSMutableArray arrayWithObjects:@"shenzhen",@"苏州",@"上海",@"深圳",@"武汉",@"广州",@"郑州",@"南昌",@"青岛",@"西宁",@"乌鲁木齐",@"天津",@"北京", nil];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     __weak typeof(self) weakself = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

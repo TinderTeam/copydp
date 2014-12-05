@@ -570,22 +570,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JmD-Lt-DAL" customClass="FETableView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CfQ-Gb-sZE" customClass="FESegmentControl">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Jlb-oy-wL0"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="XcZ-Gl-Eoh" customClass="FETableView">
+                                <rect key="frame" x="0.0" y="108" width="600" height="443"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                </variation>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="messageCell" textLabel="wOF-av-A2U" rowHeight="50" style="IBUITableViewCellStyleDefault" id="EK4-1C-ebU">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EK4-1C-ebU" id="ffw-qG-CYd">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wOF-av-A2U">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="WlZ-HF-EZC" id="TEa-MD-dAA"/>
+                                    <outlet property="delegate" destination="WlZ-HF-EZC" id="FuV-bi-f9D"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JmD-Lt-DAL" firstAttribute="leading" secondItem="la4-pz-sHt" secondAttribute="leading" id="7n3-ex-HNc"/>
-                            <constraint firstItem="JmD-Lt-DAL" firstAttribute="top" secondItem="la4-pz-sHt" secondAttribute="top" id="Cos-6m-ee7"/>
-                            <constraint firstAttribute="bottom" secondItem="JmD-Lt-DAL" secondAttribute="bottom" id="Woh-Oc-CXt"/>
-                            <constraint firstAttribute="trailing" secondItem="JmD-Lt-DAL" secondAttribute="trailing" id="Yb1-To-hYP"/>
+                            <constraint firstItem="gdw-2g-cb6" firstAttribute="top" secondItem="XcZ-Gl-Eoh" secondAttribute="bottom" id="6Fu-bI-0ZK"/>
+                            <constraint firstItem="XcZ-Gl-Eoh" firstAttribute="leading" secondItem="la4-pz-sHt" secondAttribute="leading" id="8Tz-J4-yvH"/>
+                            <constraint firstItem="CfQ-Gb-sZE" firstAttribute="top" secondItem="EOo-UF-OH2" secondAttribute="bottom" id="Hfn-3m-p2k"/>
+                            <constraint firstItem="XcZ-Gl-Eoh" firstAttribute="top" secondItem="CfQ-Gb-sZE" secondAttribute="bottom" id="RRH-JB-y4u"/>
+                            <constraint firstItem="CfQ-Gb-sZE" firstAttribute="leading" secondItem="la4-pz-sHt" secondAttribute="leading" id="UVE-yi-y2r"/>
+                            <constraint firstAttribute="trailing" secondItem="XcZ-Gl-Eoh" secondAttribute="trailing" id="Yjn-3d-tnZ"/>
+                            <constraint firstAttribute="trailing" secondItem="CfQ-Gb-sZE" secondAttribute="trailing" id="t02-iW-SWc"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="messageTableView" destination="XcZ-Gl-Eoh" id="l1l-an-kCJ"/>
+                        <outlet property="messageTypeSeg" destination="CfQ-Gb-sZE" id="h0H-Zc-9lj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uoY-Pp-gBJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1935,8 +1966,8 @@
         <image name="zbar-samples.png" width="214" height="96"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gna-YL-NED"/>
         <segue reference="ZaT-4Z-8p3"/>
-        <segue reference="yvT-If-Rl9"/>
+        <segue reference="SMN-cG-FWi"/>
+        <segue reference="aRE-qo-BYT"/>
     </inferredMetricsTieBreakers>
 </document>

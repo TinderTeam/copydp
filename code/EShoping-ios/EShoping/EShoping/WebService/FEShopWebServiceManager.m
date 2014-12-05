@@ -37,6 +37,13 @@
 #import "FEProductCreateOrderResponse.h"
 #import "FEProductOrderCancelResponse.h"
 #import "FEProductDeleteOrderResponse.h"
+#import "FEActivityListRequest.h"
+#import "FEActivityListResponse.h"
+#import "FEActivityOrderCancelRequest.h"
+#import "FEActivityOrderCreateRequest.h"
+#import "FEActivityOrderCreateResponse.h"
+#import "FEActivityOrderListRequest.h"
+#import "FEActivityOrderListResponse.h"
 
 @implementation FEShopWebServiceManager
 
@@ -86,6 +93,15 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productOrderCancel, FEProductCancelOrderReque
 //product order delete
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productOrderDelete, FEProductDeleteOrderRequest, FEProductDeleteOrderResponse)
 
+//activity method
+//list
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityList, FEActivityListRequest, FEActivityListResponse);
+//order list
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityOrderList, FEActivityOrderListRequest, FEActivityOrderListResponse);
+//order
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityOrderCreate, FEActivityOrderCreateRequest, FEActivityOrderCreateResponse);
+//order cancel
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityOrderCancel, FEActivityOrderCancelRequest, FEActivityOrderCreateResponse);
 
 
 -(AFHTTPRequestOperation *)postmanager:(FEBaseRequest *)data responseClass:(Class)class response:(void (^)(NSError *error,  id response))block {
