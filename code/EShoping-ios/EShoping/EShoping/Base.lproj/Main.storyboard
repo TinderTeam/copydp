@@ -312,6 +312,9 @@
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="history" translatesAutoresizingMaskIntoConstraints="NO" id="8hy-1I-tk8">
                                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="190"/>
+                                                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                        </variation>
                                                                     </imageView>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1403,6 +1406,9 @@
                                         <rect key="frame" x="90" y="75" width="200" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="94" y="77" width="200" height="30"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="iFm-Al-gER" id="We5-md-ixK"/>
                                         </connections>
@@ -1411,6 +1417,9 @@
                                         <rect key="frame" x="90" y="115" width="200" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="94" y="117" width="200" height="30"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="iFm-Al-gER" id="3hZ-dk-9n4"/>
                                         </connections>
@@ -1418,6 +1427,9 @@
                                 </subviews>
                                 <variation key="widthClass=compact" ambiguous="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
                                 </variation>
                             </scrollView>
                         </subviews>
@@ -1470,6 +1482,9 @@
                                         <rect key="frame" x="20" y="75" width="280" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="77" width="280" height="30"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="iVq-wM-EtG" id="rGt-Im-tF1"/>
                                         </connections>
@@ -1478,6 +1493,9 @@
                                         <rect key="frame" x="20" y="120" width="280" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                        <variation key="widthClass=compact" fixedFrame="YES">
+                                            <rect key="frame" x="20" y="120" width="280" height="30"/>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="iVq-wM-EtG" id="k2l-ms-hKu"/>
                                         </connections>
@@ -1515,6 +1533,12 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <variation key="widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                                </variation>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1632,7 +1656,9 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HVr-yf-SYk">
-                                                    <rect key="frame" x="5" y="5" width="90" height="70"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                                    </variation>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95o-VG-zAP">
                                                     <rect key="frame" x="100" y="5" width="200" height="20"/>

@@ -19,7 +19,8 @@
 #import "FEButton.h"
 #import "FECategories.h"
 #import "UIFont+AppFont.h"
+#import "AppDelegate.h"
 
-#define __WEB_SERVICE_IP    @"http://192.168.100.189:80"
+#define __WEB_SERVICE_IP    ([AppDelegate sharedDelegate].serviceURLString)
 
 #endif

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZEx-vG-31Q">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <scenes>
+        <!--Sever ConfigVC-->
+        <scene sceneID="9IP-yr-Kc2">
+            <objects>
+                <viewController id="ZEx-vG-31Q" customClass="SeverConfigVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XbX-0d-OYp"/>
+                        <viewControllerLayoutGuide type="bottom" id="RAl-Xp-jVv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LCI-3o-Jvn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://" borderStyle="roundedRect" placeholder="请输入服务器地址" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dsg-VT-oWL">
+                                <rect key="frame" x="175" y="103" width="250" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="fZE-US-T0g"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ZEx-vG-31Q" id="SVU-Cm-DF1"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dsg-VT-oWL" firstAttribute="top" secondItem="XbX-0d-OYp" secondAttribute="bottom" constant="83" id="tOd-bk-RBH"/>
+                            <constraint firstAttribute="centerX" secondItem="dsg-VT-oWL" secondAttribute="centerX" id="zTh-7a-Cbi"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="ipTextFeild" destination="dsg-VT-oWL" id="RpE-NQ-pol"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ufZ-9Y-bX4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-672" y="729"/>
+        </scene>
+    </scenes>
+</document>

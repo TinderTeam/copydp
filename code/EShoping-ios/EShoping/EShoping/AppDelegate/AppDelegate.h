@@ -18,6 +18,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) FECoreDataHandler *coreDataHandler;
+@property (nonatomic, strong) NSString *serviceURLString;
 
 +(AppDelegate *)sharedDelegate;
 
