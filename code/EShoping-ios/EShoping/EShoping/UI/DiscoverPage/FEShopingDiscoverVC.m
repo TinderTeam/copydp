@@ -8,6 +8,9 @@
 
 #import "FEShopingDiscoverVC.h"
 #import <ZBarSDK/ZBarSDK.h>
+#import "FEShopWebServiceManager.h"
+#import "FEActivityListRequest.h"
+#import "FEActivityListResponse.h"
 
 
 @interface FEShopingDiscoverVC ()<UISearchBarDelegate,ZBarReaderDelegate,UISearchDisplayDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -22,6 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initUI];
+    [self requestActivity];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -31,6 +35,7 @@
 
 - (IBAction)codeQR:(id)sender {
     ZBarReaderViewController *reader = [ZBarReaderViewController new];
+    reader.showsZBarControls = YES;
     reader.readerDelegate = self;
     reader.supportedOrientationsMask = ZBarOrientationMaskAll;
     
@@ -75,6 +80,15 @@
     self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.navigationItem.rightBarButtonItem = self.QRBarItem;
 
+}
+
+-(void)requestActivity{
+    FEActivityListRequest *rdata = [[FEActivityListRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey)];
+    [[FEShopWebServiceManager sharedInstance] activityList:rdata response:^(NSError *error, FEActivityListResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

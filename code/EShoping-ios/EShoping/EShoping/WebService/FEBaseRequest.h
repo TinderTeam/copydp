@@ -27,13 +27,6 @@
 #define __METHOD_PRODUCT_CANCELORDER        @"Buy/CancelOrder_rest"     //
 #define __METHOD_PRODUCT_DELETEORDER        @"Buy/DeleteOrder_rest"
 
-//order
-#define __METHOD_ORDER_PRODUCT      @"order/product/list"
-#define __METHOD_ORDER_PRODUCT_CREATE   @"order/product/create"
-#define __METHOD_ORDER_CANCEL       @"order/product/cancel"
-#define __METHOD_ORDER_ABOLISH      @"order/product/abolish"
-#define __METHOD_ORDER_DELETE       @"order/product/delete"
-
 //news
 #define __METHOD_NEWS_GETNEWS       @"News/getNewsList_rest"
 
@@ -42,6 +35,14 @@
 #define __METHOD_ACTIVITY_ACTIVITYORDER @"Activity/activityOrder_rest"
 #define __METHOD_ACTIVITY_CREATEORDER   @"Activity/createOrder_rest"
 #define __METHOD_ACTIVITY_CANCELORDER   @"Activity/cancelOrder_rest"
+
+//community
+#define __METHOD_COMMUNITY_HOTRECOMMEND      @"Community/HotRecommend_rest"//APP获取热点推荐帖子列表
+#define __METHOD_COMMUNITY_HOTTOPIC          @"Community/HotTopic_rest"//APP获取热门话题帖子列表
+#define __METHOD_COMMUNITY_ALL              @"Community/AllCommunity_rest"//APP获取所有帖子列表
+#define __METHOD_COMMUNITY_HOTUSER          @"Community/HotUser_rest"//APP获取会员热榜列表
+#define __METHOD_COMMUNITY_CREATETOPIC      @"Community/CreateTopic_rest"//APP创建新帖子
+#define __METHOD_COMMUNITY_CREATERELY       @"Community/CreateReply_rest"//APP回复帖子
 
 
 @interface FEBaseRequest : FEObject

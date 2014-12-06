@@ -44,6 +44,16 @@
 #import "FEActivityOrderCreateResponse.h"
 #import "FEActivityOrderListRequest.h"
 #import "FEActivityOrderListResponse.h"
+#import "FENewsListResponse.h"
+#import "FENewsListRequest.h"
+#import "FECommunityRecommendRequest.h"
+#import "FECommunityHotUserRequest.h"
+#import "FECommunityHotTopicRequest.h"
+#import "FECommunityReplyTopicRequest.h"
+#import "FECommunityAllRequest.h"
+#import "FECommunityCreateResponse.h"
+#import "FECommunityTopicResponse.h"
+#import "FECommunityListResponse.h"
 
 @implementation FEShopWebServiceManager
 
@@ -93,6 +103,9 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productOrderCancel, FEProductCancelOrderReque
 //product order delete
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productOrderDelete, FEProductDeleteOrderRequest, FEProductDeleteOrderResponse)
 
+//news
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(newsList, FENewsListRequest, FENewsListResponse)
+
 //activity method
 //list
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityList, FEActivityListRequest, FEActivityListResponse);
@@ -102,6 +115,20 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityOrderList, FEActivityOrderListRequest
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityOrderCreate, FEActivityOrderCreateRequest, FEActivityOrderCreateResponse);
 //order cancel
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(activityOrderCancel, FEActivityOrderCancelRequest, FEActivityOrderCreateResponse);
+
+//community
+//APP获取热点推荐帖子列表
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityRecommend, FECommunityRecommendRequest, FECommunityListResponse)
+//APP获取热门话题帖子列表
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityHotTopic, FECommunityHotTopicRequest, FECommunityTopicResponse)
+//APP获取所有帖子列表
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityHotUser, FECommunityHotUserRequest, FECommunityListResponse)
+//APP获取会员热榜列表
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityAll, FECommunityAllRequest, FECommunityListResponse)
+//APP创建新帖子
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityCreateTopic, FECommunityCreateTopicRequest, FECommunityCreateResponse)
+//APP回复帖子
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityReplyTopic, FECommunityReplyTopicRequest, FECommunityCreateResponse)
 
 
 -(AFHTTPRequestOperation *)postmanager:(FEBaseRequest *)data responseClass:(Class)class response:(void (^)(NSError *error,  id response))block {

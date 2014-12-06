@@ -9,7 +9,9 @@
 #import "FEMessageVC.h"
 #import "FESegmentControl.h"
 #import "FETableView.h"
-//#import "FEProductNewRequest.h"
+#import "FENewsListRequest.h"
+#import "FENewsListResponse.h"
+#import "FEShopWebServiceManager.h"
 
 
 @interface FEMessageVC ()<UITableViewDataSource, UITableViewDelegate>
@@ -30,10 +32,17 @@
     self.messageTypeSeg.backgroundColor = FEThemeWhite;
     self.messageTypeSeg.selectedTextColor = FEThemeOrange;
     self.messageTypeSeg.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    
+    [self requestNews];
 }
 
 -(void)requestNews{
-    
+    FENewsListRequest *rdata = [[FENewsListRequest alloc] init];
+    [[FEShopWebServiceManager sharedInstance] newsList:rdata response:^(NSError *error, FENewsListResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            NSLog(@"news success!");
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

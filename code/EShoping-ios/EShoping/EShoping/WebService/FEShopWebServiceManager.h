@@ -50,6 +50,17 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 @class FEActivityOrderCreateResponse;
 @class FEActivityOrderListRequest;
 @class FEActivityOrderListResponse;
+@class FENewsListRequest;
+@class FENewsListResponse;
+@class FECommunityRecommendRequest;
+@class FECommunityHotUserRequest;
+@class FECommunityCreateTopicRequest;
+@class FECommunityHotTopicRequest;
+@class FECommunityReplyTopicRequest;
+@class FECommunityAllRequest;
+@class FECommunityCreateResponse;
+@class FECommunityTopicResponse;
+@class FECommunityListResponse;
 
 @interface FEShopWebServiceManager : AFHTTPRequestOperationManager
 
@@ -92,6 +103,13 @@ DEFINE_WEBSERVICE_METHOD_HEADER(productOrderCancel, FEProductCancelOrderRequest,
 DEFINE_WEBSERVICE_METHOD_HEADER(productOrderDelete, FEProductDeleteOrderRequest, FEProductDeleteOrderResponse)
 
 /*-------------------------------------------
+ ;product news interface
+ ;
+ --------------------------------------------*/
+//newslist
+DEFINE_WEBSERVICE_METHOD_HEADER(newsList, FENewsListRequest, FENewsListResponse)
+
+/*-------------------------------------------
  ;Activity service interface
  ;
  --------------------------------------------*/
@@ -103,5 +121,22 @@ DEFINE_WEBSERVICE_METHOD_HEADER(activityOrderList, FEActivityOrderListRequest, F
 DEFINE_WEBSERVICE_METHOD_HEADER(activityOrderCreate, FEActivityOrderCreateRequest, FEActivityOrderCreateResponse);
 //activity order cancel
 DEFINE_WEBSERVICE_METHOD_HEADER(activityOrderCancel, FEActivityOrderCancelRequest, FEActivityOrderCreateResponse);
+
+/*-------------------------------------------
+ ;Community service interface
+ ;
+ --------------------------------------------*/
+//APP获取热点推荐帖子列表
+DEFINE_WEBSERVICE_METHOD_HEADER(communityRecommend, FECommunityRecommendRequest, FECommunityListResponse)
+//APP获取热门话题帖子列表
+DEFINE_WEBSERVICE_METHOD_HEADER(communityHotTopic, FECommunityHotTopicRequest, FECommunityTopicResponse)
+//APP获取所有帖子列表
+DEFINE_WEBSERVICE_METHOD_HEADER(communityHotUser, FECommunityHotUserRequest, FECommunityListResponse)
+//APP获取会员热榜列表
+DEFINE_WEBSERVICE_METHOD_HEADER(communityAll, FECommunityAllRequest, FECommunityListResponse)
+//APP创建新帖子
+DEFINE_WEBSERVICE_METHOD_HEADER(communityCreateTopic, FECommunityCreateTopicRequest, FECommunityCreateResponse)
+//APP回复帖子
+DEFINE_WEBSERVICE_METHOD_HEADER(communityReplyTopic, FECommunityReplyTopicRequest, FECommunityCreateResponse)
 
 @end
