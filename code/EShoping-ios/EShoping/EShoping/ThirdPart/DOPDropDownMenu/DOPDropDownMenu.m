@@ -7,6 +7,7 @@
 //
 
 #import "DOPDropDownMenu.h"
+#import "FETableView.h"
 
 @implementation DOPIndexPath
 - (instancetype)initWithColumn:(NSInteger)column row:(NSInteger)row {
@@ -32,7 +33,9 @@
 @property (nonatomic, assign) NSInteger numOfMenu;
 @property (nonatomic, assign) CGPoint origin;
 @property (nonatomic, strong) UIView *backGroundView;
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) FETableView *tableView;
+@property (nonatomic, strong) FETableView *subTableView;
+@property (nonatomic, strong) UIView *contentView;
 //data source
 @property (nonatomic, copy) NSArray *array;
 //layers array
@@ -130,10 +133,21 @@
         _show = NO;
         
         //tableView init
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0) style:UITableViewStylePlain];
+        _contentView = [[UIView alloc] initWithFrame:CGRectMake(origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0)];
+        _contentView.backgroundColor = [UIColor whiteColor];
+        
+        _tableView = [[FETableView alloc] initWithFrame:CGRectMake(0, 0, _contentView.bounds.size.width / 2.0f - 10, 5 * 38) style:UITableViewStylePlain];
         _tableView.rowHeight = 38;
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        [_contentView addSubview:_tableView];
+        
+        _subTableView = [[FETableView alloc] initWithFrame:CGRectMake(_contentView.bounds.size.width / 2.0f - 10, 0, _contentView.bounds.size.width / 2.0f + 10, 5 * 38) style:UITableViewStylePlain];
+        _subTableView.rowHeight = 38;
+        _subTableView.dataSource = self;
+        _subTableView.delegate = self;
+        [_contentView addSubview:_subTableView];
+        
         
         //self tapped
         self.backgroundColor = [UIColor whiteColor];
@@ -318,19 +332,20 @@
 
 - (void)animateTableView:(UITableView *)tableView show:(BOOL)show complete:(void(^)())complete {
     if (show) {
-        tableView.frame = CGRectMake(0, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
-        [self.superview addSubview:tableView];
+//        tableView.frame = CGRectMake(0, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
         
-        CGFloat tableViewHeight = ([tableView numberOfRowsInSection:0] > 5) ? (5 * tableView.rowHeight) : ([tableView numberOfRowsInSection:0] * tableView.rowHeight);
+        [self.superview addSubview:_contentView];
+        
+        CGFloat tableViewHeight = 5 * 38; //([tableView numberOfRowsInSection:0] > 5) ? (5 * tableView.rowHeight) : ([tableView numberOfRowsInSection:0] * tableView.rowHeight);
         
         [UIView animateWithDuration:0.2 animations:^{
-            _tableView.frame = CGRectMake(0, self.frame.origin.y + self.frame.size.height, self.frame.size.width, tableViewHeight);
+            _contentView.frame = CGRectMake(0, self.frame.origin.y + self.frame.size.height, self.frame.size.width, tableViewHeight);
         }];
     } else {
         [UIView animateWithDuration:0.2 animations:^{
-            _tableView.frame = CGRectMake(0, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
+            _contentView.frame = CGRectMake(0, self.frame.origin.y + self.frame.size.height, self.frame.size.width , 0);
         } completion:^(BOOL finished) {
-            [tableView removeFromSuperview];
+            [_contentView removeFromSuperview];
         }];
     }
     complete();
@@ -359,14 +374,24 @@
 
 #pragma mark - table datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSAssert(self.dataSource != nil, @"menu's dataSource shouldn't be nil");
-    if ([self.dataSource respondsToSelector:@selector(menu:numberOfRowsInColumn:)]) {
-        return [self.dataSource menu:self
-                numberOfRowsInColumn:self.currentSelectedMenudIndex];
-    } else {
-        NSAssert(0 == 1, @"required method of dataSource protocol should be implemented");
-        return 0;
+    if (tableView == _tableView) {
+        NSAssert(self.dataSource != nil, @"menu's dataSource shouldn't be nil");
+        if ([self.dataSource respondsToSelector:@selector(menu:numberOfRowsInColumn:)]) {
+            return [self.dataSource menu:self
+                    numberOfRowsInColumn:self.currentSelectedMenudIndex];
+        } else {
+            NSAssert(0 == 1, @"required method of dataSource protocol should be implemented");
+            return 0;
+        }
+    }else if(tableView == _subTableView){
+        if ([self.dataSource respondsToSelector:@selector(menu:numberOfRowsInSubSelectRow:)]) {
+            return [self.dataSource menu:self numberOfRowsInSubSelectRow:[[DOPIndexPath alloc] initWithColumn:self.currentSelectedMenudIndex row:[_tableView indexPathForSelectedRow].row]];
+        }else{
+            return 0;
+        }
     }
+    return 0;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -377,11 +402,20 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     NSAssert(self.dataSource != nil, @"menu's datasource shouldn't be nil");
-    if ([self.dataSource respondsToSelector:@selector(menu:titleForRowAtIndexPath:)]) {
-        cell.textLabel.text = [self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
-    } else {
-        NSAssert(0 == 1, @"dataSource method needs to be implemented");
+    if (tableView == _tableView) {
+        if ([self.dataSource respondsToSelector:@selector(menu:titleForRowAtIndexPath:)]) {
+            cell.textLabel.text = [self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
+        } else {
+            NSAssert(0 == 1, @"dataSource method needs to be implemented");
+        }
+    }else{
+        if ([self.dataSource respondsToSelector:@selector(menu:titleForSubRowAtIndexPath:subrowAtIndex:)]) {
+            cell.textLabel.text = [self.dataSource menu:self titleForSubRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:[_tableView indexPathForSelectedRow].row] subrowAtIndex:indexPath.row];//[self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
+        } else {
+            NSAssert(0 == 1, @"dataSource method needs to be implemented");
+        }
     }
+    
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.font = [UIFont systemFontOfSize:14.0];
     cell.separatorInset = UIEdgeInsetsZero;
@@ -395,12 +429,22 @@
 
 #pragma mark - tableview delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.delegate || [self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
-        [self confiMenuWithSelectRow:indexPath.row];
-        [self.delegate menu:self didSelectRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
-    } else {
-        //TODO: delegate is nil
+    if (tableView == _tableView) {
+        if (self.delegate || [self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
+            //        [self confiMenuWithSelectRow:indexPath.row];
+            if ([self.dataSource respondsToSelector:@selector(menu:columRowHasSub:)]) {
+//                if ([self.dataSource menu:self columRowHasSub:[[DOPIndexPath alloc] initWithColumn:self.currentSelectedMenudIndex row:indexPath.row]]) {
+                    [_subTableView reloadData];
+//                }
+            }
+            [self.delegate menu:self didSelectRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
+        } else {
+            //TODO: delegate is nil
+        }
+    }else if(tableView == _subTableView){
+        
     }
+    
 }
 
 - (void)confiMenuWithSelectRow:(NSInteger)row {

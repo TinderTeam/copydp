@@ -127,9 +127,9 @@
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        return [_city[index][CITYS] count];
-    }else{
         return 0;
+    }else{
+        return index;
     }
 }
 

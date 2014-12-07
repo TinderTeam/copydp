@@ -6,6 +6,9 @@
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
+#define _CKEY @"key"
+#define _CATECORY @"category"
+
 #import "FEGroupCategoryVC.h"
 #import "DOPDropDownMenu.h"
 #import "FEGroupCategoryProductCell.h"
@@ -13,14 +16,17 @@
 #import "FEProductGetAllRequest.h"
 #import "FEShopWebServiceManager.h"
 #import "FEShopingItemVC.h"
+#import "FEShopCategory.h"
 
 @interface FEGroupCategoryVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *groupTableView;
 @property (strong, nonatomic) NSArray *categoryArray;
 @property (strong, nonatomic) NSArray *regoinArray;
 @property (strong, nonatomic) NSArray *sortArray;
+@property (strong, nonatomic) NSArray *categoryContentArray;
 
 @property (strong, nonatomic) NSArray *productDatas;
+
 
 @end
 
@@ -28,10 +34,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
-    self.categoryArray = [NSArray arrayWithObjects:@"全部分类",@"餐饮美食",@"汽车服务",@"摄影写真",@"教育培训",@"休闲娱乐",@"酒店旅游",@"都市丽人",@"生活服务", nil];
-    self.regoinArray = [NSArray arrayWithObjects:@"全部商圈",@"工业园区",@"平江区",@"高新区",@"吴中区",@"金阊区", nil];
-    self.sortArray = @[@"智能排序",@"离我最近",@"人气最高",@"评分最高",@"最新发布",@"价格最低",@"价格最高"];
+    self.categoryArray = @[
+                          @{_CKEY:@"全部分类"},
+                          @{_CKEY:@"餐饮美食",_CATECORY:@[@"火锅海鲜",@"自助餐",@"日韩料理",@"甜品糕点",@"中西美食",@"家常小炒"]},
+                          @{_CKEY:@"汽车服务",_CATECORY:@[@"洗车行",@"装饰美容",@"维护保养",@"二手车行",@"驾校培训"]},
+                          @{_CKEY:@"摄影写真"},
+                          @{_CKEY:@"教育培训"},
+                          @{_CKEY:@"休闲娱乐",_CATECORY:@[@"酒吧KTV",@"保健按摩",@"足道浴场",@"影音欣赏",@"茶式咖啡馆",@"运动户外"]},
+                          @{_CKEY:@"酒店旅游"},
+                          @{_CKEY:@"都市丽人"},
+                          @{_CKEY:@"生活服务"}];
+    
+    self.regoinArray = @[
+                         @{_CKEY:@"全部商圈"},
+                         @{_CKEY:@"工业园区"},
+                         @{_CKEY:@"平江区"},
+                         @{_CKEY:@"吴中区"},
+                         @{_CKEY:@"金阊区"}];
+    self.sortArray = @[
+                       @{_CKEY:@"智能排序"},
+                       @{_CKEY:@"离我最近"},
+                       @{_CKEY:@"人气最高"},
+                       @{_CKEY:@"评分最高"},
+                       @{_CKEY:@"价格最低"},
+                       @{_CKEY:@"价格最高"}];
+    self.categoryContentArray = @[self.categoryArray,self.regoinArray,self.sortArray];
 
     [self initUI];
     [self requestProduct];
@@ -51,7 +80,7 @@
 
 -(void)requestProduct{
     __weak typeof(self) weakself = self;
-    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:1 keyword:nil isSearch:NO];
     [[FEShopWebServiceManager sharedInstance] productAll:rdata response:^(NSError *error, FEProductAllResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
             weakself.productDatas = response.productList;
@@ -75,36 +104,29 @@
 
 #pragma mark - DOPDropDownMenuDataSource
 - (NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column{
-    switch (column) {
-        case 0:
-            return self.categoryArray.count;
-        case 1:
-            return self.regoinArray.count;
-        case 2:
-            return self.sortArray.count;
-        default:
-            return 0;
-            break;
-    }
+
+    return [self.categoryContentArray[column] count];
 }
 
 - (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath{
-    switch (indexPath.column) {
-        case 0:
-            return self.categoryArray[indexPath.row];
-        case 1:
-            return self.regoinArray[indexPath.row];
-        case 2:
-            return self.sortArray[indexPath.row];
-            
-        default:
-            return @"";
-            break;
-    }
+    return self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
+}
+
+-(NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInSubSelectRow:(DOPIndexPath *)indexPath{
+    return [self.categoryContentArray[indexPath.column][indexPath.row][_CATECORY] count];
+}
+
+-(NSString *)menu:(DOPDropDownMenu *)menu titleForSubRowAtIndexPath:(DOPIndexPath *)indexPath subrowAtIndex:(NSInteger)index{
+    return self.categoryContentArray[indexPath.column][indexPath.row][_CATECORY][index];
+}
+
+-(BOOL)menu:(DOPDropDownMenu *)menu columRowHasSub:(DOPIndexPath *)indexPath{
+    
+    return self.categoryContentArray[indexPath.column][indexPath.row][_CATECORY]?YES:NO;
 }
 
 - (NSInteger)numberOfColumnsInMenu:(DOPDropDownMenu *)menu{
-    return 3;
+    return self.categoryContentArray.count;
 }
 
 #pragma mark - DOPDropDownMenuDelegate

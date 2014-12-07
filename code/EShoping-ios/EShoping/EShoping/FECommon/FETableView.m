@@ -18,6 +18,21 @@
     return self;
 }
 
+-(id)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
+    self = [super initWithFrame:frame style:style];
+    if (self) {
+        self.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    }
+    return self;
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
