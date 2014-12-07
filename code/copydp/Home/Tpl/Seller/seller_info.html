@@ -147,27 +147,27 @@
 						<div class="box-wrap">
 							<div id="J_tab_mod" data-id="tab_mod">
 								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
-									<li class="new"> <a href="__APP__/Buy/seller_list"><span>商家介绍</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/seller_list"><span>在线地图</span></a> </li>
-									<li class="new"> <a href="__APP__/Buy/seller_list"><span>商户评价</span></a> </li>
+									<li class="new"> <a href="#seller"><span>商家介绍</span></a> </li>
+									<li class="new"> <a href="#map"><span>在线地图</span></a> </li>
+									<li class="new"> <a href="#evaluation"><span>商户评价</span></a> </li>
 								</ul>
 							</div>
 							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
 								<div class="dptg-intro Fix">								
-									<div class="detail">
+									<div id="seller" class="detail">
 										<h3 class="new-tit"><span class="name">商家介绍</span></h3>
 										<p class="explain">{$sellerDscr}</p>										
 									</div>									
 									<div class="detail">
 										<p id ="position" data="{$sellerPosition}"></p>
 										<p id ="city" data="{$city}"></p>
-										<h3 class="new-tit"><span class="name">在线地图</span></h3>	
+										<h3 id="map" class="new-tit"><span class="name">在线地图</span></h3>	
 										<div id="allmap" class="img map"></div>
 									</div>
 									<!-- movie info end -->
 									<div class="detail J_tab J_loadTab">
 										<div class="comment-tab J_comment_tab">
-											<span class="tab-item cur" data-ref="J_site_comment"> <a href="__APP__/Buy/seller_list">商户评价<em class="Hide J_total_count"></em></a> </span>
+											<span id="evaluation" class="tab-item cur" data-ref="J_site_comment"> <a >商户评价<em class="Hide J_total_count"></em></a> </span>
 										</div>
 										<div class="comment-box J_comment_box">
 											<div class="tab-box J_site_comment" data-loaded="true">
