@@ -365,7 +365,7 @@ class IndexAction extends IndexServiceAction {
     
         //$this->doAuth();
         
-        $getCityResult['cityList'] = parent::cityService();
+        $getCityResult = parent::cityService();
     
         $errorCode = $getCityResult['errorCode'];
         $Rsp['pinyin'] = $getCityResult['pinyin'];
@@ -477,23 +477,7 @@ class IndexAction extends IndexServiceAction {
 			if($asc >= -11055 and $asc <= -10247) return "Z";
 			return null;
 		}	 
-		public function pinyin($zh){
-			$ret = "";
-			$s1 = iconv("UTF-8","gb2312", $zh);
-			$s2 = iconv("gb2312","UTF-8", $s1);
-			if($s2 == $zh){$zh = $s1;}
-			for($i = 0; $i < strlen($zh); $i++){
-				$s1 = substr($zh,$i,1);
-				$p = ord($s1);
-				if($p > 160){
-					$s2 = substr($zh,$i++,2);
-					$ret .= $this->getfirstchar($s2);
-				}else{
-					$ret .= $s1;
-				}
-			}
-			return $ret;
-		}
+
 			
 }
 ?>
