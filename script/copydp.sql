@@ -1,5 +1,5 @@
-﻿# Host: localhost  (Version: 5.1.70-community)
-# Date: 2014-11-21 15:46:49
+﻿# Host: 127.0.0.1  (Version: 5.1.70-community)
+# Date: 2014-12-08 15:27:18
 # Generator: MySQL-Front 5.3  (Build 2.42)
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -14,10 +14,6 @@
 /*!40014 SET UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS */;
 /*!40014 SET FOREIGN_KEY_CHECKS=0 */;
-
-DROP DATABASE IF EXISTS `copydp`;
-CREATE DATABASE `copydp` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `copydp`;
 
 #
 # Source for table "t_activity"
@@ -39,12 +35,13 @@ CREATE TABLE `t_activity` (
   `imgsrc` varchar(255) DEFAULT NULL,
   `point` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`activity_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_activity"
 #
 
+INSERT INTO `t_activity` VALUES (6,'活动1','2014-11-26 11:34:32','测试活动','深圳龙华区工业路192号','广场舞<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>',NULL,'进行中','2','2015-05-02','12','54754a48ba6a7.png','1');
 
 #
 # Source for table "t_activity_order"
@@ -81,13 +78,13 @@ CREATE TABLE `t_city` (
   `x` varchar(255) DEFAULT NULL,
   `y` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`city_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_city"
 #
 
-INSERT INTO `t_city` VALUES (1,'广州','113.270855','23.136533'),(2,'深圳','114.063918','22.550326');
+INSERT INTO `t_city` VALUES (1,'广州','113.270855','23.136533'),(2,'深圳','123','123'),(6,'shenzhen','1122333','1122333'),(7,NULL,'123','123');
 
 #
 # Source for table "t_city_zone"
@@ -99,13 +96,13 @@ CREATE TABLE `t_city_zone` (
   `zone_name` varchar(255) DEFAULT NULL,
   `city_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`zone_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_city_zone"
 #
 
-INSERT INTO `t_city_zone` VALUES (1,'福田区','2'),(2,'宝安区','2'),(3,'南山区','2'),(4,'荔湾区','1'),(5,'越秀区','1');
+INSERT INTO `t_city_zone` VALUES (1,'福田区','2'),(2,'宝安区','2'),(3,'南山区','2'),(4,'荔湾区','1'),(5,'越秀区','1'),(6,'测试区1','7'),(7,'测试区2','7'),(8,'CE','7'),(9,'dd','7'),(10,'dd','7'),(11,'dd','7'),(12,'WW','7'),(13,'1','7'),(14,'12','7');
 
 #
 # Source for table "t_collect"
@@ -137,12 +134,13 @@ CREATE TABLE `t_community` (
   `datetime` date DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`community_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_community"
 #
 
+INSERT INTO `t_community` VALUES (26,'测试帖1','房介信息','最新你测试帖里的计算机<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','2014-11-27',59),(27,'测试帖2','应聘信息','士大夫似的方式<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','2014-11-27',61),(28,'测试帖3','应聘信息','收到是对方<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','2014-11-27',61),(29,'ceshi','123','sdjflskdjf;sl','2014-11-27',59);
 
 #
 # Source for table "t_community_discuss"
@@ -156,12 +154,13 @@ CREATE TABLE `t_community_discuss` (
   `community_id` int(11) DEFAULT NULL,
   `datetime` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`community_discuss_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_community_discuss"
 #
 
+INSERT INTO `t_community_discuss` VALUES (14,61,'SDF SDF S',26,'2014-11-27 17:30:00'),(15,61,'S SD S D',26,'2014-11-27 17:30:16'),(16,61,'S SD S D',26,'2014-11-27 17:30:16'),(17,61,'',26,'2014-11-27 17:30:20'),(18,61,'士大夫  但是是',27,'2014-11-27 17:42:37'),(19,61,'士大夫 收到',27,'2014-11-27 17:42:50'),(20,61,'收到是',27,'2014-11-27 17:43:02'),(21,61,'收到收到',27,'2014-11-27 17:43:07'),(22,61,'士大夫似的',27,'2014-11-27 17:43:15'),(23,59,'sdjflskdjf',27,'2014-11-27 22:31:52');
 
 #
 # Source for table "t_customer"
@@ -186,6 +185,7 @@ CREATE TABLE `t_customer` (
 # Data for table "t_customer"
 #
 
+INSERT INTO `t_customer` VALUES (59,'VIP',12,'','123@11.com','',NULL,'正常','null','2014-12-05'),(60,'VIP',2,NULL,'111@qq.com',NULL,NULL,'正常','null','2014-11-27'),(62,'VIP',0,NULL,NULL,NULL,NULL,'待审批','审批',NULL),(63,'VIP',2,NULL,NULL,NULL,NULL,'正常','null','2014-11-27'),(67,'VIP',2,NULL,NULL,NULL,NULL,'正常','null','2014-12-05');
 
 #
 # Source for table "t_news"
@@ -198,12 +198,13 @@ CREATE TABLE `t_news` (
   `content` varchar(5000) DEFAULT NULL,
   `datetime` date DEFAULT NULL,
   PRIMARY KEY (`news_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_news"
 #
 
+INSERT INTO `t_news` VALUES (3,'咨询1','最新资讯<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','2014-11-26'),(4,'资讯2','最最最新自诩你<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','2014-11-26');
 
 #
 # Source for table "t_order"
@@ -232,6 +233,7 @@ CREATE TABLE `t_order` (
 # Data for table "t_order"
 #
 
+INSERT INTO `t_order` VALUES ('1301417763256','产品1¥8.00×1',0,13,'产品1','测试产品',61,'2014-12-05 15:07:36',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('13591417061942','产品1¥8.00×1',59,13,'产品1','测试产品',61,'2014-11-27 12:19:02',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('13671417764624','产品1¥8.00×1',67,13,'产品1','测试产品',61,'2014-12-05 15:30:24',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('14601417057133','产品2¥6.00×1',60,14,'产品2','测试产品',61,'2014-11-27 10:58:53',1,6,234,'已下单',NULL,'5475e1814d8f0.png'),('14671417764638','产品2¥6.00×1',67,14,'产品2','测试产品',61,'2014-12-05 15:30:38',1,6,234,'已下单',NULL,'5475e1814d8f0.png');
 
 #
 # Source for table "t_poll_code"
@@ -248,6 +250,7 @@ CREATE TABLE `t_poll_code` (
 # Data for table "t_poll_code"
 #
 
+INSERT INTO `t_poll_code` VALUES ('bl37fJ7Bl2','已使用'),('d5VmKoGW9N','已使用'),('EiRxnbrSGx','未使用'),('HBJ6IbzQeU','未使用'),('igm7hjigtW','未使用'),('jqTfqKIxxJ','未使用'),('LsC9yxUfCZ','未使用'),('RL0D0iJGZK','未使用'),('s2eMZiTrVG','未使用'),('TudQgbwDGd','未使用');
 
 #
 # Source for table "t_privilege"
@@ -288,12 +291,13 @@ CREATE TABLE `t_product` (
   `imglist` varchar(255) DEFAULT NULL,
   `product_status` varchar(255) NOT NULL DEFAULT '待审核',
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_product"
 #
 
+INSERT INTO `t_product` VALUES (13,'产品1',1,61,'2014-12-08 00:00:00','2015-09-01 00:00:00',8.00,123.00,'测试产品','<p>产品详细描述：</p><p><img src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015743643.png _src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015743643.png style=/></p><p><img src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015793458.png _src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015793458.png style=/></p><p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','普通','5475e15e969b4.png',NULL,'正常'),(14,'产品2',1,61,'2014-11-26 00:00:00','2015-04-15 00:00:00',6.00,234.00,'测试产品','sdfs&nbsp;<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','普通','5475e1814d8f0.png',NULL,'正常'),(15,'礼物',2,65,'2014-12-02 00:00:00','0000-00-00 00:00:00',0.00,0.00,'dhdhdh','&lt;p&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t你&lt;/p&gt;','普通','547d8430aa454.jpg',NULL,'已过期'),(16,'ff',2,65,'2014-12-02 00:00:00','0000-00-00 00:00:00',0.00,0.00,'','','普通','547d84849b188.jpg',NULL,'已过期');
 
 #
 # Source for table "t_product_evaluation"
@@ -360,12 +364,13 @@ DROP TABLE IF EXISTS `t_recommend_product`;
 CREATE TABLE `t_recommend_product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_recommend_product"
 #
 
+INSERT INTO `t_recommend_product` VALUES (13),(15);
 
 #
 # Source for table "t_seller"
@@ -390,6 +395,7 @@ CREATE TABLE `t_seller` (
 # Data for table "t_seller"
 #
 
+INSERT INTO `t_seller` VALUES (61,'6',10,'概述','','',NULL,'<p>详细描述</p>'),(64,'2',1,'',NULL,NULL,NULL,NULL),(65,'6',1,'sdf sd ','','5','547d30ceacab2.jpg','齐威王<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>'),(66,'2',3,'是大幅度','','1','547eb3b7c7ccf.png','<p>啊手动阀</p>'),(68,'1',10,'概述11111','','4',NULL,'<p>是 收到收到收到收到</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180206498399.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180206498399.png\\\"/></p>'),(69,'1',42,'GAISHU','','5','548549b9d19fd.png','<p>详细描述21112212</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180213038312.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180213038312.png\\\"/></p>'),(70,'6',10,'概述','','','54854f96d502f.png','<p>详细描述：</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180228048276.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180228048276.png\\\"/></p>'),(71,'1',10,'改改改改树','','4','548550812191c.png','<p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180230893201.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180230893201.png\\\"/></p>');
 
 #
 # Source for table "t_seller_evaluation"
@@ -458,13 +464,13 @@ CREATE TABLE `t_user` (
   `username` varchar(255) NOT NULL DEFAULT '',
   `role` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
 #
 # Data for table "t_user"
 #
 
-INSERT INTO `t_user` VALUES (0,'123456','admin','ADMIN');
+INSERT INTO `t_user` VALUES (0,'123456','admin','ADMIN'),(59,'123456','user1','CUSTOMER'),(60,'123123','user2','CUSTOMER'),(61,'123456','seller1','SELLER'),(63,'e10adc3949ba59abbe56e057f20f883e','test','CUSTOMER'),(64,'123456','seller3','SELLER'),(65,'123456','seller2','SELLER'),(66,'123456','新商户1','SELLER'),(67,'123456','test1','CUSTOMER'),(68,'123456','测试商户1','SELLER'),(69,'123456','CECESHI','SELLER'),(70,'123456','111','SELLER'),(71,'123456','商户11111','SELLER');
 
 #
 # Source for view "t_view_activity"
@@ -480,7 +486,7 @@ CREATE VIEW `t_view_activity` AS
 
 DROP VIEW IF EXISTS `t_view_activity_order`;
 CREATE VIEW `t_view_activity_order` AS 
-  select `t_activity_order`.`activity_order_id` AS `activity_order_id`,`t_activity_order`.`activity_id` AS `activity_id`,`t_activity_order`.`activity_title` AS `activity_title`,`t_activity_order`.`status` AS `status`,`t_activity_order`.`datetime` AS `datetime`,`t_user`.`username` AS `username`,`t_customer`.`grade` AS `grade`,`t_customer`.`cellphone` AS `cellphone`,`t_customer`.`email` AS `email` from ((`t_activity_order` join `t_customer` on((`t_customer`.`user_id` = `t_activity_order`.`customer_id`))) join `t_user` on((`t_user`.`user_id` = `t_activity_order`.`customer_id`)));
+  select `t_activity_order`.`activity_order_id` AS `activity_order_id`,`t_activity_order`.`activity_id` AS `activity_id`,`t_activity_order`.`customer_id` AS `customer_id`,`t_activity_order`.`activity_title` AS `activity_title`,`t_activity_order`.`acitivity_disc` AS `activity_disc`,`t_activity_order`.`imgsrc` AS `imgsrc`,`t_activity_order`.`memberlimit` AS `memberlimit`,`t_activity_order`.`datelimit` AS `datelimit`,`t_activity_order`.`status` AS `status`,`t_activity_order`.`datetime` AS `datetime`,`t_activity`.`status` AS `activity_status`,`t_user`.`username` AS `username`,`t_customer`.`grade` AS `grade`,`t_customer`.`cellphone` AS `cellphone`,`t_customer`.`email` AS `email` from (((`t_activity_order` join `t_customer` on((`t_customer`.`user_id` = `t_activity_order`.`customer_id`))) join `t_activity` on((`t_activity`.`activity_id` = `t_activity_order`.`activity_id`))) join `t_user` on((`t_user`.`user_id` = `t_activity_order`.`customer_id`)));
 
 #
 # Source for view "t_view_community_customer"
@@ -520,7 +526,7 @@ CREATE VIEW `t_view_customer` AS
 
 DROP VIEW IF EXISTS `t_view_order`;
 CREATE VIEW `t_view_order` AS 
-  select `t_order`.`order_id` AS `order_id`,`t_order`.`product_name` AS `product_name`,`t_product`.`end_date_time` AS `end_date_time`,`t_order`.`order_time` AS `order_time`,`t_order`.`quantity` AS `quantity`,`t_order`.`order_price` AS `order_price`,`t_user`.`username` AS `username`,`t_product`.`imgsrc` AS `imgsrc`,`t_order`.`order_status` AS `order_status`,`t_product`.`seller_id` AS `seller_id` from ((`t_order` join `t_product` on((`t_product`.`product_id` = `t_order`.`product_id`))) join `t_user` on((`t_user`.`user_id` = `t_order`.`customer_id`)));
+  select `t_order`.`order_id` AS `order_id`,`t_order`.`order_name` AS `order_name`,`t_order`.`customer_id` AS `customer_id`,`t_order`.`product_id` AS `product_id`,`t_order`.`product_name` AS `product_name`,`t_order`.`product_description` AS `product_description`,`t_order`.`seller_id` AS `seller_id`,`t_order`.`order_time` AS `order_time`,`t_order`.`quantity` AS `quantity`,`t_order`.`order_price` AS `order_price`,`t_order`.`order_original_price` AS `order_original_price`,`t_order`.`order_status` AS `order_status`,`t_order`.`imgsrc` AS `imgsrc`,`t_order`.`note` AS `note`,`t_user`.`username` AS `username`,`t_product`.`end_date_time` AS `end_date_time` from ((`t_order` join `t_product` on((`t_product`.`product_id` = `t_order`.`product_id`))) join `t_user` on((`t_user`.`user_id` = `t_order`.`customer_id`)));
 
 #
 # Source for view "t_view_product"
@@ -528,7 +534,7 @@ CREATE VIEW `t_view_order` AS
 
 DROP VIEW IF EXISTS `t_view_product`;
 CREATE VIEW `t_view_product` AS 
-  select `t_product`.`product_id` AS `product_id`,`t_product`.`type_id` AS `type_id`,`t_product`.`seller_id` AS `seller_id`,`t_product`.`product_status` AS `product_status`,`t_product`.`end_date_time` AS `end_date_time`,`t_product`.`name` AS `name`,`t_product`.`imgsrc` AS `imgsrc`,`t_product`.`describe` AS `dscr`,`t_product`.`price` AS `price`,`t_product`.`update_date` AS `update_date`,`t_product`.`original_price` AS `original_price`,`t_city`.`city` AS `city`,`t_city`.`city_id` AS `city_id` from ((`t_product` join `t_seller` on((`t_product`.`seller_id` = `t_seller`.`user_id`))) join `t_city` on((`t_seller`.`city_id` = `t_city`.`city_id`))) order by `t_product`.`update_date` desc;
+  select `t_product`.`product_id` AS `product_id`,`t_product`.`name` AS `name`,`t_product`.`type_id` AS `type_id`,`t_product`.`seller_id` AS `seller_id`,`t_product`.`update_date` AS `update_date`,`t_product`.`end_date_time` AS `end_date_time`,`t_product`.`price` AS `price`,`t_product`.`original_price` AS `original_price`,`t_product`.`describe` AS `dscr`,`t_product`.`basic_infor` AS `basic_infor`,`t_product`.`svip_privilege` AS `svip_privilege`,`t_product`.`imgsrc` AS `imgsrc`,`t_product`.`imglist` AS `imglist`,`t_product`.`product_status` AS `product_status`,`t_city`.`city` AS `city`,`t_city`.`city_id` AS `city_id` from ((`t_product` join `t_seller` on((`t_product`.`seller_id` = `t_seller`.`user_id`))) join `t_city` on((`t_seller`.`city_id` = `t_city`.`city_id`))) order by `t_product`.`update_date` desc;
 
 #
 # Source for view "t_view_product_eva"
@@ -552,7 +558,7 @@ CREATE VIEW `t_view_recommernd` AS
 
 DROP VIEW IF EXISTS `t_view_seller`;
 CREATE VIEW `t_view_seller` AS 
-  select `t_seller`.`user_id` AS `user_id`,`t_seller`.`city_id` AS `city_id`,`t_seller`.`zone_id` AS `zone_id`,`t_seller`.`type_id` AS `type_id`,`t_seller`.`description` AS `description`,`t_seller`.`position` AS `position`,`t_seller`.`img` AS `img`,`t_product_type`.`type_name` AS `type_name`,`t_product_type`.`father_id` AS `father_id`,`t_city`.`city` AS `city`,`t_city_zone`.`zone_name` AS `zone_name`,`t_user`.`password` AS `password`,`t_user`.`username` AS `username`,`t_user`.`role` AS `role` from ((((`t_seller` left join `t_product_type` on((`t_seller`.`type_id` = `t_product_type`.`type_id`))) left join `t_city` on((`t_seller`.`city_id` = `t_city`.`city_id`))) left join `t_city_zone` on(((`t_seller`.`city_id` = `t_city_zone`.`city_id`) and (`t_seller`.`zone_id` = `t_city_zone`.`zone_id`)))) left join `t_user` on((`t_seller`.`user_id` = `t_user`.`user_id`))) where (`t_user`.`role` = 'SELLER');
+  select `t_seller`.`user_id` AS `user_id`,`t_seller`.`city_id` AS `city_id`,`t_seller`.`zone_id` AS `zone_id`,`t_seller`.`type_id` AS `type_id`,`t_seller`.`description` AS `description`,`t_seller`.`position` AS `position`,`t_seller`.`img` AS `img`,`t_seller`.`info` AS `info`,`t_product_type`.`type_name` AS `type_name`,`t_product_type`.`father_id` AS `father_id`,`t_city`.`city` AS `city`,`t_city_zone`.`zone_name` AS `zone_name`,`t_user`.`password` AS `password`,`t_user`.`username` AS `username`,`t_user`.`role` AS `role` from ((((`t_seller` left join `t_product_type` on((`t_seller`.`type_id` = `t_product_type`.`type_id`))) left join `t_city` on((`t_seller`.`city_id` = `t_city`.`city_id`))) left join `t_city_zone` on(((`t_seller`.`city_id` = `t_city_zone`.`city_id`) and (`t_seller`.`zone_id` = `t_city_zone`.`zone_id`)))) left join `t_user` on((`t_seller`.`user_id` = `t_user`.`user_id`))) where (`t_user`.`role` = 'SELLER');
 
 #
 # Source for view "t_view_zone"
