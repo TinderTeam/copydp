@@ -187,7 +187,7 @@
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
 	
-	<div id="htmldiv" class= "hide">
+	<div id="htmldiv" class= "Hide">
 		{$productItem['basic_infor']}
 	</div>
 	
@@ -199,6 +199,7 @@
 	<script type="text/javascript">	
 	   //实例化编辑器
 		var um = UM.getEditor('editor');
+		um.setContent($("#htmldiv").html());
 		$(".submit-btn").click(function(){
 			var txt=UM.getEditor('editor').getContent();//获得描述内容
 			//测试描述内容

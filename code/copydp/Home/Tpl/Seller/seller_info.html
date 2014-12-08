@@ -43,6 +43,7 @@
 		$sellerIDCondition['user_id']=$sellerID;
 		$sellerName=$sellerViewDB->where($sellerIDCondition)->getField('username');
 		$sellerDscr=$sellerViewDB->where($sellerIDCondition)->getField('description');
+		$sellerhtml=$sellerViewDB->where($sellerIDCondition)->getField('info');
 		$sellerImgsrc=$sellerViewDB->where($sellerIDCondition)->getField('img');
 		$sellerPosition=$sellerViewDB->where($sellerIDCondition)->getField('position');
 		$city=$sellerViewDB->where($sellerIDCondition)->getField('city');
@@ -156,8 +157,12 @@
 								<div class="dptg-intro Fix">								
 									<div id="seller" class="detail">
 										<h3 class="new-tit"><span class="name">商家介绍</span></h3>
-										{$info}									
-									</div>								
+										<?php
+
+											$sellerhtml=str_replace("\\", '', $sellerhtml);											
+										?>
+										<p class="explain">{$sellerhtml}</p>										
+									</div>									
 									<div class="detail">
 										<p id ="position" data="{$sellerPosition}"></p>
 										<p id ="city" data="{$city}"></p>
