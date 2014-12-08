@@ -161,16 +161,8 @@ class BuyAction extends BuyServiceAction {
     //APP获取产品类型列表
     public function GetProdutType_rest(){
     
-        $req =  $this->getReqObj();
-        $typeRoot = $req->typeRoot;
-        if($typeRoot!=0){
-            $typeCondition['father_id']=$typeRoot;
-        }else{
-            $typeCondition['father_id']=0;
-        }
-        
         $productTypeDB = new Model('product_type');
-        $productTypeList = $productTypeDB->where($typeCondition)->select();
+        $productTypeList = $productTypeDB->select();
         
         $errorCode = SUCCESS;
         if($productTypeList==false)
