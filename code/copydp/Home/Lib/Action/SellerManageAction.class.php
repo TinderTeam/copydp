@@ -1,5 +1,6 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
+
 header("Content-Type:text/html;charset=utf-8");
 class SellerManageAction extends Action {
     public function index(){
@@ -78,6 +79,8 @@ class SellerManageAction extends Action {
 	
 		if($sellerID!='' or $sellerName!='' or $cityName!='' or $typeName!='')
 		{
+
+
 			$count = $db->where($condition)->count(); 
 			$Page = new Page($count,5); 
 			$show = $Page->show();
@@ -186,15 +189,13 @@ class SellerManageAction extends Action {
 						$info = $upload->getUploadFileInfo();  
 						$data2['img']=$info[0]['savename'];					
 					}    					
-					$seller = M('seller');
-			
+					$seller = M('seller');			
 					$data2['type_id']=$_POST['type_id'];
 					$data2['description']=$_POST['description'];
 					$data2['position']=$_POST['position'];
 					$data2['city_id']=$_POST['city_id'];
 					$data2['zone_id']=$_POST['zone_id'];
 					$data2['info']=$_POST['info'];
-					print_r($data2);
 					$seller->where($condition)->save($data2);
 					$this->assign("jumpUrl","index");
 					$this->success("用户编辑成功！");

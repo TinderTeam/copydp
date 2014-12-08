@@ -29,7 +29,6 @@ class IndexServiceAction extends BaseAction {
 	  $userDB= M('user');
 	  $getUser = $userDB->where($condition)->find();
 	  $userCount = $userDB->where($condition)->count();
-	  
 	  $pwdenter=$user['password'];
 	  $pwdtrue = $userDB->where($condition)->getField('password');
 	  $userID = $userDB->where($condition)->getField('user_id');
@@ -38,12 +37,11 @@ class IndexServiceAction extends BaseAction {
 	  if($userCount==0)		//用户不存在
 	  {
 	      $rsp['errorCode'] = USERNAME_OR_PASSWORD_WRONG;
-	      return  $rsp;
+	      
 	  }
 	  elseif($pwdtrue!=$pwdenter)		//密码不正确
 	  {
 	      $rsp['errorCode'] = USERNAME_OR_PASSWORD_WRONG;
-	      return  $rsp;
 	  }
 	  else
 	  {
@@ -81,15 +79,14 @@ class IndexServiceAction extends BaseAction {
     	          $rsp['customer'] = $getCustomer;
     	          $this->log("the user is ".$getUser);
     	          $this->log("the customer is".$getCustomer);
-    	          return  $rsp;
 	          }
 	      }
 	      else{
 	          //用户角色错误处理
 	          $rsp['errorCode'] = USERNAME_OR_PASSWORD_WRONG;
-	          return  $rsp;
 	      }	
 	  }
+	  return  $rsp;
 	  
 	}
 	//用户注册

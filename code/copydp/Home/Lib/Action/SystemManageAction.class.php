@@ -11,11 +11,31 @@ class SystemManageAction extends Action {
 		$zoneDB=M('view_zone');
 		$zoneIDCondition['city_id']=$cityID;
 		$zoneList= $zoneDB->where($zoneIDCondition)->select();
+		$cityDB = M('city');
+		$IDcondition['city_id'] = $cityID;
+		$city = $cityDB->where($IDcondition)->find();
 		$this->assign("zoneList",$zoneList);
 		$this->assign("cityID",$cityID);
+		$this->assign("city",$city);
 		$this->display();
 	}
+	public function updateCityCoordinate(){
 	
+	    $cityDB=M('city');
+	    $cityID = $_POST['cityID'];
+	    $IDCondition['city_id']=$cityID;
+	    $newCity['city'] = $_POST['cityName'];
+	    $newCity['x']=$_POST['cityX'];
+		$newCity['y']=$_POST['cityY'];
+		if(($newCity['x']=="")||($newCity['y'] == ""))
+		{
+		    $this->assign("jumpUrl","cityEdit?cityID=$cityID");
+		    $this->error("操作失败，请输入完整的城市坐标信息");
+		}
+		$cityDB->where($IDCondition)->save($newCity);
+		$this->assign("jumpUrl","cityEdit?cityID=$cityID");
+		$this->success("操作成功");
+	}
 	
 
 	public function NewsEdit(){
@@ -78,6 +98,11 @@ class SystemManageAction extends Action {
 		$newCity['city']=$_POST['cityName'];
 		$newCity['x']=$_POST['cityPositionX'];
 		$newCity['y']=$_POST['cityPositionY'];
+		if(($newCity['x']=="")||($newCity['y'] == ""))
+		{
+		    $this->assign("jumpUrl","index");
+		    $this->error("操作失败，请输入完整的城市坐标信息");
+		}
 		$CityDB->add($newCity);
 		$this->assign("jumpUrl","index");
 		$this->success("操作成功");
@@ -88,7 +113,7 @@ class SystemManageAction extends Action {
 		$newZone['city_id']=$cityID;
 		$newZone['zone_name']=$_POST['zoneName'];
 		$ZoneDB->add($newZone);
-		$this->assign("jumpUrl","index");
+		$this->assign("jumpUrl","cityEdit?cityID=$cityID");
 		$this->success("操作成功");
 	}
 	

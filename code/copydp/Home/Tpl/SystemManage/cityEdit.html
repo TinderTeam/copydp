@@ -80,6 +80,32 @@ margin-right: 10px;
 						<h4>城市区域管理</h4>
 						<span>配置区域</span>
 					</div>
+					<form name="form" action="__URL__/updateCityCoordinate" method="post">
+						<ul class="tab-filter">
+							<li>
+								<div class="span-input">
+									<span>当前城市：{$city.city}</span>
+								</div> 
+							</li>
+							<li>
+								<div class="span-input">
+									<span>x坐标：</span><input name="cityX" type="text" value=""/>
+								</div> 
+							</li>
+							<li>
+								<div class="span-input">
+									<span>y坐标：</span><input name="cityY" type="text" value=""/>
+									<input name="cityID" type="text" style ="display:none" value="{$city.city_id}"/>
+									<input name="cityName" type="text" style ="display:none" value="{$city.city}"/>
+								</div> 
+							</li>
+							<li>
+								<strong class="btn-type-b btn-fn-c btnbar">
+									<input type="submit" value="更改城市坐标" class="form-btn">
+								</strong> 
+							</li>						
+						</ul>						
+					</form>			
 					<div class="pay-confirm">					
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
@@ -140,7 +166,6 @@ margin-right: 10px;
                   alert("当前ajax操作出错！");
               },
               success:function(msg){
-			  alert(msg);
 				alert('操作成功');
 			  }
         });	
