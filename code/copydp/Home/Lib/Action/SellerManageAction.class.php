@@ -1,6 +1,5 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
-
 header("Content-Type:text/html;charset=utf-8");
 class SellerManageAction extends Action {
     public function index(){
@@ -79,8 +78,6 @@ class SellerManageAction extends Action {
 	
 		if($sellerID!='' or $sellerName!='' or $cityName!='' or $typeName!='')
 		{
-
-
 			$count = $db->where($condition)->count(); 
 			$Page = new Page($count,5); 
 			$show = $Page->show();
