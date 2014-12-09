@@ -276,7 +276,11 @@
 		?>		
 		<p id = "SellerType" type_id="{$type.type_id}" father_id ="{$type.father_id}"></p>
 		<p id = "SellerCity" city_id="{$seller.city_id}" zone_id ="{$seller.zone_id}"></p>
-		<div id ="html-info">{$seller.info}</div>
+		<?php
+			$info=$seller['info'];
+			$info=str_replace("\\", '', $info);
+		?>
+		<div id ="html-info">{$info}</div>
 		<p id = "action-eidt"  action="__URL__/edit" ></p>
 	<div>
 	
