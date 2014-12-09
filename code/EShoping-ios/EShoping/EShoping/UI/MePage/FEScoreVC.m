@@ -1,18 +1,18 @@
 //
-//  FEServiceCenterVC.m
+//  FEScoreVC.m
 //  EShoping
 //
-//  Created by Seven on 14-11-17.
+//  Created by Seven on 14-12-9.
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#import "FEServiceCenterVC.h"
+#import "FEScoreVC.h"
 
-@interface FEServiceCenterVC ()
+@interface FEScoreVC ()
 
 @end
 
-@implementation FEServiceCenterVC
+@implementation FEScoreVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +22,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 /*

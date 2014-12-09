@@ -20,6 +20,8 @@
 #import "FEShopingItemVC.h"
 #import "FEProductTypeRecRequest.h"
 #import "FEProductTypeRecResponse.h"
+#import "FEShopingGroupCollectionCell.h"
+#import "FEGroupCategoryVC.h"
 
 @interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>{
     BOOL _productRecommendBecome;
@@ -99,7 +101,12 @@
     if([segue.identifier isEqualToString:@"showProductItem"]){
         FEShopingItemVC *productVC = (FEShopingItemVC *)segue.destinationViewController;
         productVC.product = ((FEGroupProductCell *)sender).product;
+    }else if([sender isKindOfClass:[FEShopingGroupCollectionCell class]]){
+        CDCategory *category = ((FEShopingGroupCollectionCell *)sender).productcategory;
+        FEGroupCategoryVC *vc = segue.destinationViewController;
+        vc.productcategory = category;
     }
+
 }
 
 -(void)requestNewProduct{

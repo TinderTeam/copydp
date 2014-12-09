@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class CDCategory;
+
 @interface FEFuncCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *funcIcon;
 @property (strong, nonatomic) IBOutlet UILabel *funcTitle;
+@property (strong, nonatomic, readonly) CDCategory *productCategory;
+
+-(void)configWithCategory:(CDCategory *)category;
 
 @end

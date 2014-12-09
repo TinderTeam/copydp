@@ -7,7 +7,13 @@
 //
 
 #import "FEShopingGroupCollectionCell.h"
+#import "CDCategory.h"
 
 @implementation FEShopingGroupCollectionCell
+
+-(void)configwithCategory:(CDCategory *)category{
+    _productcategory = category;
+    _titleLabel.text = category.type_name;
+}
 
 @end

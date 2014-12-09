@@ -7,7 +7,7 @@
 //
 
 #define _CKEY @"key"
-#define _CATECORY @"category"
+#define _CCHILD @"child"
 
 #import "FEGroupCategoryVC.h"
 #import "DOPDropDownMenu.h"
@@ -16,7 +16,10 @@
 #import "FEProductGetAllRequest.h"
 #import "FEShopWebServiceManager.h"
 #import "FEShopingItemVC.h"
+#import "CDCategory.h"
 #import "FEShopCategory.h"
+#import "AppDelegate.h"
+#import "FECoreDataHandler.h"
 
 @interface FEGroupCategoryVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *groupTableView;
@@ -36,16 +39,27 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
-    self.categoryArray = @[
-                          @{_CKEY:@"全部分类"},
-                          @{_CKEY:@"餐饮美食",_CATECORY:@[@"火锅海鲜",@"自助餐",@"日韩料理",@"甜品糕点",@"中西美食",@"家常小炒"]},
-                          @{_CKEY:@"汽车服务",_CATECORY:@[@"洗车行",@"装饰美容",@"维护保养",@"二手车行",@"驾校培训"]},
-                          @{_CKEY:@"摄影写真"},
-                          @{_CKEY:@"教育培训"},
-                          @{_CKEY:@"休闲娱乐",_CATECORY:@[@"酒吧KTV",@"保健按摩",@"足道浴场",@"影音欣赏",@"茶式咖啡馆",@"运动户外"]},
-                          @{_CKEY:@"酒店旅游"},
-                          @{_CKEY:@"都市丽人"},
-                          @{_CKEY:@"生活服务"}];
+    NSArray *allcategorys = [FECoreData fetchCategory];
+    NSArray *rootcategorys = [allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == 0 || SELF.father_id = -1"]];
+    NSMutableArray *filltercateforys = [NSMutableArray new];
+    for (CDCategory *category in rootcategorys) {
+        NSArray *childcategorys = [allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == %@",category.type_id]];
+        NSDictionary *cdic = childcategorys?@{_CKEY:category,_CCHILD:childcategorys}:@{_CKEY:category};
+        [filltercateforys addObject:cdic];
+    }
+    self.categoryArray = filltercateforys;
+   
+    
+//    self.categoryArray = @[
+//                          @{_CKEY:@"全部分类"},
+//                          @{_CKEY:@"餐饮美食",_CATECORY:@[@"火锅海鲜",@"自助餐",@"日韩料理",@"甜品糕点",@"中西美食",@"家常小炒"]},
+//                          @{_CKEY:@"汽车服务",_CATECORY:@[@"洗车行",@"装饰美容",@"维护保养",@"二手车行",@"驾校培训"]},
+//                          @{_CKEY:@"摄影写真"},
+//                          @{_CKEY:@"教育培训"},
+//                          @{_CKEY:@"休闲娱乐",_CATECORY:@[@"酒吧KTV",@"保健按摩",@"足道浴场",@"影音欣赏",@"茶式咖啡馆",@"运动户外"]},
+//                          @{_CKEY:@"酒店旅游"},
+//                          @{_CKEY:@"都市丽人"},
+//                          @{_CKEY:@"生活服务"}];
     
     self.regoinArray = @[
                          @{_CKEY:@"全部商圈"},
@@ -66,12 +80,18 @@
     [self requestProduct];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = FEThemeOrange;
+}
+
 -(void)initUI{
     
-    self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.extendedLayoutIncludesOpaqueBars = YES;
-    
-    DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:40];
+//    self.edgesForExtendedLayout = UIRectEdgeAll;
+//    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 0) andHeight:40];
     menu.dataSource = self;
     menu.delegate = self;
     [self.view addSubview:menu];
@@ -80,7 +100,8 @@
 
 -(void)requestProduct{
     __weak typeof(self) weakself = self;
-    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:1 keyword:nil isSearch:NO];
+    
+    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:self.productcategory.type_id.integerValue keyword:nil isSearch:NO];
     [[FEShopWebServiceManager sharedInstance] productAll:rdata response:^(NSError *error, FEProductAllResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
             weakself.productDatas = response.productList;
@@ -109,20 +130,33 @@
 }
 
 - (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath{
-    return self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
+    id item = self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
+    if ([item isKindOfClass:[CDCategory class]]) {
+        return ((CDCategory *)item).type_name;
+    }else{
+        return self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
+    }
+    
 }
 
 -(NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInSubSelectRow:(DOPIndexPath *)indexPath{
-    return [self.categoryContentArray[indexPath.column][indexPath.row][_CATECORY] count];
+    return [self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD] count];
 }
 
 -(NSString *)menu:(DOPDropDownMenu *)menu titleForSubRowAtIndexPath:(DOPIndexPath *)indexPath subrowAtIndex:(NSInteger)index{
-    return self.categoryContentArray[indexPath.column][indexPath.row][_CATECORY][index];
+    
+    id item = self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index];
+    if ([item isKindOfClass:[CDCategory class]]) {
+        return ((CDCategory *)item).type_name;
+    }else{
+        return self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index];
+    }
+//    return ((CDCategory *)self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index]).type_name;
 }
 
 -(BOOL)menu:(DOPDropDownMenu *)menu columRowHasSub:(DOPIndexPath *)indexPath{
     
-    return self.categoryContentArray[indexPath.column][indexPath.row][_CATECORY]?YES:NO;
+    return self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD]?YES:NO;
 }
 
 - (BOOL)menu:(DOPDropDownMenu *)menu columHasSubList:(NSInteger)colum{
@@ -144,9 +178,15 @@
 #pragma mark - UITableVieDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.groupTableView) {
-        FEGroupCategoryProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupProductItemCell" forIndexPath:indexPath];
-        [cell configWithProduct:self.productDatas[indexPath.row]];
-        return cell;
+        if (self.productDatas.count) {
+            FEGroupCategoryProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupProductItemCell" forIndexPath:indexPath];
+            [cell configWithProduct:self.productDatas[indexPath.row]];
+            return cell;
+        }else{
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NONProductCell" forIndexPath:indexPath];
+            return cell;
+        }
+        
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
         static NSString *identifier = @"cell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
@@ -171,13 +211,25 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.groupTableView) {
-        return self.productDatas.count;
+        if (self.productDatas.count) {
+            return self.productDatas.count;
+        }else{
+            return 1;
+        }
+        
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
         return 1;
     }
     return 0;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.productDatas.count) {
+        return 85;
+    }else{
+        return 40;
+    }
+}
 
 /*
 #pragma mark - Navigation

@@ -31,7 +31,16 @@
 
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
-    _imageArray = [NSArray arrayWithObjects:product.imgsrc,product.imgsrc, nil];
+    NSArray *imgs = [product.imglist componentsSeparatedByString:@","];
+    
+    if (imgs) {
+        NSMutableArray *mimgs = [NSMutableArray arrayWithArray:imgs];
+        [mimgs insertObject:FEShopImageUrlSring(product.imgsrc) atIndex:0];
+        _imageArray = mimgs;//[NSArray arrayWithObjects:product.imgsrc, nil];
+    }else{
+        _imageArray = [NSArray arrayWithObjects:FEShopImageUrlSring(product.imgsrc), nil];
+    }
+    
     self.pageIndicate.numberOfPages = self.imageArray.count;
     [self.imageShowCollectionView reloadData];
 }
@@ -47,7 +56,7 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     FEProductImageShowCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"shopingItemImageShowCell" forIndexPath:indexPath];
-    [cell.showImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(self.imageArray[indexPath.row])]];
+    [cell.showImageView sd_setImageWithURL:[NSURL URLWithString:self.imageArray[indexPath.row]]];
     return cell;
 }
 

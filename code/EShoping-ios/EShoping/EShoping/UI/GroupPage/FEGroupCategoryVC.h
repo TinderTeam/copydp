@@ -10,4 +10,6 @@
 
 @interface FEGroupCategoryVC : FECommonViewController
 
+@property (nonatomic, strong) CDCategory *productcategory;
+
 @end

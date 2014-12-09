@@ -15,6 +15,7 @@
 @interface FEShopingFuncCell ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 {
     NSArray *_categoryData;
+    NSArray *_categorypng;
 }
 
 @end
@@ -25,7 +26,11 @@
     // Initialization code
     self.pageIndicate.numberOfPages = 0;
     
-    _categoryData = @[@{__PNG:@"food_u",__TITLE:FEString(@"餐饮美食")},@{__PNG:@"ktv_u",__TITLE:FEString(@"休闲娱乐")},@{__PNG:@"takeaway_u",__TITLE:FEString(@"汽车服务")},@{__PNG:@"hotel_u",__TITLE:FEString(@"酒店旅游")},@{__PNG:@"marry_u",__TITLE:FEString(@"摄影写真")},@{__PNG:@"discount_u",__TITLE:FEString(@"都市丽人")},@{__PNG:@"booking_u",__TITLE:FEString(@"教育培训")},@{__PNG:@"locate_u",__TITLE:FEString(@"生活服务")}];
+    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"SELF.father_id = %@",@(0)];
+    _categoryData = [[FECoreData fetchCategory] filteredArrayUsingPredicate:userPredicate];
+    _categorypng = @[@"food_u",@"ktv_u",@"takeaway_u",@"hotel_u",@"marry_u",@"discount_u",@"booking_u",@"locate_u"];
+    
+//    _categoryData = @[@{__PNG:@"food_u",__TITLE:FEString(@"餐饮美食")},@{__PNG:@"ktv_u",__TITLE:FEString(@"休闲娱乐")},@{__PNG:@"takeaway_u",__TITLE:FEString(@"汽车服务")},@{__PNG:@"hotel_u",__TITLE:FEString(@"酒店旅游")},@{__PNG:@"marry_u",__TITLE:FEString(@"摄影写真")},@{__PNG:@"discount_u",__TITLE:FEString(@"都市丽人")},@{__PNG:@"booking_u",__TITLE:FEString(@"教育培训")},@{__PNG:@"locate_u",__TITLE:FEString(@"生活服务")}];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -47,8 +52,9 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     FEFuncCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"shopingTypeCell" forIndexPath:indexPath];
-    cell.funcTitle.text = _categoryData[indexPath.row][__TITLE];
-    cell.funcIcon.image = [UIImage imageNamed:_categoryData[indexPath.row][__PNG]];
+    [cell configWithCategory:_categoryData[indexPath.row]];
+//    cell.funcTitle.text = _categoryData[indexPath.row][__TITLE];
+    cell.funcIcon.image = [UIImage imageNamed:_categorypng[indexPath.row]];
     return cell;
 }
 

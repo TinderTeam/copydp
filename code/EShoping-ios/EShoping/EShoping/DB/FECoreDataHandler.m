@@ -304,7 +304,8 @@ relationshipKeyPathsForPrefetching:nil
 }
 
 -(NSArray *)fetchCategory{
-    return [self fetchEntityByName:@"CDCategory" predicate:nil sortKeys:nil];
+    
+    return [self fetchEntityByName:@"CDCategory" predicate:nil sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"type_id" ascending:YES]]];
 }
 
 @end

@@ -6,6 +6,10 @@
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
+#define __CELL_TYPE @"type"
+#define __CELL_HIGHT @"height"
+#define __CELL_CONTENT @"content"
+
 #import "FEShopingItemVC.h"
 #import "FEProductImageTableViewCell.h"
 #import "FEProductOrderView.h"
@@ -16,6 +20,8 @@
 
 @property (nonatomic, strong) FEProductOrderView *orderView;
 
+@property (nonatomic, strong) NSMutableArray *productInfo;
+
 @end
 
 @implementation FEShopingItemVC
@@ -23,7 +29,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _productInfo = [NSMutableArray new];
+    NSArray *s = @[@"商家介绍",@"特惠详情",@"商户位置",@"购买须知",@"商户评价"];
+    for (NSString *str in s) {
+        NSDictionary *info = @{__CELL_TYPE:@(0),__CELL_HIGHT:@(30),__CELL_CONTENT:str};
+        NSDictionary *info1 = @{__CELL_TYPE:@(0),__CELL_HIGHT:@(20),__CELL_CONTENT:@""};
+        [_productInfo addObject:info];
+        [_productInfo addObject:info1];
+    }
+    
     [self initUI];
+    
+    
     
 }
 
@@ -72,8 +89,9 @@
         FEProductImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productImageTableCell" forIndexPath:indexPath];
         [cell configWithProduct:self.product];
         return cell;
-    }else{
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"spaceCell" forIndexPath:indexPath];
+    }else if(indexPath.section == 1){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productSectionTitle" forIndexPath:indexPath];
+        cell.textLabel.text = _productInfo[indexPath.row][__CELL_CONTENT];
         return cell;
     }
     return nil;
@@ -89,7 +107,15 @@
     if (section == 0) {
         return 1;
     }
-    return 3;
+    return _productInfo.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 190;
+    }else{
+        return [_productInfo[indexPath.row][__CELL_HIGHT] floatValue];
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

@@ -1,22 +1,27 @@
 //
-//  FEHistoryVC.m
+//  FEMyAvtivityVC.m
 //  EShoping
 //
-//  Created by Seven on 14-11-17.
+//  Created by Seven on 14-12-9.
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#import "FEHistoryVC.h"
+#import "FEMyAvtivityVC.h"
 
-@interface FEHistoryVC ()
+@interface FEMyAvtivityVC ()
 
 @end
 
-@implementation FEHistoryVC
+@implementation FEMyAvtivityVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

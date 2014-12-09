@@ -82,7 +82,6 @@
     }else{
         [self performSegueWithIdentifier:@"userSiginSegue" sender:ges.view];
     }
-    
 }
 
 

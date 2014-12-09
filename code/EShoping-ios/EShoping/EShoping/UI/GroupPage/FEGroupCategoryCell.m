@@ -8,12 +8,16 @@
 
 #import "FEGroupCategoryCell.h"
 #import "FEShopingGroupCollectionCell.h"
+#import "FECoreDataHandler.h"
+#import "AppDelegate.h"
+#import "CDCategory.h"
 
 #define __PNG @"png"
 #define __TITLE @"title"
 
 @interface FEGroupCategoryCell ()<UICollectionViewDataSource,UICollectionViewDelegate>{
     NSArray *_groupCategoryData;
+    NSArray *_categorypng;
 }
 
 @end
@@ -22,7 +26,10 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    _groupCategoryData = @[@{__PNG:@"food_u",__TITLE:FEString(@"餐饮美食")},@{__PNG:@"ktv_u",__TITLE:FEString(@"休闲娱乐")},@{__PNG:@"takeaway_u",__TITLE:FEString(@"汽车服务")},@{__PNG:@"hotel_u",__TITLE:FEString(@"酒店旅游")},@{__PNG:@"marry_u",__TITLE:FEString(@"摄影写真")},@{__PNG:@"discount_u",__TITLE:FEString(@"都市丽人")},@{__PNG:@"booking_u",__TITLE:FEString(@"教育培训")},@{__PNG:@"locate_u",__TITLE:FEString(@"生活服务")}];
+    
+    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"SELF.father_id = %@",@(0)];
+    _groupCategoryData = [[FECoreData fetchCategory] filteredArrayUsingPredicate:userPredicate];
+    _categorypng = @[@"food_u",@"ktv_u",@"takeaway_u",@"hotel_u",@"marry_u",@"discount_u",@"booking_u",@"locate_u"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -34,8 +41,9 @@
 #pragma mark - UICollectionDataSource
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     FEShopingGroupCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"groupCategoryCollectionCell" forIndexPath:indexPath];
-    cell.headImageView.image = [UIImage imageNamed:_groupCategoryData[indexPath.row][__PNG]];
-    cell.titleLabel.text = _groupCategoryData[indexPath.row][__TITLE];
+    [cell configwithCategory:_groupCategoryData[indexPath.row]];
+    cell.headImageView.image = [UIImage imageNamed:_categorypng[indexPath.row]];
+//    cell.titleLabel.text = ((CDCategory *)_groupCategoryData[indexPath.row]).type_name;
     return cell;
 }
 
