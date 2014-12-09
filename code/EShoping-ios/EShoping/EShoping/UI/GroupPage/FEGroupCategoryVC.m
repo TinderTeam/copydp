@@ -125,6 +125,13 @@
     return self.categoryContentArray[indexPath.column][indexPath.row][_CATECORY]?YES:NO;
 }
 
+- (BOOL)menu:(DOPDropDownMenu *)menu columHasSubList:(NSInteger)colum{
+    if (colum == 0) {
+        return YES;
+    }
+    return NO;
+}
+
 - (NSInteger)numberOfColumnsInMenu:(DOPDropDownMenu *)menu{
     return self.categoryContentArray.count;
 }

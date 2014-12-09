@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @class CDUser;
+@class CDCity;
+@class CDCategory;
 
 @interface FESortDescriptor : NSObject
 
@@ -38,5 +40,12 @@
 -(CDUser *)touchUserByIdentifier:(NSNumber *)identifier;
 - (void)saveCoreData;
 - (void)deleteCoreData:(NSArray *)array;
+
+//city
+-(NSArray *)fetchCity;
+-(CDCity *)touchCityByName:(NSString *)cname;
+//catecory
+-(CDCategory *)touchCategoryById:(NSNumber *)tid;
+-(NSArray *)fetchCategory;
 
 @end

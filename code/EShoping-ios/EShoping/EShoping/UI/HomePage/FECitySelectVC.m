@@ -7,6 +7,9 @@
 //
 
 #import "FECitySelectVC.h"
+#import "FECoreDataHandler.h"
+#import "CDCity.h"
+#import "AppDelegate.h"
 
 #define FIRSTLETTER @"key"
 #define CITYS       @"citys"
@@ -27,37 +30,53 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     _city = [NSMutableArray new];
-    _allcitys = [NSMutableArray arrayWithObjects:@"shenzhen",@"苏州",@"上海",@"深圳",@"武汉",@"广州",@"郑州",@"南昌",@"青岛",@"西宁",@"乌鲁木齐",@"天津",@"北京", nil];
+    _allcitys = [FECoreData fetchCity];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    __weak typeof(self) weakself = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSMutableArray *sortedarray = [NSMutableArray arrayWithArray:[_allcitys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
-        for (int i = 0; i < 27; i++) {
-            unichar ch = i + 65;
-            NSString *key = [NSString stringWithFormat:@"%c",ch];
-            if (i == 26) {
-                key = @"#";
-            }
-            
-            NSMutableArray *citys = [[NSMutableArray alloc]init];
-            for (NSString *city in sortedarray) {
-                CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)city);CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
-                CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);
-                NSString *pinyin = (__bridge NSString *)string;
-                if (pinyin.length && [[[pinyin substringToIndex:1] uppercaseString] isEqualToString:key]) {
-                    [citys addObject:city];
-                }
-            }
-            if (citys.count) {
-                [_city addObject:@{FIRSTLETTER:key,CITYS:citys}];
-                [sortedarray removeObjectsInArray:citys];
-            }
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakself.cityTableView reloadData];
-        });
     
-    });
+    for (int i = 0; i < 27; i++) {
+        unichar ch = i + 65;
+        NSString *key = [NSString stringWithFormat:@"%c",ch];
+        if (i == 26) {
+            key = @"#";
+        }
+        NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"SELF.citypinin contains[cd] %@",key];
+        NSArray *filltercitys = [_allcitys filteredArrayUsingPredicate:userPredicate];
+        if (filltercitys.count) {
+            [_city addObject:@{FIRSTLETTER:key,CITYS:filltercitys}];
+        }
+    }
+    
+    
+    
+//    __weak typeof(self) weakself = self;
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSMutableArray *sortedarray = [NSMutableArray arrayWithArray:[_allcitys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
+//        for (int i = 0; i < 27; i++) {
+//            unichar ch = i + 65;
+//            NSString *key = [NSString stringWithFormat:@"%c",ch];
+//            if (i == 26) {
+//                key = @"#";
+//            }
+//
+//            NSMutableArray *citys = [[NSMutableArray alloc]init];
+//            for (NSString *city in sortedarray) {
+//                CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)city);CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
+//                CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);
+//                NSString *pinyin = (__bridge NSString *)string;
+//                if (pinyin.length && [[[pinyin substringToIndex:1] uppercaseString] isEqualToString:key]) {
+//                    [citys addObject:city];
+//                }
+//            }
+//            if (citys.count) {
+//                [_city addObject:@{FIRSTLETTER:key,CITYS:citys}];
+//                [sortedarray removeObjectsInArray:citys];
+//            }
+//        }
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [weakself.cityTableView reloadData];
+//        });
+//    
+//    });
    
 }
 
@@ -75,7 +94,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
-        cell.textLabel.text = self.searchResult[indexPath.row];
+        cell.textLabel.text = ((CDCity *)self.searchResult[indexPath.row]).cityititle;
         return cell;
     }else{
         static NSString *identifier = @"city";
@@ -83,7 +102,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
-        cell.textLabel.text = _city[indexPath.section][CITYS][indexPath.row];
+        cell.textLabel.text = ((CDCity *)_city[indexPath.section][CITYS][indexPath.row]).cityititle;
         return cell;
     }
 }
@@ -145,9 +164,9 @@
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        FEUserDefaultsSetObjectForKey(self.searchResult[indexPath.row], FEShopRegionKey);
+        FEUserDefaultsSetObjectForKey(((CDCity *)self.searchResult[indexPath.row]).cityititle, FEShopRegionKey);
     }else{
-        FEUserDefaultsSetObjectForKey(_city[indexPath.section][CITYS][indexPath.row], FEShopRegionKey);
+        FEUserDefaultsSetObjectForKey(((CDCity *)_city[indexPath.section][CITYS][indexPath.row]).cityititle, FEShopRegionKey);
     }
     FEUserDefaultsSync;
     [[NSNotificationCenter defaultCenter] postNotificationName:FERegionCityDidChang object:nil];
@@ -189,7 +208,7 @@
 }
 
 -(void)filterContentForSearchText:(NSString*)searchText {
-    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"SELF contains[cd] %@",searchText];
+    NSPredicate *userPredicate = [NSPredicate predicateWithFormat:@"SELF.cityititle contains[cd] %@",searchText];
     self.searchResult = [_allcitys filteredArrayUsingPredicate:userPredicate];
     
 }

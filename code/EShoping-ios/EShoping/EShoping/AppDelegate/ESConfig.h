@@ -57,6 +57,7 @@ return shared##className; \
 //region
 #define FEShopRegionKey                         @"region"
 
+
 //itunes url
 #define FEItunesUrlString(_ID)                  [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",_ID]
 

@@ -61,10 +61,19 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 @class FECommunityCreateResponse;
 @class FECommunityTopicResponse;
 @class FECommunityListResponse;
+@class FECityRequest;
+@class FECityResponse;
 
 @interface FEShopWebServiceManager : AFHTTPRequestOperationManager
 
 +(FEShopWebServiceManager *)sharedInstance;
+
+/*-------------------------------------------
+ ;city service interface
+ ;
+ --------------------------------------------*/
+//city
+DEFINE_WEBSERVICE_METHOD_HEADER(city, FECityRequest, FECityResponse)
 
 /*-------------------------------------------
  ;user service interface

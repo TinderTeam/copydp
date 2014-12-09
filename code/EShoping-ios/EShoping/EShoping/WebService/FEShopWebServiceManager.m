@@ -48,12 +48,15 @@
 #import "FENewsListRequest.h"
 #import "FECommunityRecommendRequest.h"
 #import "FECommunityHotUserRequest.h"
+#import "FECommunityCreateTopicRequest.h"
 #import "FECommunityHotTopicRequest.h"
 #import "FECommunityReplyTopicRequest.h"
 #import "FECommunityAllRequest.h"
 #import "FECommunityCreateResponse.h"
 #import "FECommunityTopicResponse.h"
 #import "FECommunityListResponse.h"
+#import "FECityRequest.h"
+#import "FECityResponse.h"
 
 @implementation FEShopWebServiceManager
 
@@ -73,6 +76,9 @@
     }
     return self;
 }
+
+//city
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(city, FECityRequest, FECityResponse)
 
 //resgist
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(regist, FEUserRegistRequest, FEUserRegistResponse)

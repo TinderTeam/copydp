@@ -333,6 +333,20 @@
 - (void)animateTableView:(UITableView *)tableView show:(BOOL)show complete:(void(^)())complete {
     if (show) {
 //        tableView.frame = CGRectMake(0, self.frame.origin.y + self.frame.size.height, self.frame.size.width, 0);
+//        BOOL hassub = []
+        NSAssert(self.dataSource != nil, @"menu's dataSource shouldn't be nil");
+        if ([self.dataSource respondsToSelector:@selector(menu:columHasSubList:)]) {
+            BOOL hassub =  [self.dataSource menu:self columHasSubList:self.currentSelectedMenudIndex];
+            if (hassub) {
+                _tableView.frame = CGRectMake(0, 0, _contentView.bounds.size.width / 2.0f - 10, 5 * 38);
+                _subTableView.frame = CGRectMake(_contentView.bounds.size.width / 2.0f - 10, 0, _contentView.bounds.size.width / 2.0f + 10, 5 * 38);
+            }else{
+                _tableView.frame = CGRectMake(0, 0, _contentView.bounds.size.width, 5 * 38);
+                _subTableView.frame = CGRectMake(_contentView.bounds.size.width / 2.0f - 10, 0, _contentView.bounds.size.width / 2.0f + 10, 0);
+            }
+        } else {
+            NSAssert(0 == 1, @"required method of dataSource protocol should be implemented");
+        }
         
         [self.superview addSubview:_contentView];
         
@@ -431,7 +445,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _tableView) {
         if (self.delegate || [self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
-            //        [self confiMenuWithSelectRow:indexPath.row];
+//                    [self confiMenuWithSelectRow:indexPath.row];
             if ([self.dataSource respondsToSelector:@selector(menu:columRowHasSub:)]) {
 //                if ([self.dataSource menu:self columRowHasSub:[[DOPIndexPath alloc] initWithColumn:self.currentSelectedMenudIndex row:indexPath.row]]) {
                     [_subTableView reloadData];

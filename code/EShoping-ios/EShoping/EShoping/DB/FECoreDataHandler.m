@@ -9,6 +9,8 @@
 #import "FECoreDataHandler.h"
 #import "AppDelegate.h"
 #import "CDUser.h"
+#import "CDCity.h"
+#import "CDCategory.h"
 
 @implementation FESortDescriptor
 @synthesize key;
@@ -272,5 +274,37 @@ relationshipKeyPathsForPrefetching:nil
     return user;
 }
 
+#pragma mark - CDCity
+-(CDCity *)touchCityByName:(NSString *)cname{
+    CDCity *city = [self fetchEntityByName:@"CDCity" predicate:[NSPredicate predicateWithFormat:@"SELF.cityititle == %@",cname] sortKeys:nil].lastObject;
+    if (!city) {
+        city = (CDCity *)[NSEntityDescription insertNewObjectForEntityForName:@"CDCity" inManagedObjectContext:self.managedObjectContext];
+        city.cityititle = cname;
+    }
+    
+    return city;
+}
+
+-(NSArray *)fetchCity{
+    return [self fetchEntityByName:@"CDCity" predicate:nil sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"citypinin" ascending:YES]]];
+}
+
+#pragma mark - CDCategory
+-(CDCategory *)touchCategoryById:(NSNumber *)tid{
+    CDCategory *category;
+     NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF.type_id == %@",tid];
+    category = [self fetchEntityByName:@"CDCategory" predicate:pre sortKeys:nil].lastObject;
+    if (!category) {
+        category = (CDCategory *)[NSEntityDescription insertNewObjectForEntityForName:@"CDCategory" inManagedObjectContext:self.managedObjectContext];
+        category.type_id = tid;
+    }
+    return category;
+    
+    return category;
+}
+
+-(NSArray *)fetchCategory{
+    return [self fetchEntityByName:@"CDCategory" predicate:nil sortKeys:nil];
+}
 
 @end

@@ -21,7 +21,9 @@
 #import "FEProductTypeRecRequest.h"
 #import "FEProductTypeRecResponse.h"
 
-@interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>{
+    BOOL _productRecommendBecome;
+}
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *regionBarItem;
 @property (strong, nonatomic) FESegmentControl *segment;
@@ -38,14 +40,48 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initUI];
-    [self requestNewProduct];
-    [self requestProductType];
-    [self requestTypeRecommend];
+//    [self requestNewProduct];
+//    [self requestTypeRecommend];
     __weak typeof(self) weakself = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
-        [weakself requestNewProduct];
+//        [weakself requestNewProduct];
+//        [weakself requestTypeRecommend];
     }];
+    [self requestRecommend];
+}
+
+-(void)requestRecommend{
+    __weak typeof(self) weakself = self;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FEProductNewRequest *rdata = [[FEProductNewRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        [[FEShopWebServiceManager sharedInstance] productNew:rdata response:^(NSError *error, FEProductNewResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.productNew = response.productList;
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.productTypeRecommed = response.productList;
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        _productRecommendBecome = YES;
+        [weakself.productsTableView reloadData];
+//        [weakself.productsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    });
 }
 
 -(void)initUI{
@@ -87,14 +123,7 @@
     }];
 }
 
--(void)requestProductType{
-    FEProductTypeRequest *rdata = [[FEProductTypeRequest alloc] initWithTypeRoot:0];
-    [[FEShopWebServiceManager sharedInstance] productType:rdata response:^(NSError *error, FEProductTypeResponse *response) {
-        if (!error && response.result.errorCode.integerValue == 0) {
-            NSLog(@"product type success!");
-        }
-    }];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -169,7 +198,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if (tableView == self.productsTableView) {
-        return 2;
+        return _productRecommendBecome?2:1;
     }else{
         return 1;
     }

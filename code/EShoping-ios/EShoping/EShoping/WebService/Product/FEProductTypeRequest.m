@@ -13,7 +13,7 @@
 -(id)initWithTypeRoot:(NSInteger)typeRoot{
     self = [super initWithMothed:__METHOD_PRODUCT_GETPRODUCTTYPE];
     if (self) {
-        _typeRoot = @(typeRoot);
+//        _typeRoot = @(typeRoot);
     }
     return self;
 }
