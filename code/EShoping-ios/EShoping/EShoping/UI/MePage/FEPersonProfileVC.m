@@ -16,6 +16,7 @@
 #import "FEUserSignoutResponse.h"
 
 @interface FEPersonProfileVC ()<UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet FETableView *profileTableView;
 
 @property (nonatomic, strong) UIView *footView;
 
@@ -39,7 +40,7 @@
 
 #pragma mark - UITableViewDataSource
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == 1) {
         if (!self.footView) {
             UIView *footview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 80)];
             footview.userInteractionEnabled = YES;
@@ -60,7 +61,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == 1) {
         return 80;
     }
     return 0;

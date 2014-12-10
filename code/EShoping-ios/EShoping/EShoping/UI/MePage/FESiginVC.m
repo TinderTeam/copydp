@@ -60,6 +60,10 @@
                     user.role = wuser.role;
                     [FECoreData saveCoreData];
                     [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
+                    if ([weakself.delegate respondsToSelector:@selector(signinVCDidSignin:)]) {
+                        [weakself.delegate signinVCDidSignin:YES];
+                    }
+                    
                 }];
             }
             
@@ -69,7 +73,12 @@
 }
 
 - (IBAction)backPress:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    if ([self.delegate respondsToSelector:@selector(signinVCDidSignin:)]) {
+        [self.delegate signinVCDidSignin:NO];
+    }
 }
 
 

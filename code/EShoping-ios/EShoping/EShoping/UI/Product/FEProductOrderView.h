@@ -10,6 +10,7 @@
 
 @class FEProductOrderView;
 @class FEProduct;
+@class FEActivity;
 
 @protocol FEProductOrderViewDelegate <NSObject>
 
@@ -20,9 +21,10 @@
 
 @interface FEProductOrderView : UIView
 @property (nonatomic, strong, readonly) FEProduct *product;
+@property (nonatomic, strong, readonly) FEActivity *activity;
 @property (weak, nonatomic) id<FEProductOrderViewDelegate> delegate;
 
 
 -(void)configWithProduct:(FEProduct *)product;
-
+-(void)configWithActivity:(FEActivity *)activity;
 @end

@@ -20,6 +20,8 @@
 #import "FECategories.h"
 #import "UIFont+AppFont.h"
 #import "AppDelegate.h"
+#import "FETableView.h"
+#import "FECoreDataHandler.h"
 
 #define __WEB_SERVICE_IP    ([AppDelegate sharedDelegate].serviceURLString)
 

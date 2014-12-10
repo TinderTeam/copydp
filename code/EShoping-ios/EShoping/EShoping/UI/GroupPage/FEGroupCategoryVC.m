@@ -48,18 +48,6 @@
         [filltercateforys addObject:cdic];
     }
     self.categoryArray = filltercateforys;
-   
-    
-//    self.categoryArray = @[
-//                          @{_CKEY:@"全部分类"},
-//                          @{_CKEY:@"餐饮美食",_CATECORY:@[@"火锅海鲜",@"自助餐",@"日韩料理",@"甜品糕点",@"中西美食",@"家常小炒"]},
-//                          @{_CKEY:@"汽车服务",_CATECORY:@[@"洗车行",@"装饰美容",@"维护保养",@"二手车行",@"驾校培训"]},
-//                          @{_CKEY:@"摄影写真"},
-//                          @{_CKEY:@"教育培训"},
-//                          @{_CKEY:@"休闲娱乐",_CATECORY:@[@"酒吧KTV",@"保健按摩",@"足道浴场",@"影音欣赏",@"茶式咖啡馆",@"运动户外"]},
-//                          @{_CKEY:@"酒店旅游"},
-//                          @{_CKEY:@"都市丽人"},
-//                          @{_CKEY:@"生活服务"}];
     
     self.regoinArray = @[
                          @{_CKEY:@"全部商圈"},

@@ -15,8 +15,9 @@
 #import "FEResult.h"
 #import "CDUser.h"
 #import "FESegmentControl.h"
+#import "FESiginVC.h"
 
-@interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource,FESigninVCDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *orderList;
 @property (nonatomic,strong) NSArray *orderDatas;
 @property (nonatomic, strong) FESegmentControl *orderTypeSeg;
@@ -28,11 +29,36 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initUI];
-    [self requestOrder];
+    if (FELoginUser) {
+        [self requestOrder];
+    }else{
+        [self performSegueWithIdentifier:@"userSiginSegue" sender:nil];
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    UINavigationController *nc = segue.destinationViewController;
+    FESiginVC *vc = (FESiginVC *)nc.topViewController;
+    vc.delegate = self;
+}
+
+#pragma mark - FESigninVCDelegate
+-(void)signinVCDidSignin:(BOOL)isSignin{
+    if (isSignin) {
+        [self requestOrder];
+    }else{
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 -(void)initUI{
-    _orderTypeSeg = [[FESegmentControl alloc] initWithSectionTitles:@[@"全部",@"待付款",@"未消费",@"退款单"]];
+    self.title = FEString(@"我的订单");
+    _orderTypeSeg = [[FESegmentControl alloc] initWithSectionTitles:@[@"全部",@"收藏",@"终止订单"]];
     _orderTypeSeg.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
     _orderTypeSeg.font = FEFont(14);//[UIFont systemFontOfSize:14];
     _orderTypeSeg.selectedTextColor = FEThemeOrange;

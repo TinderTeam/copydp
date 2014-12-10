@@ -7,8 +7,9 @@
 //
 
 #import "FEScoreVC.h"
+#import "FESiginVC.h"
 
-@interface FEScoreVC ()
+@interface FEScoreVC ()<FESigninVCDelegate>
 
 @end
 
@@ -17,6 +18,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    if (FELoginUser) {
+       
+    }else{
+        [self performSegueWithIdentifier:@"userSiginSegue" sender:nil];
+    }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    UINavigationController *nc = segue.destinationViewController;
+    FESiginVC *vc = (FESiginVC *)nc.topViewController;
+    vc.delegate = self;
+}
+
+#pragma mark - FESigninVCDelegate
+-(void)signinVCDidSignin:(BOOL)isSignin{
+    if (isSignin) {
+        
+    }else{
+        [self.navigationController popViewControllerAnimated:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
