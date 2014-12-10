@@ -9,11 +9,8 @@ import cn.fuego.eshoping.webservice.up.model.GetActivityListReq;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListReq;
 import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListRsp;
-import cn.fuego.eshoping.webservice.up.model.GetProductOrderListRsp;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderReq;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderRsp;
-import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
-
 
 @Path("/Activity")
 @Produces("application/json")  

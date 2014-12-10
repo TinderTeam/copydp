@@ -160,6 +160,15 @@ class IndexAction extends IndexServiceAction {
 				$CustomerData['login_date']=$nowDate;
 				$custmerDB->where($customerIDCondition)->save($CustomerData);
 			}
+			elseif($role=='SELLER'){
+			    $sellerDB= M('seller');
+			    $IDCondition['user_id']=$userID;
+			    $status =$sellerDB->where($IDCondition)->getField('status');
+			    if($status=='冻结'){
+			        $this->assign("jumpUrl","login");
+			        $this->error("您的账户已被冻结，请联系管理员！");
+			    }
+			}
 			
 			$_SESSION['login_user']= $_POST['name'];
 			$this->assign("jumpUrl","index");

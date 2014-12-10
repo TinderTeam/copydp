@@ -173,7 +173,8 @@
 					
 					//设置总筛选条件
 					$sellerViewDB=new Model('view_seller');
-					$sellerList =$sellerViewDB->where($sellerFilter)->getField('user_id',true);
+					$sellerStatusCondition['status']="正常";	
+					$sellerList =$sellerViewDB->where($sellerStatusCondition)->where($sellerFilter)->getField('user_id',true);
 					
 				?>
 				<volist name="sellerList" id="sellerID">

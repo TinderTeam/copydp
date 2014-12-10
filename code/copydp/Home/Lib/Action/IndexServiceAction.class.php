@@ -157,8 +157,8 @@ class IndexServiceAction extends BaseAction {
 	public function cityService($newUser)
 	{
 	    //获取数据库内容
-	    $db=new Model('city');
-	    $select = $db->order('convert(city using gbk) asc')->select();
+	    $citydb=new Model('city');
+	    $select = $citydb->order('convert(city using gbk) asc')->select();
 	    $pinyin= array();
 	    $cityList= array();
 	    
@@ -167,21 +167,14 @@ class IndexServiceAction extends BaseAction {
 	        $index = array_search($pinyinStr,$pinyin);
 	        if($index==null){
 	            array_push($pinyin,$pinyinStr);
-	            $index = array_search($pinyinStr,$pinyin);
 	        }
-	        if($cityList[$index]==null){
-	            $ciryArray=array();
-	            array_push($ciryArray,$select[$i]['city']);
-	            $cityList[$index]=$ciryArray;
-	        }else{
-	            $ciryArray=$cityList[$index];
-	            array_push($ciryArray,$select[$i]['city']);
-	            $cityList[$index]=$ciryArray;
-	        }
+	        $zoneDB = M('city_zone');
+	        $condition['city_id'] = $select[$i]['city_id'];
+	        $select[$i]['zone_list'] = $zoneDB->where($condition)->select();
 	    }
 	    $rep['errorCode'] = SUCCESS;
 	    $rsp['pinyin'] = $pinyin;
-	    $rsp['cityList'] = $cityList;
+	    $rsp['cityList'] = $select;
 	    return  $rsp;
 	}
 	public function pinyin($zh){

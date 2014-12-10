@@ -130,24 +130,32 @@ margin-right: 10px;
 			
 				</form>
 					<div class="pay-confirm">
+					<form id="freezeForm" name="form2" action="__URL__/freezeDeal" method="post">	
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
 								<tr>
+									<th width="5%">
+									<input type="checkbox" name="chkAll" id="chkAll" onclick="selectAll('chkID_[]','chkAll')">
+									</th>
 									<th width="10%">用户编号</th>
 									<th width="10%">商户名称</th>
 									<th width="10%">商户类型</th>	
 									<th width="10%">所在城市</th>
+									<th width="10%">商户状态</th>
 									<th width="30%">商户描述</th>						
 									<th width="5%">操作</th>
 								</tr>
-						<form name="form2" action="" method="post">		
 						<foreach name='sellerInfo' item='v1'>	
 						
 								<tr>
+									<td class="t-check">
+									   <input type="checkbox" name="chkID_[]" id="chkID_[{$key+1}]" value="{$v1.user_id}"/>
+									</td>
 									<td valign="middle" align="left" class="deal">{$v1.user_id}</td>
 									<td valign="middle" align="left" class="deal">{$v1.username}</td>
 									<td align="center" >{$v1.type_name}</td>
 									<td align="center"> {$v1.city}</td>
+									<td align="center"> {$v1.status}</td>
 									<td align="center" >{$v1.description}</td>
 									<td align="center" >
 										<input type="submit" value="编辑"  onclick="javascript:this.form.action='__URL__/sellerEditView?type=edit&sellerID={$v1.user_id}';"/>
@@ -155,16 +163,22 @@ margin-right: 10px;
 										<input type="submit" value="删除"  onclick="javascript:this.form.action='__URL__/sellerDelete?sellerID={$v1.user_id}';"/>
 										--->
 									</td>
-								</tr>
-						
+								</tr>					
 						</foreach>		
-						
 							<tr >
-								<td colspan="6" style=" text-align: center;" ><span>{$page1}</span></td>
+								<td colspan="8" style=" text-align: center;" ><span>{$page1}</span></td>
 							</tr>
-						</form>
+						
 							</tbody>
 						</table>
+						<strong class="btn-type-b btn-fn-c btnbar">
+							 <input type="submit" value="批量冻结" name="subFreeze" class=" form-btn"/> 
+						</strong>
+						<strong class="btn-type-b btn-fn-c btnbar">
+							<input type="submit" value="批量解冻"  class="form-btn" name="subUnfreeze"/>
+						
+						</strong>
+						</form>
 					</div>
 				</div>
 			</div>	<!--<div class="um-con">-->
@@ -380,8 +394,6 @@ margin-right: 10px;
 					
 					
 					<div class="pay-confirm">
-					<form method="post" name="box" id="box" action="__URL__/quantityDeal">
-					
 					<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">				
 						<thead>
 							<tr>
@@ -471,15 +483,6 @@ margin-right: 10px;
 						 </tbody>
 					
 						 </table>
-						 <strong class="btn-type-b btn-fn-c btnbar">
-							 <input type="submit" value="批量审批" name="subSure" class=" form-btn" /> 
-						</strong>
-						<strong class="btn-type-b btn-fn-c btnbar">
-							<input type="submit" value="批量退回"  class="form-btn" name="subQuit"/>
-						
-						</strong>
-						 
-					</form>
 					
 					<script type="text/javascript">
 						function selectAll(sonName, cbAllId){

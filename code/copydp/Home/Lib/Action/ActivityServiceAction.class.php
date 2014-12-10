@@ -11,7 +11,13 @@ class ActivityServiceAction extends BaseAction {
 		//设置总筛选条件
 		$activityViewDB=new Model('view_activity');
 		$activityList =$activityViewDB->where($activityFilter)->select();
-		
+		$activityCount = $activityViewDB->where($activityFilter)->count();
+		for($i=0;$i<$activityCount;$i++)
+		{
+		    $activityOrderDB = M('activity_order');
+		    $condition['activity_id'] = $activityList[$i]['activity_id'];
+		    $activityList[$i]['current_member'] = $activityOrderDB->where($condition)->count(); 
+		}
 		$rsp['errorCode'] = SUCCESS;
 		$rsp['activityList'] = $activityList;
 		$this->log("the ActivityList is".$activityList);

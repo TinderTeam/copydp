@@ -1,5 +1,5 @@
 ﻿# Host: 127.0.0.1  (Version: 5.1.70-community)
-# Date: 2014-12-08 15:27:18
+# Date: 2014-12-10 15:46:40
 # Generator: MySQL-Front 5.3  (Build 2.42)
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -84,7 +84,7 @@ CREATE TABLE `t_city` (
 # Data for table "t_city"
 #
 
-INSERT INTO `t_city` VALUES (1,'广州','113.270855','23.136533'),(2,'深圳','123','123'),(6,'shenzhen','1122333','1122333'),(7,NULL,'123','123');
+INSERT INTO `t_city` VALUES (1,'广州','113.270855','23.136533'),(2,'深圳','123','123'),(3,'上海','1','2');
 
 #
 # Source for table "t_city_zone"
@@ -185,7 +185,7 @@ CREATE TABLE `t_customer` (
 # Data for table "t_customer"
 #
 
-INSERT INTO `t_customer` VALUES (59,'VIP',12,'','123@11.com','',NULL,'正常','null','2014-12-05'),(60,'VIP',2,NULL,'111@qq.com',NULL,NULL,'正常','null','2014-11-27'),(62,'VIP',0,NULL,NULL,NULL,NULL,'待审批','审批',NULL),(63,'VIP',2,NULL,NULL,NULL,NULL,'正常','null','2014-11-27'),(67,'VIP',2,NULL,NULL,NULL,NULL,'正常','null','2014-12-05');
+INSERT INTO `t_customer` VALUES (59,'VIP',12,'','123@11.com','',NULL,'正常','null','2014-12-05'),(60,'VIP',2,NULL,'111@qq.com',NULL,NULL,'正常','null','2014-11-27'),(62,'VIP',0,NULL,NULL,NULL,NULL,'待审批','审批',NULL),(63,'VIP',2,NULL,NULL,NULL,NULL,'正常','null','2014-11-27'),(67,'VIP',4,NULL,NULL,NULL,NULL,'正常','null','2014-12-08');
 
 #
 # Source for table "t_news"
@@ -233,7 +233,7 @@ CREATE TABLE `t_order` (
 # Data for table "t_order"
 #
 
-INSERT INTO `t_order` VALUES ('1301417763256','产品1¥8.00×1',0,13,'产品1','测试产品',61,'2014-12-05 15:07:36',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('13591417061942','产品1¥8.00×1',59,13,'产品1','测试产品',61,'2014-11-27 12:19:02',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('13671417764624','产品1¥8.00×1',67,13,'产品1','测试产品',61,'2014-12-05 15:30:24',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('14601417057133','产品2¥6.00×1',60,14,'产品2','测试产品',61,'2014-11-27 10:58:53',1,6,234,'已下单',NULL,'5475e1814d8f0.png'),('14671417764638','产品2¥6.00×1',67,14,'产品2','测试产品',61,'2014-12-05 15:30:38',1,6,234,'已下单',NULL,'5475e1814d8f0.png');
+INSERT INTO `t_order` VALUES ('1301417763256','产品1¥8.00×1',0,13,'产品1','测试产品',61,'2014-12-05 15:07:36',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('13591417061942','产品1¥8.00×1',59,13,'产品1','测试产品',61,'2014-11-27 12:19:02',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('13591418055714','¥×1',59,13,NULL,NULL,NULL,'2014-12-09 00:21:54',1,NULL,NULL,'已下单',NULL,NULL),('13671417764624','产品1¥8.00×1',67,13,'产品1','测试产品',61,'2014-12-05 15:30:24',1,8,123,'已下单',NULL,'5475e15e969b4.png'),('14601417057133','产品2¥6.00×1',60,14,'产品2','测试产品',61,'2014-11-27 10:58:53',1,6,234,'已下单',NULL,'5475e1814d8f0.png'),('14671417764638','产品2¥6.00×1',67,14,'产品2','测试产品',61,'2014-12-05 15:30:38',1,6,234,'已下单',NULL,'5475e1814d8f0.png');
 
 #
 # Source for table "t_poll_code"
@@ -297,7 +297,7 @@ CREATE TABLE `t_product` (
 # Data for table "t_product"
 #
 
-INSERT INTO `t_product` VALUES (13,'产品1',1,61,'2014-12-08 00:00:00','2015-09-01 00:00:00',8.00,123.00,'测试产品','<p>产品详细描述：</p><p><img src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015743643.png _src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015743643.png style=/></p><p><img src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015793458.png _src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015793458.png style=/></p><p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','普通','5475e15e969b4.png',NULL,'正常'),(14,'产品2',1,61,'2014-11-26 00:00:00','2015-04-15 00:00:00',6.00,234.00,'测试产品','sdfs&nbsp;<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>','普通','5475e1814d8f0.png',NULL,'正常'),(15,'礼物',2,65,'2014-12-02 00:00:00','0000-00-00 00:00:00',0.00,0.00,'dhdhdh','&lt;p&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t你&lt;/p&gt;','普通','547d8430aa454.jpg',NULL,'已过期'),(16,'ff',2,65,'2014-12-02 00:00:00','0000-00-00 00:00:00',0.00,0.00,'','','普通','547d84849b188.jpg',NULL,'已过期');
+INSERT INTO `t_product` VALUES (13,'产品1',1,61,'2014-12-10 00:00:00','2015-09-01 00:00:00',8.00,123.00,'测试产品','<p>\t\t</p><p>产品详细描述：</p><p><img src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015743643.png _src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015743643.png style=//></p><p><img src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015793458.png _src=http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180015793458.png style=//></p><p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p><p>\t</p>','普通','5475e15e969b4.png',NULL,'正常'),(14,'产品2',1,61,'2014-12-10 00:00:00','2015-04-15 00:00:00',6.00,234.00,'测试产品','<p>\r\n\t\tsdfs&nbsp;</p><p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p><p>\t</p>','普通','5475e1814d8f0.png',NULL,'正常'),(15,'礼物',2,65,'2014-12-02 00:00:00','0000-00-00 00:00:00',0.00,0.00,'dhdhdh','&lt;p&gt;\n\t\t\t\t\t\t\t\t\t\t\t\t你&lt;/p&gt;','普通','547d8430aa454.jpg',NULL,'已过期'),(16,'ff',2,65,'2014-12-02 00:00:00','0000-00-00 00:00:00',0.00,0.00,'','','普通','547d84849b188.jpg',NULL,'已过期');
 
 #
 # Source for table "t_product_evaluation"
@@ -386,6 +386,7 @@ CREATE TABLE `t_seller` (
   `zone_id` varchar(255) DEFAULT NULL,
   `img` varchar(255) DEFAULT NULL,
   `info` varchar(2000) DEFAULT NULL,
+  `status` varchar(255) DEFAULT '正常',
   PRIMARY KEY (`user_id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `t_seller_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `t_product_type` (`type_id`)
@@ -395,7 +396,7 @@ CREATE TABLE `t_seller` (
 # Data for table "t_seller"
 #
 
-INSERT INTO `t_seller` VALUES (61,'6',10,'概述','','',NULL,'<p>详细描述</p>'),(64,'2',1,'',NULL,NULL,NULL,NULL),(65,'6',1,'sdf sd ','','5','547d30ceacab2.jpg','齐威王<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>'),(66,'2',3,'是大幅度','','1','547eb3b7c7ccf.png','<p>啊手动阀</p>'),(68,'1',10,'概述11111','','4',NULL,'<p>是 收到收到收到收到</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180206498399.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180206498399.png\\\"/></p>'),(69,'1',42,'GAISHU','','5','548549b9d19fd.png','<p>详细描述21112212</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180213038312.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180213038312.png\\\"/></p>'),(70,'6',10,'概述','','','54854f96d502f.png','<p>详细描述：</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180228048276.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180228048276.png\\\"/></p>'),(71,'1',10,'改改改改树','','4','548550812191c.png','<p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180230893201.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180230893201.png\\\"/></p>');
+INSERT INTO `t_seller` VALUES (61,'1',10,'概述士大夫','113.220262,23.099307','4','54866f63bfcab.png','<p>详细描述:</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141209/14180964816367.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141209/14180964816367.png\\\"/></p>','正常'),(64,'2',1,'',NULL,NULL,NULL,NULL,'正常'),(65,'6',1,'sdf sd ','','5','547d30ceacab2.jpg','齐威王<p>\r\n\t\t\t\t\t\t\t\t\t\t\t\t</p>',NULL),(66,'2',3,'是大幅度','','1','547eb3b7c7ccf.png','<p>啊手动阀</p>',NULL),(68,'1',10,'概述11111','','4',NULL,'<p>是 收到收到收到收到</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180206498399.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180206498399.png\\\"/></p>',NULL),(69,'1',42,'GAISHU','','5','548549b9d19fd.png','<p>详细描述21112212</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180213038312.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180213038312.png\\\"/></p>',NULL),(70,'6',10,'概述','','','54854f96d502f.png','<p>详细描述：</p><p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180228048276.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180228048276.png\\\"/></p>',NULL),(71,'1',10,'改改改改树','','4','548550812191c.png','<p><img src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180230893201.png\\\" _src=\\\"http://localhost:7000/copydp/Public/ueditor/php/upload/20141208/14180230893201.png\\\"/></p>',NULL);
 
 #
 # Source for table "t_seller_evaluation"
@@ -558,7 +559,7 @@ CREATE VIEW `t_view_recommernd` AS
 
 DROP VIEW IF EXISTS `t_view_seller`;
 CREATE VIEW `t_view_seller` AS 
-  select `t_seller`.`user_id` AS `user_id`,`t_seller`.`city_id` AS `city_id`,`t_seller`.`zone_id` AS `zone_id`,`t_seller`.`type_id` AS `type_id`,`t_seller`.`description` AS `description`,`t_seller`.`position` AS `position`,`t_seller`.`img` AS `img`,`t_seller`.`info` AS `info`,`t_product_type`.`type_name` AS `type_name`,`t_product_type`.`father_id` AS `father_id`,`t_city`.`city` AS `city`,`t_city_zone`.`zone_name` AS `zone_name`,`t_user`.`password` AS `password`,`t_user`.`username` AS `username`,`t_user`.`role` AS `role` from ((((`t_seller` left join `t_product_type` on((`t_seller`.`type_id` = `t_product_type`.`type_id`))) left join `t_city` on((`t_seller`.`city_id` = `t_city`.`city_id`))) left join `t_city_zone` on(((`t_seller`.`city_id` = `t_city_zone`.`city_id`) and (`t_seller`.`zone_id` = `t_city_zone`.`zone_id`)))) left join `t_user` on((`t_seller`.`user_id` = `t_user`.`user_id`))) where (`t_user`.`role` = 'SELLER');
+  select `t_seller`.`user_id` AS `user_id`,`t_seller`.`city_id` AS `city_id`,`t_seller`.`zone_id` AS `zone_id`,`t_seller`.`type_id` AS `type_id`,`t_seller`.`description` AS `description`,`t_seller`.`position` AS `position`,`t_seller`.`img` AS `img`,`t_seller`.`info` AS `info`,`t_seller`.`status` AS `status`,`t_product_type`.`type_name` AS `type_name`,`t_product_type`.`father_id` AS `father_id`,`t_city`.`city` AS `city`,`t_city_zone`.`zone_name` AS `zone_name`,`t_user`.`password` AS `password`,`t_user`.`username` AS `username`,`t_user`.`role` AS `role` from ((((`t_seller` left join `t_product_type` on((`t_seller`.`type_id` = `t_product_type`.`type_id`))) left join `t_city` on((`t_seller`.`city_id` = `t_city`.`city_id`))) left join `t_city_zone` on(((`t_seller`.`city_id` = `t_city_zone`.`city_id`) and (`t_seller`.`zone_id` = `t_city_zone`.`zone_id`)))) left join `t_user` on((`t_seller`.`user_id` = `t_user`.`user_id`))) where (`t_user`.`role` = 'SELLER');
 
 #
 # Source for view "t_view_zone"

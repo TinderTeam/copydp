@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.fuego.eshoping.webservice.up.model.base.BaseJsonRsp;
+import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 
 public class GetCityListRsp extends BaseJsonRsp
 {
 
-	List<List<String>> cityList = new ArrayList<List<String>>();
+	
+	List<CityJson> cityList = new ArrayList<CityJson>();
 	List<String> pinyin = new ArrayList<String>();
-	public List<List<String>> getCityList() {
+	
+	public List<CityJson> getCityList() {
 		return cityList;
 	}
-	public void setCityList(List<List<String>> cityList) {
+	public void setCityList(List<CityJson> cityList) {
 		this.cityList = cityList;
 	}
 	public List<String> getPinyin() {
