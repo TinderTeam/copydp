@@ -15,14 +15,18 @@
 #import "FEProduct.h"
 #import "CDUser.h"
 
+@interface FEProductOrderVC ()
+@property (strong, nonatomic) IBOutlet UILabel *productPerPrice;
+@property (strong, nonatomic) UIView *footerView;
+@property (strong, nonatomic) UIButton *submitButton;
+
+@end
 
 @implementation FEProductOrderVC
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    [self.submitButton setBackgroundImage:[UIImage imageFromColor:FEThemeOrange] forState:UIControlStateNormal];
-    self.submitButton.layer.cornerRadius = 4;
-    self.submitButton.layer.masksToBounds = YES;
+    self.title = FEString(@"提交订单");
     
 }
 
@@ -39,5 +43,34 @@
     }
     
 }
+
+#pragma mark - UITableViewDataSource
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//}
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if (section == 0) {
+        if (!self.footerView) {
+            self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 100)];
+            self.footerView.userInteractionEnabled = YES;
+            self.submitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [self.submitButton setTitle:FEString(@"提交订单") forState:UIControlStateNormal];
+            self.submitButton.frame = CGRectMake((self.footerView.bounds.size.width - 200) / 2, 10, 200, 35);
+            [self.submitButton setBackgroundImage:[UIImage imageFromColor:FEThemeOrange] forState:UIControlStateNormal];
+            [self.submitButton addTarget:self action:@selector(submitOrder:) forControlEvents:UIControlEventTouchUpInside];
+            self.submitButton.layer.cornerRadius = 4;
+            self.submitButton.layer.masksToBounds = YES;
+
+            [self.footerView addSubview:self.submitButton];
+        }
+        return self.footerView;
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 100;
+}
+
 
 @end

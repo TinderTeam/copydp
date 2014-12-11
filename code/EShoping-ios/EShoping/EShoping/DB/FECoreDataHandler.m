@@ -296,11 +296,19 @@ relationshipKeyPathsForPrefetching:nil
 
 #pragma mark - CDZone
 -(CDZone *)touchZoneByID:(NSNumber *)zid{
-    CDZone *zone = (CDZone *)[NSEntityDescription insertNewObjectForEntityForName:@"CDZone" inManagedObjectContext:self.managedObjectContext];
-    zone.zone_id = zid;
+
+    CDZone *zone = [self fetchEntityByName:@"CDZone" predicate:[NSPredicate predicateWithFormat:@"SELF.zone_id == %@",zid] sortKeys:nil].lastObject;
+    if (!zone) {
+        zone = (CDZone *)[NSEntityDescription insertNewObjectForEntityForName:@"CDZone" inManagedObjectContext:self.managedObjectContext];
+        zone.zone_id = zid;
+    }
     return zone;
 }
 
+-(NSArray *)fetchZoneByCity:(CDCity *)city{
+//    NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF.city",city];
+    return [self fetchEntityByName:@"CDZone" predicate:[NSPredicate predicateWithFormat:@"SELF.city == %@",city] sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"zone_id" ascending:YES]]];
+}
 
 #pragma mark - CDCategory
 -(CDCategory *)touchCategoryById:(NSNumber *)tid{

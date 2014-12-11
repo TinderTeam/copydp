@@ -338,8 +338,15 @@
         FECityRequest *rdata = [[FECityRequest alloc] init];
         [[FEShopWebServiceManager sharedInstance] city:rdata response:^(NSError *error, FECityResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
-//                for (NSString *pinyin in response.pinyin) {
                 for (FECity *fecity in response.cityList) {
+                    
+                    NSString *region = FEUserDefaultsObjectForKey(FEShopRegionKey);
+                    if (!region) {
+                        FEUserDefaultsSetObjectForKey(fecity.city, FEShopRegionKey);
+                        FEUserDefaultsSync;
+                        [weakself.regionBarItem setTitle:fecity.city];
+                    }
+                    
                     CDCity *city = [FECoreData touchCityByName:fecity.city];
                     city.citynumber = fecity.city_id;
                     city.x = fecity.x;
@@ -361,14 +368,14 @@
                         cdzone.city_id = fecity.city_id;
                         [city addZone_listObject:cdzone];
                     }
-                    CDZone *czone = [FECoreData touchZoneByID:fecity.city_id];
+                    CDZone *czone = [FECoreData touchZoneByID:@(0)];
                     czone.zone_name = @"全部商圈";
                     czone.city_id = fecity.city_id;
                     [city addZone_listObject:czone];
                 }
+                
             }
             [FECoreData saveCoreData];
-//            }
             dispatch_semaphore_signal(sem);
         }];
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);

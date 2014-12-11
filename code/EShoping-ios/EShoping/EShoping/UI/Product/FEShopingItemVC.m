@@ -31,6 +31,7 @@
     // Do any additional setup after loading the view.
     _productInfo = [NSMutableArray new];
     NSArray *s = @[@"商家介绍",@"特惠详情",@"商户位置",@"购买须知",@"商户评价"];
+//    NSArray *info = @[@{__CELL_TYPE:@(1),__CELL_HIGHT:@(50)}];
     for (NSString *str in s) {
         NSDictionary *info = @{__CELL_TYPE:@(0),__CELL_HIGHT:@(30),__CELL_CONTENT:str};
         NSDictionary *info1 = @{__CELL_TYPE:@(0),__CELL_HIGHT:@(20),__CELL_CONTENT:@""};

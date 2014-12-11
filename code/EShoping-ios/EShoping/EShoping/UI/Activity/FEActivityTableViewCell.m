@@ -23,7 +23,7 @@
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(activity.imgsrc)] placeholderImage:nil];
     self.activityDescriptionLabel.text = activity.dscr;
     self.activityTitleLabel.text = activity.title;
-    self.activityJoinLabel.text = [NSString stringWithFormat:@"参与人数: 0/%@",activity.memberlimit] ;
+    self.activityJoinLabel.text = [NSString stringWithFormat:@"参与人数: %@/%@",activity.current_member,activity.memberlimit] ;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

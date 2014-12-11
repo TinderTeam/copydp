@@ -45,24 +45,19 @@
     NSArray *rootcategorys = [allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == 0 || SELF.father_id = -1"]];
     NSMutableArray *filltercateforys = [NSMutableArray new];
     for (CDCategory *category in rootcategorys) {
-        NSArray *childcategorys = [allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == %@",category.type_id]];
+        NSArray *childcategorys = (category.type_id.integerValue == 0)?nil:[allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == %@",category.type_id]];
         NSDictionary *cdic = childcategorys?@{_CKEY:category,_CCHILD:childcategorys}:@{_CKEY:category};
         [filltercateforys addObject:cdic];
     }
     self.categoryArray = filltercateforys;
-    NSArray *zones = [FECoreData fecthCityByName:FEUserDefaultsObjectForKey(FEShopRegionKey)].zone_list.allObjects;
+
+    NSArray *zones = [FECoreData fetchZoneByCity:[FECoreData fecthCityByName:FEUserDefaultsObjectForKey(FEShopRegionKey)]];
     NSMutableArray *zonesarray = [NSMutableArray new];
     for (CDZone *zone in zones) {
         [zonesarray addObject:@{_CKEY:zone}];
     }
     self.regoinArray = zonesarray;
     
-//    self.regoinArray = @[
-//                         @{_CKEY:@"全部商圈"},
-//                         @{_CKEY:@"工业园区"},
-//                         @{_CKEY:@"平江区"},
-//                         @{_CKEY:@"吴中区"},
-//                         @{_CKEY:@"金阊区"}];
     self.sortArray = @[
                        @{_CKEY:@"智能排序"},
                        @{_CKEY:@"离我最近"},
@@ -84,8 +79,8 @@
 
 -(void)initUI{
     
-//    self.edgesForExtendedLayout = UIRectEdgeAll;
-//    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.extendedLayoutIncludesOpaqueBars = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 0) andHeight:40];
     menu.dataSource = self;
@@ -128,6 +123,9 @@
 - (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath{
     id item = self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
     if ([item isKindOfClass:[CDCategory class]]) {
+        if (indexPath.subrow != -1) {
+            return ((CDCategory *)self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][indexPath.subrow]).type_name;
+        }
         return ((CDCategory *)item).type_name;
     }else if([item isKindOfClass:[CDZone class]]){
         return ((CDZone *)item).zone_name;
@@ -141,16 +139,16 @@
     return [self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD] count];
 }
 
--(NSString *)menu:(DOPDropDownMenu *)menu titleForSubRowAtIndexPath:(DOPIndexPath *)indexPath subrowAtIndex:(NSInteger)index{
-    
-    id item = self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index];
-    if ([item isKindOfClass:[CDCategory class]]) {
-        return ((CDCategory *)item).type_name;
-    }else{
-        return self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index];
-    }
-//    return ((CDCategory *)self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index]).type_name;
-}
+//-(NSString *)menu:(DOPDropDownMenu *)menu titleForSubRowAtIndexPath:(DOPIndexPath *)indexPath subrowAtIndex:(NSInteger)index{
+//    
+//    id item = self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index];
+//    if ([item isKindOfClass:[CDCategory class]]) {
+//        return ((CDCategory *)item).type_name;
+//    }else{
+//        return self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index];
+//    }
+////    return ((CDCategory *)self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][index]).type_name;
+//}
 
 -(BOOL)menu:(DOPDropDownMenu *)menu columRowHasSub:(DOPIndexPath *)indexPath{
     
@@ -170,7 +168,15 @@
 
 #pragma mark - DOPDropDownMenuDelegate
 -(void)menu:(DOPDropDownMenu *)menu didSelectRowAtIndexPath:(DOPIndexPath *)indexPath{
-    
+    if (indexPath.column == 0) {
+        NSArray *a = self.categoryArray[indexPath.row][_CCHILD];
+        if (a.count) {
+            self.productcategory = self.categoryArray[indexPath.row][_CCHILD][indexPath.subrow];
+        }else{
+            self.productcategory = self.categoryArray[indexPath.row][_CKEY];
+        }
+        [self requestProduct];
+    }
 }
 
 #pragma mark - UITableVieDataSource

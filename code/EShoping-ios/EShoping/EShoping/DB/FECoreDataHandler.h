@@ -46,6 +46,7 @@
 -(NSArray *)fetchCity;
 -(CDCity *)touchCityByName:(NSString *)cname;
 -(CDCity *)fecthCityByName:(NSString *)cname;
+-(NSArray *)fetchZoneByCity:(CDCity *)city;
 //zone
 -(CDZone *)touchZoneByID:(NSNumber *)zid;
 //catecory
