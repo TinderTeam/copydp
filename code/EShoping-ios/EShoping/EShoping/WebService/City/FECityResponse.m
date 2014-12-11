@@ -7,6 +7,7 @@
 //
 
 #import "FECityResponse.h"
+#import "FECity.h"
 
 @implementation FECityResponse
 
@@ -15,7 +16,12 @@
     if (self) {
         NSArray *citylist = response[@"cityList"];
         if (citylist && ![citylist isKindOfClass:[NSNull class]]) {
-            _cityList = citylist;
+//            _cityList = citylist;
+            NSMutableArray *citys = [NSMutableArray new];
+            for (NSDictionary *city in citylist) {
+                [citys addObject:[[FECity alloc] initWithDictionary:city]];
+            }
+            _cityList = citys;
         }
         NSArray *pinyin = response[@"pinyin"];
         if (pinyin && ![pinyin isKindOfClass:[NSNull class]]) {

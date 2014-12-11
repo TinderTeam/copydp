@@ -20,6 +20,8 @@
 #import "FEShopCategory.h"
 #import "AppDelegate.h"
 #import "FECoreDataHandler.h"
+#import "CDCity.h"
+#import "CDZone.h"
 
 @interface FEGroupCategoryVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *groupTableView;
@@ -48,13 +50,19 @@
         [filltercateforys addObject:cdic];
     }
     self.categoryArray = filltercateforys;
+    NSArray *zones = [FECoreData fecthCityByName:FEUserDefaultsObjectForKey(FEShopRegionKey)].zone_list.allObjects;
+    NSMutableArray *zonesarray = [NSMutableArray new];
+    for (CDZone *zone in zones) {
+        [zonesarray addObject:@{_CKEY:zone}];
+    }
+    self.regoinArray = zonesarray;
     
-    self.regoinArray = @[
-                         @{_CKEY:@"全部商圈"},
-                         @{_CKEY:@"工业园区"},
-                         @{_CKEY:@"平江区"},
-                         @{_CKEY:@"吴中区"},
-                         @{_CKEY:@"金阊区"}];
+//    self.regoinArray = @[
+//                         @{_CKEY:@"全部商圈"},
+//                         @{_CKEY:@"工业园区"},
+//                         @{_CKEY:@"平江区"},
+//                         @{_CKEY:@"吴中区"},
+//                         @{_CKEY:@"金阊区"}];
     self.sortArray = @[
                        @{_CKEY:@"智能排序"},
                        @{_CKEY:@"离我最近"},
@@ -121,6 +129,8 @@
     id item = self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
     if ([item isKindOfClass:[CDCategory class]]) {
         return ((CDCategory *)item).type_name;
+    }else if([item isKindOfClass:[CDZone class]]){
+        return ((CDZone *)item).zone_name;
     }else{
         return self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
     }

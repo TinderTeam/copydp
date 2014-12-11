@@ -9,6 +9,9 @@
         <attribute name="cityititle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="citynumber" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="citypinin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="x" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="y" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="zone_list" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDZone" inverseName="city" inverseEntity="CDZone" syncable="YES"/>
     </entity>
     <entity name="CDUser" representedClassName="CDUser" syncable="YES">
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
@@ -16,9 +19,16 @@
         <attribute name="user_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="CDZone" representedClassName="CDZone" syncable="YES">
+        <attribute name="city_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="zone_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="zone_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDCity" inverseName="zone_list" inverseEntity="CDCity" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="CDUser" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="CDCity" positionX="-63" positionY="9" width="128" height="90"/>
         <element name="CDCategory" positionX="-54" positionY="27" width="128" height="88"/>
+        <element name="CDCity" positionX="-63" positionY="9" width="128" height="133"/>
+        <element name="CDUser" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="CDZone" positionX="-36" positionY="54" width="128" height="103"/>
     </elements>
 </model>

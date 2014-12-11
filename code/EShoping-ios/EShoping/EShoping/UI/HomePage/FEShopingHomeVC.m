@@ -37,6 +37,10 @@
 #import "FEProductTypeRecRequest.h"
 #import "FEProductTypeRecResponse.h"
 
+#import "FECity.h"
+#import "FEZone.h"
+#import "CDZone.h"
+
 
 @interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,FECitySelectVCDelegate>{
     dispatch_semaphore_t semaphore;
@@ -334,14 +338,37 @@
         FECityRequest *rdata = [[FECityRequest alloc] init];
         [[FEShopWebServiceManager sharedInstance] city:rdata response:^(NSError *error, FECityResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
-                for (NSString *pinyin in response.pinyin) {
-                    for (NSString *cityname in response.cityList[[response.pinyin indexOfObject:pinyin]]) {
-                        CDCity *city = [FECoreData touchCityByName:cityname];
-                        city.citypinin = pinyin;
+//                for (NSString *pinyin in response.pinyin) {
+                for (FECity *fecity in response.cityList) {
+                    CDCity *city = [FECoreData touchCityByName:fecity.city];
+                    city.citynumber = fecity.city_id;
+                    city.x = fecity.x;
+                    city.y = fecity.y;
+                    CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)fecity.city);
+                    CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
+                    NSString *pinyin = (__bridge NSString *)string;
+                    NSString *firtletter = NULL;
+                    if (pinyin.length) {
+                        firtletter = [pinyin substringToIndex:1];
+                    }else{
+                        firtletter = @"#";
                     }
+                    firtletter = [firtletter uppercaseString];
+                    city.citypinin = firtletter;
+                    for (FEZone *zone in fecity.zone_list) {
+                        CDZone *cdzone = [FECoreData touchZoneByID:zone.zone_id];
+                        cdzone.zone_name = zone.zone_name;
+                        cdzone.city_id = fecity.city_id;
+                        [city addZone_listObject:cdzone];
+                    }
+                    CDZone *czone = [FECoreData touchZoneByID:fecity.city_id];
+                    czone.zone_name = @"全部商圈";
+                    czone.city_id = fecity.city_id;
+                    [city addZone_listObject:czone];
                 }
-                [FECoreData saveCoreData];
             }
+            [FECoreData saveCoreData];
+//            }
             dispatch_semaphore_signal(sem);
         }];
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);

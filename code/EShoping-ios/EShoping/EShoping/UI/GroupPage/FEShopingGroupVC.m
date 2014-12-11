@@ -42,13 +42,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initUI];
-//    [self requestNewProduct];
-//    [self requestTypeRecommend];
     __weak typeof(self) weakself = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
-//        [weakself requestNewProduct];
-//        [weakself requestTypeRecommend];
     }];
     [self requestRecommend];
 }

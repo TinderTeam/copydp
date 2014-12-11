@@ -11,6 +11,7 @@
 #import "CDUser.h"
 #import "CDCity.h"
 #import "CDCategory.h"
+#import "CDZone.h"
 
 @implementation FESortDescriptor
 @synthesize key;
@@ -288,6 +289,18 @@ relationshipKeyPathsForPrefetching:nil
 -(NSArray *)fetchCity{
     return [self fetchEntityByName:@"CDCity" predicate:nil sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"citypinin" ascending:YES]]];
 }
+
+-(CDCity *)fecthCityByName:(NSString *)cname{
+    return [self fetchEntityByName:@"CDCity" predicate:[NSPredicate predicateWithFormat:@"SELF.cityititle == %@",cname] sortKeys:nil].lastObject;
+}
+
+#pragma mark - CDZone
+-(CDZone *)touchZoneByID:(NSNumber *)zid{
+    CDZone *zone = (CDZone *)[NSEntityDescription insertNewObjectForEntityForName:@"CDZone" inManagedObjectContext:self.managedObjectContext];
+    zone.zone_id = zid;
+    return zone;
+}
+
 
 #pragma mark - CDCategory
 -(CDCategory *)touchCategoryById:(NSNumber *)tid{
