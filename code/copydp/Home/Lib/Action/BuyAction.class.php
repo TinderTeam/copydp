@@ -250,6 +250,21 @@ class BuyAction extends BuyServiceAction {
         $Rsp['productList'] = $productListResult['productList'];
         $this->returnJson($errorCode,$Rsp);
     }
+    //APP获取分类推荐产品列表
+    public function GetSellerInfo_rest(){
+    
+        $req =  $this->getReqObj();
+        $condition['user_id'] = $req->seller_id;
+        $sellerViewDB = new Model('view_seller');
+        $seller = $sellerViewDB->where($condition)->find();
+        $errorCode = SUCCESS;
+        if($seller==false)
+        {
+            $seller=null;
+        }
+        $Rsp['seller'] = $seller;
+        $this->returnJson($errorCode,$Rsp);
+    }
 	public function cancelFilter($crtCdtItm=0){
 	
 		if($crtCdtItm!=0){
