@@ -1,33 +1,210 @@
 
-/* Class = "IBUIBarButtonItem"; title = "Item"; ObjectID = "JfT-Wp-Z8g"; */
-"JfT-Wp-Z8g.title" = "Item";
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "03d-C2-1Kw"; */
+"03d-C2-1Kw.text" = "Label";
 
-/* Class = "IBUINavigationController"; title = "fourth"; ObjectID = "K6J-7s-bwJ"; */
-"K6J-7s-bwJ.title" = "fourth";
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "11u-xb-IQx"; */
+"11u-xb-IQx.text" = "Label";
 
-/* Class = "IBUIBarButtonItem"; title = "Message"; ObjectID = "Mko-9T-lTu"; */
-"Mko-9T-lTu.title" = "Message";
+/* Class = "IBUILabel"; text = "密    码："; ObjectID = "13E-Jj-W4O"; */
+"13E-Jj-W4O.text" = "密    码：";
+
+/* Class = "IBUITextField"; placeholder = "6-32位密码"; ObjectID = "1JY-Jk-biw"; */
+"1JY-Jk-biw.placeholder" = "6-32位密码";
+
+/* Class = "IBUITableViewController"; title = "Setting"; ObjectID = "28v-dk-Nng"; */
+"28v-dk-Nng.title" = "Setting";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "2M9-X0-y7y"; */
+"2M9-X0-y7y.text" = "Label";
+
+/* Class = "IBUIButton"; normalTitle = "1"; ObjectID = "5Is-7V-qFz"; */
+"5Is-7V-qFz.normalTitle" = "1";
+
+/* Class = "IBUILabel"; text = "消息提醒设置"; ObjectID = "5tj-tv-eXx"; */
+"5tj-tv-eXx.text" = "消息提醒设置";
+
+/* Class = "IBUILabel"; text = "设置"; ObjectID = "6ib-rD-kpl"; */
+"6ib-rD-kpl.text" = "设置";
+
+/* Class = "IBUILabel"; text = "修改密码"; ObjectID = "8TV-q3-XAQ"; */
+"8TV-q3-XAQ.text" = "修改密码";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "8iD-b1-dBQ"; */
+"8iD-b1-dBQ.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "95o-VG-zAP"; */
+"95o-VG-zAP.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "9tR-Uo-7Ru"; */
+"9tR-Uo-7Ru.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "ANv-oA-gAG"; */
+"ANv-oA-gAG.text" = "Label";
+
+/* Class = "IBUITabBarItem"; title = "最新资讯"; ObjectID = "ATz-lX-6om"; */
+"ATz-lX-6om.title" = "最新资讯";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "BeF-LE-6qs"; */
+"BeF-LE-6qs.text" = "Label";
+
+/* Class = "IBUILabel"; text = "头像"; ObjectID = "CEY-HM-TNI"; */
+"CEY-HM-TNI.text" = "头像";
+
+/* Class = "IBUILabel"; text = "没有任何活动~"; ObjectID = "CEp-1d-aLB"; */
+"CEp-1d-aLB.text" = "没有任何活动~";
+
+/* Class = "IBUILabel"; text = "我已看过并通过EShoping"; ObjectID = "CIQ-Ie-dL9"; */
+"CIQ-Ie-dL9.text" = "我已看过并通过EShoping";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Ee8-AF-LBE"; */
+"Ee8-AF-LBE.text" = "Label";
+
+/* Class = "IBUIBarButtonItem"; title = "苏州"; ObjectID = "Erx-gP-Txu"; */
+"Erx-gP-Txu.title" = "苏州";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "FaV-Wp-ZVp"; */
+"FaV-Wp-ZVp.text" = "Detail";
+
+/* Class = "IBUILabel"; text = "总价"; ObjectID = "Fgn-bc-w1x"; */
+"Fgn-bc-w1x.text" = "总价";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "GEV-1B-jkw"; */
+"GEV-1B-jkw.text" = "Label";
+
+/* Class = "IBUILabel"; text = "手机号"; ObjectID = "GIe-1z-I93"; */
+"GIe-1z-I93.text" = "手机号";
+
+/* Class = "IBUILabel"; text = "清楚缓存"; ObjectID = "GuY-c3-GcD"; */
+"GuY-c3-GcD.text" = "清楚缓存";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "IHb-oY-TGK"; */
+"IHb-oY-TGK.text" = "Detail";
+
+/* Class = "IBUIBarButtonItem"; title = "苏州"; ObjectID = "JfT-Wp-Z8g"; */
+"JfT-Wp-Z8g.title" = "苏州";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "KVD-wH-KWR"; */
+"KVD-wH-KWR.text" = "Label";
+
+/* Class = "IBUILabel"; text = "我的活动"; ObjectID = "KWr-eo-OpO"; */
+"KWr-eo-OpO.text" = "我的活动";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "N4P-rK-ffi"; */
+"N4P-rK-ffi.text" = "Label";
+
+/* Class = "IBUILabel"; text = "￥178"; ObjectID = "O1e-uw-g9x"; */
+"O1e-uw-g9x.text" = "￥178";
+
+/* Class = "IBUILabel"; text = "数量"; ObjectID = "PAp-W3-W6c"; */
+"PAp-W3-W6c.text" = "数量";
+
+/* Class = "IBUIBarButtonItem"; title = "注册"; ObjectID = "Qyx-oD-ukh"; */
+"Qyx-oD-ukh.title" = "注册";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "VTJ-Ue-bkM"; */
+"VTJ-Ue-bkM.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "WMf-kt-vR1"; */
+"WMf-kt-vR1.text" = "Detail";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "WZr-ZX-YWz"; */
+"WZr-ZX-YWz.text" = "Label";
 
 /* Class = "IBUITabBarItem"; title = "Discover"; ObjectID = "WmY-YT-Uyv"; */
 "WmY-YT-Uyv.title" = "Discover";
 
-/* Class = "IBUINavigationController"; title = "First"; ObjectID = "WvI-mz-QH0"; */
-"WvI-mz-QH0.title" = "First";
-
 /* Class = "IBUITabBarItem"; title = "Shoping"; ObjectID = "Yzb-gG-Rpb"; */
 "Yzb-gG-Rpb.title" = "Shoping";
 
-/* Class = "IBUINavigationController"; title = "Second"; ObjectID = "d94-L1-XGL"; */
-"d94-L1-XGL.title" = "Second";
+/* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "ZhF-M4-bTr"; */
+"ZhF-M4-bTr.title" = "Back";
 
-/* Class = "IBUITabBarItem"; title = "Home"; ObjectID = "ful-U9-0Sa"; */
-"ful-U9-0Sa.title" = "Home";
+/* Class = "IBUILabel"; text = "性别"; ObjectID = "aJZ-4T-FAY"; */
+"aJZ-4T-FAY.text" = "性别";
+
+/* Class = "IBUILabel"; text = "用户名："; ObjectID = "ady-rb-cCU"; */
+"ady-rb-cCU.text" = "用户名：";
+
+/* Class = "IBUILabel"; text = "我的订单"; ObjectID = "bOp-pk-btv"; */
+"bOp-pk-btv.text" = "我的订单";
+
+/* Class = "IBUILabel"; text = "没用任何团购信息~"; ObjectID = "dhw-cE-70K"; */
+"dhw-cE-70K.text" = "没用任何团购信息~";
+
+/* Class = "IBUITabBarItem"; title = "活动"; ObjectID = "dji-1z-lmv"; */
+"dji-1z-lmv.title" = "活动";
+
+/* Class = "IBUITextField"; placeholder = "请输入真实的邮箱"; ObjectID = "eLT-7b-oGP"; */
+"eLT-7b-oGP.placeholder" = "请输入真实的邮箱";
+
+/* Class = "IBUIButton"; normalTitle = "登          陆"; ObjectID = "eg1-Sd-urM"; */
+"eg1-Sd-urM.normalTitle" = "登          陆";
+
+/* Class = "IBUILabel"; text = "单价"; ObjectID = "fCh-xf-zL5"; */
+"fCh-xf-zL5.text" = "单价";
+
+/* Class = "IBUILabel"; text = "昵称"; ObjectID = "fiI-tf-9Wq"; */
+"fiI-tf-9Wq.text" = "昵称";
+
+/* Class = "IBUITabBarItem"; title = "首页"; ObjectID = "ful-U9-0Sa"; */
+"ful-U9-0Sa.title" = "首页";
+
+/* Class = "IBUIButton"; normalTitle = "取消参与"; ObjectID = "hK7-Yt-Pgj"; */
+"hK7-Yt-Pgj.normalTitle" = "取消参与";
+
+/* Class = "IBUIButton"; normalTitle = "注               册"; ObjectID = "iTt-6r-dFc"; */
+"iTt-6r-dFc.normalTitle" = "注               册";
+
+/* Class = "IBUILabel"; text = "关于我们"; ObjectID = "kbt-eL-ONz"; */
+"kbt-eL-ONz.text" = "关于我们";
+
+/* Class = "IBUILabel"; text = "我的积分"; ObjectID = "kee-Ij-vmY"; */
+"kee-Ij-vmY.text" = "我的积分";
+
+/* Class = "IBUILabel"; text = "￥35"; ObjectID = "kmD-uY-cEV"; */
+"kmD-uY-cEV.text" = "￥35";
 
 /* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "lJO-ay-qSO"; */
 "lJO-ay-qSO.title" = "Back";
 
-/* Class = "IBUINavigationController"; title = "Third"; ObjectID = "oej-hc-Vqx"; */
-"oej-hc-Vqx.title" = "Third";
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "nI3-hN-yon"; */
+"nI3-hN-yon.text" = "Label";
 
-/* Class = "IBUITabBarItem"; title = "Me"; ObjectID = "pVj-hj-NNv"; */
-"pVj-hj-NNv.title" = "Me";
+/* Class = "IBUILabel"; text = "版本更新"; ObjectID = "oCj-Ai-217"; */
+"oCj-Ai-217.text" = "版本更新";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "p1g-PF-Bq9"; */
+"p1g-PF-Bq9.text" = "Title";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "pCP-cP-9M5"; */
+"pCP-cP-9M5.text" = "Label";
+
+/* Class = "IBUITabBarItem"; title = "个人中心"; ObjectID = "pVj-hj-NNv"; */
+"pVj-hj-NNv.title" = "个人中心";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "pzp-M6-NYb"; */
+"pzp-M6-NYb.text" = "Label";
+
+/* Class = "IBUIButton"; normalTitle = "《用户协议》"; ObjectID = "qxS-WT-If8"; */
+"qxS-WT-If8.normalTitle" = "《用户协议》";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "rAP-Fy-aAU"; */
+"rAP-Fy-aAU.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "uNv-fy-sLy"; */
+"uNv-fy-sLy.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "ujX-Pt-SNu"; */
+"ujX-Pt-SNu.text" = "Title";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "wOF-av-A2U"; */
+"wOF-av-A2U.text" = "Title";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "wv6-ME-VNA"; */
+"wv6-ME-VNA.text" = "Label";
+
+/* Class = "IBUILabel"; text = "图片设置"; ObjectID = "xqM-Rs-O7K"; */
+"xqM-Rs-O7K.text" = "图片设置";
+
+/* Class = "IBUITableViewController"; title = "Shoping Me"; ObjectID = "zv0-kj-aVg"; */
+"zv0-kj-aVg.title" = "Shoping Me";
