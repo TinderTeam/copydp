@@ -150,6 +150,11 @@
 		14C8F5971A1C310600E04B04 /* FESiginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5961A1C310600E04B04 /* FESiginVC.m */; };
 		14C8F59A1A1C313600E04B04 /* FEPersonProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5991A1C313600E04B04 /* FEPersonProfileVC.m */; };
 		14DDD5A51A3A90AF00C5B190 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14DDD5A71A3A90AF00C5B190 /* Main.storyboard */; };
+		14DDD5AD1A3A960800C5B190 /* FEProductGetSellerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DDD5AC1A3A960800C5B190 /* FEProductGetSellerRequest.m */; };
+		14DDD5B01A3A962500C5B190 /* FEProductGetSellerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DDD5AF1A3A962500C5B190 /* FEProductGetSellerResponse.m */; };
+		14DDD5B31A3A984E00C5B190 /* FEShopSeller.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DDD5B21A3A984E00C5B190 /* FEShopSeller.m */; };
+		14DDD5B51A3AC67800C5B190 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DDD5B41A3AC67800C5B190 /* MapKit.framework */; };
+		14DDD5B81A3AC79A00C5B190 /* FEMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DDD5B71A3AC79A00C5B190 /* FEMapView.m */; };
 		E61FA59E5A5A87F94DAC628C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1592EE0451FECA7C54A4A2A8 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -438,8 +443,16 @@
 		14C8F5961A1C310600E04B04 /* FESiginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESiginVC.m; sourceTree = "<group>"; };
 		14C8F5981A1C313600E04B04 /* FEPersonProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEPersonProfileVC.h; sourceTree = "<group>"; };
 		14C8F5991A1C313600E04B04 /* FEPersonProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEPersonProfileVC.m; sourceTree = "<group>"; };
-		14DDD5A61A3A90AF00C5B190 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/Main.storyboard"; sourceTree = "<group>"; };
-		14DDD5A91A3A90C700C5B190 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		14DDD5AA1A3A955000C5B190 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		14DDD5AB1A3A960800C5B190 /* FEProductGetSellerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProductGetSellerRequest.h; sourceTree = "<group>"; };
+		14DDD5AC1A3A960800C5B190 /* FEProductGetSellerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductGetSellerRequest.m; sourceTree = "<group>"; };
+		14DDD5AE1A3A962500C5B190 /* FEProductGetSellerResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProductGetSellerResponse.h; sourceTree = "<group>"; };
+		14DDD5AF1A3A962500C5B190 /* FEProductGetSellerResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductGetSellerResponse.m; sourceTree = "<group>"; };
+		14DDD5B11A3A984E00C5B190 /* FEShopSeller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEShopSeller.h; sourceTree = "<group>"; };
+		14DDD5B21A3A984E00C5B190 /* FEShopSeller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEShopSeller.m; sourceTree = "<group>"; };
+		14DDD5B41A3AC67800C5B190 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		14DDD5B61A3AC79A00C5B190 /* FEMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEMapView.h; sourceTree = "<group>"; };
+		14DDD5B71A3AC79A00C5B190 /* FEMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEMapView.m; sourceTree = "<group>"; };
 		1592EE0451FECA7C54A4A2A8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC7EB2B9477A0FA4A382D304 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FF4699D77D0F2B00A99EB9B6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -450,6 +463,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14DDD5B51A3AC67800C5B190 /* MapKit.framework in Frameworks */,
 				E61FA59E5A5A87F94DAC628C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,6 +647,8 @@
 				146080B91A2F49E40057EA9A /* FETableView.m */,
 				1408A79E1A39D58C00D02D52 /* FEShopCheckView.h */,
 				1408A79F1A39D58C00D02D52 /* FEShopCheckView.m */,
+				14DDD5B61A3AC79A00C5B190 /* FEMapView.h */,
+				14DDD5B71A3AC79A00C5B190 /* FEMapView.m */,
 			);
 			path = FECommon;
 			sourceTree = "<group>";
@@ -879,6 +895,8 @@
 				1408A7811A38894200D02D52 /* FECity.m */,
 				1408A7831A38895000D02D52 /* FEZone.h */,
 				1408A7841A38895000D02D52 /* FEZone.m */,
+				14DDD5B11A3A984E00C5B190 /* FEShopSeller.h */,
+				14DDD5B21A3A984E00C5B190 /* FEShopSeller.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -943,6 +961,10 @@
 				14AA2C951A2834FC005FDA8F /* FEProductDeleteOrderRequest.m */,
 				14AA2CAF1A28427E005FDA8F /* FEProductDeleteOrderResponse.h */,
 				14AA2CB01A28427E005FDA8F /* FEProductDeleteOrderResponse.m */,
+				14DDD5AB1A3A960800C5B190 /* FEProductGetSellerRequest.h */,
+				14DDD5AC1A3A960800C5B190 /* FEProductGetSellerRequest.m */,
+				14DDD5AE1A3A962500C5B190 /* FEProductGetSellerResponse.h */,
+				14DDD5AF1A3A962500C5B190 /* FEProductGetSellerResponse.m */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -959,6 +981,7 @@
 		E60016C52BF2045319E31435 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14DDD5B41A3AC67800C5B190 /* MapKit.framework */,
 				1592EE0451FECA7C54A4A2A8 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -1111,6 +1134,7 @@
 				1408A75F1A3726A900D02D52 /* FEMyAvtivityVC.m in Sources */,
 				1415464E1A163A87004C0500 /* FECommonViewController.m in Sources */,
 				14AA2C931A2834D8005FDA8F /* FEProductCancelOrderRequest.m in Sources */,
+				14DDD5AD1A3A960800C5B190 /* FEProductGetSellerRequest.m in Sources */,
 				145B218D1A3495E3000AE204 /* FEShopCategory.m in Sources */,
 				14C8F5911A1B77F800E04B04 /* FEGroupProductCell.m in Sources */,
 				14C8F5611A1982D000E04B04 /* FETableViewController.m in Sources */,
@@ -1148,6 +1172,7 @@
 				14AA2C401A259B01005FDA8F /* FEBaseRequest.m in Sources */,
 				148798871A31A64000565491 /* FEMessageTableViewCell.m in Sources */,
 				1408A74D1A35DC4000D02D52 /* FEUserSigninResponse.m in Sources */,
+				14DDD5B31A3A984E00C5B190 /* FEShopSeller.m in Sources */,
 				1408A7851A38895000D02D52 /* FEZone.m in Sources */,
 				1408A7971A38992100D02D52 /* CDZone.m in Sources */,
 				14BD09A31A244EB20005C17F /* FEGroupCategoryCollectionView.m in Sources */,
@@ -1174,12 +1199,14 @@
 				14AA2C8A1A28344F005FDA8F /* FEProductTypeRequest.m in Sources */,
 				14AA2C9C1A2841B9005FDA8F /* FEProductRecommendResponse.m in Sources */,
 				141546491A163A87004C0500 /* FEButton.m in Sources */,
+				14DDD5B81A3AC79A00C5B190 /* FEMapView.m in Sources */,
 				14C8F58E1A1B49C400E04B04 /* FEShopingGroupCollectionCell.m in Sources */,
 				14C8F57F1A1B23D300E04B04 /* FEFuncCollectionViewCell.m in Sources */,
 				1487989C1A31AEB300565491 /* FEActivityOrderCancelRequest.m in Sources */,
 				1408A7691A37EC3900D02D52 /* FEActivityDeltailVC.m in Sources */,
 				1487988A1A31A9C400565491 /* FEActivityListRequest.m in Sources */,
 				1408A75C1A37263700D02D52 /* FEScoreVC.m in Sources */,
+				14DDD5B01A3A962500C5B190 /* FEProductGetSellerResponse.m in Sources */,
 				140BB7031A28D31600A73ADF /* FEOrderItemTableViewCell.m in Sources */,
 				14AA2C841A28340F005FDA8F /* FEProductNewRequest.m in Sources */,
 				148798AA1A32C69000565491 /* FECommunityRecommendRequest.m in Sources */,
@@ -1246,8 +1273,7 @@
 		14DDD5A71A3A90AF00C5B190 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				14DDD5A61A3A90AF00C5B190 /* zh-Hans */,
-				14DDD5A91A3A90C700C5B190 /* en */,
+				14DDD5AA1A3A955000C5B190 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

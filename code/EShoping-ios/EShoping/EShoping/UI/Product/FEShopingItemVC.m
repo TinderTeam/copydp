@@ -6,21 +6,35 @@
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
+typedef enum : NSUInteger {
+    CELL_SELLER_TITILE,
+    CELL_SELLER_CONTENT_TEXT,
+    CELL_SELLER_MAP,
+//    CELL_SELLER_
+} CELL_TYPE;
+
 #define __CELL_TYPE @"type"
 #define __CELL_HIGHT @"height"
 #define __CELL_CONTENT @"content"
+#define __CELL_XIB_NAME @"xib"
 
 #import "FEShopingItemVC.h"
 #import "FEProductImageTableViewCell.h"
 #import "FEProductOrderView.h"
 #import "FEProductOrderVC.h"
 #import "FEProduct.h"
+#import "FEProductGetSellerRequest.h"
+#import "FEProductGetSellerResponse.h"
+#import "FEShopWebServiceManager.h"
+#import "FEMapView.h"
+
 
 @interface FEShopingItemVC ()<UITableViewDelegate,UITableViewDataSource,FEProductOrderViewDelegate>
 
 @property (nonatomic, strong) FEProductOrderView *orderView;
-
+@property (strong, nonatomic) IBOutlet UITableView *productShowTableView;
 @property (nonatomic, strong) NSMutableArray *productInfo;
+@property (nonatomic, strong) FEShopSeller *seller;
 
 @end
 
@@ -29,20 +43,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _productInfo = [NSMutableArray new];
-    NSArray *s = @[@"商家介绍",@"特惠详情",@"商户位置",@"购买须知",@"商户评价"];
-//    NSArray *info = @[@{__CELL_TYPE:@(1),__CELL_HIGHT:@(50)}];
-    for (NSString *str in s) {
-        NSDictionary *info = @{__CELL_TYPE:@(0),__CELL_HIGHT:@(30),__CELL_CONTENT:str};
-        NSDictionary *info1 = @{__CELL_TYPE:@(0),__CELL_HIGHT:@(20),__CELL_CONTENT:@""};
-        [_productInfo addObject:info];
-        [_productInfo addObject:info1];
-    }
+    
     
     [self initUI];
-    
-    
-    
+    [self requestSeller];
 }
 
 -(void)initUI{
@@ -60,6 +64,34 @@
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];
     item2.style = UIBarButtonItemStyleBordered;
     self.navigationItem.rightBarButtonItems = @[item2,item1];
+}
+
+-(void)requestSeller{
+    __weak typeof(self) weakself = self;
+    FEProductGetSellerRequest *rdata = [[FEProductGetSellerRequest alloc] initWithSellerId:self.product.seller_id];
+    [[FEShopWebServiceManager sharedInstance] productGetSeller:rdata response:^(NSError *error, FEProductGetSellerResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+//            NSLog(@"has seller info");
+            
+            _productInfo = [NSMutableArray new];
+//            NSArray *s = @[@"商家介绍",@"特惠详情",@"商户位置",@"购买须知",@"商户评价"];
+            NSDictionary *info = @{__CELL_TYPE:@(CELL_SELLER_TITILE), __CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商家介绍")};
+            [_productInfo addObject:info];
+            info = @{__CELL_TYPE:@(CELL_SELLER_CONTENT_TEXT),__CELL_XIB_NAME:@"sellerInfoCell",__CELL_HIGHT:@(50)};
+            [_productInfo addObject:info];
+            info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"特惠详情")};
+            [_productInfo addObject:info];
+            info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商户位置")};
+            [_productInfo addObject:info];
+            info = @{__CELL_TYPE:@(CELL_SELLER_MAP),__CELL_XIB_NAME:@"mapCell",__CELL_HIGHT:@(150)};
+            [_productInfo addObject:info];
+            //    NSArray *info = @[@{__CELL_TYPE:@(1),__CELL_HIGHT:@(50)}];
+            
+            weakself.seller = response.seller;
+            [weakself.productShowTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }];
+    
 }
 
 
@@ -91,8 +123,17 @@
         [cell configWithProduct:self.product];
         return cell;
     }else if(indexPath.section == 1){
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"productSectionTitle" forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:_productInfo[indexPath.row][__CELL_XIB_NAME] forIndexPath:indexPath];
         cell.textLabel.text = _productInfo[indexPath.row][__CELL_CONTENT];
+        if ([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_SELLER_MAP) {
+            FEMapView *mapview = (FEMapView *)[cell viewWithTag:10];
+            NSString *positon = self.seller.position;
+            NSArray *pa = [positon componentsSeparatedByString:@","];
+            if (pa.count == 2) {
+                [mapview setPin:CLLocationCoordinate2DMake([pa[1] floatValue], [pa[0] floatValue])];
+            }
+            
+        }
         return cell;
     }
     return nil;

@@ -21,6 +21,8 @@
 - (void)awakeFromNib {
     // Initialization code
 //    self.pageIndicate.numberOfPages = 1;
+    self.saleLabel.layer.cornerRadius = self.saleLabel.bounds.size.height / 2.0;
+    self.saleLabel.layer.masksToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -31,6 +33,7 @@
 
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
+    self.saleLabel.text = [NSString stringWithFormat:@"%@ %d",FEString(@"已售"),0];
     NSArray *imgs = [product.imglist componentsSeparatedByString:@","];
     
     if (imgs) {
