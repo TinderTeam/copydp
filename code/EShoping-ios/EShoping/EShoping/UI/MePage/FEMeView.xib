@@ -14,7 +14,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="5VG-D4-ZON">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="personal_icon_serve" translatesAutoresizingMaskIntoConstraints="NO" id="wka-8p-GrB">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_head" translatesAutoresizingMaskIntoConstraints="NO" id="wka-8p-GrB">
                     <rect key="frame" x="20" y="45" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="dn7-Vh-daC"/>
@@ -88,7 +88,7 @@
     </objects>
     <resources>
         <image name="common_arrow" width="8" height="12"/>
-        <image name="personal_icon_serve" width="25" height="25"/>
+        <image name="default_head" width="160" height="160"/>
         <image name="profile" width="320" height="166"/>
     </resources>
 </document>

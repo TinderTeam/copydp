@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class FEMyActivityCell;
 @class FEActivityOrder;
+
+@protocol FEMyActivityCellDelegate <NSObject>
+
+@optional
+-(void)activityCell:(FEMyActivityCell *)cell willCancel:(FEActivityOrder *)activity;
+
+@end
+
 
 @interface FEMyActivityCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *activityImageView;
@@ -18,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *activityStatusLabel;
 @property (strong, nonatomic) IBOutlet UIButton *activityActionBtn;
 @property (nonatomic, strong, readonly) FEActivityOrder *activity;
+@property (nonatomic, weak) id<FEMyActivityCellDelegate> delegate;
 
 -(void)configWithActivity:(FEActivityOrder *)activity;
 

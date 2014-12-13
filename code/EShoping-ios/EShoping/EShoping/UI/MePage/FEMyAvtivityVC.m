@@ -10,11 +10,14 @@
 #import "FEMyActivityCell.h"
 #import "FEActivityOrderListRequest.h"
 #import "FEActivityOrderListResponse.h"
+#import "FEActivityOrderCancelRequest.h"
+#import "FEActivityOrderCreateResponse.h"
 #import "FEShopWebServiceManager.h"
 #import "CDUser.h"
 #import "FESiginVC.h"
+#import "FEActivityOrder.h"
 
-@interface FEMyAvtivityVC ()<UITableViewDataSource, UITableViewDelegate,FESigninVCDelegate>
+@interface FEMyAvtivityVC ()<UITableViewDataSource, UITableViewDelegate,FESigninVCDelegate,FEMyActivityCellDelegate>
 @property (strong, nonatomic) IBOutlet FETableView *myactivityTableView;
 @property (strong, nonatomic) NSArray *myactivityList;
 
@@ -56,6 +59,17 @@
     }];
 }
 
+-(void)requestActivityCancel:(FEActivityOrder *)activity{
+    [self displayHUD:FEString(@"取消中...")];
+    FEActivityOrderCancelRequest *rdate = [[FEActivityOrderCancelRequest alloc] initWithUserID:FELoginUser.user_id.integerValue activityID:activity.activity_id.integerValue];
+    [[FEShopWebServiceManager sharedInstance] activityOrderCancel:rdate response:^(NSError *error, FEActivityOrderCreateResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            
+        }
+        [self hideHUD:YES];
+    }];
+}
+
 #pragma mark - FESigninVCDelegate
 -(void)signinVCDidSignin:(BOOL)isSignin{
     if (isSignin) {
@@ -65,9 +79,15 @@
     }
 }
 
+#pragma mark - FEMyActivityCellDelegate
+-(void)activityCell:(FEMyActivityCell *)cell willCancel:(FEActivityOrder *)activity{
+    [self requestActivityCancel:activity];
+}
+
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FEMyActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myOrderActivityCell" forIndexPath:indexPath];
+    cell.delegate = self;
     [cell configWithActivity:self.myactivityList[indexPath.row]];
     return cell;
 }

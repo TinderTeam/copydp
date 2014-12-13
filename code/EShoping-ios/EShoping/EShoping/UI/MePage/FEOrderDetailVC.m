@@ -14,15 +14,20 @@
 #import "FEProductOrderResponse.h"
 #import "FEProductCancelOrderRequest.h"
 #import "FEProductOrderCancelResponse.h"
+#import "FEProductDeleteOrderRequest.h"
+#import "FEProductDeleteOrderResponse.h"
 #import "FEResult.h"
 #import "CDUser.h"
 #import "FESegmentControl.h"
 #import "FESiginVC.h"
 #import "FEProductOrder.h"
 
-@interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource,FESigninVCDelegate>
+@interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource,FESigninVCDelegate,FEOrderItemTableViewCellDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *orderList;
 @property (nonatomic,strong) NSArray *orderDatas;
+@property (nonatomic, strong) NSArray *orderPlace;
+@property (nonatomic, strong) NSArray *orderCancel;
+@property (nonatomic, strong) NSArray *orderComplete;
 @property (nonatomic, strong) FESegmentControl *orderTypeSeg;
 @end
 
@@ -61,7 +66,7 @@
 
 -(void)initUI{
     self.title = FEString(@"我的订单");
-    _orderTypeSeg = [[FESegmentControl alloc] initWithSectionTitles:@[@"全部",@"收藏",@"终止订单"]];
+    _orderTypeSeg = [[FESegmentControl alloc] initWithSectionTitles:@[@"已订购",@"已取消",@"已终止"]];
     _orderTypeSeg.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
     _orderTypeSeg.font = FEFont(14);//[UIFont systemFontOfSize:14];
     _orderTypeSeg.selectedTextColor = FEThemeOrange;
@@ -74,7 +79,7 @@
 }
 
 -(void)segmentedControlChangedValue:(FESegmentControl *)seg{
-    
+    [self.orderList reloadData];
 }
 
 -(void)requestOrder{
@@ -82,7 +87,10 @@
     FEProductOrderRequest *rdata = [[FEProductOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue];
     [[FEShopWebServiceManager sharedInstance] productOrder:rdata response:^(NSError *error, FEProductOrderResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
-            weakself.orderDatas = response.orderList;
+//            weakself.orderDatas = response.orderList;
+//            [weakself.orderList reloadData];
+            weakself.orderPlace = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已下单"]];
+            weakself.orderCancel = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已取消"]];
             [weakself.orderList reloadData];
         }
     }];
@@ -95,10 +103,42 @@
     FEProductCancelOrderRequest *rdata = [[FEProductCancelOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:order.product_id.integerValue quantity:order.quantity.integerValue orderid:order.order_id];
     [[FEShopWebServiceManager sharedInstance] productOrderCancel:rdata response:^(NSError *error, FEProductOrderCancelResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
-            
+            NSMutableArray *tarray = [NSMutableArray arrayWithArray:weakself.orderPlace];
+            [tarray removeObject:order];
+            weakself.orderPlace = tarray;
+            [weakself.orderList reloadData];
+            [order setValue:@"已取消" forKey:@"order_status"];
+            NSMutableArray *aarray = [NSMutableArray arrayWithArray:weakself.orderCancel];
+            [aarray addObject:order];
+            weakself.orderCancel = aarray;
         }
         [self hideHUD:YES];
     }];
+}
+
+-(void)requestDeletOrder:(FEProductOrder *)order{
+    __weak typeof(self) weakself = self;
+    [self displayHUD:FEString(@"删除中...")];
+    FEProductDeleteOrderRequest *rdata = [[FEProductDeleteOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:order.product_id.integerValue quantity:order.quantity.integerValue orderid:order.order_id];
+    [[FEShopWebServiceManager sharedInstance] productOrderDelete:rdata response:^(NSError *error, FEProductDeleteOrderResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            NSMutableArray *tarray = [NSMutableArray arrayWithArray:weakself.orderCancel];
+            [tarray removeObject:order];
+            weakself.orderCancel = tarray;
+            [weakself.orderList reloadData];
+        }
+        [self hideHUD:YES];
+    }];
+}
+
+
+#pragma mark - FEOrderItemTableViewCellDelegate
+-(void)orderWillDelete:(FEOrderItemTableViewCell *)cell order:(FEProductOrder *)order{
+    [self requestDeletOrder:order];
+}
+
+-(void)orderWillCancel:(FEOrderItemTableViewCell *)cell order:(FEProductOrder *)order{
+    [self requestCancelOrder:order];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,12 +149,39 @@
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FEOrderItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderProductCell" forIndexPath:indexPath];
-    [cell configWithProduct:self.orderDatas[indexPath.row]];
+    FEProductOrder *order;
+    switch (self.orderTypeSeg.selectedSegmentIndex) {
+        case 0:
+            order = self.orderPlace[indexPath.row];
+            break;
+        case 1:
+            order = self.orderCancel[indexPath.row];
+            break;
+        case 2:
+            order = self.orderComplete[indexPath.row];
+            break;
+            
+        default:
+            break;
+    }
+    cell.delegate = self;
+    [cell configWithProduct:order];
     return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.orderDatas.count;
+    switch (self.orderTypeSeg.selectedSegmentIndex) {
+        case 0:
+            return self.orderPlace.count;
+        case 1:
+            return self.orderCancel.count;
+        case 2:
+            return self.orderComplete.count;
+            
+        default:
+            break;
+    }
+    return 0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
