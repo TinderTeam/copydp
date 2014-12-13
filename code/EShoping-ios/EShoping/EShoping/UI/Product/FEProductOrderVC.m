@@ -32,11 +32,14 @@
 
 - (IBAction)submitOrder:(id)sender {
     if (FELoginUser) {
+        [self displayHUD:FEString(@"订购中...")];
+        __weak typeof(self) weakself = self;
         FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:self.product.product_id.integerValue quantity:1 orderid:nil];
         [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
                 NSLog(@"order sucess!");
             }
+            [weakself hideHUD:YES];
         }];
     }else{
         [self performSegueWithIdentifier:@"productOrderToSignin" sender:sender];

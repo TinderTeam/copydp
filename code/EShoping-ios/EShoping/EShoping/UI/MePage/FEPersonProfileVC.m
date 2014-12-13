@@ -17,6 +17,7 @@
 
 @interface FEPersonProfileVC ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet FETableView *profileTableView;
+@property (strong, nonatomic) IBOutlet UITableViewCell *nickNameCell;
 
 @property (nonatomic, strong) UIView *footView;
 
@@ -29,7 +30,8 @@
     // Do any additional setup after loading the view.
     self.navigationController.navigationBar.barTintColor = FEThemeWhite;
     self.navigationController.navigationBar.tintColor = FEThemeOrange;
-    self.title = FEString(@"PROFILE");
+    self.title = FEString(@"个人资料");
+    self.nickNameCell.detailTextLabel.text = FELoginUser.username;
 }
 
 - (void)didReceiveMemoryWarning {

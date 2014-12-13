@@ -12,10 +12,13 @@
 #import "FEShopWebServiceManager.h"
 #import "FEProductOrderRequest.h"
 #import "FEProductOrderResponse.h"
+#import "FEProductCancelOrderRequest.h"
+#import "FEProductOrderCancelResponse.h"
 #import "FEResult.h"
 #import "CDUser.h"
 #import "FESegmentControl.h"
 #import "FESiginVC.h"
+#import "FEProductOrder.h"
 
 @interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource,FESigninVCDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *orderList;
@@ -82,6 +85,19 @@
             weakself.orderDatas = response.orderList;
             [weakself.orderList reloadData];
         }
+    }];
+}
+
+
+-(void)requestCancelOrder:(FEProductOrder *)order{
+    __weak typeof(self) weakself = self;
+    [self displayHUD:FEString(@"取消中...")];
+    FEProductCancelOrderRequest *rdata = [[FEProductCancelOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:order.product_id.integerValue quantity:order.quantity.integerValue orderid:order.order_id];
+    [[FEShopWebServiceManager sharedInstance] productOrderCancel:rdata response:^(NSError *error, FEProductOrderCancelResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            
+        }
+        [self hideHUD:YES];
     }];
 }
 

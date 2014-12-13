@@ -24,6 +24,7 @@
     }else{
         [self performSegueWithIdentifier:@"userSiginSegue" sender:nil];
     }
+    self.title = FEString(@"我的积分");
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
