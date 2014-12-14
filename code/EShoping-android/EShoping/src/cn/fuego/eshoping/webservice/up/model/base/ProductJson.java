@@ -18,6 +18,9 @@ public class ProductJson
 	private String product_status;
 	private int city_id;
 	private String city;
+	private int zone_id;
+	private String zone_name;
+	private int current_member;
 	
 	public int getProduct_id() {
 		return product_id;
@@ -116,6 +119,26 @@ public class ProductJson
 	public void setCity(String city) {
 		this.city = city;
 	}
+	
+	public int getZone_id() {
+		return zone_id;
+	}
+	public void setZone_id(int zone_id) {
+		this.zone_id = zone_id;
+	}
+	public String getZone_name() {
+		return zone_name;
+	}
+	public void setZone_name(String zone_name) {
+		this.zone_name = zone_name;
+	}
+	
+	public int getCurrent_member() {
+		return current_member;
+	}
+	public void setCurrent_member(int current_member) {
+		this.current_member = current_member;
+	}
 	@Override
 	public String toString() {
 		return "ProductJson [product_id=" + product_id + ", name=" + name
@@ -126,8 +149,10 @@ public class ProductJson
 				+ basic_infor + ", svip_privilege=" + svip_privilege
 				+ ", imgsrc=" + imgsrc + ", imglist=" + imglist
 				+ ", product_status=" + product_status + ", city_id=" + city_id
-				+ ", city=" + city + "]";
+				+ ", city=" + city + ", zone_id=" + zone_id + ", zone_name="
+				+ zone_name + ", current_member=" + current_member + "]";
 	}
 	
+		
 
 }

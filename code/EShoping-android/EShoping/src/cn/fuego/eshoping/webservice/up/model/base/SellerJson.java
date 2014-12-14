@@ -6,7 +6,7 @@ public class SellerJson
 	private String city_id;
 	private String zone_id;
 	private int type_id;
-	private String description;
+	private String dscr;
 	private String position;
 	private String img;
 	private String info;
@@ -42,11 +42,11 @@ public class SellerJson
 	public void setType_id(int type_id) {
 		this.type_id = type_id;
 	}
-	public String getDescription() {
-		return description;
+	public String getDscr() {
+		return dscr;
 	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDscr(String dscr) {
+		this.dscr = dscr;
 	}
 	public String getPosition() {
 		return position;
@@ -117,12 +117,15 @@ public class SellerJson
 	@Override
 	public String toString() {
 		return "SellerJson [user_id=" + user_id + ", city_id=" + city_id
-				+ ", zone_id=" + zone_id + ", type_id=" + type_id
-				+ ", description=" + description + ", position=" + position
-				+ ", img=" + img + ", info=" + info + ", status=" + status
-				+ ", type_name=" + type_name + ", father_id=" + father_id
-				+ ", city=" + city + ", zone_name=" + zone_name + ", password="
-				+ password + ", username=" + username + ", role=" + role + "]";
+				+ ", zone_id=" + zone_id + ", type_id=" + type_id + ", dscr="
+				+ dscr + ", position=" + position + ", img=" + img + ", info="
+				+ info + ", status=" + status + ", type_name=" + type_name
+				+ ", father_id=" + father_id + ", city=" + city
+				+ ", zone_name=" + zone_name + ", password=" + password
+				+ ", username=" + username + ", role=" + role
+				+ "]";
 	}
+	
+	
  
 }
