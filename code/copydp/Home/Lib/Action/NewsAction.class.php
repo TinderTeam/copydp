@@ -10,6 +10,10 @@ class NewsAction extends BaseAction {
         
         $newsDB=new Model('news');
         $newsList=$newsDB->order('rand()')->limit(6)->select();
+        for($i=0;$i<6;$i++)
+        {
+            $newsList[$i]['content'] = str_replace("\\", '', $newsList[$i]['content']);
+        }
         $errorCode = SUCCESS;
         if($newsList==false)
         {

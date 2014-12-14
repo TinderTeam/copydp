@@ -76,6 +76,7 @@ color: black;
 					$title=$newsDB->where($newsCondition)->getField('title');
 					$datetime=$newsDB->where($$newsCondition)->getField('datetime');
 					$context=$newsDB->where($newsCondition)->getField('content');
+					$context=str_replace("\\", '', $context);
 				?>
 					<h1 class="topic" style="line-height:30px">{$title}</h1>
 					<div class="topic-list" id="J_topic_list">
