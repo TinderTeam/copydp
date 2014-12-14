@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *productNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *productDescriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *productValueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *productOriginPriceLabel;
 
 @end
 
@@ -23,6 +24,7 @@
 - (void)awakeFromNib {
     // Initialization cod
     self.productImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
 }
 
 -(void)configWithProduct:(FEProduct *)product{
@@ -31,6 +33,12 @@
     self.productNameLabel.text = product.name;
     self.productDescriptionLabel.text = product.dscr;
     self.productValueLabel.text = [NSString stringWithFormat:@"￥%@",product.price];
+    if (product.original_price) {
+        NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"￥%@",product.original_price]];
+        NSRange range = {1,astring.length - 1};
+        [astring addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:range];
+        self.productOriginPriceLabel.attributedText = astring;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

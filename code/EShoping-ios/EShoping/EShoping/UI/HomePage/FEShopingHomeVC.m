@@ -40,9 +40,12 @@
 #import "FECity.h"
 #import "FEZone.h"
 #import "CDZone.h"
+#import "GAAlertObj.h"
+
+#import <ZBarSDK/ZBarReaderViewController.h>
 
 
-@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,FECitySelectVCDelegate>{
+@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,FECitySelectVCDelegate,ZBarReaderDelegate>{
     dispatch_semaphore_t semaphore;
     BOOL _productRecommendBecome;
 }
@@ -75,11 +78,32 @@
     [self getcityandcategory];
 }
 
+
+
 -(void)initUI{
     [self.regionBarItem setTitle:FEUserDefaultsObjectForKey(FEShopRegionKey)];
     self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.navigationItem.leftBarButtonItem = self.regionBarItem;
     self.navigationItem.rightBarButtonItem = self.messageBarItem;
+}
+
+- (IBAction)qrscan:(id)sender {
+    ZBarReaderViewController *reader = [ZBarReaderViewController new];
+    reader.showsZBarControls = YES;
+    reader.readerDelegate = self;
+    reader.supportedOrientationsMask = ZBarOrientationMaskAll;
+    
+    ZBarImageScanner *scanner = reader.scanner;
+    
+    // TODO: (optional) additional reader configuration here
+    
+    // EXAMPLE: disable rarely used I2/5 to improve performance
+    [scanner setSymbology: ZBAR_I25
+                   config: ZBAR_CFG_ENABLE
+                       to: 0];
+    
+    // present and release the controller
+    [self presentViewController:reader animated:YES completion:nil];
 }
 
 -(void)gotoLocation:(id)sender{
@@ -305,6 +329,34 @@
 
 -(void)filterContentForSearchText:(NSString*)searchText {
     
+}
+
+#pragma mark - UIImagePickerViewDelegate
+- (void) imagePickerController: (UIImagePickerController*) reader
+ didFinishPickingMediaWithInfo: (NSDictionary*) info
+{
+    // ADD: get the decode results
+    id<NSFastEnumeration> results =
+    [info objectForKey: ZBarReaderControllerResults];
+    ZBarSymbol *symbol = nil;
+    for(symbol in results)
+        // EXAMPLE: just grab the first barcode
+        break;
+    GAAlertAction *act = [GAAlertAction actionWithTitle:FEString(@"OK") action:^{
+        [reader dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }];
+    [GAAlertObj showAlertWithTitle:FEString(@"提示") message:symbol.data actions:@[act]];
+    // EXAMPLE: do something useful with the barcode data
+    //    resultText.text = symbol.data;
+    
+    // EXAMPLE: do something useful with the barcode image
+    //    resultImage.image =
+    //    [info objectForKey: UIImagePickerControllerOriginalImage];
+    
+    // ADD: dismiss the controller (NB dismiss from the *reader*!)
+//    [reader dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

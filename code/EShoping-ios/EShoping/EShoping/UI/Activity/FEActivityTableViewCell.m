@@ -24,6 +24,7 @@
     self.activityDescriptionLabel.text = activity.dscr;
     self.activityTitleLabel.text = activity.title;
     self.activityJoinLabel.text = [NSString stringWithFormat:@"参与人数: %@/%@",activity.current_member,activity.memberlimit] ;
+    self.limitDateLabel.text = [NSString stringWithFormat:@"%@ 截止",activity.datelimit];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

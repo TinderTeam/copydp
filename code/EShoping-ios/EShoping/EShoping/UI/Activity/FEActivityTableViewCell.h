@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *activityDescriptionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *activityJoinLabel;
 @property (strong, nonatomic, readonly) FEActivity *activity;
+@property (strong, nonatomic) IBOutlet UILabel *limitDateLabel;
 
 -(void)configWithActivity:(FEActivity *)activity;
 
