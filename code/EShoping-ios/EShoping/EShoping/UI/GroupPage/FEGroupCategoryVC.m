@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSArray *regoinArray;
 @property (strong, nonatomic) NSArray *sortArray;
 @property (strong, nonatomic) NSArray *categoryContentArray;
+@property (strong, nonatomic) CDZone *productzone;
 
 @property (strong, nonatomic) NSArray *productDatas;
 
@@ -45,7 +46,15 @@
     NSArray *rootcategorys = [allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == 0 || SELF.father_id = -1"]];
     NSMutableArray *filltercateforys = [NSMutableArray new];
     for (CDCategory *category in rootcategorys) {
-        NSArray *childcategorys = (category.type_id.integerValue == 0)?nil:[allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == %@",category.type_id]];
+        NSMutableArray *childcategorys = NULL;
+        if (category.type_id.integerValue != 0) {
+            childcategorys = [NSMutableArray arrayWithArray:[allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == %@",category.type_id]]];
+        }
+        
+        if (childcategorys) {
+            [childcategorys insertObject:category atIndex:0];
+        }
+
         NSDictionary *cdic = childcategorys?@{_CKEY:category,_CCHILD:childcategorys}:@{_CKEY:category};
         [filltercateforys addObject:cdic];
     }
@@ -56,16 +65,17 @@
     for (CDZone *zone in zones) {
         [zonesarray addObject:@{_CKEY:zone}];
     }
+    [zonesarray insertObject:@{_CKEY:[FECoreData fetchZoneByID:@(0)]} atIndex:0];
     self.regoinArray = zonesarray;
     
-    self.sortArray = @[
-                       @{_CKEY:@"智能排序"},
-                       @{_CKEY:@"离我最近"},
-                       @{_CKEY:@"人气最高"},
-                       @{_CKEY:@"评分最高"},
-                       @{_CKEY:@"价格最低"},
-                       @{_CKEY:@"价格最高"}];
-    self.categoryContentArray = @[self.categoryArray,self.regoinArray,self.sortArray];
+//    self.sortArray = @[
+//                       @{_CKEY:@"智能排序"},
+//                       @{_CKEY:@"离我最近"},
+//                       @{_CKEY:@"人气最高"},
+//                       @{_CKEY:@"评分最高"},
+//                       @{_CKEY:@"价格最低"},
+//                       @{_CKEY:@"价格最高"}];
+    self.categoryContentArray = @[self.categoryArray,self.regoinArray];
 
     [self initUI];
     [self requestProduct];
@@ -124,7 +134,8 @@
     id item = self.categoryContentArray[indexPath.column][indexPath.row][_CKEY];
     if ([item isKindOfClass:[CDCategory class]]) {
         if (indexPath.subrow != -1) {
-            return ((CDCategory *)self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][indexPath.subrow]).type_name;
+            CDCategory *category = self.categoryContentArray[indexPath.column][indexPath.row][_CCHILD][indexPath.subrow];
+            return category.type_name;
         }
         return ((CDCategory *)item).type_name;
     }else if([item isKindOfClass:[CDZone class]]){
@@ -176,6 +187,8 @@
             self.productcategory = self.categoryArray[indexPath.row][_CKEY];
         }
         [self requestProduct];
+    }else if (indexPath.column == 1){
+        self.productzone = self.regoinArray[indexPath.row][_CKEY];
     }
 }
 

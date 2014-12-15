@@ -14,7 +14,7 @@
 @property (nonatomic, strong, readonly) NSString *city_id;
 @property (nonatomic, strong, readonly) NSString *zone_id;
 @property (nonatomic, strong, readonly) NSNumber *type_id;
-@property (nonatomic, strong, readonly) NSString *description;
+@property (nonatomic, strong, readonly) NSString *dscr;
 @property (nonatomic, strong, readonly) NSString *position;
 @property (nonatomic, strong, readonly) NSString *img;
 @property (nonatomic, strong, readonly) NSString *info;

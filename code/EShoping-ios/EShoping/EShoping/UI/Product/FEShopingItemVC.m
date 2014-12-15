@@ -10,6 +10,7 @@ typedef enum : NSUInteger {
     CELL_SELLER_TITILE,
     CELL_SELLER_CONTENT_TEXT,
     CELL_SELLER_MAP,
+    CELL_SELLER_NOTE,
 //    CELL_SELLER_
 } CELL_TYPE;
 
@@ -27,6 +28,7 @@ typedef enum : NSUInteger {
 #import "FEProductGetSellerResponse.h"
 #import "FEShopWebServiceManager.h"
 #import "FEMapView.h"
+#import "FEProductNoteCell.h"
 
 
 @interface FEShopingItemVC ()<UITableViewDelegate,UITableViewDataSource,FEProductOrderViewDelegate>
@@ -79,13 +81,16 @@ typedef enum : NSUInteger {
             [_productInfo addObject:info];
             info = @{__CELL_TYPE:@(CELL_SELLER_CONTENT_TEXT),__CELL_XIB_NAME:@"sellerInfoCell",__CELL_HIGHT:@(50)};
             [_productInfo addObject:info];
-            info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"特惠详情")};
-            [_productInfo addObject:info];
+//            info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"特惠详情")};
+//            [_productInfo addObject:info];
             info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商户位置")};
             [_productInfo addObject:info];
             info = @{__CELL_TYPE:@(CELL_SELLER_MAP),__CELL_XIB_NAME:@"mapCell",__CELL_HIGHT:@(150)};
             [_productInfo addObject:info];
-            //    NSArray *info = @[@{__CELL_TYPE:@(1),__CELL_HIGHT:@(50)}];
+            info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"购买须知")};
+            [_productInfo addObject:info];
+            info = @{__CELL_TYPE:@(CELL_SELLER_NOTE),__CELL_XIB_NAME:@"productNoteCell",__CELL_HIGHT:@(120)};
+            [_productInfo addObject:info];
             
             weakself.seller = response.seller;
             [weakself.productShowTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -133,6 +138,10 @@ typedef enum : NSUInteger {
                 [mapview setPin:CLLocationCoordinate2DMake([pa[1] floatValue], [pa[0] floatValue])];
             }
             
+        }else if([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_SELLER_CONTENT_TEXT){
+            cell.textLabel.text = self.seller.dscr;
+        }else if([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_SELLER_NOTE){
+            [((FEProductNoteCell *)cell) configWithProduct:self.product];
         }
         return cell;
     }

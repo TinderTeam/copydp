@@ -9,7 +9,7 @@
 #import "FEScoreVC.h"
 #import "FESiginVC.h"
 
-@interface FEScoreVC ()<FESigninVCDelegate>
+@interface FEScoreVC ()<FESigninVCDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @end
 
@@ -51,6 +51,20 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
+
+#pragma mark - UITableViewDataSource
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [tableView dequeueReusableCellWithIdentifier:@"scoreCell" forIndexPath:indexPath];
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 10;
+}
+
 
 /*
 #pragma mark - Navigation

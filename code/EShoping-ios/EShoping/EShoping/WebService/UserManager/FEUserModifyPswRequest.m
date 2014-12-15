@@ -13,7 +13,9 @@
 -(id)initWithUname:(NSString *)uname oldPassword:(NSString *)oldpsw newPassword:(NSString *)newpsw{
     self = [super initWithMothed:__METHOD_MODIFY_PASSWORD];
     if (self) {
-        
+        _oldPwd = oldpsw;
+        _username = uname;
+        _pwdNew = newpsw;
     }
     return self;
 }

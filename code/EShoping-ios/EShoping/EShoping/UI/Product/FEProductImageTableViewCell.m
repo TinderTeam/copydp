@@ -33,7 +33,7 @@
 
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
-    self.saleLabel.text = [NSString stringWithFormat:@"%@ %d",FEString(@"已售"),0];
+    self.saleLabel.text = [NSString stringWithFormat:@"%@ %@",FEString(@"已售"),product.current_member];
     NSArray *imgs = [product.imglist componentsSeparatedByString:@","];
     
     if (imgs) {

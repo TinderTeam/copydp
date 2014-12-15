@@ -135,6 +135,7 @@
 		14AA2CB11A28427E005FDA8F /* FEProductDeleteOrderResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2CB01A28427E005FDA8F /* FEProductDeleteOrderResponse.m */; };
 		14AA2CB41A2842E7005FDA8F /* FEProductTypeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2CB31A2842E7005FDA8F /* FEProductTypeResponse.m */; };
 		14AA2CB71A284A55005FDA8F /* FEProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2CB61A284A55005FDA8F /* FEProduct.m */; };
+		14B52AAD1A3DE3010005F0D7 /* FEProductNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B52AAC1A3DE3010005F0D7 /* FEProductNoteCell.m */; };
 		14BD09A31A244EB20005C17F /* FEGroupCategoryCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD09A21A244EB20005C17F /* FEGroupCategoryCollectionView.m */; };
 		14C49CD01A3B3F0400937B52 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C49CCF1A3B3F0400937B52 /* CoreText.framework */; };
 		14C8F5411A18E65B00E04B04 /* FEShopingMeTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5401A18E65B00E04B04 /* FEShopingMeTableVC.m */; };
@@ -419,6 +420,8 @@
 		14AA2CB31A2842E7005FDA8F /* FEProductTypeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductTypeResponse.m; sourceTree = "<group>"; };
 		14AA2CB51A284A55005FDA8F /* FEProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProduct.h; sourceTree = "<group>"; };
 		14AA2CB61A284A55005FDA8F /* FEProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProduct.m; sourceTree = "<group>"; };
+		14B52AAB1A3DE3010005F0D7 /* FEProductNoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProductNoteCell.h; sourceTree = "<group>"; };
+		14B52AAC1A3DE3010005F0D7 /* FEProductNoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductNoteCell.m; sourceTree = "<group>"; };
 		14BD09A11A244EB20005C17F /* FEGroupCategoryCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEGroupCategoryCollectionView.h; sourceTree = "<group>"; };
 		14BD09A21A244EB20005C17F /* FEGroupCategoryCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEGroupCategoryCollectionView.m; sourceTree = "<group>"; };
 		14C49CCF1A3B3F0400937B52 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -571,6 +574,8 @@
 				140CA5951A1F18C40076C4AC /* FEProductImageTableViewCell.m */,
 				140BB70D1A29CE1B00A73ADF /* FEProductOrderVC.h */,
 				140BB70E1A29CE1B00A73ADF /* FEProductOrderVC.m */,
+				14B52AAB1A3DE3010005F0D7 /* FEProductNoteCell.h */,
+				14B52AAC1A3DE3010005F0D7 /* FEProductNoteCell.m */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -1246,6 +1251,7 @@
 				14AA2CB41A2842E7005FDA8F /* FEProductTypeResponse.m in Sources */,
 				140BB7121A2AFF7700A73ADF /* FEProductType.m in Sources */,
 				14AA2C961A2834FC005FDA8F /* FEProductDeleteOrderRequest.m in Sources */,
+				14B52AAD1A3DE3010005F0D7 /* FEProductNoteCell.m in Sources */,
 				1415466D1A163E71004C0500 /* UIImage+Resize.m in Sources */,
 				140BB70F1A29CE1B00A73ADF /* FEProductOrderVC.m in Sources */,
 				1415464C1A163A87004C0500 /* FECommonNavgationController.m in Sources */,

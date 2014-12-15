@@ -66,7 +66,7 @@
 
 -(void)initUI{
     self.title = FEString(@"我的订单");
-    _orderTypeSeg = [[FESegmentControl alloc] initWithSectionTitles:@[@"已订购",@"已取消",@"已终止"]];
+    _orderTypeSeg = [[FESegmentControl alloc] initWithSectionTitles:@[@"已订购",@"已使用",@"已取消",@"已过期"]];
     _orderTypeSeg.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
     _orderTypeSeg.font = FEFont(14);//[UIFont systemFontOfSize:14];
     _orderTypeSeg.selectedTextColor = FEThemeOrange;

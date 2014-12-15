@@ -128,13 +128,6 @@
     }
 }
 
--(void)requestCity{
-    FECityRequest *rdata = [[FECityRequest alloc] init];
-    [[FEShopWebServiceManager sharedInstance] city:rdata response:^(NSError *error, FECityResponse *response) {
-        
-    }];
-}
-
 #pragma mark - RequestRecommend
 
 -(void)requestRecommend{
@@ -156,7 +149,7 @@
     
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:1 keyword:nil isSearch:NO];
         [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
                 weakself.productTypeRecommed = response.productList;
@@ -258,7 +251,7 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         if (!self.segment) {
-            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"最新上架",@"分类推荐",@"搜索热门"]];
+            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"最新特惠",@"分类推荐",@"热门推荐"]];
             _segment.font = FEFont(14);//[UIFont systemFontOfSize:14];
             _segment.selectedTextColor = FEThemeOrange;
             _segment.selectionIndicatorColor = FEThemeOrange;
@@ -342,12 +335,14 @@
     for(symbol in results)
         // EXAMPLE: just grab the first barcode
         break;
-    GAAlertAction *act = [GAAlertAction actionWithTitle:FEString(@"OK") action:^{
-        [reader dismissViewControllerAnimated:YES completion:^{
-            
-        }];
-    }];
-    [GAAlertObj showAlertWithTitle:FEString(@"提示") message:symbol.data actions:@[act]];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:FEString(@"提示") message:symbol.data delegate:nil cancelButtonTitle:FEString(@"OK") otherButtonTitles: nil];
+    [alert show];
+//    GAAlertAction *act = [GAAlertAction actionWithTitle:FEString(@"OK") action:^{
+//        [reader dismissViewControllerAnimated:YES completion:^{
+//            
+//        }];
+//    }];
+//    [GAAlertObj showAlertWithTitle:FEString(@"提示") message:symbol.data actions:@[act]];
     // EXAMPLE: do something useful with the barcode data
     //    resultText.text = symbol.data;
     
@@ -356,7 +351,7 @@
     //    [info objectForKey: UIImagePickerControllerOriginalImage];
     
     // ADD: dismiss the controller (NB dismiss from the *reader*!)
-//    [reader dismissViewControllerAnimated:YES completion:nil];
+    [reader dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -377,10 +372,10 @@
 
 //get all city list and product category list
 -(void)getcityandcategory{
-    if ([FECoreData fetchCity].count && [FECoreData fetchCategory].count) {
-        [self requestRecommend];
-        return;
-    }
+//    if ([FECoreData fetchCity].count && [FECoreData fetchCategory].count) {
+//        [self requestRecommend];
+//        return;
+//    }
     [self displayHUD:FEString(@"加载中...")];
     __weak typeof(self) weakself = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -420,13 +415,12 @@
                         cdzone.city_id = fecity.city_id;
                         [city addZone_listObject:cdzone];
                     }
-                    CDZone *czone = [FECoreData touchZoneByID:@(0)];
-                    czone.zone_name = @"全部商圈";
-                    czone.city_id = fecity.city_id;
-                    [city addZone_listObject:czone];
                 }
                 
             }
+            CDZone *czone = [FECoreData touchZoneByID:@(0)];
+            czone.zone_name = @"全部商圈";
+            czone.city = nil;
             [FECoreData saveCoreData];
             dispatch_semaphore_signal(sem);
         }];

@@ -305,6 +305,10 @@ relationshipKeyPathsForPrefetching:nil
     return zone;
 }
 
+-(CDZone *)fetchZoneByID:(NSNumber *)zid{
+    return [self fetchEntityByName:@"CDZone" predicate:[NSPredicate predicateWithFormat:@"SELF.zone_id == %@",zid] sortKeys:nil].lastObject;
+}
+
 -(NSArray *)fetchZoneByCity:(CDCity *)city{
 //    NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF.city",city];
     return [self fetchEntityByName:@"CDZone" predicate:[NSPredicate predicateWithFormat:@"SELF.city == %@",city] sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"zone_id" ascending:YES]]];

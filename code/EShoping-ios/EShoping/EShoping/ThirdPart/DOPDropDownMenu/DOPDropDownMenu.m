@@ -126,13 +126,13 @@
         [self.layer addSublayer:indicator];
         [tempIndicators addObject:indicator];
         //separator
-        /*
+        
         if (i != _numOfMenu - 1) {
-            CGPoint separatorPosition = CGPointMake((i + 1) * separatorLineInterval, self.frame.size.height / 2);
+            CGPoint separatorPosition = CGPointMake((i + 1) * (self.bounds.size.width / _numOfMenu), self.frame.size.height / 2);
             CAShapeLayer *separator = [self createSeparatorLineWithColor:self.separatorColor andPosition:separatorPosition];
             [self.layer addSublayer:separator];
         }
-        */
+        
         
     }
     _titles = [tempTitles copy];

@@ -61,10 +61,14 @@
 
 -(void)requestActivityCancel:(FEActivityOrder *)activity{
     [self displayHUD:FEString(@"取消中...")];
+    __weak typeof(self) weakself = self;
     FEActivityOrderCancelRequest *rdate = [[FEActivityOrderCancelRequest alloc] initWithUserID:FELoginUser.user_id.integerValue activityID:activity.activity_id.integerValue];
     [[FEShopWebServiceManager sharedInstance] activityOrderCancel:rdate response:^(NSError *error, FEActivityOrderCreateResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
-            
+            NSMutableArray *marray = [NSMutableArray arrayWithArray:weakself.myactivityList];
+            [marray removeObject:activity];
+            weakself.myactivityList = marray;
+            [weakself.myactivityTableView reloadData];
         }
         [self hideHUD:YES];
     }];

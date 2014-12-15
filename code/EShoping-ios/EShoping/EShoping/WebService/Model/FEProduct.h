@@ -26,5 +26,8 @@
 @property (nonatomic, strong, readonly) NSString *product_status;
 @property (nonatomic, strong, readonly) NSNumber *city_id;
 @property (nonatomic, strong, readonly) NSString *city;
+@property (nonatomic, strong, readonly) NSNumber *zone_id;
+@property (nonatomic, strong, readonly) NSString *zone_name;
+@property (nonatomic, strong, readonly) NSNumber *current_member;
 
 @end
