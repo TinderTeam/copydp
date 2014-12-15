@@ -48,15 +48,28 @@ class BuyServiceAction extends BaseAction {
         return  $rsp;
     
     }
-    //获取分类筛选产品列表
+    //获取分类推荐产品列表
     public function TypeRecProductService($typeInfo)
     {
     
         $productViewDB=new Model('view_product');
-        $condition['type_id'] = $typeInfo['typeRoot'];
-        $condition['city']=$typeInfo['city'];
-        $condition['product_status']="正常";
-        $productList=$productViewDB->where($condition)->order('rand()')->limit(3)->select();
+        
+        
+        $typeDB=new Model('product_type');
+        //查询子类列表
+        $fatherTypeCondition['father_id'] = 0;
+        $subTypeList=$typeDB->where($fatherTypeCondition)->getField('type_id',true);
+        $productList = array();
+        for($i=0;$i<count($subTypeList);$i++){
+            $condition['type_id'] = $subTypeList[$i];
+            $condition['city']=$typeInfo['city'];
+            $condition['product_status']="正常";
+            $productTypeList=$productViewDB->where($condition)->order('rand()')->limit(3)->select();
+            for($j=0;$j<count($productTypeList);$j++)
+            {
+               array_push($productList,$productTypeList[$j]);
+            }
+        }
 
         for($i=0;$i<count($productList);$i++)
         {
@@ -65,6 +78,27 @@ class BuyServiceAction extends BaseAction {
         $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
         }
         
+        $rsp['errorCode'] = SUCCESS;
+        $rsp['productList'] = $productList;
+        $this->log("the productList is".$productList);
+        return  $rsp;
+    
+    }
+    //获取积分产品列表
+    public function ScoreProductService($typeInfo)
+    {
+    
+        $productViewDB=new Model('view_product');
+        $condition['city']=$typeInfo['city'];
+        $condition['type_id'] = 1000;               //积分商品
+        $productList=$productViewDB->where($condition)->select();
+        for($i=0;$i<count($productList);$i++)
+        {
+        $productOrderDB = M('order');
+        $condition['product_id'] = $productList[$i]['product_id'];
+        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
+        }
+    
         $rsp['errorCode'] = SUCCESS;
         $rsp['productList'] = $productList;
         $this->log("the productList is".$productList);

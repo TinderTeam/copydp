@@ -250,6 +250,22 @@ class BuyAction extends BuyServiceAction {
         $Rsp['productList'] = $productListResult['productList'];
         $this->returnJson($errorCode,$Rsp);
     }
+    //APP获取积分产品列表
+    public function ScoreProduct_rest(){
+    
+        $req =  $this->getReqObj();
+        $typeInfo['city'] = $req->city;
+        $this->log($typeInfo);
+        $productListResult = parent::ScoreProductService($typeInfo);
+    
+        $errorCode = $productListResult['errorCode'];
+        if($productListResult['productList']==false)
+        {
+            $productListResult['productList']=null;
+        }
+        $Rsp['productList'] = $productListResult['productList'];
+        $this->returnJson($errorCode,$Rsp);
+    }
     //APP获取商家信息
     public function GetSellerInfo_rest(){
     

@@ -42,6 +42,11 @@ public interface ProductManageRest
 	@Path("/AllProduct_rest")
 	GetProductListRsp getAllProductList(GetProductListReq req);
 	
+	//APP获取积分产品列表
+	@POST
+	@Path("/ScoreProduct_rest")
+	GetProductListRsp getScoreProductList(GetProductListReq req);
+	
 	//APP获取产品类型列表
 	@POST
 	@Path("/GetProdutType_rest")
