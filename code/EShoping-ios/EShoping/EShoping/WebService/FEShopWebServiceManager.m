@@ -57,6 +57,8 @@
 #import "FECommunityListResponse.h"
 #import "FECityRequest.h"
 #import "FECityResponse.h"
+#import "FEProductGetSellerRequest.h"
+#import "FEProductGetSellerResponse.h"
 
 @implementation FEShopWebServiceManager
 
@@ -108,6 +110,8 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productOrderCreate, FEProductCreateOrderReque
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productOrderCancel, FEProductCancelOrderRequest, FEProductOrderCancelResponse)
 //product order delete
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productOrderDelete, FEProductDeleteOrderRequest, FEProductDeleteOrderResponse)
+//product seller info
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(productGetSeller, FEProductGetSellerRequest, FEProductGetSellerResponse)
 
 //news
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(newsList, FENewsListRequest, FENewsListResponse)

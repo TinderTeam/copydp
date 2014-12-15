@@ -11,7 +11,7 @@
 @implementation FEProductDeleteOrderRequest
 
 -(id)initWithUid:(NSInteger)userID productID:(NSInteger)pid quantity:(NSInteger)quan orderid:(NSString *)oid{
-    self = [super initWithMothed:__METHOD_PRODUCT_GREATEORDER];
+    self = [super initWithMothed:__METHOD_PRODUCT_DELETEORDER];
     if (self) {
         _userID = @(userID);
         _productID = @(pid);

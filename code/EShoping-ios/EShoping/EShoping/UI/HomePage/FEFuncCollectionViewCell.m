@@ -7,7 +7,13 @@
 //
 
 #import "FEFuncCollectionViewCell.h"
+#import "CDCategory.h"
 
 @implementation FEFuncCollectionViewCell
+
+-(void)configWithCategory:(CDCategory *)category{
+    _productCategory = category;
+    self.funcTitle.text = category.type_name;
+}
 
 @end

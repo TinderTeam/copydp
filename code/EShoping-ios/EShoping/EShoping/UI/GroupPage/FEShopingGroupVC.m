@@ -20,6 +20,8 @@
 #import "FEShopingItemVC.h"
 #import "FEProductTypeRecRequest.h"
 #import "FEProductTypeRecResponse.h"
+#import "FEShopingGroupCollectionCell.h"
+#import "FEGroupCategoryVC.h"
 
 @interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>{
     BOOL _productRecommendBecome;
@@ -40,13 +42,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initUI];
-//    [self requestNewProduct];
-//    [self requestTypeRecommend];
     __weak typeof(self) weakself = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
-//        [weakself requestNewProduct];
-//        [weakself requestTypeRecommend];
     }];
     [self requestRecommend];
 }
@@ -99,7 +97,12 @@
     if([segue.identifier isEqualToString:@"showProductItem"]){
         FEShopingItemVC *productVC = (FEShopingItemVC *)segue.destinationViewController;
         productVC.product = ((FEGroupProductCell *)sender).product;
+    }else if([sender isKindOfClass:[FEShopingGroupCollectionCell class]]){
+        CDCategory *category = ((FEShopingGroupCollectionCell *)sender).productcategory;
+        FEGroupCategoryVC *vc = segue.destinationViewController;
+        vc.productcategory = category;
     }
+
 }
 
 -(void)requestNewProduct{

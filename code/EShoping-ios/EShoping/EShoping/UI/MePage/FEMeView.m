@@ -34,6 +34,8 @@
     }else{
         self.nickNameLabel.text = FEString(@"点击登陆");
     }
+    
+    self.locationRegionLabel.text = [NSString stringWithFormat:@"常居地:%@",FEUserDefaultsObjectForKey(FEShopRegionKey)];
 }
 
 @end

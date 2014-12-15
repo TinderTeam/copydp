@@ -12,8 +12,10 @@
 
 @property (nonatomic, assign) NSInteger column;
 @property (nonatomic, assign) NSInteger row;
+@property (nonatomic, assign) NSInteger subrow;
 - (instancetype)initWithColumn:(NSInteger)column row:(NSInteger)row;
 + (instancetype)indexPathWithCol:(NSInteger)col row:(NSInteger)row;
++ (instancetype)indexPathWithCol:(NSInteger)col row:(NSInteger)row subrow:(NSInteger)srow;
 
 @end
 
@@ -26,7 +28,7 @@
 - (NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInColumn:(NSInteger)column;
 - (NSString *)menu:(DOPDropDownMenu *)menu titleForRowAtIndexPath:(DOPIndexPath *)indexPath;
 - (NSInteger)menu:(DOPDropDownMenu *)menu numberOfRowsInSubSelectRow:(DOPIndexPath *)indexPath;
-- (NSString *)menu:(DOPDropDownMenu *)menu titleForSubRowAtIndexPath:(DOPIndexPath *)indexPath subrowAtIndex:(NSInteger)index;
+//- (NSString *)menu:(DOPDropDownMenu *)menu titleForSubRowAtIndexPath:(DOPIndexPath *)indexPath subrowAtIndex:(NSInteger)index;
 - (BOOL)menu:(DOPDropDownMenu *)menu columRowHasSub:(DOPIndexPath *)indexPath;
 - (BOOL)menu:(DOPDropDownMenu *)menu columHasSubList:(NSInteger)colum;
 @optional

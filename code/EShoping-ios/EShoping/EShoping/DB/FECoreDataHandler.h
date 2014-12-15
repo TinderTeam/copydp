@@ -10,6 +10,7 @@
 
 @class CDUser;
 @class CDCity;
+@class CDZone;
 @class CDCategory;
 
 @interface FESortDescriptor : NSObject
@@ -44,6 +45,10 @@
 //city
 -(NSArray *)fetchCity;
 -(CDCity *)touchCityByName:(NSString *)cname;
+-(CDCity *)fecthCityByName:(NSString *)cname;
+-(NSArray *)fetchZoneByCity:(CDCity *)city;
+//zone
+-(CDZone *)touchZoneByID:(NSNumber *)zid;
 //catecory
 -(CDCategory *)touchCategoryById:(NSNumber *)tid;
 -(NSArray *)fetchCategory;

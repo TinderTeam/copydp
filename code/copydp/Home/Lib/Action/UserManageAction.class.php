@@ -91,9 +91,6 @@ class UserManageAction extends Action {
 		   $condition['cellphone'] = $phoneNum;
 		}
         		
-		if($userID!='' or $userName!='' or $phoneNum!='')
-		{
-			//$map="user_name like('%".$userName."%') or user_id like('%".$userID."%' ) or cellphone like('%".$phoneNum."%')";
 			$condition['request'] = 'NULL';
 			$list = $db->where($condition)->select();
 			$this->assign('userInfo',$list);
@@ -102,12 +99,6 @@ class UserManageAction extends Action {
 			$show = $Page->show();
 			$this->assign('page',$show);
 			$this->display('index');
-			
-		}else{	
-
-			echo "<script>alert('请输入关键信息!');history.back();</script>";
-			
-		}
 	}
     //新增用户
 		public function add(){
@@ -151,6 +142,22 @@ class UserManageAction extends Action {
 			}
 			
 		}
+		
+		public function freezeControl(){
+			$customer = M('customer');
+			$userID=$_POST['chkID_'];
+			print_r($userID);
+			//判断id是否数组
+			if(is_array($userID)){
+				$condition = 'user_id in('.implode(',',$userID).')';
+			}else{
+				$condition = 'user_id='.$userID;
+			}
+			$customer->where($condition)->setField('status','冻结');
+			$this->assign("jumpUrl","index");
+			$this->success("用户冻结成功！");
+		}
+		
 		//解冻账户
 		public function unfreeze(){
 		
@@ -159,8 +166,7 @@ class UserManageAction extends Action {
 		    $condition['user_id']=$userID;
 		    $customer->where($condition)->setField('status','正常');
 		    $this->assign("jumpUrl","index");
-		    $this->success("用户解冻成功！");
-		
+		    $this->success("用户解冻成功！");	
 		}
 		//冻结账户
 		public function freeze(){

@@ -11,6 +11,11 @@
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
 
+
+<link href="__PUBLIC__/css/fuego.management.css" type="text/css">
+<link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
+
 <!-- <link type="text/css" href="http://t3.s2.dpfile.com/t/cssnew/my/index.min.81e8e568c7d3705cb3d1ecc2cf472b7d.css" rel="stylesheet"/>
 <link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
 <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/deal/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" rel="stylesheet"/>
@@ -75,151 +80,226 @@ margin-right: 10px;
 			<!-----管理菜单---->
 		</div>
 		<div class="user-main">
-			<div class="um-con" id="orderManage">
-				<div class="modebox my-comm J_my_comm" >
-					<div class="hd">
-						<h4 style="font-size:14px">订单管理</h4>
-						<span>管理系统订单</span>
-					</div>
-				</div>
-				
-				<div class="con-tab">             
-					 <ul class="tab-filter">
-						<li>
-							<a href="__APP__/OrderManage/index?filter_type=all">全部</a>
-						</li>
-						<li>
-							<a href="__APP__/OrderManage/index?filter_type=place">已下单</a>
-						</li>
-						<li>
-							<a href="__APP__/OrderManage/index?filter_type=cancel">已取消</a>	
-						</li>
-						<li>
-							<a href="__APP__/OrderManage/index?filter_type=abolish">已作废</a>	
-						</li>
-						<li>
-							<a href="__APP__/OrderManage/index?filter_type=used">已使用</a>
-						</li>
-						<li>
-							<a href="__APP__/OrderManage/index?filter_type=out">已过期</a>
-						</li>
-						<li>
-							<select style="width:120px" id="selectProduct">
-								<option>按照产品筛选</option>
-								<foreach name='productList' item='v0' >
-								<option value="{$v0.product_id}" >{$v0.name}</option>
-								</foreach>
-							</select>
-						</li>
-					</ul>             
-				</div>
-				<div class="modebox my-comm J_my_comm"  style="
-    padding-top: 0px;
-">
-					<div class="pay-confirm">
-						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
-						<thead>
-						<tr>
-							<th class="t-order">
-								订单信息
-							</th>
-							<th class="t-time">
-								下单时间
-							</th>
-							<th class="t-amount">
-								数量
-							</th>
-							<th class="t-price">
-								金额
-							</th>
-							<th class="t-status">
-								交易状态
-							</th>
-							<th class="t-op">
-								操作
-							</th>
-							<th class="t-delete"></th>
-						</tr>
-						</thead>
-							<tbody id="pageListArray_activity">							
-								<foreach name='orderList' item='v1' key="j" >
-								<if condition="$j gt 5">
-									<tr id="item_activity_{$j+1}" class="Hide">
-								<else/>
-									<tr id="item_activity_{$j+1}" >
-								</if>
-									<td class="t-order">
-										<div class="pic">
-											<a href="#"><img src="__PUBLIC__/uploads/img/{$v1.imgsrc}" width="85" height="53" /></a>
-										</div>
-
-										<div class="txt">
-											<h4>
-												<a href="#">
-													{$v1.product_name}
-												</a>
-											</h4>
-											<h5>
-												<span>
-													订单号：{$v1.order_id}
-												</span>
-											</h5>
-											<h5>
-												<span>
-													过期时间：{$v1.end_date_time}
-												</span>
-											</h5>
-										</div>
-
-									</td>
-									<td class="t-time">
-										<span>{$v1.order_time}</span>
-									</td>
-									<td class="t-amount">
-										<span>{$v1.quantity}</span>
-									</td>
-									<td class="t-price">
-										<span>￥{$v1.order_price}</span>
-									</td>
-									<td class="t-status">
-										<div>{$v1.order_status}</div>
-									</td>
-									<td class="t-op">
-										<a onclick="show_abolish_confirm({$v1.order_id})" >作废</a>
-									</td>
-									<td class="t-delete">
-										<a href="__APP__/Buy/product_list"  data-id="delete-order" data-eval-config="{'type':'single'}"  class="deletebox Hide">
-											<i></i>
-										</a>
-									</td>
-								</tr>
-							</foreach>	
-							</tbody>							
-						</table>
-						
-						<div class="pages-wrap J_tab2_pagewrap">
-							<div class="Pages">
-								<?php
-									$pageNumber2=floor(count($orderList)/5);
-								?>			
+			<form name="forml" action="__URL__/Index" method="post">
+				<div class="um-con" id="orderManage">
+					<div class="modebox my-comm J_my_comm" >
+						<div class="hd">
+							<h4 style="font-size:14px">订单管理</h4>
+							<span>管理系统订单</span>
+						</div>
+						<ul class="tab-filter">		
+							<li>
+								<div class="span-input">
+									<span >订单编号</span>
 									
-								<if condition="$pageNumber2 gt 0">
-									<a class="LastPage" typename="activity" title="上一页">上一页</a>
-									<span class="pageTagArray_activity" data="1" typename="activity">
-									<a id="page_activity_1" class="PageSel pageTag" typename="activity">1</a> 
-									<for start="1" end="($pageNumber2+1)">
-										<a id="page_activity_{$i+1}" typename="activity" class="PageLink pageTag">{$i+1}</a> 
-									 </for>	
-									</span>
-									<a class="NextPage" typename="activity" title="下一页" data="{$pageNumber2+1}">下一页</a>
-								</if>													
+									<input type="text" name="orderID"/>
+								</div>							
+							</li>						
+							<li>
+								<div class="span-input">
+									<span >订单日期</span>
+									<input  type="text" data-date-format="yyyy-mm-dd" value="2014-01-01" onFocus="WdatePicker()" name="orderDate" />	
+								</div>
+							</li>				
+							<li>
+								<div class="span-input">
+									<span >会员编号</span><input type="text" name="userID"/>
+								</div>
+							</li>
+							<li>
+								<div class="span-input">
+									<span >会员名称</span><input type="text" name="userName"/>
+								</div>
+							</li>
+							<li>
+								<div class="span-input">
+									<span >手机号码</span><input type="text" name="phoneNum"/>
+								</div>							
+							</li>
+							<li>
+								<div class="span-input">
+									<span >会员级别</span><input type="text" name="userType"/>
+								</div>							
+							</li>
+							<li>
+								<div class="span-input">
+									<span >行业类别</span>
+									<select name="typeID" class="span-select" >
+										<?php					
+											$productTypeDB=M('product_type');
+											$allType=$productTypeDB->select();
+										?>
+										<option selected="selected" value="">请选择子类型</option>
+										<foreach name='allType' item='allvt'>
+											<option value="{$allvt.type_id}">{$allvt.type_name}</option>						
+										</foreach>
+									</select>								
+								</div>							
+							</li>
+							<li>
+								<div class="span-input">
+									<span >模糊名称</span><input type="text" name="orderName"/>
+								</div>							
+							</li>
+							<li>
+								<strong class="btn-type-b btn-fn-c btnbar">
+									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+								</strong> 
+							</li>
+						</ul>
+					</div>
+			
+					<div class="modebox my-comm J_my_comm"  style="
+		padding-top: 0px;
+	">
+						<div class="pay-confirm">
+							<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<thead>
+							<tr>
+								<th class="t-order">
+									订单信息
+								</th>
+								<th class="t-time">
+									买家信息
+								</th>
+								<th class="t-amount">
+									产品信息
+								</th>
+								<th class="t-price">
+									价格信息
+								</th>
+								<th class="t-status">
+									交易状态
+								</th>
+								<th class="t-op">
+									操作
+								</th>
+							</tr>
+							</thead>
+								<tbody id="pageListArray_activity">							
+									<foreach name='orderList' item='v1' key="j" >
+									<if condition="$j gt 5">
+										<tr id="item_activity_{$j+1}" class="Hide">
+									<else/>
+										<tr id="item_activity_{$j+1}" >
+									</if>
+										<td class="t-order">
+	
+											<div class="txt">
+												<h4>
+													<a href="#">
+														订单名称：{$v1.order_name}
+													</a>
+												</h4>
+												<h5>
+													<span>
+														订单号：{$v1.order_id}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														订单时间：{$v1.order_time}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														过期时间：{$v1.end_date_time}
+													</span>
+												</h5>
+											</div>
+
+										</td>
+										<td>
+											<div class="txt">
+												<h4>
+													<a href="#">
+														用户名：{$v1.user_name}
+													</a>
+												</h4>
+												<h5>
+													<span>
+														用户编号：{$v1.customer_id}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														用户权限：{$v1.grade}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														手机号码：{$v1.cellphone}
+													</span>
+												</h5>
+											</div>
+										</td>
+										<td class="t-amount">
+											<div class="pic">
+												<a href="#"><img src="__PUBLIC__/uploads/img/{$v1.imgsrc}" width="85" height="53" /></a>
+											</div>
+											<div class="txt">
+												<h4>
+													<a href="#">
+														产品名：{$v1.product_name}
+													</a>
+												</h4>
+												<h5>
+													<span>
+														产品类型：{$v1.type_name}
+													</span>
+												</h5>
+
+											</div>
+										</td>
+											<td class="t-price">
+											<div class="txt">
+													<h4>
+														<a href="#">
+															购买数量：{$v1.quantity}
+														</a>
+													</h4>
+													<h5>
+														<span>
+															订单价格：￥{$v1.order_price}
+														</span>
+													</h5>
+
+											</div>
+										</td>
+										<td class="t-status">
+											<div>{$v1.order_status}</div>
+										</td>
+										<td class="t-op">
+											<a onclick="show_abolish_confirm({$v1.order_id})" >作废</a>
+										</td>
+									</tr>
+								</foreach>	
+								</tbody>							
+							</table>
+							
+							<div class="pages-wrap J_tab2_pagewrap">
+								<div class="Pages">
+									<?php
+										$pageNumber2=floor(count($orderList)/5);
+									?>			
+										
+									<if condition="$pageNumber2 gt 0">
+										<a class="LastPage" typename="activity" title="上一页">上一页</a>
+										<span class="pageTagArray_activity" data="1" typename="activity">
+										<a id="page_activity_1" class="PageSel pageTag" typename="activity">1</a> 
+										<for start="1" end="($pageNumber2+1)">
+											<a id="page_activity_{$i+1}" typename="activity" class="PageLink pageTag">{$i+1}</a> 
+										 </for>	
+										</span>
+										<a class="NextPage" typename="activity" title="下一页" data="{$pageNumber2+1}">下一页</a>
+									</if>													
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			
-			
+			</form>
 				
 		</div>
 	</div>

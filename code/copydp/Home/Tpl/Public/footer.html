@@ -45,46 +45,37 @@
 					</li>
 					<?php
 						$siteCfg= M('site_config');
-						$condition['name']='helpname1';
-						$helpname1=$siteCfg->where($condition)->getField('content');
 						$condition['name']='help1';
 						$help1=$siteCfg->where($condition)->getField('content');
-						
-						$condition['name']='helpname2';
-						$helpname2=$siteCfg->where($condition)->getField('content');
 						$condition['name']='help2';
 						$help2=$siteCfg->where($condition)->getField('content');
-						
-						$condition['name']='helpname3';
-						$helpname3=$siteCfg->where($condition)->getField('content');
 						$condition['name']='help3';
-						$help3=$siteCfg->where($condition)->getField('content');
-						
-						$condition['name']='helpname4';
-						$helpname4=$siteCfg->where($condition)->getField('content');
+						$help3=$siteCfg->where($condition)->getField('content');	
 						$condition['name']='help4';
 						$help4=$siteCfg->where($condition)->getField('content');
 						
+		
 						$helpnone=1;
-						if((mb_strlen($helpname1)+mb_strlen($helpname2)+mb_strlen($helpname3)+mb_strlen($helpname4))==0){
+						if((mb_strlen($help1)+mb_strlen($help2)+mb_strlen($help3)+mb_strlen($help4))==0){
 							$helpnone=0;
 						}
+						print($helpnone);				
 					?>
 					<if condition="$helpnone eq '1'">
 						<li>
 							<h3>服务帮助</h3>
 							<ul>
-								<if condition="$helpname1 neq ''">
-									<li>·<a href="http://{$help1}">{$helpname1}</a></li>
+								<if condition="$help1 neq ''">
+									<li>·<a href="__APP__/SystemManage/helpShow?id=1">{$help1}</a></li>
 								</if>
-								<if condition="$helpname2 neq ''">
-									<li>·<a href="http://{$help2}">{$helpname2}</a></li>
+								<if condition="$help2 neq ''">
+									<li>·<a href="__APP__/SystemManage/helpShow?id=2">{$help2}</a></li>
 								</if>
-								<if condition="$helpname3 neq ''">
-									<li>·<a href="http://{$help3}">{$helpname3}</a></li>
+								<if condition="$help3 neq ''">
+									<li>·<a href="__APP__/SystemManage/helpShow?id=3">{$help3}</a></li>
 								</if>
-								<if condition="$helpname4 neq ''">
-									<li>·<a href="http://{$help4}">{$helpname4}</a></li>
+								<if condition="$help4 neq ''">
+									<li>·<a href="__APP__/SystemManage/helpShow?id=4">{$help4}</a></li>
 								</if>
 							</ul>
 						</li>

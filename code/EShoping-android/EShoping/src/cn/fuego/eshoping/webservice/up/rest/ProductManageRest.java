@@ -11,6 +11,8 @@ import cn.fuego.eshoping.webservice.up.model.GetProductOrderListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductOrderListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductTypeReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductTypeRsp;
+import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
+import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.SetProductOrderReq;
 import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
 
@@ -64,5 +66,10 @@ public interface ProductManageRest
 	@POST
 	@Path("/DeleteOrder_rest")
 	SetProductOrderRsp deleteProductOrder(SetProductOrderReq req);
+	
+	//APP获取商家信息
+	@POST
+	@Path("/GetSellerInfo_rest")
+	GetSellerRsp getSellerInfo(GetSellerReq req);
  
 }

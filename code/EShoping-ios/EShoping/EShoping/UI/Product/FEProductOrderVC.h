@@ -6,12 +6,12 @@
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#import "FECommonViewController.h"
+//#import "FECommonViewController.h"
+#import "FETableViewController.h"
 
 @class FEProduct;
 
-@interface FEProductOrderVC : FECommonViewController
-@property (strong, nonatomic) IBOutlet UIButton *submitButton;
+@interface FEProductOrderVC : FETableViewController
 @property (nonatomic, strong) FEProduct *product;
 
 @end

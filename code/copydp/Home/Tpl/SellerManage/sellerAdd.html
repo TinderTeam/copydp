@@ -147,8 +147,7 @@
 												</select>
 												<?php
 														$productTypeDB=M('product_type');
-														$allType=$productTypeDB->select();
-														
+														$allType=$productTypeDB->select();														
 												?>
 												<select id="typeSelect" name="type_id" class="form-select-sim">
 													<option selected="selected" value="">请选择子类型</option>
@@ -161,7 +160,7 @@
 														<if condition="$allvt.father_id eq '0'">
 															<option type_ID="{$allvt.type_id}" father_id="{$allvt.father_id}"  class="typeCopy" value="{$allvt.type_id}">{$allvt.type_name}</option>	
 														<else/>
-															<option type_ID="{$allvt.type_id}" father_id="{$allvt.father_id}"   class="typeCopy" value="{$allvt.type_id}">{$allvt.type_name}</option>	
+															<option type_ID="{$allvt.type_id}" father_id="{$allvt.father_id}"   class="typeCopy typeCopy_{$allvt.type_id}" value="{$allvt.type_id}">{$allvt.type_name}</option>	
 														</if>
 														
 													</foreach>											
@@ -202,7 +201,7 @@
 												<select id="zonecopy" name="nullid" class="Hide">
 										
 													<foreach name='Zone' item='vz'>
-														<option value="{$vz.zone_id}" zone_id="{$vz.zone_id}" city_id="{$vz.city_id}"  class="cityCopy">{$vz.zone_name}</option>
+														<option value="{$vz.zone_id}" zone_id="{$vz.zone_id}" city_id="{$vz.city_id}"  class="cityCopy zoneCopy_{$vz.zone_id}">{$vz.zone_name}</option>
 													</foreach>									
 												</select>
 											</div>
@@ -287,9 +286,8 @@
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.min.js"> </script>
-    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>	
-	<script type="text/javascript">	
-	
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+	<script type="text/javascript">		
 	function typeSelectChange(){
 		var id=$(".selectTarget").val();	
 		
@@ -310,10 +308,6 @@
 	}
 	function citySelectChange(){
 		var id=$("#citySelect").val();
-		
-		
-			
-			
 		$(".cityshowOption").each(function(){	
 			$(this).remove();
 		});
@@ -324,8 +318,7 @@
 			var name=$(this).html();
 			
 			if(city_id==id){				
-				$("#zoneSelect").append(
-					
+				$("#zoneSelect").append(					
 					'<option class="cityshowOption" value="'+zone_id+'">'+name +'</option>'
 				); 
 			}
@@ -379,26 +372,11 @@
 			}
 			
 			
-		});
-
-		
+		});	
 	</script>
 	
-	<script>
-	//类别联动
-		$('.type-select').change(function(){	
-			$(".type-suboption").addClass("Hide");
-			var type_id=$(".type-select").val();
-			$(".typeGroup"+type_id).removeClass("Hide");
-		});
-    </script>
 	
-	<script>
-        $(function () {
-            $("#up0").uploadPreview({ Img: "img0"});				
-        });
-    </script>
-	
+
 	<script>
 		//初始化
 		 $(function () {
@@ -406,22 +384,26 @@
 				//初始化类型
 					var id =$('#SellerType').attr('type_id');
 					var father_id=$('#SellerType').attr('father_id');
+					var name =$('.typeCopy_'+id).html();
+					if(father_id != 0){									
+						$("#typeSelect").append(
+							"<option class='showOption' value='"+id+"' selected='true' >"+name +"</option>"
+						); 	
+						//选中
+						$(".fathertype"+father_id).attr("selected",true);						
+					}else{
+						$(".fathertype"+id).attr("selected",true);
+					}
 					
-					if(father_id != 0){					
-						$(".type-suboption").addClass("Hide");
-						$(".typeGroup"+father_id).removeClass("Hide");
-						$(".typeid"+id).attr("selected",true);					
-					}			
-					//选中
-					$(".fathertype"+father_id).attr("selected",true);
 				//初始化城市
 					var cityid =$('#SellerCity').attr('city_id');
 					var zoneid=$('#SellerCity').attr('zone_id');
+					var name =$('.zoneCopy_'+zoneid).html();		
+					$(".cityid"+cityid).attr("selected",true);			
+					$("#zoneSelect").append(						
+						"<option class='cityshowOption' value='"+zoneid+"' selected='true'  >"+name +"</option>"
+					); 
 					
-					$(".city-option").addClass("Hide");
-					$(".cityid"+cityid).attr("selected",true);
-					$("[data='"+cityid+"']").removeClass("Hide");				
-					$(".zoneid"+zoneid).attr("selected",true);
 					
 					
 					
@@ -451,5 +433,11 @@
         });
 		
     </script>
+		<script>
+        $(function () {
+            $("#up0").uploadPreview({ Img: "img0"});				
+        });
+    </script>
+	
 </body>
 </html>

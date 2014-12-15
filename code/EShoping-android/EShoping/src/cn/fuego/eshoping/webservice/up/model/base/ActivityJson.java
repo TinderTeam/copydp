@@ -1,20 +1,20 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
-import java.util.Date;
-
 public class ActivityJson
 {
 	private int activity_id;
 	private String title;
-	private Date datetime;
+	private String datetime;
 	private String dscr;
 	private String address;
 	private String info;
 	private String note;
 	private String status;
 	private String city_id;
+	private String city;
 	private String datelimit;
 	private String memberlimit;
+	private String current_member;
 	private String imgsrc;
 	private String point;
 	public int getActivity_id() {
@@ -29,10 +29,10 @@ public class ActivityJson
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Date getDatetime() {
+	public String getDatetime() {
 		return datetime;
 	}
-	public void setDatetime(Date datetime) {
+	public void setDatetime(String datetime) {
 		this.datetime = datetime;
 	}
 	public String getDscr() {
@@ -71,11 +71,24 @@ public class ActivityJson
 	public void setCity_id(String city_id) {
 		this.city_id = city_id;
 	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
 	public String getDatelimit() {
 		return datelimit;
 	}
 	public void setDatelimit(String datelimit) {
 		this.datelimit = datelimit;
+	}
+	
+	public String getCurrent_member() {
+		return current_member;
+	}
+	public void setCurrent_member(String current_member) {
+		this.current_member = current_member;
 	}
 	public String getMemberlimit() {
 		return memberlimit;
@@ -100,10 +113,12 @@ public class ActivityJson
 		return "ActivityJson [activity_id=" + activity_id + ", title=" + title
 				+ ", datetime=" + datetime + ", dscr=" + dscr + ", address="
 				+ address + ", info=" + info + ", note=" + note + ", status="
-				+ status + ", city_id=" + city_id + ", datelimit=" + datelimit
-				+ ", memberlimit=" + memberlimit + ", imgsrc=" + imgsrc
+				+ status + ", city_id=" + city_id + ", city=" + city
+				+ ", datelimit=" + datelimit + ", memberlimit=" + memberlimit
+				+ ", current_member=" + current_member + ", imgsrc=" + imgsrc
 				+ ", point=" + point + "]";
 	}
 	
+
  
 }

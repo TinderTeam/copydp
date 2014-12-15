@@ -15,6 +15,7 @@
     if (self) {
         _column = column;
         _row = row;
+        _subrow = -1;
     }
     return self;
 }
@@ -23,12 +24,28 @@
     DOPIndexPath *indexPath = [[self alloc] initWithColumn:col row:row];
     return indexPath;
 }
+
+- (instancetype)initWithColumn:(NSInteger)col row:(NSInteger)row subrow:(NSInteger)srow{
+    self = [super init];
+    if (self) {
+        _column = col;
+        _row = row;
+        _subrow = srow;
+    }
+    return self;
+}
+
++ (instancetype)indexPathWithCol:(NSInteger)col row:(NSInteger)row subrow:(NSInteger)srow{
+    return [[self alloc] initWithColumn:col row:row subrow:srow];
+}
 @end
 
 #pragma mark - menu implementation
 
 @interface DOPDropDownMenu ()
 @property (nonatomic, assign) NSInteger currentSelectedMenudIndex;
+@property (nonatomic, assign) NSInteger currentSelectedRow;
+@property (nonatomic, assign) NSInteger currentSelectedSubRow;
 @property (nonatomic, assign) BOOL show;
 @property (nonatomic, assign) NSInteger numOfMenu;
 @property (nonatomic, assign) CGPoint origin;
@@ -100,7 +117,7 @@
         [tempBgLayers addObject:bgLayer];
         //title
         CGPoint titlePosition = CGPointMake( (i * 2 + 1) * textLayerInterval , self.frame.size.height / 2);
-        NSString *titleString = [_dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:i row:0]];
+        NSString *titleString = [_dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:i row:0 subrow:-1]];
         CATextLayer *title = [self createTextLayerWithNSString:titleString withColor:self.textColor andPosition:titlePosition];
         [self.layer addSublayer:title];
         [tempTitles addObject:title];
@@ -418,25 +435,32 @@
     NSAssert(self.dataSource != nil, @"menu's datasource shouldn't be nil");
     if (tableView == _tableView) {
         if ([self.dataSource respondsToSelector:@selector(menu:titleForRowAtIndexPath:)]) {
-            cell.textLabel.text = [self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
+            cell.textLabel.text = [self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row subrow:-1]];
         } else {
             NSAssert(0 == 1, @"dataSource method needs to be implemented");
         }
     }else{
-        if ([self.dataSource respondsToSelector:@selector(menu:titleForSubRowAtIndexPath:subrowAtIndex:)]) {
-            cell.textLabel.text = [self.dataSource menu:self titleForSubRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:[_tableView indexPathForSelectedRow].row] subrowAtIndex:indexPath.row];//[self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
+        
+        if ([self.dataSource respondsToSelector:@selector(menu:titleForRowAtIndexPath:)]) {
+            cell.textLabel.text = [self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:self.currentSelectedRow subrow:indexPath.row]];
         } else {
             NSAssert(0 == 1, @"dataSource method needs to be implemented");
         }
+        
+//        if ([self.dataSource respondsToSelector:@selector(menu:titleForSubRowAtIndexPath:subrowAtIndex:)]) {
+//            cell.textLabel.text = [self.dataSource menu:self titleForSubRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:[_tableView indexPathForSelectedRow].row] subrowAtIndex:indexPath.row];//[self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
+//        } else {
+//            NSAssert(0 == 1, @"dataSource method needs to be implemented");
+//        }
     }
     
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.font = [UIFont systemFontOfSize:14.0];
     cell.separatorInset = UIEdgeInsetsZero;
     
-    if (cell.textLabel.text == [(CATextLayer *)[_titles objectAtIndex:_currentSelectedMenudIndex] string]) {
-        cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    }
+//    if (cell.textLabel.text == [(CATextLayer *)[_titles objectAtIndex:_currentSelectedMenudIndex] string]) {
+//        cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+//    }
     
     return cell;
 }
@@ -444,26 +468,37 @@
 #pragma mark - tableview delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (tableView == _tableView) {
-        if (self.delegate || [self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
-//                    [self confiMenuWithSelectRow:indexPath.row];
-            if ([self.dataSource respondsToSelector:@selector(menu:columRowHasSub:)]) {
-//                if ([self.dataSource menu:self columRowHasSub:[[DOPIndexPath alloc] initWithColumn:self.currentSelectedMenudIndex row:indexPath.row]]) {
-                    [_subTableView reloadData];
-//                }
+        self.currentSelectedRow = indexPath.row;
+        self.currentSelectedSubRow = -1;
+        if ([self.dataSource respondsToSelector:@selector(menu:columRowHasSub:)]) {
+            if ([self.dataSource menu:self columRowHasSub:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row subrow:-1]]) {
+            }else{
+                if ([self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
+                    [self.delegate menu:self didSelectRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row subrow:-1]];
+                } else {
+                    //TODO: delegate is nil
+                }
+                
+                [self confiMenuWithSelectRow:self.currentSelectedRow subrow:self.currentSelectedSubRow];
             }
-            [self.delegate menu:self didSelectRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:indexPath.row]];
-        } else {
-            //TODO: delegate is nil
         }
+        [_subTableView reloadData];
     }else if(tableView == _subTableView){
-        
+        self.currentSelectedSubRow = indexPath.row;
+        if ([self.delegate respondsToSelector:@selector(menu:didSelectRowAtIndexPath:)]) {
+            [self.delegate menu:self didSelectRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:self.currentSelectedRow subrow:indexPath.row]];
+        }
+        [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_tableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
+            _show = NO;
+        }];
+        [self confiMenuWithSelectRow:self.currentSelectedRow subrow:self.currentSelectedSubRow];
     }
     
 }
 
-- (void)confiMenuWithSelectRow:(NSInteger)row {
+- (void)confiMenuWithSelectRow:(NSInteger)row subrow:(NSInteger)subrow{
     CATextLayer *title = (CATextLayer *)_titles[_currentSelectedMenudIndex];
-    title.string = [self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:self.currentSelectedMenudIndex row:row]];
+    title.string = [self.dataSource menu:self titleForRowAtIndexPath:[DOPIndexPath indexPathWithCol:_currentSelectedMenudIndex row:self.currentSelectedRow subrow:self.currentSelectedSubRow]];
     
     [self animateIdicator:_indicators[_currentSelectedMenudIndex] background:_backGroundView tableView:_tableView title:_titles[_currentSelectedMenudIndex] forward:NO complecte:^{
         _show = NO;

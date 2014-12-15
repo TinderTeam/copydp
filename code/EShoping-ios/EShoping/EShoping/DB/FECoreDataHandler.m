@@ -11,6 +11,7 @@
 #import "CDUser.h"
 #import "CDCity.h"
 #import "CDCategory.h"
+#import "CDZone.h"
 
 @implementation FESortDescriptor
 @synthesize key;
@@ -289,6 +290,26 @@ relationshipKeyPathsForPrefetching:nil
     return [self fetchEntityByName:@"CDCity" predicate:nil sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"citypinin" ascending:YES]]];
 }
 
+-(CDCity *)fecthCityByName:(NSString *)cname{
+    return [self fetchEntityByName:@"CDCity" predicate:[NSPredicate predicateWithFormat:@"SELF.cityititle == %@",cname] sortKeys:nil].lastObject;
+}
+
+#pragma mark - CDZone
+-(CDZone *)touchZoneByID:(NSNumber *)zid{
+
+    CDZone *zone = [self fetchEntityByName:@"CDZone" predicate:[NSPredicate predicateWithFormat:@"SELF.zone_id == %@",zid] sortKeys:nil].lastObject;
+    if (!zone) {
+        zone = (CDZone *)[NSEntityDescription insertNewObjectForEntityForName:@"CDZone" inManagedObjectContext:self.managedObjectContext];
+        zone.zone_id = zid;
+    }
+    return zone;
+}
+
+-(NSArray *)fetchZoneByCity:(CDCity *)city{
+//    NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF.city",city];
+    return [self fetchEntityByName:@"CDZone" predicate:[NSPredicate predicateWithFormat:@"SELF.city == %@",city] sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"zone_id" ascending:YES]]];
+}
+
 #pragma mark - CDCategory
 -(CDCategory *)touchCategoryById:(NSNumber *)tid{
     CDCategory *category;
@@ -304,7 +325,8 @@ relationshipKeyPathsForPrefetching:nil
 }
 
 -(NSArray *)fetchCategory{
-    return [self fetchEntityByName:@"CDCategory" predicate:nil sortKeys:nil];
+    
+    return [self fetchEntityByName:@"CDCategory" predicate:nil sortKeys:@[[FESortDescriptor sortDescriptorWithKey:@"type_id" ascending:YES]]];
 }
 
 @end

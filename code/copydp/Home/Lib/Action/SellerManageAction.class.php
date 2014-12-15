@@ -308,7 +308,36 @@ class SellerManageAction extends Action {
 			$this->success("批量退回成功！");
 			}			
 		}
-
+		//商家批量冻结与解冻
+		public function freezeDeal(){
+		    	
+		    $sellerDB= M('seller');
+		    $productDB = M('product');
+		    $sellerID=$_POST['chkID_'];
+		    	
+		    //判断id是否数组
+		    if(is_array($sellerID)){
+		        $condition = 'user_id in('.implode(',',$sellerID).')';
+		        $productCondition = 'seller_id in('.implode(',',$sellerID).')';
+		    }else{
+		        $condition = 'user_id='.$sellerID;
+		        $productCondition = 'seller_id='.$sellerID;
+		    }
+		    
+		    if (isset($_POST['subFreeze'])) {
+		        $sellerDB->where($condition)->setField('status','冻结');
+		        $productDB->where($productCondition)->setField('product_status','已过期');	
+		        $this->assign("jumpUrl","index");
+		        $this->success("批量冻结成功！");
+		    }
+		    if (isset($_POST['subUnfreeze'])) {
+		        	
+		        $sellerDB->where($condition)->setField('status','正常');
+		        $productDB->where($productCondition)->setField('product_status','正常');
+		        $this->assign("jumpUrl","index");
+		        $this->success("批量解冻成功！");
+		    }
+		}
 
 
 

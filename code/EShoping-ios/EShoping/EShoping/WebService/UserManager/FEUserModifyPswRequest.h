@@ -14,4 +14,6 @@
 @property (nonatomic, strong, readonly) NSString *oldPwd;
 @property (nonatomic, strong, readonly) NSString *pwdNew;
 
+-(id)initWithUname:(NSString *)uname oldPassword:(NSString *)oldpsw newPassword:(NSString *)newpsw;
+
 @end

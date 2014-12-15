@@ -8,10 +8,12 @@ class CommunityManageAction extends Action {
 			$IDFilter=$_POST['community_id'];
 			$titleFilter=$_POST['title'];
 			$userFilters=$_POST['user_name'];
-			
+			$datetimeFilters=$_POST['datetime'];
 			$this->assign("IDFilter",$IDFilter);
 			$this->assign("titleFilter",$titleFilter);
 			$this->assign("userFilters",$userFilters);
+			$this->assign("datetimeFilters",$datetimeFilters);
+			
 			
 			$this->display('index');
 		}else{

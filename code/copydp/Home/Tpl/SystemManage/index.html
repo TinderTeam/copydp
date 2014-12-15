@@ -375,7 +375,6 @@ margin-right: 10px;
 								<tr>
 									<th width="10%" >位置</th>
 									<th >标题</th>							
-									<th >链接地址</th>
 									<th width="10%">操作</th>								
 								</tr>
 							<?php
@@ -384,9 +383,10 @@ margin-right: 10px;
 								for($i = 0;$i<4;$i++){
 									$condition['name']='help'.($i+1);							
 									$help[$i]=$ConfigDB->where($condition)->getField('content');
-									$condition['name']='helpname'.($i+1);
-									$helpname[$i]=$ConfigDB->where($condition)->getField('content');
+		
+		
 								}
+				
 							?>
 							<foreach name='help' item='hp' key="i">
 								<tr>
@@ -394,13 +394,10 @@ margin-right: 10px;
 										{$i+1}
 									</td>
 									<td align="center" class="deal">
-										<input id="helpname{$i+1}" value="{$helpname[$i]}" style="width:100%"/>
-									</td>
+										{$help[$i]}								
+									</td>								
 									<td align="center" class="deal">
-										<input id="help{$i+1}" value="{$hp}" style="width:100%"/>
-									</td>									
-									<td align="center" class="deal">
-										<button index="{$i+1}" class="help-btn" type="button">保存</button>
+										<a href="__URL__/HelpEdit?id={$i+1}" class="help-btn-edit" type="button">编辑</button>
 									</td>									
 								</tr>
 							</foreach>
@@ -463,28 +460,7 @@ margin-right: 10px;
 			});		
 		});	
 	</script>
-	
-	<script>
-		$(".help-btn").click(function(){
-			var index=$(this).attr('index');
-			var help=$("#help"+index).val();
-			var helpname=$("#helpname"+index).val();
-			//ajax
-			$.ajax({
-				  type:"post",
-				  url:"__URL__/helpEdit",
-				  data:"data="+help+"~"+helpname+"~"+index,
-				  dataType:"html",
-				  error:
-				  function(){
-					  alert("当前ajax操作出错！");
-				  },
-				  success:function(msg){
-					alert('操作成功');
-				  }
-			});		
-		});	
-	</script>
+
 <script type="text/javascript">
 function show_delete_confirm(cityID)
 {

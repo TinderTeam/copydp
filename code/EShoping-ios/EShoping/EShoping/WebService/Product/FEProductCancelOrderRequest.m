@@ -11,7 +11,7 @@
 @implementation FEProductCancelOrderRequest
 
 -(id)initWithUid:(NSInteger)userID productID:(NSInteger)pid quantity:(NSInteger)quan orderid:(NSString *)oid{
-    self = [super initWithMothed:__METHOD_PRODUCT_GREATEORDER];
+    self = [super initWithMothed:__METHOD_PRODUCT_CANCELORDER];
     if (self) {
         _userID = @(userID);
         _productID = @(pid);

@@ -27,15 +27,39 @@
 #import "CDCategory.h"
 #import "CDCity.h"
 #import "FEProductType.h"
+#import "FESegmentControl.h"
+#import "FEFuncCollectionViewCell.h"
+#import "FEGroupCategoryVC.h"
 
-@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,FECitySelectVCDelegate>{
+#import "FEProductNewRequest.h"
+#import "FEProductNewResponse.h"
+#import "FEProductType.h"
+#import "FEProductTypeRecRequest.h"
+#import "FEProductTypeRecResponse.h"
+
+#import "FECity.h"
+#import "FEZone.h"
+#import "CDZone.h"
+#import "GAAlertObj.h"
+
+#import <ZBarSDK/ZBarReaderViewController.h>
+
+
+@interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,FECitySelectVCDelegate,ZBarReaderDelegate>{
     dispatch_semaphore_t semaphore;
+    BOOL _productRecommendBecome;
 }
 @property (strong, nonatomic) IBOutlet UITableView *shopingTableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+
 @property (nonatomic, strong) NSArray *productList;
+@property (strong, nonatomic) NSArray *productNew;
+@property (strong, nonatomic) NSArray *productTypeRecommed;
+
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *regionBarItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *messageBarItem;
+@property (strong, nonatomic) FESegmentControl *segment;
 
 @end
 
@@ -49,18 +73,37 @@
     __weak typeof(self) weakself = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         weakself.regionBarItem.title = FEUserDefaultsObjectForKey(FEShopRegionKey);
-        [weakself requestRecommendproduct];
+        [weakself requestRecommend];
     }];
-    
     [self getcityandcategory];
-//    [self requestRecommendproduct];
 }
+
+
 
 -(void)initUI{
     [self.regionBarItem setTitle:FEUserDefaultsObjectForKey(FEShopRegionKey)];
     self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.navigationItem.leftBarButtonItem = self.regionBarItem;
     self.navigationItem.rightBarButtonItem = self.messageBarItem;
+}
+
+- (IBAction)qrscan:(id)sender {
+    ZBarReaderViewController *reader = [ZBarReaderViewController new];
+    reader.showsZBarControls = YES;
+    reader.readerDelegate = self;
+    reader.supportedOrientationsMask = ZBarOrientationMaskAll;
+    
+    ZBarImageScanner *scanner = reader.scanner;
+    
+    // TODO: (optional) additional reader configuration here
+    
+    // EXAMPLE: disable rarely used I2/5 to improve performance
+    [scanner setSymbology: ZBAR_I25
+                   config: ZBAR_CFG_ENABLE
+                       to: 0];
+    
+    // present and release the controller
+    [self presentViewController:reader animated:YES completion:nil];
 }
 
 -(void)gotoLocation:(id)sender{
@@ -77,7 +120,11 @@
         productVC.product = ((FEShopingItemCell *)sender).product;
     }else if(sender == self.regionBarItem){
         FECitySelectVC *city = (FECitySelectVC *)((FECommonNavgationController *)segue.destinationViewController).topViewController;
-        city.delegate =self;
+        city.delegate = self;
+    }else if([sender isKindOfClass:[FEFuncCollectionViewCell class]]){
+        CDCategory *category = ((FEFuncCollectionViewCell *)sender).productCategory;
+        FEGroupCategoryVC *vc = segue.destinationViewController;
+        vc.productcategory = category;
     }
 }
 
@@ -88,16 +135,53 @@
     }];
 }
 
--(void)requestRecommendproduct{
-    __weak typeof(self) weakself = self;
-    FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
-    [[FEShopWebServiceManager sharedInstance] productRecommedProduct:rdata response:^(NSError *error, FEProductRecommendResponse *response) {
-        if (!error && response.result.errorCode.integerValue == 0) {
-            weakself.productList = response.productList;
-            [weakself.shopingTableView reloadData];
-        }
+#pragma mark - RequestRecommend
 
-    }];
+-(void)requestRecommend{
+    _productRecommendBecome = NO;
+    __weak typeof(self) weakself = self;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FEProductNewRequest *rdata = [[FEProductNewRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        [[FEShopWebServiceManager sharedInstance] productNew:rdata response:^(NSError *error, FEProductNewResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.productNew = response.productList;
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.productTypeRecommed = response.productList;
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        [[FEShopWebServiceManager sharedInstance] productRecommedProduct:rdata response:^(NSError *error, FEProductRecommendResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.productList = response.productList;
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        _productRecommendBecome = YES;
+        [weakself.shopingTableView reloadData];
+    });
 }
 
 #pragma mark - UITableViewDataSource
@@ -108,7 +192,22 @@
             return cell;
         }else{
             FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
-            [cell configWithProduct:self.productList[indexPath.row]];
+            
+            FEProduct *product;
+            switch (self.segment.selectedSegmentIndex) {
+                case 0:
+                    product = self.productNew[indexPath.row];
+                    break;
+                case 1:
+                    product = self.productTypeRecommed[indexPath.row];
+                    break;
+                case 2:
+                    product = self.productList[indexPath.row];
+                    break;
+                default:
+                    break;
+            }
+            [cell configWithProduct:product];
             return cell;
         }
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
@@ -125,7 +224,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if (tableView == self.shopingTableView) {
-        return 2;
+        return _productRecommendBecome?2:1;
     }else{
         return 1;
     }
@@ -136,7 +235,16 @@
         if (section == 0) {
             return 1;
         }else{
-            return self.productList.count;
+            switch (self.segment.selectedSegmentIndex) {
+                case 0:
+                    return self.productNew.count;
+                case 1:
+                    return self.productTypeRecommed.count;
+                case 2:
+                    return self.productList.count;
+                default:
+                    return 0;
+            }
         }
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
         return 1;
@@ -146,16 +254,27 @@
 }
 
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
-        return FEString(@"猜你喜欢");
+        if (!self.segment) {
+            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"最新上架",@"分类推荐",@"搜索热门"]];
+            _segment.font = FEFont(14);//[UIFont systemFontOfSize:14];
+            _segment.selectedTextColor = FEThemeOrange;
+            _segment.selectionIndicatorColor = FEThemeOrange;
+            _segment.selectionStyle = HMSegmentedControlSelectionStyleFullWidthStripe;
+            _segment.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+            _segment.selectionIndicatorHeight = 2;
+            [_segment addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+        }
+        return self.segment;
     }
     return nil;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
-        return 20;
+        return 44;
     }
     return 0;
 }
@@ -164,8 +283,13 @@
     if (indexPath.section == 0) {
         return 190;
     }
-    return 120;
+    return 110;
     
+}
+
+#pragma mark - SegmentControllClick
+-(void)segmentedControlChangedValue:(FESegmentControl *)seg{
+    [self.shopingTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 //-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -207,6 +331,34 @@
     
 }
 
+#pragma mark - UIImagePickerViewDelegate
+- (void) imagePickerController: (UIImagePickerController*) reader
+ didFinishPickingMediaWithInfo: (NSDictionary*) info
+{
+    // ADD: get the decode results
+    id<NSFastEnumeration> results =
+    [info objectForKey: ZBarReaderControllerResults];
+    ZBarSymbol *symbol = nil;
+    for(symbol in results)
+        // EXAMPLE: just grab the first barcode
+        break;
+    GAAlertAction *act = [GAAlertAction actionWithTitle:FEString(@"OK") action:^{
+        [reader dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+    }];
+    [GAAlertObj showAlertWithTitle:FEString(@"提示") message:symbol.data actions:@[act]];
+    // EXAMPLE: do something useful with the barcode data
+    //    resultText.text = symbol.data;
+    
+    // EXAMPLE: do something useful with the barcode image
+    //    resultImage.image =
+    //    [info objectForKey: UIImagePickerControllerOriginalImage];
+    
+    // ADD: dismiss the controller (NB dismiss from the *reader*!)
+//    [reader dismissViewControllerAnimated:YES completion:nil];
+}
+
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
@@ -226,7 +378,7 @@
 //get all city list and product category list
 -(void)getcityandcategory{
     if ([FECoreData fetchCity].count && [FECoreData fetchCategory].count) {
-        [self requestRecommendproduct];
+        [self requestRecommend];
         return;
     }
     [self displayHUD:FEString(@"加载中...")];
@@ -238,14 +390,44 @@
         FECityRequest *rdata = [[FECityRequest alloc] init];
         [[FEShopWebServiceManager sharedInstance] city:rdata response:^(NSError *error, FECityResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
-                for (NSString *pinyin in response.pinyin) {
-                    for (NSString *cityname in response.cityList[[response.pinyin indexOfObject:pinyin]]) {
-                        CDCity *city = [FECoreData touchCityByName:cityname];
-                        city.citypinin = pinyin;
+                for (FECity *fecity in response.cityList) {
+                    
+                    NSString *region = FEUserDefaultsObjectForKey(FEShopRegionKey);
+                    if (!region) {
+                        FEUserDefaultsSetObjectForKey(fecity.city, FEShopRegionKey);
+                        FEUserDefaultsSync;
+                        [weakself.regionBarItem setTitle:fecity.city];
                     }
+                    
+                    CDCity *city = [FECoreData touchCityByName:fecity.city];
+                    city.citynumber = fecity.city_id;
+                    city.x = fecity.x;
+                    city.y = fecity.y;
+                    CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)fecity.city);
+                    CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
+                    NSString *pinyin = (__bridge NSString *)string;
+                    NSString *firtletter = NULL;
+                    if (pinyin.length) {
+                        firtletter = [pinyin substringToIndex:1];
+                    }else{
+                        firtletter = @"#";
+                    }
+                    firtletter = [firtletter uppercaseString];
+                    city.citypinin = firtletter;
+                    for (FEZone *zone in fecity.zone_list) {
+                        CDZone *cdzone = [FECoreData touchZoneByID:zone.zone_id];
+                        cdzone.zone_name = zone.zone_name;
+                        cdzone.city_id = fecity.city_id;
+                        [city addZone_listObject:cdzone];
+                    }
+                    CDZone *czone = [FECoreData touchZoneByID:@(0)];
+                    czone.zone_name = @"全部商圈";
+                    czone.city_id = fecity.city_id;
+                    [city addZone_listObject:czone];
                 }
-                [FECoreData saveCoreData];
+                
             }
+            [FECoreData saveCoreData];
             dispatch_semaphore_signal(sem);
         }];
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
@@ -260,6 +442,9 @@
                     category.type_name = item.type_name;
                     category.father_id = item.father_id;
                 }
+                CDCategory *category = [FECoreData touchCategoryById:@(0)];
+                category.type_name = @"全部分类";
+                category.father_id = @(-1);
                 [FECoreData saveCoreData];
             }
             dispatch_semaphore_signal(sem);
@@ -268,7 +453,8 @@
     });
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         [weakself hideHUD:YES];
-        [weakself requestRecommendproduct];
+        [weakself.shopingTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [weakself requestRecommend];
     });
 }
 

@@ -8,6 +8,8 @@
 
 #import "FEProductOrderView.h"
 #import "FEProduct.h"
+#import "FEActivity.h"
+#import "NSString+DateFromNow.h"
 
 @interface FEProductOrderView ()
 
@@ -52,6 +54,13 @@
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",product.price];
+    [self.orderButton setTitle:FEString(@"立即抢购") forState:UIControlStateNormal];
+}
+
+-(void)configWithActivity:(FEActivity *)activity{
+    _activity = activity;
+    self.priceLabel.text = [NSString stringWithFormat:@"剩余%ld天",(long)[activity.datelimit dateFromNow]];
+    [self.orderButton setTitle:FEString(@"立即参与") forState:UIControlStateNormal];
 }
 
 
@@ -60,6 +69,12 @@
     CGContextSetLineWidth(context, 0.5);
     
     CGContextSetStrokeColorWithColor(context, FEColor(225, 225, 225, 1).CGColor);
+    
+    CGContextMoveToPoint(context, 0, 0);
+    
+    CGContextAddLineToPoint(context, self.bounds.size.width, 0);
+    
+//    CGContextSetStrokeColorWithColor(context, FEColor(225, 225, 225, 1).CGColor);
     
     CGContextMoveToPoint(context, 0, self.bounds.size.height - 0.5f);
     

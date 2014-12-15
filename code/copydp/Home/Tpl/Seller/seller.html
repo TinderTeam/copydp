@@ -43,8 +43,9 @@
 				<ul id="carousel-list" class="promo-wrap J_promo_wrap" data-mode="render" style="position: absolute; left: -366520px;">	
 					<?php
 						$sellerViewDB=new Model('view_seller');
-						$sellerViewCondition['city']=$city;							
-						$sellerIDList=$sellerViewDB->where($sellerViewCondition)->order('rand()')->limit(4)->getField('user_id',true);
+						$sellerViewCondition['city']=$city;
+						$sellerStatusCondition['status']="正常";							
+						$sellerIDList=$sellerViewDB->where($sellerStatusCondition)->where($sellerViewCondition)->order('rand()')->limit(4)->getField('user_id',true);
 						$num = count($sellerIDList);
 						
 					?>		
@@ -133,7 +134,8 @@
 							<?php
 								$productViewDB=new Model('view_seller');
 								$sellerCityCondition['city']=$city;
-								$procuctIDList=$sellerViewDB->where($sellerCityCondition)->order('rand()')->limit(4)->getField('user_id',true);		
+								$sellerStatusCondition['status']="正常";	
+								$procuctIDList=$sellerViewDB->where($sellerStatusCondition)->where($sellerCityCondition)->order('rand()')->limit(4)->getField('user_id',true);		
 								$num = count($procuctIDList);								
 							?>
 							<if condition="	$num eq 0">
@@ -177,7 +179,8 @@
 						<?php
 							$productViewDB=new Model('view_seller');
 							$sellerCityCondition['city']=$city;
-							$procuctIDList=$sellerViewDB->where($sellerCityCondition)->order('user_id desc')->limit(4)->getField('user_id',true);		
+							$sellerStatusCondition['status']="正常";	
+							$procuctIDList=$sellerViewDB->where($sellerStatusCondition)->where($sellerCityCondition)->order('user_id desc')->limit(4)->getField('user_id',true);		
 							$num = count($procuctIDList);								
 						?>
 						<if condition="	$num eq 0">

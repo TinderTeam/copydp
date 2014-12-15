@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+
 <!-- <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
 <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
@@ -76,7 +77,7 @@ margin-right: 10px;
 						<h4>会员管理</h4>
 						<span>管理系统用户</span>	
 					</div>								
-					<ul class="tab-filter">
+					<ul class="tab-filter">						
 						<li>
 							<div class="span-input">
 								<span >会员编号</span><input type="text" name="userID"/>
@@ -93,21 +94,23 @@ margin-right: 10px;
 							</div>							
 						</li>
 						<li>
-								<strong class="btn-type-b btn-fn-c btnbar">
-									<input id="btnAdd" type="submit" value="查询" class="form-btn">
-								</strong> 
-								<strong class="btn-type-b btn-fn-c btnbar">			
-									<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/UserManage/userAdd'" />
-								</strong> 
-
+							<strong class="btn-type-b btn-fn-c btnbar">
+								<input id="btnAdd" type="submit" value="查询" class="form-btn">
+							</strong> 
+							<strong class="btn-type-b btn-fn-c btnbar">			
+								<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/UserManage/userAdd'" />
+							</strong> 
 						</li>
 					</ul>
-
 				</form>	
 					<div class="pay-confirm">
+						<form name="form2" action="__URL__/freezeControl" method="post">
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
 								<tr>
+									<th width="5%">
+										<input type="checkbox" name="chkAll" id="chkAll" onclick="selectAll('chkID_[]','chkAll')">
+									</th>
 									<th width="15%">会员编号</th>
 									<th width="15%">会员名称</th>
 									<th width="10%">会员级别</th>	
@@ -116,10 +119,13 @@ margin-right: 10px;
 									<th width="15%">用户状态</th>							
 									<th width="30%">操作</th>
 								</tr>
-						<form name="form2" action="" method="post">
+						
 						<foreach name='userInfo' item='v1'>
 						
 								<tr>
+									<td class="t-check">
+										<input type="checkbox" name="chkID_[]" id="chkID_[{$key+1}]" value="{$v1.user_id}"/>
+									</td>
 									<td align="center" class="deal">{$v1.user_id}</td>
 									<td align="center" class="deal">{$v1.username}</td>
 									<td align="center" >{$v1.grade}</td>
@@ -136,14 +142,18 @@ margin-right: 10px;
 									</td>
 								</tr>
 						</foreach>
-						</form>
+						
 						  <tr >
-                            <td colspan="7" style=" text-align: center;" ><span>{$page}</span></td>
+                            <td colspan="8" style=" text-align: center;" ><span>{$page}</span></td>
                           </tr>
 
 							</tbody>
 						</table>
-
+						
+						<strong class="btn-type-b btn-fn-c btnbar">
+							 <input type="submit" value="批量冻结" name="subSure" class=" form-btn" /> 
+						</strong>
+						</form>
 					</div>
 				</div>
 			</div>

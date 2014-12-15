@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
-
+<script type="text/javascript" src="__PUBLIC__/My97DatePicker/WdatePicker.js"></script>
 <!-- <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
 <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
@@ -97,6 +97,12 @@ margin-right: 10px;
 								</div> 
 							</li>
 							<li>
+								<div class="span-input">
+									<span>发帖时间</span>
+									<input  type="text" data-date-format="yyyy-mm-dd" value="2014-01-01" onFocus="WdatePicker()" name="datetime" />				
+								</div> 
+							</li>
+							<li>
 								<strong class="btn-type-b btn-fn-c btnbar">
 									<input type="submit" value="查询" class="form-btn">
 								</strong> 							
@@ -126,6 +132,9 @@ margin-right: 10px;
 								}
 								if($userFilters!=""){
 									$communityCondition['username']=$userFilters;
+								}
+								if($datetimeFilters!=""){
+									$communityCondition['datetime']=$datetimeFilters;
 								}
 								$communityList=$communityDB->where($communityCondition)->select();
 							?>

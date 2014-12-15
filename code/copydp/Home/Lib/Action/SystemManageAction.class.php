@@ -178,26 +178,38 @@ class SystemManageAction extends Action {
 		$this->ajaxReturn($data, 'Ajax 成功！', 1);
 	}
 	
+	public function helpShow($id){
+		$this->assign("id",$id);
+		$this->display(helpShow);
+	}
+	public function HelpEdit($id){
 	
 	
-	public function helpEdit($data){
-	
-		$array = explode("~",$data);
-		$help=urldecode($array[0]);
-		$helpname=urldecode($array[1]);	
-		$index=urldecode($array[2]);	
-		$siteCfg= M('site_config');
-		$conditionlink['name']="helpname".$index;
-		$helpData1['content']=$helpname;
-		$siteCfg->where($conditionlink)->save($helpData1);
 		
-		$conditionlink['name']="help".$index;
-		$helpData2['content']=$help;
-		$siteCfg->where($conditionlink)->save($helpData2);
-	
-		$this->ajaxReturn('EDIT'.$conditionlink['name'], 'Ajax 成功！', 1);
+		$this->assign("id",$id);
+		$this->display(helpEdit);
 	}
 
+	public function ModifyHelp($id){
+	
+		$content = $_POST['info'];
+		$title = $_POST['title'];
+		
+		$siteCfg= M('site_config');
+		$conditionhelp['name']="help".$id;
+		$data1['content']=$title;
+		
+		$conditionhelp2['name']="helpC".$id;
+		$data2['content']=$content;
+		
+		$siteCfg->where($conditionhelp)->save($data1);
+		$siteCfg->where($conditionhelp2)->save($data2);
+		
+		$this->assign("jumpUrl","Index");
+		$this->success("修改成功");
+	}
+	
+	
     public function index(){
 		
 		if($_SESSION['login_user']!=""){

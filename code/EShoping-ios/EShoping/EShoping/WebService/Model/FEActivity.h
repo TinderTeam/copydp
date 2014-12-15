@@ -20,6 +20,7 @@
 @property (nonatomic, strong, readonly) NSString *status;
 @property (nonatomic, strong, readonly) NSString *city_id;
 @property (nonatomic, strong, readonly) NSString *datelimit;
+@property (nonatomic, strong, readonly) NSString *current_member;
 @property (nonatomic, strong, readonly) NSString *memberlimit;
 @property (nonatomic, strong, readonly) NSString *imgsrc;
 @property (nonatomic, strong, readonly) NSString *point;

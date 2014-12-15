@@ -14,7 +14,13 @@ class BuyServiceAction extends BaseAction {
 		$map['product_id']=array('in',$rcmIDList);
 		$productDB = new Model('view_product');
 		$productList = $productDB->where($map)->select();
-		
+		$productCount = count($rcmIDList);
+	    for($i=0;$i<$productCount;$i++)
+		{
+		$productOrderDB = M('order');
+		$condition['product_id'] = $productList[$i]['product_id'];
+		$productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
+		}
 		$rsp['errorCode'] = SUCCESS;
 		$rsp['productList'] = $productList;
 		$this->log("the productList is".$productList);
@@ -29,7 +35,13 @@ class BuyServiceAction extends BaseAction {
         $productCityCondition['city']=$city;
         $statusCondition['product_status']="正常";
         $productList=$productViewDB->where($productCityCondition)->where($statusCondition)->order('update_date desc')->limit(4)->select();
-    
+        for($i=0;$i<count($productList);$i++)
+        {
+        $productOrderDB = M('order');
+        $condition['product_id'] = $productList[$i]['product_id'];
+        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
+        }            
+        
         $rsp['errorCode'] = SUCCESS;
         $rsp['productList'] = $productList;
         $this->log("the productList is".$productList);
@@ -45,7 +57,14 @@ class BuyServiceAction extends BaseAction {
         $condition['city']=$typeInfo['city'];
         $condition['product_status']="正常";
         $productList=$productViewDB->where($condition)->order('rand()')->limit(3)->select();
-    
+
+        for($i=0;$i<count($productList);$i++)
+        {
+        $productOrderDB = M('order');
+        $condition['product_id'] = $productList[$i]['product_id'];
+        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
+        }
+        
         $rsp['errorCode'] = SUCCESS;
         $rsp['productList'] = $productList;
         $this->log("the productList is".$productList);
@@ -88,7 +107,14 @@ class BuyServiceAction extends BaseAction {
 		$productViewDB=new Model('view_product');
 		$statusCondition['product_status']="正常";
 	    $productList =$productViewDB->where($productFilter)->where($statusCondition)->select();
-	    
+	    $productCount = $productViewDB->where($productFilter)->count();
+        for($i=0;$i<$productCount;$i++)
+        {
+        $productOrderDB = M('order');
+        $condition['product_id'] = $productList[$i]['product_id'];
+        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
+        }
+
 	    $rsp['errorCode'] = SUCCESS;
 	    $rsp['productList'] = $productList;
 	    $this->log("the productList is".$productList);

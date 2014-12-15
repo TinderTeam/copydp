@@ -63,6 +63,8 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 @class FECommunityListResponse;
 @class FECityRequest;
 @class FECityResponse;
+@class FEProductGetSellerRequest;
+@class FEProductGetSellerResponse;
 
 @interface FEShopWebServiceManager : AFHTTPRequestOperationManager
 
@@ -110,6 +112,9 @@ DEFINE_WEBSERVICE_METHOD_HEADER(productOrderCreate, FEProductCreateOrderRequest,
 DEFINE_WEBSERVICE_METHOD_HEADER(productOrderCancel, FEProductCancelOrderRequest, FEProductOrderCancelResponse)
 //product order delete
 DEFINE_WEBSERVICE_METHOD_HEADER(productOrderDelete, FEProductDeleteOrderRequest, FEProductDeleteOrderResponse)
+
+//product seller info
+DEFINE_WEBSERVICE_METHOD_HEADER(productGetSeller, FEProductGetSellerRequest, FEProductGetSellerResponse)
 
 /*-------------------------------------------
  ;product news interface
