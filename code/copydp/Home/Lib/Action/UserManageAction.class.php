@@ -5,7 +5,25 @@ class UserManageAction extends Action {
 		$this->assign("currentPage","user");
 		if($_SESSION['login_user']!=""){
 
-	    $this->display();
+            //加载会员管理列表
+            import("ORG.Util.Page");
+            $db = M('view_customer');
+            $list = $db->select();
+            $this->assign('userInfo',$list);
+            $count = $db->count();
+            $Page = new Page($count,5);
+            $show = $Page->show();
+            $this->assign('page',$show);
+            
+            //加载积分管理列表
+            $this->assign('scoreInfo',$list);
+
+            //加载激活码
+            $codeDB= M('poll_code');
+            $codeList = $codeDB->select();
+            $this->assign("codeList",$codeList);
+            
+            $this->display();
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");
@@ -91,6 +109,9 @@ class UserManageAction extends Action {
 		   $condition['cellphone'] = $phoneNum;
 		}
         		
+		if($userID!='' or $userName!='' or $phoneNum!='')
+		{
+			//$map="user_name like('%".$userName."%') or user_id like('%".$userID."%' ) or cellphone like('%".$phoneNum."%')";
 			$condition['request'] = 'NULL';
 			$list = $db->where($condition)->select();
 			$this->assign('userInfo',$list);
@@ -98,7 +119,17 @@ class UserManageAction extends Action {
 			$Page = new Page($count,5); 
 			$show = $Page->show();
 			$this->assign('page',$show);
+			//$this->assign('nav','#UserManage');
 			$this->display('index');
+			
+		}else{
+
+		    $this->redirect('UserManage/index','',0,'全部查询');//页面重定向
+		    //$this->assign("jumpUrl","index");
+		    //$this->success("请输入关键信息!");
+			//echo "<script>alert('请输入关键信息!');history.back();</script>";
+			
+		}
 	}
     //新增用户
 		public function add(){
@@ -165,8 +196,8 @@ class UserManageAction extends Action {
 		    $userID=$_GET['id'];
 		    $condition['user_id']=$userID;
 		    $customer->where($condition)->setField('status','正常');
-		    $this->assign("jumpUrl","index");
-		    $this->success("用户解冻成功！");	
+		    $this->redirect('UserManage/index','',0,'操作成功');
+		
 		}
 		//冻结账户
 		public function freeze(){
@@ -175,8 +206,7 @@ class UserManageAction extends Action {
 			$userID=$_GET['id'];
 			$condition['user_id']=$userID;
 			$customer->where($condition)->setField('status','冻结');
-			$this->assign("jumpUrl","index");
-			$this->success("用户冻结成功！");			
+			$this->redirect('UserManage/index','',0,'操作成功');			
 		
 		}
 		//升级账户
@@ -186,8 +216,7 @@ class UserManageAction extends Action {
 			$userID=$_GET['id'];
 			$condition['user_id']=$userID;
 			$customer->where($condition)->setField('grade','SVIP');
-			$this->assign("jumpUrl","index");
-			$this->success("用户升级成功！");
+			$this->redirect('UserManage/index#UserRequest','',0,'操作成功');
 		
 		}	
 
@@ -207,6 +236,7 @@ class UserManageAction extends Action {
 			}else{
 				$codeList = $codeDB->select();
 			}
+			$this->assign('nav','#CodeManage');
 			$this->assign("codeList",$codeList);
 			$this->display('index');
 		}
@@ -215,8 +245,10 @@ class UserManageAction extends Action {
 		public function CodeDelete($code=0){		
 			$codeDB= M('poll_code');     
 			$codecondition['code']=$code;
-			$codeDB->where($codecondition)->delete();			
+			$codeDB->where($codecondition)->delete();
+			$codeList = $codeDB->select();			
 			$this->assign("codeList",$codeList);
+			$this->assign('nav','#CodeManage');
 			$this->display('index');
 		}
 		
@@ -229,6 +261,9 @@ class UserManageAction extends Action {
 				$newCode['status']='未使用';
 				$codeDB->add($newCode);
 			}
+			$codeList = $codeDB->select();			
+			$this->assign("codeList",$codeList);
+			$this->assign('nav','#CodeManage');
 			$this->display('index');
 		}
 		
@@ -263,7 +298,7 @@ class UserManageAction extends Action {
 
 				}
 
-				$this->redirect('UserManage/index','',0,'操作成功');
+				$this->redirect('UserManage/index#UserRequest','',0,'操作成功');
 				
 				
 			}else{
@@ -283,7 +318,7 @@ class UserManageAction extends Action {
 			
 			$db->where('user_id='.$userID)->setField('request','null');
 			$db->where('user_id='.$userID)->setField('status','已拒绝');
-			$this->redirect('UserManage/index','',0,'操作成功');
+			$this->redirect('UserManage/index#UserRequest','',0,'操作成功');
 	
 				
 		}
@@ -295,18 +330,17 @@ class UserManageAction extends Action {
 	
 		$userID=$_POST['userID'];
 
-
-				
 		if($userID!='' )
 		{
 			$condition['user_id'] = $userID;
 			$list = $db->where($condition)->select();
 			$this->assign('scoreInfo',$list);
+			$this->assign('nav','#ScoreManage');
 			$this->display('index');
 			
-		}else{	
+		}else{
 
-			$this->error("请输入检索信息！");
+			$this->redirect('UserManage/index#ScoreManage','',0,'全部查询');
 			
 		}
 	}
@@ -320,8 +354,7 @@ class UserManageAction extends Action {
 		if($newScore!='' ){
 		  
 		    $db->where('user_id='.$userID)->setField('score',$newScore);
-			$this->assign("jumpUrl","index");
-			$this->success("积分修改成功！");
+			$this->redirect('UserManage/index#ScoreManage','',0,'全部查询');
 			//$this->redirect('UserManage/index');
 			
 		}else{

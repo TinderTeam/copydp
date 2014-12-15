@@ -171,8 +171,9 @@ class IndexAction extends IndexServiceAction {
 			}
 			
 			$_SESSION['login_user']= $_POST['name'];
-			$this->assign("jumpUrl","index");
-			$this->success("登陆成功！");
+			$this->redirect('Index/index','',0,'登录成功');//页面重定向
+			//$this->assign("jumpUrl","index");
+			//$this->success("登陆成功！");
 		 
 		}
 

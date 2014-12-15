@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
-
 <!-- <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
 <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
 <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
@@ -72,12 +71,13 @@ margin-right: 10px;
 		<div class="user-main">
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
+				<input id="nav" value="{$nav}" style="display:none;"/>
 				<form name="forml" action="__URL__/search" method="post">
 					<div class="hd">
 						<h4>会员管理</h4>
 						<span>管理系统用户</span>	
 					</div>								
-					<ul class="tab-filter">						
+					<ul class="tab-filter">
 						<li>
 							<div class="span-input">
 								<span >会员编号</span><input type="text" name="userID"/>
@@ -94,14 +94,16 @@ margin-right: 10px;
 							</div>							
 						</li>
 						<li>
-							<strong class="btn-type-b btn-fn-c btnbar">
-								<input id="btnAdd" type="submit" value="查询" class="form-btn">
-							</strong> 
-							<strong class="btn-type-b btn-fn-c btnbar">			
-								<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/UserManage/userAdd'" />
-							</strong> 
+								<strong class="btn-type-b btn-fn-c btnbar">
+									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+								</strong> 
+								<strong class="btn-type-b btn-fn-c btnbar">			
+									<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/UserManage/userAdd'" />
+								</strong> 
+
 						</li>
 					</ul>
+
 				</form>	
 					<div class="pay-confirm">
 						<form name="form2" action="__URL__/freezeControl" method="post">
@@ -136,7 +138,8 @@ margin-right: 10px;
 										<if condition="$v1.status eq '冻结' ">
 											<input type="submit" value="解冻"  onclick="javascript:this.form.action='__URL__/unfreeze?id={$v1.user_id}';"/>
 										<else/>
-											<input type="submit" value="冻结"  onclick="javascript:this.form.action='__URL__/freeze?id={$v1.user_id}';"/>
+											<input type="button" value="冻结" class="form-btn"  onclick="show_freeze_confirm('{$v1.user_id}')"/>
+											<!--<input type="submit" value="冻结"  onclick="javascript:this.form.action='__URL__/freeze?id={$v1.user_id}';"/>-->
 										</if>
 										<input type="submit" value="升级"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
 									</td>
@@ -162,7 +165,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>用户请求处理</h4>
+						<h4 id="UserRequest">用户请求处理</h4>
 						<span>处理用户的升级、审核请求</span>
 					</div>
 					<div class="pay-confirm">
@@ -221,7 +224,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>积分管理</h4>
+						<h4 id="ScoreManage">积分管理</h4>
 						<span>管理员对积分进行管理</span>
 					</div>
 				<form name="form4" action="__URL__/searchScore" method="post">
@@ -272,7 +275,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>激活码管理</h4>
+						<h4 id="CodeManage">激活码管理</h4>
 						<span>管理激活码发放</span>
 					</div>
 					<form name="form4" action="__URL__/SearchCode" method="post">
@@ -281,9 +284,9 @@ margin-right: 10px;
 								<div class="span-input">
 									<span>激活码查询</span>
 									<select name= "codeStatus">
+										<option value="全部"/>全部
 										<option value="已使用"/>已使用
 										<option value="未使用"/>未使用
-										<option value="全部"/>全部
 									</select>					
 								</div>								
 							</li>
@@ -321,7 +324,7 @@ margin-right: 10px;
 									<td align="center" name="scoreID">{$codeItem.code}</td>
 									<td align="center" >{$codeItem.status}</td>								
 									<td align="center" >
-									<a href="__URL__/CodeDelete?code={$codeItem.code}">删除</a>
+						 			<input type="button" value="删除" class="form-btn"  onclick="show_delete_confirm('{$codeItem.code}')"/>
 									</td>
 								</tr>
 							</foreach>
@@ -344,6 +347,35 @@ margin-right: 10px;
 			alert('激活码已生成');
 			var num=$("#codeid").val();
 			window.location.href='__URL__/createCode?num='+num;
+		}
+		//实现页面内导航跳转
+		if("" !=$("#nav").val())
+		{
+			location.hash=$("#nav").val();
+		}
+		//冻结用户确认
+		function show_freeze_confirm(userID)
+		{
+			var r=confirm("确定要冻结该用户？");
+			if(r==true)
+			{
+				top.location="__APP__/UserManage/freeze?id="+userID;
+			}
+			else
+			{
+			}
+		}
+		//删除激活码确认
+		function show_delete_confirm(code)
+		{
+			var r=confirm("确定要删除该激活码？");
+			if(r==true)
+			{
+				top.location="__APP__/UserManage/CodeDelete?code="+code;
+			}
+			else
+			{
+			}
 		}
 	</script>
 </body>

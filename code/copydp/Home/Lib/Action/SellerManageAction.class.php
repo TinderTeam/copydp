@@ -6,8 +6,16 @@ class SellerManageAction extends Action {
     public function index(){
 		$this->assign("currentPage","seller");
 		if($_SESSION['login_user']!=""){
-	
-	    $this->display();
+		    
+		    $db = M('view_seller');
+		    import("ORG.Util.Page");
+		    $count = $db->count();
+		    $Page = new Page($count,5);
+		    $show = $Page->show();
+		    $list=$db->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
+		    $this->assign('page1',$show);
+		    $this->assign('sellerInfo',$list);
+            $this->display();
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");
@@ -18,15 +26,13 @@ class SellerManageAction extends Action {
 		$recDB=M('recommend_product');
 		$rcondition['product_id']=$id;
 		$recDB->add($rcondition);
-		$this->assign("jumpUrl","index");
-		$this->success("推荐成功！");
+		$this->redirect('SellerManage/index#RecProduct','',0,'全部查询');//页面重定向
 	}
 	public function cancelRecomend($id=0){
 		$recDB=M('recommend_product');
 		$rcondition['product_id']=$id;
 		$recDB->where($rcondition)->delete();
-		$this->assign("jumpUrl","index");
-		$this->success("取消成功！");
+		$this->redirect('SellerManage/index#RecProduct','',0,'全部查询');//页面重定向
 	}
 	
 	public function sellerDelete($sellerID=0){
@@ -90,13 +96,7 @@ class SellerManageAction extends Action {
 			$this->display('index');
 			
 		}else{	
-			$count = $db->where($condition)->count(); 
-			$Page = new Page($count,5); 
-			$show = $Page->show();
-			$list=$db->order('user_id')->limit($Page->firstRow.','.$Page->listRows)->select();
-			$this->assign('page1',$show);
-			$this->assign('sellerInfo',$list);
-			$this->display('index');	
+		    $this->redirect('SellerManage/index','',0,'全部查询');//页面重定向
 		}
 
 		}else{
@@ -204,46 +204,46 @@ class SellerManageAction extends Action {
 		
 		if($_SESSION['login_user']!=""){
 		
-		$db = M('view_product');
-        import("ORG.Util.Page"); 
-		//mysql_query("set names utf8");
-		
-		$sellerID=$_GET['seller_id'];
-		$productName=$_GET['product_name'];
-		$cityID=$_GET['city_id'];
-		$typeID=$_GET['type_id'];
-		
-		if($sellerID!=''){
-		   $condition['seller_id'] = $sellerID;
-		}
-		if($productName!=''){
-		   $condition['name'] = $productName;
-		}
-		if($cityID!=''){
-		   $condition['city_id'] = $cityID;
-		}
-		if($typeID!=''){
-		   $condition['type_id'] = $typeID;
-		}
-        
-	
-		if($sellerID!='' or $productName!='' or $cityID!='' or $typeID!='')
-		{
-			$condition['product_status']="待审核";
+    		$db = M('view_product');
+            import("ORG.Util.Page"); 
+    		//mysql_query("set names utf8");
+    		
+    		$sellerID=$_GET['seller_id'];
+    		$productName=$_GET['product_name'];
+    		$cityID=$_GET['city_id'];
+    		$typeID=$_GET['type_id'];
+    		
+    		if($sellerID!=''){
+    		   $condition['seller_id'] = $sellerID;
+    		}
+    		if($productName!=''){
+    		   $condition['name'] = $productName;
+    		}
+    		if($cityID!=''){
+    		   $condition['city_id'] = $cityID;
+    		}
+    		if($typeID!=''){
+    		   $condition['type_id'] = $typeID;
+    		}
+            
+    	
+    		if($sellerID!='' or $productName!='' or $cityID!='' or $typeID!='')
+    		{
+    			$condition['product_status']="待审核";
+    
+    			$this->assign('sellerCondition',$condition);
+    			$this->assign('nav','#ProductManage');
+    			$this->display('index');
+    			
+    		}else{	
+    
+    			$this->redirect('SellerManage/index#ProductManage','',0,'全部查询');//页面重定向
+    			
+    		}
 
-			$this->assign('sellerCondition',$condition);
-			$this->display('index');
-			
-		}else{	
-
-			$this->assign("jumpUrl","index");
-			$this->error("请输入关键搜索信息！");
-			
-		}
-
-			}else{
-		  $this->redirect('Index/login','',0,'你还没登陆');//页面重定向
-			}		
+    	}else{
+            $this->redirect('Index/login','',0,'你还没登陆');//页面重定向
+    	}		
 		}
 
 		public function requestDeal(){
@@ -256,8 +256,7 @@ class SellerManageAction extends Action {
 			{
 				$db->where('product_id='.$productID)->setField('product_status','正常');
 
-
-				$this->redirect('SellerManage/index','',0,'操作成功');
+				$this->redirect('SellerManage/index#ProductManage','',0,'操作成功');
 				
 				
 			}else{
@@ -273,10 +272,8 @@ class SellerManageAction extends Action {
 			
 			$db= M('product');
 			$productID=$_GET['id'];
-
-			
 			$db->where('product_id='.$productID)->setField('product_status','未批准');
-			$this->redirect('SellerManage/index','',0,'操作成功');
+			$this->redirect('SellerManage/index#ProductManage','',0,'操作成功');
 	
 				
 		}
@@ -297,15 +294,13 @@ class SellerManageAction extends Action {
 			if (isset($_POST['subSure'])) {
 			$db->where($condition)->setField('product_status','正常');
 			
-			$this->assign("jumpUrl","index");
-			$this->success("批量处理成功！");
+			$this->redirect('SellerManage/index#ProductManage','',0,'操作成功');
 			}
 			if (isset($_POST['subQuit'])) {
 			
 			$db->where($condition)->setField('product_status','未批准');
 			
-			$this->assign("jumpUrl","index");
-			$this->success("批量退回成功！");
+			$this->redirect('SellerManage/index#ProductManage','',0,'操作成功');
 			}			
 		}
 		//商家批量冻结与解冻
@@ -336,6 +331,50 @@ class SellerManageAction extends Action {
 		        $productDB->where($productCondition)->setField('product_status','正常');
 		        $this->assign("jumpUrl","index");
 		        $this->success("批量解冻成功！");
+		    }
+		}
+		public function searchRecProduct(){
+		
+		    if($_SESSION['login_user']!=""){
+		
+		        $db = M('view_product');
+		        //import("ORG.Util.Page");
+		        //mysql_query("set names utf8");
+		
+		        $productID=$_GET['product_id'];
+		        $productName=$_GET['product_name'];
+		        $cityID=$_GET['city_id'];
+		        $typeID=$_GET['type_id'];
+		
+		        if($productID!=''){
+		            $condition['product_id'] = $productID;
+		        }
+		        if($productName!=''){
+		            $condition['name'] = $productName;
+		        }
+		        if($cityID!=''){
+		            $condition['city_id'] = $cityID;
+		        }
+		        if($typeID!=''){
+		            $condition['type_id'] = $typeID;
+		        }
+		
+		         
+		        if($productID!='' or $productName!='' or $cityID!='' or $typeID!='')
+		        {
+		
+		            $this->assign('RecCondition',$condition);
+		            $this->assign('nav','#RecProduct');
+		            $this->display('index');
+		             
+		        }else{
+		
+		            $this->redirect('SellerManage/index#RecProduct','',0,'全部查询');//页面重定向
+		             
+		        }
+		
+		    }else{
+		        $this->redirect('Index/login','',0,'你还没登陆');//页面重定向
 		    }
 		}
 

@@ -80,6 +80,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
+					<input id="nav" value="{$nav}" style="display:none;"/>
 						<h4>商户管理</h4>
 						<span>管理系统商户</span>
 					</div>
@@ -186,7 +187,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>产品审核</h4>
+						<h4 id="ProductManage">产品审核</h4>
 						<span>审核商铺上传的产品信息</span>
 					</div>
 					<form name="formProduct" action="__URL__/searchProduct" method="get">
@@ -349,14 +350,14 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4>推荐产品</h4>
+						<h4 id='RecProduct'>推荐产品</h4>
 						<span>设置首页推荐产品</span>
 					</div>
 					
-					<form name="formProduct" action="__URL__/searchProduct" method="get">
+					<form name="formProduct" action="__URL__/searchRecProduct" method="get">
 						<ul class="tab-filter">
 							<li >
-								<span>商家编号</span><input type="text" name="seller_id"/>
+								<span>产品编号</span><input type="text" name="product_id"/>
 							</li>
 							<li>
 								<span>产品名称</span><input type="text" name="product_name"/>
@@ -394,13 +395,11 @@ margin-right: 10px;
 					
 					
 					<div class="pay-confirm">
-					<form method="post" name="box" id="box" action="__URL__/quantityDeal">
-					
 					<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">				
 						<thead>
 							<tr>
 								<th width="10%">
-									商家编号
+									产品编号
 								</th>
 								<th width="20%">
 									产品名称
@@ -422,10 +421,10 @@ margin-right: 10px;
 						
 							$db = M('view_product');
 							import("ORG.Util.Page");
-							$count = $db->count(); 
+							$count = $db->where($RecCondition)->count(); 
 							$Page = new Page($count,5); 
 							$pageProduct = $Page->show();
-							$productInfo=$db->order('update_date desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+							$productInfo=$db->where($RecCondition)->order('update_date desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 						?>
 
 					<foreach name='productInfo' item='vP'>
@@ -468,9 +467,9 @@ margin-right: 10px;
 								</td>
                             <td class="t-op">	
 									<if condition=" $rProductID eq '' ">
-										<input type="submit" value="推荐"  class="form-btn"  onclick="javascript:this.form.action='__URL__/recommend?id={$vP.product_id}';"/>
+										<input type="submit" value="推荐"  class="form-btn"  onclick="javascript:window.location.href='__URL__/recommend?id={$vP.product_id}'"/>
 									<else/>
-										<input type="submit" value="取消"  class="form-btn" onclick="javascript:this.form.action='__URL__/cancelRecomend?id={$vP.product_id}';"/>
+										<input type="submit" value="取消"  class="form-btn" onclick="javascript:window.location.href='__URL__/cancelRecomend?id={$vP.product_id}'"/>
 									</if>							
 								
 								
@@ -485,15 +484,6 @@ margin-right: 10px;
 						 </tbody>
 					
 						 </table>
-						 <strong class="btn-type-b btn-fn-c btnbar">
-							 <input type="submit" value="批量审批" name="subSure" class=" form-btn" /> 
-						</strong>
-						<strong class="btn-type-b btn-fn-c btnbar">
-							<input type="submit" value="批量退回"  class="form-btn" name="subQuit"/>
-						
-						</strong>
-						 
-					</form>
 					
 					<script type="text/javascript">
 						function selectAll(sonName, cbAllId){
@@ -517,6 +507,38 @@ margin-right: 10px;
 		
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
-	<!---footer-->			
+	<!---footer-->
+<script>
+
+	//实现页面内导航跳转
+	if("" !=$("#nav").val())
+	{
+		location.hash=$("#nav").val();
+	}
+	//冻结用户确认
+	function show_freeze_confirm(userID)
+	{
+		var r=confirm("确定要冻结该用户？");
+		if(r==true)
+		{
+			top.location="__APP__/UserManage/freeze?id="+userID;
+		}
+		else
+		{
+		}
+	}
+	//删除激活码确认
+	function show_delete_confirm(code)
+	{
+		var r=confirm("确定要删除该激活码？");
+		if(r==true)
+		{
+			top.location="__APP__/UserManage/CodeDelete?code="+code;
+		}
+		else
+		{
+		}
+	}
+</script>			
 </body>
 </html>

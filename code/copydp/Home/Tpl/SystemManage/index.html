@@ -78,6 +78,7 @@ margin-right: 10px;
 
 <div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
+				<input id="nav" value="{$nav}" style="display:none;"/>
 					<div class="hd">
 						<h4 style="font-size:14px">资讯</h4>
 						<span>编辑最新资讯</span>
@@ -125,7 +126,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4 style="font-size:14px">系统设置</h4>
+						<h4 id="SystemSetting" style="font-size:14px">系统设置</h4>
 						<span>设置系统功能：签到送积分、消费送积分</span>
 					</div>
 					<div class="pay-confirm">
@@ -175,7 +176,7 @@ margin-right: 10px;
 				<div class="modebox my-comm J_my_comm" >
 				<form name="forml" action="__URL__/search" method="post">
 					<div class="hd">
-					<h4 style="font-size:14px">管理员管理</h4>
+					<h4 id="AdminManage" style="font-size:14px">管理员管理</h4>
 						<span>管理管理员</span>	
 					</div>								
 					<ul class="tab-filter">
@@ -221,7 +222,7 @@ margin-right: 10px;
 			<div class="mydiv um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4 style="font-size:14px">城市管理</h4>
+						<h4 id="CityManage" style="font-size:14px">城市管理</h4>
 						<span>编辑系统城市</span>	
 					</div>								
 					<div class="pay-confirm">
@@ -281,7 +282,7 @@ margin-right: 10px;
 			<div class="mydiv um-con">
 				<div class="modebox my-comm J_my_comm" >
 					<div class="hd">
-						<h4 style="font-size:14px">基本信息管理</h4>
+						<h4 id="BasicInfo" style="font-size:14px">基本信息管理</h4>
 						<span>管理网站的基本信息</span>	
 					</div>	
 
@@ -413,6 +414,11 @@ margin-right: 10px;
 	<!---footer-->
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
 	<script>
+	//实现页面内导航跳转
+	if("" !=$("#nav").val())
+	{
+		location.hash=$("#nav").val();
+	}
 		$(".info-btn").click(function(){
 			var email=$("#email").val();
 			var tel=$("#tel").val();
