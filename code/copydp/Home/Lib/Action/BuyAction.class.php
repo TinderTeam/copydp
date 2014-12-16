@@ -182,6 +182,7 @@ class BuyAction extends BuyServiceAction {
         
         $req =  $this->getReqObj();
         $searchInfo['city'] = $req->city;
+        $searchInfo['zone_id']=$req->zone_id;
         $searchInfo['typeRoot'] = $req->typeRoot;
         $searchInfo['keyWord'] = $req->keyWord;
         $searchInfo['search'] = $req->search;

@@ -110,6 +110,7 @@ class BuyServiceAction extends BaseAction {
     {
         $typeRoot = $searchInfo['typeRoot'];
         $city = $searchInfo['city'];
+        $zone_id = $searchInfo['zone_id'];
         $search = $searchInfo['search'];
         $keyword = '%'.$searchInfo['keyWord'].'%';
         //按照已有条件查询
@@ -131,6 +132,13 @@ class BuyServiceAction extends BaseAction {
 		
 		//获取当前城市
 		$productFilter['city']=$city;
+		
+		//获取区域
+		if($zone_id != "")
+		{
+		      $productFilter['zone_id'] = $zone_id;   
+		}
+		
 		
 		if($search=='true'){
 			$productFilter['name']= array('like',$keyword);
