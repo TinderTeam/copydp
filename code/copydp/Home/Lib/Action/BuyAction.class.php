@@ -80,8 +80,8 @@ class BuyAction extends BuyServiceAction {
 			$data2['seller_id']=$productItem['seller_id'];
 			$data2['imgsrc']=$productItem['imgsrc'];
 			$data2['order_time']=$datetime;
-			$data2['order_price']=$productItem['price'];
-			$data2['order_original_price']=$productItem['original_price'];
+			$data2['order_price']=$productItem['price']*$quantity;
+			$data2['order_original_price']=$productItem['original_price']*$quantity;
 			$data2['quantity']=$quantity;
 			$data2['order_status']='已下单';		
 			$order->add($data2);
