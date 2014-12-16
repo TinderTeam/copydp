@@ -87,6 +87,14 @@
 			<include file="./Home/Tpl/Public/managemenu.html"/>
 			<!-----管理菜单---->
 		</div>
+		<?php
+					
+					$siteCfg= M('site_config');
+					$conditionhelp['name']="help".$id;
+					$conditionhelp2['name']="helpC".$id;
+					$title=$siteCfg->where($conditionhelp)->getField('content');
+					$content=$siteCfg->where($conditionhelp2)->getField('content');
+				?>
 		<!---中间主要内容--->
 		<div class="main_w Tabs-page user-main  page-account">	
 			<div class="user-main">
@@ -107,7 +115,7 @@
 									<div class="form-inner">
 											<div class="form-block">
 												<label class="label label_required" >标题：<em>*</em></label>
-												<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="" name="title">
+												<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$title}" name="title">
 												<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
 											</div>    
 											<div class="form-block">
@@ -139,6 +147,7 @@
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
+	<div id="htmldiv" class="Hide">{$content}</div>
 </body>
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.min.js"> </script>
@@ -148,8 +157,11 @@
 	   //实例化编辑器
 		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 		var um = UM.getEditor('editor');
+		um.setContent($("#htmldiv").html());
 		$(".submit-btn").click(function(){
-			$("#info-text").val(UM.getEditor('editor').getContent());	
+			var txt=UM.getEditor('editor').getContent();
+			txt=txt.replace(/\"/g,"");			
+			$("#info-text").val(txt);			
 			$("#form").submit();
 		});
 	</script>
