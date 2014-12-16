@@ -174,19 +174,25 @@ class UserManageAction extends Action {
 			
 		}
 		
-		public function freezeControl(){
+		public function freezeControl($type=0){
 			$customer = M('customer');
 			$userID=$_POST['chkID_'];
-			print_r($userID);
+			
+			
 			//判断id是否数组
 			if(is_array($userID)){
 				$condition = 'user_id in('.implode(',',$userID).')';
 			}else{
 				$condition = 'user_id='.$userID;
 			}
-			$customer->where($condition)->setField('status','冻结');
+			if($type=='freeze'){
+				$customer->where($condition)->setField('status','冻结');
+			}else if ('unfreeze'){
+				$customer->where($condition)->setField('status','正常');
+			}
+		
 			$this->assign("jumpUrl","index");
-			$this->success("用户冻结成功！");
+			$this->success("用户冻结/解冻成功！");
 		}
 		
 		//解冻账户

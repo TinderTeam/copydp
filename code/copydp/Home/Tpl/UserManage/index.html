@@ -72,7 +72,7 @@ margin-right: 10px;
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
 				<input id="nav" value="{$nav}" style="display:none;"/>
-				<form name="forml" action="__URL__/search" method="post">
+				<form  name="forml" action="__URL__/search" method="post">
 					<div class="hd">
 						<h4>会员管理</h4>
 						<span>管理系统用户</span>	
@@ -106,7 +106,7 @@ margin-right: 10px;
 
 				</form>	
 					<div class="pay-confirm">
-						<form name="form2" action="__URL__/freezeControl" method="post">
+						<form id="freezeControl" action="__URL__/freezeControl?type=" method="post">
 						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
 							<tbody>
 								<tr>
@@ -154,7 +154,8 @@ margin-right: 10px;
 						</table>
 						
 						<strong class="btn-type-b btn-fn-c btnbar">
-							 <input type="submit" value="批量冻结" name="subSure" class=" form-btn" /> 
+							 <input type="button" value="批量冻结" name="subSure" class=" form-btn" onclick="freezesbmt()" /> 
+							 <input type="button" value="批量解冻" name="subSure" class=" form-btn" onclick="unfreezesbmt()" />
 						</strong>
 						</form>
 					</div>
@@ -340,7 +341,8 @@ margin-right: 10px;
 	<!---footer-->
 		<include file="./Home/Tpl/Public/footer.html"/>
 	<!---footer-->
-	
+		
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
 	<script>
 		function createCode()
 		{
@@ -348,11 +350,13 @@ margin-right: 10px;
 			var num=$("#codeid").val();
 			window.location.href='__URL__/createCode?num='+num;
 		}
+		
 		//实现页面内导航跳转
 		if("" !=$("#nav").val())
 		{
 			location.hash=$("#nav").val();
 		}
+		
 		//冻结用户确认
 		function show_freeze_confirm(userID)
 		{
@@ -365,6 +369,7 @@ margin-right: 10px;
 			{
 			}
 		}
+		
 		//删除激活码确认
 		function show_delete_confirm(code)
 		{
@@ -377,6 +382,37 @@ margin-right: 10px;
 			{
 			}
 		}
+		
+		//解冻
+		function unfreezesbmt()
+		{
+			var r=confirm("确定要进行批量解冻操作？");
+			if(r==true)
+			{	
+				$("#freezeControl").attr("action",$("#freezeControl").attr("action")+'unfreeze');
+				$("#freezeControl").submit();				
+			}
+			else
+			{	
+				alert("test2");
+			}
+		}
+		
+		//冻结
+		function freezesbmt()
+		{
+			var r=confirm("确定要进行批量冻结操作？");
+			if(r==true)
+			{
+				$("#freezeControl").attr("action",$("#freezeControl").attr("action")+'freeze');
+				$("#freezeControl").submit();
+			}
+			else
+			{
+				
+			}
+		}
+		
 	</script>
 </body>
 </html>
