@@ -187,7 +187,7 @@ class UserManageAction extends Action {
 			}
 			if($type=='freeze'){
 				$customer->where($condition)->setField('status','冻结');
-			}else if ('unfreeze'){
+			}else if ($type == 'unfreeze'){
 				$customer->where($condition)->setField('status','正常');
 			}
 		
