@@ -166,9 +166,12 @@
 					$productFilter['city']=$city;
 					
 					if($search=='true'){
-						$productFilter['name']= array('like',$keyword);
+						$searchFilter['name'] = array('like',$keyword);
+						$searchFilter['username'] = array('like',$keyword);
+						$searchFilter['zone_name'] = array('like',$keyword);
+						$searchFilter['_logic'] = "OR";
+						$productFilter['_complex']=$searchFilter;
 					}
-					
 					
 					//设置总筛选条件
 					$productViewDB=new Model('view_product');

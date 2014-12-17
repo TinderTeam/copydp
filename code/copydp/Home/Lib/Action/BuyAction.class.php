@@ -304,14 +304,18 @@ class BuyAction extends BuyServiceAction {
 	public function ajaxSearch($data){
 		$array = explode("-",$data);
 		$keyword=urldecode($array[0]);
-		$product = new Model('product');
+		$product = new Model('view_product');
 		$map="name like('%".$keyword."%') ";
+		$map1="username like('%".$keyword."%')";
+		$map2="zone_name like('%".$keyword."%')";
 		$productCount = $product->where($map)->count();
+		$productCount1 = $product->where($map1)->count();
+		$productCount2 = $product->where($map2)->count();
 		if($keyword=='')
 		{
 			$this->ajaxReturn('false', '请输入关键词', 1);
 		}
-		elseif($productCount==0)
+		elseif(($productCount==0)&&($productCount1==0)&&($productCount2==0))
 		{
 			$this->ajaxReturn('false', '没有搜索到相关信息', 1);
 		}

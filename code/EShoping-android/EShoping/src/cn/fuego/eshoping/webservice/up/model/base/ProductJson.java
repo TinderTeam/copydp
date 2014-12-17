@@ -20,6 +20,7 @@ public class ProductJson
 	private String city;
 	private int zone_id;
 	private String zone_name;
+	private String username;
 	private int current_member;
 	
 	public int getProduct_id() {
@@ -139,6 +140,13 @@ public class ProductJson
 	public void setCurrent_member(int current_member) {
 		this.current_member = current_member;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	@Override
 	public String toString() {
 		return "ProductJson [product_id=" + product_id + ", name=" + name
@@ -150,9 +158,8 @@ public class ProductJson
 				+ ", imgsrc=" + imgsrc + ", imglist=" + imglist
 				+ ", product_status=" + product_status + ", city_id=" + city_id
 				+ ", city=" + city + ", zone_id=" + zone_id + ", zone_name="
-				+ zone_name + ", current_member=" + current_member + "]";
+				+ zone_name + ", username=" + username + ", current_member="
+				+ current_member + "]";
 	}
-	
-		
 
 }

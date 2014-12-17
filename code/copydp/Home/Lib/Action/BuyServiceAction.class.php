@@ -141,7 +141,11 @@ class BuyServiceAction extends BaseAction {
 		
 		
 		if($search=='true'){
-			$productFilter['name']= array('like',$keyword);
+			$searchFilter['name'] = array('like',$keyword);
+			$searchFilter['username'] = array('like',$keyword);
+			$searchFilter['zone_name'] = array('like',$keyword);
+			$searchFilter['_logic'] = "OR";
+			$productFilter['_complex']=$searchFilter;
 		}
 		
 		

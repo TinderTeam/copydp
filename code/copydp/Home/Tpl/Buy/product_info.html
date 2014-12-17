@@ -122,9 +122,9 @@
 						<div class="quantity Fix">
 							<span class="tit">数量：</span>
 							<div class="counter J_counter">
-								<a class="minus"><i></i></a>
+								<a class="minus"  ><i ></i></a>
 									<input id="quantity" class="num" value="1">
-								<a class="plus" ><i></i></a>
+								<a class="plus" ><i ></i></a>
 							</div>
 						</div>
 					</div><!----购买数量---->			 
@@ -424,7 +424,7 @@
 	
 		$(".minus").click(function(){	
 			var value=Number($("#quantity").val());
-			if(value>0){
+			if(value>1){
 				$("#quantity").val( value-1 );
 			}
 			var suburl=$(".submit-btn").attr('data');
