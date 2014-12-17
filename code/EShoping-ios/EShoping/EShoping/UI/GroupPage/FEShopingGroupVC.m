@@ -22,6 +22,7 @@
 #import "FEProductTypeRecResponse.h"
 #import "FEShopingGroupCollectionCell.h"
 #import "FEGroupCategoryVC.h"
+#import "CDZone.h"
 
 @interface FEShopingGroupVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>{
     BOOL _productRecommendBecome;
@@ -33,6 +34,7 @@
 
 @property (strong, nonatomic) NSArray *productNew;
 @property (strong, nonatomic) NSArray *productTypeRecommed;
+@property (strong, nonatomic) CDZone *selectZone;
 
 @end
 
@@ -55,7 +57,7 @@
     dispatch_group_t group = dispatch_group_create();
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        FEProductNewRequest *rdata = [[FEProductNewRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        FEProductNewRequest *rdata = [[FEProductNewRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:self.selectZone.zone_id.integerValue];
         [[FEShopWebServiceManager sharedInstance] productNew:rdata response:^(NSError *error, FEProductNewResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
                 weakself.productNew = response.productList;
@@ -66,7 +68,7 @@
     });
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:self.selectZone.zone_id.integerValue];
         [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
                 weakself.productTypeRecommed = response.productList;
@@ -104,28 +106,6 @@
     }
 
 }
-
--(void)requestNewProduct{
-    __weak typeof(self) weakself = self;
-    FEProductNewRequest *rdata = [[FEProductNewRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
-    [[FEShopWebServiceManager sharedInstance] productNew:rdata response:^(NSError *error, FEProductNewResponse *response) {
-        if (!error && response.result.errorCode.integerValue == 0) {
-            weakself.productNew = response.productList;
-            [weakself.productsTableView reloadData];
-        }
-    }];
-}
-
--(void)requestTypeRecommend{
-    __weak typeof(self) weakself = self;
-    FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
-    [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
-        if (!error && response.result.errorCode.integerValue == 0) {
-            weakself.productTypeRecommed = response.productList;
-        }
-    }];
-}
-
 
 
 - (void)didReceiveMemoryWarning {

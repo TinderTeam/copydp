@@ -7,7 +7,10 @@
 //
 
 #import "FEBaseResponse.h"
+@class FEProductOrder;
 
 @interface FEProductCreateOrderResponse : FEBaseResponse
+
+@property (nonatomic, strong, readonly) FEProductOrder *productOrder;
 
 @end

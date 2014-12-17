@@ -137,6 +137,7 @@
 		14B52AAD1A3DE3010005F0D7 /* FEProductNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B52AAC1A3DE3010005F0D7 /* FEProductNoteCell.m */; };
 		14B52AB01A3FC6D20005F0D7 /* CDCustomerUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B52AAF1A3FC6D20005F0D7 /* CDCustomerUser.m */; };
 		14B52AB31A3FC6D30005F0D7 /* CDUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B52AB21A3FC6D30005F0D7 /* CDUser.m */; };
+		14B52AB91A415CD70005F0D7 /* FEProductOrderDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B52AB81A415CD70005F0D7 /* FEProductOrderDetailVC.m */; };
 		14BD09A31A244EB20005C17F /* FEGroupCategoryCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14BD09A21A244EB20005C17F /* FEGroupCategoryCollectionView.m */; };
 		14C49CD01A3B3F0400937B52 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C49CCF1A3B3F0400937B52 /* CoreText.framework */; };
 		14C8F5411A18E65B00E04B04 /* FEShopingMeTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5401A18E65B00E04B04 /* FEShopingMeTableVC.m */; };
@@ -425,6 +426,8 @@
 		14B52AAF1A3FC6D20005F0D7 /* CDCustomerUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDCustomerUser.m; sourceTree = "<group>"; };
 		14B52AB11A3FC6D30005F0D7 /* CDUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDUser.h; sourceTree = "<group>"; };
 		14B52AB21A3FC6D30005F0D7 /* CDUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDUser.m; sourceTree = "<group>"; };
+		14B52AB71A415CD70005F0D7 /* FEProductOrderDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProductOrderDetailVC.h; sourceTree = "<group>"; };
+		14B52AB81A415CD70005F0D7 /* FEProductOrderDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductOrderDetailVC.m; sourceTree = "<group>"; };
 		14BD09A11A244EB20005C17F /* FEGroupCategoryCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEGroupCategoryCollectionView.h; sourceTree = "<group>"; };
 		14BD09A21A244EB20005C17F /* FEGroupCategoryCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEGroupCategoryCollectionView.m; sourceTree = "<group>"; };
 		14C49CCF1A3B3F0400937B52 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -579,6 +582,8 @@
 				140BB70E1A29CE1B00A73ADF /* FEProductOrderVC.m */,
 				14B52AAB1A3DE3010005F0D7 /* FEProductNoteCell.h */,
 				14B52AAC1A3DE3010005F0D7 /* FEProductNoteCell.m */,
+				14B52AB71A415CD70005F0D7 /* FEProductOrderDetailVC.h */,
+				14B52AB81A415CD70005F0D7 /* FEProductOrderDetailVC.m */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -962,9 +967,9 @@
 				14AA2C9D1A2841D1005FDA8F /* FEProductNewResponse.h */,
 				14AA2C9E1A2841D1005FDA8F /* FEProductNewResponse.m */,
 				14AA2C851A283435005FDA8F /* FEProductTypeRecRequest.h */,
+				14AA2C861A283435005FDA8F /* FEProductTypeRecRequest.m */,
 				14AA2CA01A2841E9005FDA8F /* FEProductTypeRecResponse.h */,
 				14AA2CA11A2841E9005FDA8F /* FEProductTypeRecResponse.m */,
-				14AA2C861A283435005FDA8F /* FEProductTypeRecRequest.m */,
 				14AA2C881A28344F005FDA8F /* FEProductTypeRequest.h */,
 				14AA2C891A28344F005FDA8F /* FEProductTypeRequest.m */,
 				14AA2CB21A2842E7005FDA8F /* FEProductTypeResponse.h */,
@@ -1125,6 +1130,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14B52AB91A415CD70005F0D7 /* FEProductOrderDetailVC.m in Sources */,
 				14C8F5971A1C310600E04B04 /* FESiginVC.m in Sources */,
 				141546831A178FF6004C0500 /* FECitySelectVC.m in Sources */,
 				140CA5961A1F18C40076C4AC /* FEProductImageTableViewCell.m in Sources */,

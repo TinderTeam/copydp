@@ -7,7 +7,16 @@
 //
 
 #import "FEProductCreateOrderResponse.h"
+#import "FEProductOrder.h"
 
 @implementation FEProductCreateOrderResponse
+
+-(id)initWithResponse:(id)response{
+    self = [super initWithResponse:response];
+    if (self) {
+        _productOrder = [[FEProductOrder alloc] initWithDictionary:response[@"productOrder"]];
+    }
+    return self;
+}
 
 @end

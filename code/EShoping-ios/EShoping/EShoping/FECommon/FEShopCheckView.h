@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol FEShopCheckViewDelegate <NSObject>
+
+@optional
+-(void)checkViewDidChange:(NSInteger)count;
+
+@end
+
 @interface FEShopCheckView : UIView
+@property (nonatomic, strong) id<FEShopCheckViewDelegate> delegate;
+@property (nonatomic, assign) NSInteger number;
 
 @end

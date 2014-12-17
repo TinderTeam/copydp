@@ -145,7 +145,7 @@
     dispatch_group_t group = dispatch_group_create();
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        FEProductNewRequest *rdata = [[FEProductNewRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        FEProductNewRequest *rdata = [[FEProductNewRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:0];
         [[FEShopWebServiceManager sharedInstance] productNew:rdata response:^(NSError *error, FEProductNewResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
                 weakself.productNew = response.productList;
@@ -157,7 +157,7 @@
     
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:0];
         [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
                 NSArray *types = [response.productList valueForKey:@"type_id"];
@@ -180,7 +180,7 @@
     
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
+        FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:0];
         [[FEShopWebServiceManager sharedInstance] productRecommedProduct:rdata response:^(NSError *error, FEProductRecommendResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
                 weakself.productList = response.productList;

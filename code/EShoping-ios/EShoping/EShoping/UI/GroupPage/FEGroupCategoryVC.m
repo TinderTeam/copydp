@@ -109,7 +109,7 @@
 -(void)requestProduct{
     __weak typeof(self) weakself = self;
     
-    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:self.productcategory.type_id.integerValue keyword:self.searchKey isSearch:self.isSearch];
+    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:self.productcategory.type_id.integerValue keyword:self.searchKey isSearch:self.isSearch zoneId:self.productzone.zone_id.integerValue];
     [[FEShopWebServiceManager sharedInstance] productAll:rdata response:^(NSError *error, FEProductAllResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
             weakself.productDatas = response.productList;
@@ -196,6 +196,7 @@
         [self requestProduct];
     }else if (indexPath.column == 1){
         self.productzone = self.regoinArray[indexPath.row][_CKEY];
+        [self requestProduct];
     }
 }
 

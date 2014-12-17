@@ -10,13 +10,14 @@
 
 @implementation FEProductTypeRecRequest
 
--(id)initWithCity:(NSString *)city type:(NSInteger)type keyword:(NSString *)key isSearch:(BOOL)search{
+-(id)initWithCity:(NSString *)city type:(NSInteger)type keyword:(NSString *)key isSearch:(BOOL)search zoneId:(NSInteger)zid{
     self = [super initWithMothed:__METHOD_PRODUCT_TYPERECTPRIDUCT];
     if (self) {
         _city = city;
         _typeRoot = @(type);
         _keyWord = key;
         _search = @(search);
+        _zone_id = @(zid);
     }
     return self;
 }

@@ -14,7 +14,8 @@
 @property (nonatomic, strong, readonly) NSNumber *typeRoot;
 @property (nonatomic, strong, readonly) NSString *keyWord;
 @property (nonatomic, strong, readonly) NSNumber *search;
+@property (nonatomic, strong, readonly) NSNumber *zone_id;
 
--(id)initWithCity:(NSString *)city type:(NSInteger)type keyword:(NSString *)key isSearch:(BOOL)search;
+-(id)initWithCity:(NSString *)city type:(NSInteger)type keyword:(NSString *)key isSearch:(BOOL)search zoneId:(NSInteger)zid;
 
 @end
