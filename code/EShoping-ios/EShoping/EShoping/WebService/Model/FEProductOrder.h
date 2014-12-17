@@ -26,5 +26,9 @@
 @property (nonatomic, strong, readonly) NSString *imgsrc;
 @property (nonatomic, strong, readonly) NSString *username;
 @property (nonatomic, strong, readonly) NSString *end_date_time;
+@property (nonatomic, strong, readonly) NSNumber *type_id;
+@property (nonatomic, strong, readonly) NSString *type_name;
+@property (nonatomic, strong, readonly) NSString *cellphone;
+@property (nonatomic, strong, readonly) NSString *grade;
 
 @end

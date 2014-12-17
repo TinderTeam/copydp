@@ -25,6 +25,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *orderProductDescription;
 @property (strong, nonatomic) IBOutlet UILabel *orderProductStatusLabel;
 @property (strong, nonatomic) IBOutlet UIButton *orderOperationButton;
+@property (strong, nonatomic) IBOutlet UILabel *orderNumberLabel;
+@property (strong, nonatomic) IBOutlet UILabel *orderLimitTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *orderCountLabel;
 @property (strong, nonatomic) FEProductOrder *order;
 @property (weak, nonatomic) id<FEOrderItemTableViewCellDelegate> delegate;
 

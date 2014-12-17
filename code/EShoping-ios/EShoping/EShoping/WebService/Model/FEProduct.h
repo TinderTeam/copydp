@@ -10,6 +10,7 @@
 
 @interface FEProduct : FEObject
 
+
 @property (nonatomic, strong, readonly) NSNumber *product_id;
 @property (nonatomic, strong, readonly) NSString *name;
 @property (nonatomic, strong, readonly) NSNumber *type_id;
@@ -28,6 +29,7 @@
 @property (nonatomic, strong, readonly) NSString *city;
 @property (nonatomic, strong, readonly) NSNumber *zone_id;
 @property (nonatomic, strong, readonly) NSString *zone_name;
+@property (nonatomic, strong, readonly) NSString *username;
 @property (nonatomic, strong, readonly) NSNumber *current_member;
 
 @end

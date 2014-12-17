@@ -44,6 +44,9 @@
     [self.orderProductImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(product.imgsrc)]];
     self.orderProductNameLabel.text = product.product_name;
     self.orderProductStatusLabel.text = product.order_status;
+    self.orderLimitTimeLabel.text = [product.end_date_time substringToIndex:10];
+    self.orderNumberLabel.text = product.order_id;
+    self.orderCountLabel.text = [NSString stringWithFormat:@"%@份",product.quantity];
     if ([product.order_status isEqualToString:@"已取消"]) {
         [self.orderOperationButton setTitle:FEString(@"删除订单") forState:UIControlStateNormal];
     }else if([product.order_status isEqualToString:@"已下单"]){
