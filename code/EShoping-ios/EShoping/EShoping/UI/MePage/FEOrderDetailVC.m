@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSArray *orderPlace;
 @property (nonatomic, strong) NSArray *orderCancel;
 @property (nonatomic, strong) NSArray *orderComplete;
+@property (nonatomic, strong) NSArray *orderPassed;
 @property (nonatomic, strong) FESegmentControl *orderTypeSeg;
 @end
 
@@ -90,7 +91,9 @@
 //            weakself.orderDatas = response.orderList;
 //            [weakself.orderList reloadData];
             weakself.orderPlace = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已下单"]];
+            weakself.orderComplete = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已使用"]];
             weakself.orderCancel = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已取消"]];
+            weakself.orderPassed = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已过期"]];
             [weakself.orderList reloadData];
         }
     }];
@@ -155,10 +158,13 @@
             order = self.orderPlace[indexPath.row];
             break;
         case 1:
-            order = self.orderCancel[indexPath.row];
+            order = self.orderComplete[indexPath.row];
             break;
         case 2:
-            order = self.orderComplete[indexPath.row];
+            order = self.orderCancel[indexPath.row];
+            break;
+        case 3:
+            order = self.orderPassed[indexPath.row];
             break;
             
         default:
@@ -174,10 +180,11 @@
         case 0:
             return self.orderPlace.count;
         case 1:
-            return self.orderCancel.count;
-        case 2:
             return self.orderComplete.count;
-            
+        case 2:
+            return self.orderCancel.count;
+        case 3:
+            return self.orderPassed.count;
         default:
             break;
     }

@@ -31,6 +31,10 @@
         if ([self.delegate respondsToSelector:@selector(orderWillCancel:order:)]) {
             [self.delegate orderWillCancel:self order:self.order];
         }
+    }else if([self.order.order_status isEqualToString:@"已使用"] || [self.order.order_status isEqualToString:@"已过期"]){
+        if ([self.delegate respondsToSelector:@selector(orderWillCancel:order:)]) {
+            [self.delegate orderWillCancel:self order:self.order];
+        }
     }
 }
 
@@ -44,6 +48,8 @@
         [self.orderOperationButton setTitle:FEString(@"删除订单") forState:UIControlStateNormal];
     }else if([product.order_status isEqualToString:@"已下单"]){
         [self.orderOperationButton setTitle:FEString(@"取消订单") forState:UIControlStateNormal];
+    }else if([self.order.order_status isEqualToString:@"已使用"] || [self.order.order_status isEqualToString:@"已过期"]){
+        [self.orderOperationButton setTitle:FEString(@"删除订单") forState:UIControlStateNormal];
     }
     
 }

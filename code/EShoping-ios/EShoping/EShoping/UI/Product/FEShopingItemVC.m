@@ -53,19 +53,19 @@ typedef enum : NSUInteger {
 
 -(void)initUI{
     
-    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn1.frame = CGRectMake(0, 0, 30, 30);
-    [btn1 setImage:[UIImage imageNamed:@"common_navi_bar_icon_share_rest"] forState:UIControlStateNormal];
-    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn2.frame = CGRectMake(0, 0, 30, 30);
-    [btn2 setImage:[UIImage imageNamed:@"common_navi_bar_icon_favorite_off_rest"] forState:UIControlStateNormal];
-    
-    
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithCustomView:btn1];
-    item1.style = UIBarButtonItemStyleBordered;
-    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];
-    item2.style = UIBarButtonItemStyleBordered;
-    self.navigationItem.rightBarButtonItems = @[item2,item1];
+//    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn1.frame = CGRectMake(0, 0, 30, 30);
+//    [btn1 setImage:[UIImage imageNamed:@"common_navi_bar_icon_share_rest"] forState:UIControlStateNormal];
+//    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn2.frame = CGRectMake(0, 0, 30, 30);
+//    [btn2 setImage:[UIImage imageNamed:@"common_navi_bar_icon_favorite_off_rest"] forState:UIControlStateNormal];
+//    
+//    
+//    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithCustomView:btn1];
+//    item1.style = UIBarButtonItemStyleBordered;
+//    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];
+//    item2.style = UIBarButtonItemStyleBordered;
+//    self.navigationItem.rightBarButtonItems = @[item2,item1];
 }
 
 -(void)requestSeller{

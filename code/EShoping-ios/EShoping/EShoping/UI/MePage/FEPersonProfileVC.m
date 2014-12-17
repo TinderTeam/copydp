@@ -12,12 +12,16 @@
 #import "FEShopWebServiceManager.h"
 #import "FEUserSignoutResquest.h"
 #import "CDUser.h"
+#import "CDCustomerUser.h"
 #import "FEResult.h"
 #import "FEUserSignoutResponse.h"
 
 @interface FEPersonProfileVC ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet FETableView *profileTableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *nickNameCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *myscoreCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *phomeNumberCell;
+@property (strong, nonatomic) IBOutlet UITableViewCell *emailCell;
 
 @property (nonatomic, strong) UIView *footView;
 
@@ -32,6 +36,9 @@
     self.navigationController.navigationBar.tintColor = FEThemeOrange;
     self.title = FEString(@"个人资料");
     self.nickNameCell.detailTextLabel.text = FELoginUser.username;
+    self.myscoreCell.detailTextLabel.text = [NSString stringWithFormat:@"%@ 分",FELoginUser.usercustomer.score];
+    self.phomeNumberCell.detailTextLabel.text = FELoginUser.usercustomer.cellphone;
+    self.emailCell.detailTextLabel.text = FELoginUser.usercustomer.email;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -12,6 +12,7 @@
 #import "CDCity.h"
 #import "CDCategory.h"
 #import "CDZone.h"
+#import "CDCustomerUser.h"
 
 @implementation FESortDescriptor
 @synthesize key;
@@ -273,6 +274,23 @@ relationshipKeyPathsForPrefetching:nil
         user.user_id = identifier;
     }
     return user;
+}
+
+#pragma mark - CDCustomerUser
+-(CDCustomerUser *)touchCustomerByIdentifier:(NSNumber *)identifier{
+    CDCustomerUser *customer = [self fetchCustomerUser];
+    if (!customer) {
+        customer = (CDCustomerUser *)[NSEntityDescription insertNewObjectForEntityForName:@"CDCustomerUser" inManagedObjectContext:self.managedObjectContext];
+        customer.user_id = identifier;
+    }
+    return customer;
+}
+
+-(CDCustomerUser *)fetchCustomerUser{
+    NSArray *array = [self fetchEntityByName:@"CDCustomerUser"
+                                   predicate:nil
+                                    sortKeys:nil];
+    return array.lastObject;
 }
 
 #pragma mark - CDCity

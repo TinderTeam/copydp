@@ -11,5 +11,7 @@
 @interface FEGroupCategoryVC : FECommonViewController
 
 @property (nonatomic, strong) CDCategory *productcategory;
+@property (nonatomic, assign) BOOL isSearch;
+@property (nonatomic, strong) NSString *searchKey;
 
 @end

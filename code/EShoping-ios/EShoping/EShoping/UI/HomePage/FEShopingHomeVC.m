@@ -44,6 +44,9 @@
 
 #import <ZBarSDK/ZBarReaderViewController.h>
 
+#define __CATEGORY_TYPE @"type"
+#define __CATEGORY_SOURCE @"source"
+
 
 @interface FEShopingHomeVC ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,FECitySelectVCDelegate,ZBarReaderDelegate>{
     dispatch_semaphore_t semaphore;
@@ -125,6 +128,11 @@
         CDCategory *category = ((FEFuncCollectionViewCell *)sender).productCategory;
         FEGroupCategoryVC *vc = segue.destinationViewController;
         vc.productcategory = category;
+    }else if([segue.identifier isEqualToString:@"searchProdcutSegue"]){
+        FEGroupCategoryVC *vc = segue.destinationViewController;
+        vc.isSearch = YES;
+        vc.searchKey = ((UISearchBar *)sender).text;
+        
     }
 }
 
@@ -149,10 +157,21 @@
     
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:1 keyword:nil isSearch:NO];
+        FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO];
         [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
-                weakself.productTypeRecommed = response.productList;
+                NSArray *types = [response.productList valueForKey:@"type_id"];
+                NSMutableArray *recommendType = [NSMutableArray array];
+                NSArray *categorys = [FECoreData fetchCategory];
+                for (NSNumber *type in types) {
+                    NSArray *typeProduct = [response.productList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.type_id == %@",type]];
+                    CDCategory *category = [categorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.type_id == %@",type]].lastObject;
+                    [recommendType addObject:category];
+                    [recommendType addObjectsFromArray:typeProduct];
+//                    [recommendType addObject:@{__CATEGORY_TYPE:category,__CATEGORY_SOURCE:typeProduct}];
+                }
+                
+                weakself.productTypeRecommed = recommendType; //response.productList;
             }
             dispatch_semaphore_signal(sem);
         }];
@@ -184,6 +203,13 @@
             FEShopingFuncCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingCategory" forIndexPath:indexPath];
             return cell;
         }else{
+            if (self.segment.selectedSegmentIndex == 1) {
+                if ([self.productTypeRecommed[indexPath.row] isKindOfClass:[CDCategory class]]) {
+                    FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cateGoryTitleCell" forIndexPath:indexPath];
+                    cell.textLabel.text = ((CDCategory *)self.productTypeRecommed[indexPath.row]).type_name;
+                    return cell;
+                }
+            }
             FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
             
             FEProduct *product;
@@ -240,7 +266,7 @@
             }
         }
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
-        return 1;
+        return 0;
     }
     
     return 0;
@@ -276,7 +302,20 @@
     if (indexPath.section == 0) {
         return 190;
     }
-    return 110;
+    switch (self.segment.selectedSegmentIndex) {
+        case 0:
+            return 110;
+        case 1:
+            if ([self.productTypeRecommed[indexPath.row] isKindOfClass:[CDCategory class]]) {
+                return 35;
+            }
+            return 110;
+        case 2:
+            return 110;
+        default:
+            return 0;
+    }
+//    return 110;
     
 }
 
@@ -296,9 +335,10 @@
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
     self.navigationItem.rightBarButtonItem = nil;
     self.navigationItem.leftBarButtonItem = nil;
+    [controller.searchBar setShowsCancelButton:YES animated:YES];
 }
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller  {
-    
+
 }
 
 - (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
@@ -307,6 +347,10 @@
 
 -(BOOL)searchDisplayController:(UISearchDisplayController*)controller shouldReloadTableForSearchString:(NSString *)searchString {
     [self filterContentForSearchText:searchString];
+    return NO;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
     return YES;
 }
 
@@ -317,7 +361,15 @@
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
     self.navigationItem.rightBarButtonItem = self.messageBarItem;
     self.navigationItem.leftBarButtonItem = self.regionBarItem;
+    [controller.searchBar setShowsCancelButton:NO animated:YES];
     //        [self.searchBar resignFirstResponder];
+}
+
+#pragma mark - UISearchBarDelegate
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    [self performSegueWithIdentifier:@"searchProdcutSegue" sender:searchBar];
+    [self.searchDisplayController setActive:NO animated:NO];
+//    searchBar.text = @"";
 }
 
 -(void)filterContentForSearchText:(NSString*)searchText {

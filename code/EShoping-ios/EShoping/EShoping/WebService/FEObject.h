@@ -13,5 +13,6 @@
 @property (nonatomic, strong, readonly) NSDictionary *dictionary;
 
 -(id)initWithDictionary:(id)dictionary;
+-(void)toObject:(id)obj;
 
 @end

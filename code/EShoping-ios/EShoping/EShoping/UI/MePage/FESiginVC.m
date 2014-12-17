@@ -15,6 +15,8 @@
 #import "AppDelegate.h"
 #import "FECoreDataHandler.h"
 #import "CDUser.h"
+#import "FECustomer.h"
+#import "CDCustomerUser.h"
 
 
 @interface FESiginVC ()<UITextFieldDelegate>
@@ -58,6 +60,34 @@
                     user.password = wuser.password;
                     user.username = wuser.username;
                     user.role = wuser.role;
+                    
+                    FECustomer *customer = response.customer;
+                    CDCustomerUser *cdcustomer = [FECoreData touchCustomerByIdentifier:customer.user_id];
+                    cdcustomer.grade = customer.grade;
+                    cdcustomer.score = customer.score;
+                    cdcustomer.cellphone = customer.cellphone;
+                    cdcustomer.email = customer.email;
+                    cdcustomer.car_id = customer.car_id;
+                    cdcustomer.recommender_id = customer.recommender_id;
+                    cdcustomer.status = customer.status;
+                    cdcustomer.request = customer.request;
+                    cdcustomer.login_date = customer.login_date;
+                    cdcustomer.user = user;
+                    
+//                    [customer toObject:cdcustomer];
+//                    user.usercustomer = cdcustomer;
+//                    @property (nonatomic, retain) NSNumber * user_id;
+//                    @property (nonatomic, retain) NSString * grade;
+//                    @property (nonatomic, retain) NSNumber * score;
+//                    @property (nonatomic, retain) NSString * cellphone;
+//                    @property (nonatomic, retain) NSString * email;
+//                    @property (nonatomic, retain) NSString * car_id;
+//                    @property (nonatomic, retain) NSNumber * recommender_id;
+//                    @property (nonatomic, retain) NSString * status;
+//                    @property (nonatomic, retain) NSString * request;
+//                    @property (nonatomic, retain) NSString * login_date;
+//                    @property (nonatomic, retain) CDUser *user;
+                    
                     [FECoreData saveCoreData];
                     [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
                     if ([weakself.delegate respondsToSelector:@selector(signinVCDidSignin:)]) {

@@ -23,13 +23,14 @@
 #import "CDCity.h"
 #import "CDZone.h"
 
-@interface FEGroupCategoryVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface FEGroupCategoryVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *groupTableView;
 @property (strong, nonatomic) NSArray *categoryArray;
 @property (strong, nonatomic) NSArray *regoinArray;
 @property (strong, nonatomic) NSArray *sortArray;
 @property (strong, nonatomic) NSArray *categoryContentArray;
 @property (strong, nonatomic) CDZone *productzone;
+@property (strong, nonatomic) NSArray *leftItems;
 
 @property (strong, nonatomic) NSArray *productDatas;
 
@@ -42,6 +43,8 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
+    self.leftItems = self.navigationItem.leftBarButtonItems;
+    
     NSArray *allcategorys = [FECoreData fetchCategory];
     NSArray *rootcategorys = [allcategorys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.father_id == 0 || SELF.father_id = -1"]];
     NSMutableArray *filltercateforys = [NSMutableArray new];
@@ -88,11 +91,15 @@
 }
 
 -(void)initUI{
+
+    if (self.isSearch) {
+        self.searchDisplayController.searchBar.text = self.searchKey;
+    }
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.extendedLayoutIncludesOpaqueBars = YES;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 0) andHeight:40];
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
+    DOPDropDownMenu *menu = [[DOPDropDownMenu alloc] initWithOrigin:CGPointMake(0, 64) andHeight:40];
     menu.dataSource = self;
     menu.delegate = self;
     [self.view addSubview:menu];
@@ -102,7 +109,7 @@
 -(void)requestProduct{
     __weak typeof(self) weakself = self;
     
-    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:self.productcategory.type_id.integerValue keyword:nil isSearch:NO];
+    FEProductGetAllRequest *rdata = [[FEProductGetAllRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:self.productcategory.type_id.integerValue keyword:self.searchKey isSearch:self.isSearch];
     [[FEShopWebServiceManager sharedInstance] productAll:rdata response:^(NSError *error, FEProductAllResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
             weakself.productDatas = response.productList;
@@ -192,6 +199,24 @@
     }
 }
 
+#pragma mark - UISearchBarDelegate
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    self.isSearch = YES;
+    self.searchKey = searchBar.text;
+    [self requestProduct];
+    [self.searchDisplayController setActive:NO animated:YES];
+    self.searchDisplayController.searchBar.text = self.searchKey;
+}
+
+#pragma mark - UISearchDisplayController
+-(void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller{
+    self.navigationController.navigationItem.leftBarButtonItems = nil;
+}
+
+-(void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller{
+    self.navigationItem.leftBarButtonItems = self.leftItems;
+}
+
 #pragma mark - UITableVieDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.groupTableView) {
@@ -235,7 +260,7 @@
         }
         
     }else if(tableView == self.searchDisplayController.searchResultsTableView){
-        return 1;
+        return 0;
     }
     return 0;
 }

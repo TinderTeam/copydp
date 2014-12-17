@@ -18,7 +18,7 @@
         if (self) {
             NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
             NSArray *attributes = NULL;
-            NSArray *property = [self getAllProperty:&attributes];
+            NSArray *property = [self getAllProperty:&attributes class:[self class]];
             for (NSString *key in property) {
                 if (![dictionary[key] isKindOfClass:[NSNull class]] && dictionary[key] != nil) {
                     @try {
@@ -46,9 +46,36 @@
     
 }
 
+-(void)toObject:(id)obj{
+    NSArray *attributes = NULL;
+    NSArray *property = [self getAllProperty:&attributes class:[obj class]];
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    for (NSString *key in property) {
+        id keyvalue = [self valueForKey:key];
+        if (![keyvalue isKindOfClass:[NSNull class]] && keyvalue != nil) {
+            @try {
+                if (NSClassFromString([attributes[[property indexOfObject:key]] attribute]) == [NSNumber class] && ![keyvalue isKindOfClass:[NSNumber class]]) {
+                    NSNumber *number = [f numberFromString:keyvalue];
+                    [obj setValue:number forKey:key];
+                }else{
+                    [obj setValue:keyvalue forKey:key];
+                }
+                
+            }
+            @catch (NSException *exception) {
+                NSLog(@"error create object %@",exception);
+            }
+            @finally {
+                
+            }
+            
+        }
+    }
+}
+
 - (NSDictionary *)dictionary{
     NSArray *attributes = NULL;
-    NSArray *property = [self getAllProperty:&attributes];
+    NSArray *property = [self getAllProperty:&attributes class:[self class]];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
     
     for (NSString *name in property) {
@@ -67,10 +94,10 @@
 }
 
 //获取类的所有的 属性的名字
--(NSArray *)getAllProperty:(NSArray **)attributes
+-(NSArray *)getAllProperty:(NSArray **)attributes class:(Class)class
 {
     unsigned int count;
-    objc_property_t *properties = class_copyPropertyList([self class], &count);
+    objc_property_t *properties = class_copyPropertyList(class, &count);
     NSMutableArray *rv = [NSMutableArray array];
     NSMutableArray *av = [NSMutableArray array];
     unsigned int i;

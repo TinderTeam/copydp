@@ -12,6 +12,7 @@
 @class CDCity;
 @class CDZone;
 @class CDCategory;
+@class CDCustomerUser;
 
 @interface FESortDescriptor : NSObject
 
@@ -36,12 +37,13 @@
  */
 - (instancetype)initWithAppDelegateManagedObjectContext;
 
-//fetch user information
--(CDUser *)fetchUser;
--(CDUser *)touchUserByIdentifier:(NSNumber *)identifier;
 - (void)saveCoreData;
 - (void)deleteCoreData:(NSArray *)array;
 
+//fetch user information
+-(CDUser *)fetchUser;
+-(CDUser *)touchUserByIdentifier:(NSNumber *)identifier;
+-(CDCustomerUser *)touchCustomerByIdentifier:(NSNumber *)identifier;
 //city
 -(NSArray *)fetchCity;
 -(CDCity *)touchCityByName:(NSString *)cname;

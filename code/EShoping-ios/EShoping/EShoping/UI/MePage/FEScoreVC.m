@@ -8,8 +8,12 @@
 
 #import "FEScoreVC.h"
 #import "FESiginVC.h"
+#import "CDCustomerUser.h"
+#import "CDUser.h"
 
 @interface FEScoreVC ()<FESigninVCDelegate,UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet UIView *scoreView;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
 
 @end
 
@@ -20,8 +24,11 @@
     // Do any additional setup after loading the view.
     
     if (FELoginUser) {
-       
+        self.scoreView.hidden = NO;
+        self.scoreLabel.text = [NSString stringWithFormat:@"%@ 分",FELoginUser.usercustomer.score];
+        
     }else{
+        self.scoreView.hidden = YES;
         [self performSegueWithIdentifier:@"userSiginSegue" sender:nil];
     }
     self.title = FEString(@"我的积分");
