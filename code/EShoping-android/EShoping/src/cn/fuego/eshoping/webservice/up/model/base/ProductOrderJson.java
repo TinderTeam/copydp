@@ -26,6 +26,10 @@ public class ProductOrderJson
 	private String imgsrc;
 	private String username;
 	private String end_date_time;
+	private int type_id;
+	private String type_name;
+	private String cellphone;
+	private String grade;
 	public String getOrder_id() {
 		return order_id;
 	}
@@ -122,6 +126,31 @@ public class ProductOrderJson
 	public void setEnd_date_time(String end_date_time) {
 		this.end_date_time = end_date_time;
 	}
+	
+	public int getType_id() {
+		return type_id;
+	}
+	public void setType_id(int type_id) {
+		this.type_id = type_id;
+	}
+	public String getType_name() {
+		return type_name;
+	}
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
+	}
+	public String getCellphone() {
+		return cellphone;
+	}
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 	@Override
 	public String toString() {
 		return "ProductOrderJson [order_id=" + order_id + ", order_name="
@@ -133,7 +162,10 @@ public class ProductOrderJson
 				+ ", order_original_price=" + order_original_price
 				+ ", order_status=" + order_status + ", note=" + note
 				+ ", imgsrc=" + imgsrc + ", username=" + username
-				+ ", end_date_time=" + end_date_time + "]";
+				+ ", end_date_time=" + end_date_time + ", type_id=" + type_id
+				+ ", type_name=" + type_name + ", cellphone=" + cellphone
+				+ ", grade=" + grade + "]";
 	}
+	
 	
 }
