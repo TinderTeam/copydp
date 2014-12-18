@@ -130,7 +130,7 @@
 					</div><!----购买数量---->			 
 					<div class="order"> 
 						<if condition="$productStatus eq '正常'">
-							<a  class="b-new-rbtn small order-btn J_package submit-btn"  href="__APP__/Buy/order?productID={$productID}&quantity=‘javascript:$('#quantity').val();’"
+							<a  class="b-new-rbtn small order-btn J_package submit-btn"  href="__APP__/Buy/order?productID={$productID}&quantity=1"
 							data="__APP__/Buy/order?productID={$productID}"> <span>立即抢购</span> </a>
 						<else/>
 							<a disabled="true" class="b-new-rbtn small order-btn J_package submit-btn" ><span>产品过期</span></a>
@@ -428,8 +428,8 @@
 				$("#quantity").val( value-1 );
 			}
 			var suburl=$(".submit-btn").attr('data');
-			$(".submit-btn").attr('href',suburl+'&quantity='+(value-1));
-			$(".submit-btn2").attr('href',suburl+'&quantity='+(value-1));
+			$(".submit-btn").attr('href',suburl+'&quantity='+$("#quantity").val());
+			$(".submit-btn2").attr('href',suburl+'&quantity='+$("#quantity").val());
 			
 			
 		});
