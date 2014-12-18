@@ -2,8 +2,10 @@ package cn.fuego.eshoping.webservice.up.rest;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
 
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.misp.service.http.HttpListener;
 import cn.fuego.misp.service.http.MispProxyFactory;
 
 public class WebServiceContext
@@ -12,7 +14,7 @@ public class WebServiceContext
 
 	private static WebServiceContext instance;
 
-	public static String hostURL = "http://"+"127.0.0.1"+":"+"7000"+"/copydp/index.php";
+	public static String hostURL = "http://"+"120.24.217.173"+":"+"9000"+"/copydp/index.php";
 	
 	private WebServiceContext()
 	{
@@ -28,46 +30,43 @@ public class WebServiceContext
 		}
 		return instance;
 	}
-
-	public NewsManageRest getNewsManageRest()
-	{
  
-		NewsManageRest rest = MispProxyFactory.create( hostURL,NewsManageRest.class, getHttpClient());
-
-		return rest;
-	}
 	private HttpClient getHttpClient()
 	{
-		HttpClient httpClient = new DefaultHttpClient();  
-
+		HttpClient httpClient = new DefaultHttpClient();
+	 
+		httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 30000);
+ 
+		httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 30000);
 		return httpClient;
 
 	}
-	public UserManageRest getUserManageRest()
+
+	public UserManageRest getUserManageRest(HttpListener handler)
 	{
  
-		UserManageRest rest = MispProxyFactory.create( hostURL,UserManageRest.class, getHttpClient());
+		UserManageRest rest = MispProxyFactory.create( hostURL,UserManageRest.class, getHttpClient(),handler);
 
 		return rest;
 	}	
-	public ActivityManageRest getActivityManageRest()
+	public ActivityManageRest getActivityManageRest(HttpListener handler)
 	{
  
-		ActivityManageRest rest = MispProxyFactory.create( hostURL,ActivityManageRest.class, getHttpClient());
+		ActivityManageRest rest = MispProxyFactory.create( hostURL,ActivityManageRest.class, getHttpClient(),handler);
 
 		return rest;
 	}
-	public ProductManageRest getProductManageRest()
+	public ProductManageRest getProductManageRest(HttpListener handler)
 	{
  
-		ProductManageRest rest = MispProxyFactory.create( hostURL,ProductManageRest.class, getHttpClient());
+		ProductManageRest rest = MispProxyFactory.create( hostURL,ProductManageRest.class, getHttpClient(),handler);
 
 		return rest;
 	}
-	public CommunityManageRest getCommunityManageRest()
+	public CommunityManageRest getCommunityManageRest(HttpListener handler)
 	{
  
-		CommunityManageRest rest = MispProxyFactory.create( hostURL,CommunityManageRest.class, getHttpClient());
+		CommunityManageRest rest = MispProxyFactory.create( hostURL,CommunityManageRest.class, getHttpClient(),handler);
 
 		return rest;
 	}

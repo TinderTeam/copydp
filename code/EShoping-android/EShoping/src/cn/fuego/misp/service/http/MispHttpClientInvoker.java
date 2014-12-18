@@ -19,19 +19,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.jboss.resteasy.specimpl.UriBuilderImpl;
 import org.jboss.resteasy.util.IsHttpMethod;
 
-import android.os.Handler;
-import android.os.Message;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.misp.constant.MISPErrorMessageConst;
-import cn.fuego.misp.service.MISPException;
 
 /**
  * @ClassName: MispClientInvoker
@@ -49,14 +44,14 @@ public class MispHttpClientInvoker extends Thread
 	private static final String GET_METHOD = "GET";
 	private static final String POST_METHOD = "POST";
 	
-	private static final String CODE_WITH_UTF_8 = "utf-8";
+	private static final String CODE_WITH_UTF_8 = "UTF-8";
  	protected UriBuilderImpl uri;
 	protected Method method;
 	protected Object[] argObjects;
 	protected HttpClient httpClient;
-	protected Handler handler;
+	protected HttpListener handler;
  
-	public MispHttpClientInvoker(URI baseUri,Class<?> calzz,Method method,HttpClient httpClient, Handler handler)
+	public MispHttpClientInvoker(URI baseUri,Class<?> calzz,Method method,HttpClient httpClient, HttpListener handler)
 	{
 		this.uri = new UriBuilderImpl();
 		this.handler = handler;
@@ -80,6 +75,9 @@ public class MispHttpClientInvoker extends Thread
 	public void run() {
 		// TODO Auto-generated method stub
 		super.run();
+		
+		MispHttpMessage msg = new MispHttpMessage();
+
 		Object rspObj = null;
 		try
 		{
@@ -93,19 +91,20 @@ public class MispHttpClientInvoker extends Thread
 			
 			String content = EntityUtils.toString(response.getEntity(), CODE_WITH_UTF_8);
 			
+			log.info("the response is " + content);
+			
 			ObjectMapper mapper = new ObjectMapper();
 			
 			rspObj = mapper.readValue(content,method.getReturnType());
-			Message msg = new Message();
-			msg.obj = rspObj;
-			handler.sendMessage(msg);
+			msg.getMessage().obj = rspObj;
+			
 			 
-		} 
-		catch (Exception e)
+		} catch (Exception e)
 		{
-			log.error("call http failed",e);
-			throw new MISPException(MISPErrorMessageConst.NET_FAIL,e);
+			log.error("call http failed.",e);
+			msg.getMessage().what = MISPErrorMessageConst.NET_FAIL;
 		}
+		handler.sendMessage(msg);
 		
 	}
 
@@ -162,19 +161,26 @@ public class MispHttpClientInvoker extends Thread
 		{
 			ObjectMapper mapper = new ObjectMapper();
 			
-			StringEntity se = null;
+			ByteArrayEntity se = null;
 			try
 			{
-				se = new StringEntity( mapper.writeValueAsString(args));
-	            se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-
+				//se = new StringEntity(mapper.writeValueAsString(args));
+				String json = mapper.writeValueAsString(args);
+				
+				 se = new ByteArrayEntity(json.getBytes()); 
+				//se = new StringEntity(json,CODE_WITH_UTF_8);
+	            //se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+                se.setContentType("application/json");
+      
+                se.setContentEncoding(CODE_WITH_UTF_8);
 			} catch (Exception e)
 			{
 				log.error("covert object to json failed.object is " + args,e);
 			} 
         
 			HttpPost postMethod = new HttpPost(absPath);
-			postMethod.setHeader(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+			postMethod.setHeader("Content-Type", "application/json;charset=utf-8");
 			postMethod.setEntity(se);
 			return postMethod;
 		}

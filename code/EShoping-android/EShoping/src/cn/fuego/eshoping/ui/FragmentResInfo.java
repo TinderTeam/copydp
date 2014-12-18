@@ -1,0 +1,30 @@
+package cn.fuego.eshoping.ui;
+
+import cn.fuego.eshoping.R;
+
+
+
+public class FragmentResInfo
+{
+	private int image = R.drawable.tabbar_defualt_icon;
+	private int name = R.string.tabbar_default;
+	public int getImage()
+	{
+		return image;
+	}
+	public void setImage(int image)
+	{
+		this.image = image;
+	}
+	public int getName()
+	{
+		return name;
+	}
+	public void setName(int name)
+	{
+		this.name = name;
+	}
+ 
+	
+
+}

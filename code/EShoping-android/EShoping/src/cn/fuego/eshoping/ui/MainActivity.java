@@ -1,37 +1,42 @@
 package cn.fuego.eshoping.ui;
 
-
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.ui.base.BaseActivtiy;
+import cn.fuego.misp.service.http.MispHttpMessage;
 
-public class MainActivity extends Activity
+public class MainActivity extends BaseActivtiy 
 {
+	private FuegoLog log = FuegoLog.getLog(MainActivity.class);
+	
+	public static boolean isForeground = false;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R., menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+		//setContentView(R.layout.main);
+		setContentView(R.layout.main_welcome);
 	 
-		return super.onOptionsItemSelected(item);
+		Intent intent = new Intent();
+		//SharedPreferences userInfo = getSharedPreferences(SharedPreferenceConst.UESR_INFO, 0);
+		 
+        intent.setClass(MainActivity.this, MainTabbarActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+        startActivity(intent);
+        this.finish();
+ 
 	}
+
+	@Override
+	public void handle(MispHttpMessage message)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+ 
+
+		
 }

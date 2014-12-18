@@ -1,8 +1,17 @@
 package cn.fuego.eshoping.ui.news;
 
-import android.support.v4.app.Fragment;
+import cn.fuego.eshoping.ui.base.BaseFragment;
+import cn.fuego.misp.service.http.MispHttpMessage;
 
-public class NewsFrament extends Fragment
+public class NewsFrament extends BaseFragment
 {
+	
+
+	@Override
+	public void handle(MispHttpMessage message)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
 }

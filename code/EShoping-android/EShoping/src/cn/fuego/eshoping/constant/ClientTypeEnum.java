@@ -18,8 +18,8 @@ package cn.fuego.eshoping.constant;
 public enum ClientTypeEnum 
 {
 	WEB_CLIENT(0,"WEB"),
-	ANDRIOD_CLIENT(1,"ANDRIOD"),
-	IOS_CLIENT(2,"IOS");
+	ANDRIOD_CLIENT(3,"ANDRIOD"),
+	IOS_CLIENT(4,"IOS");
 	private int intValue;
 	private String strValue;
 	
@@ -40,6 +40,17 @@ public enum ClientTypeEnum
 	{
 		return strValue;
 	}
+	public static ClientTypeEnum getEnumByInt(int intValue)
+	{
+		for (ClientTypeEnum c : ClientTypeEnum.values())
+		{
+			if (intValue == c.intValue)
+			{
+				return c;
+			}
+		}
+		return null;
+	}	
 
  
 	
