@@ -6,17 +6,32 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />  
+	<uses-permission android:name="android.permission.USE_CREDENTIALS" />  
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />  
+	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />  
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+	<uses-permission android:name="android.permission.INTERNET" />  
+	<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />  
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />  
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />  
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />  
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />  
+	<uses-permission android:name="android.permission.BROADCAST_STICKY" />  
+	<uses-permission android:name="android.permission.WRITE_SETTINGS" />  
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	
+	
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="18" />
-
+ 
     <application
         android:allowBackup="true"
         android:icon="@null"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
- 
+
         <activity
             android:name="cn.fuego.eshoping.ui.LoginActivity"
             android:label="@string/app_name" >
@@ -37,6 +52,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+          <meta-data  
+	        android:name="com.baidu.lbsapi.API_KEY"  
+	        android:value="V8GryXnQL1nCHyIECQZbirSF" />  
     </application>
 
 </manifest>

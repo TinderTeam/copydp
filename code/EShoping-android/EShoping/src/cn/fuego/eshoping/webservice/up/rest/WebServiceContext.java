@@ -5,6 +5,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.HttpListener;
 import cn.fuego.misp.service.http.MispProxyFactory;
 
@@ -14,7 +15,7 @@ public class WebServiceContext
 
 	private static WebServiceContext instance;
 
-	public static String hostURL = "http://"+"120.24.217.173"+":"+"9000"+"/copydp/index.php";
+	public static String hostURL = MemoryCache.getHostUrl()+"/copydp/index.php";
 	
 	private WebServiceContext()
 	{

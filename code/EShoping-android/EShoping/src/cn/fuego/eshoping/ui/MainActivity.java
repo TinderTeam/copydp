@@ -7,6 +7,8 @@ import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
+import com.baidu.mapapi.SDKInitializer;
+
 public class MainActivity extends BaseActivtiy 
 {
 	private FuegoLog log = FuegoLog.getLog(MainActivity.class);
@@ -17,6 +19,9 @@ public class MainActivity extends BaseActivtiy
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.main);
+		
+		//init baidu map
+		SDKInitializer.initialize(getApplicationContext());
 		setContentView(R.layout.main_welcome);
 	 
 		Intent intent = new Intent();
