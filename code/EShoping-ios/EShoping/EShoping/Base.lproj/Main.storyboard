@@ -2336,89 +2336,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwU-iE-efG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848" y="1993"/>
-        </scene>
-        <!--ScoreVC-->
-        <scene sceneID="wiW-x6-UW0">
-            <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="wWK-Pp-YVC" customClass="FEScoreVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6sq-qn-pzb"/>
-                        <viewControllerLayoutGuide type="bottom" id="xpx-x5-5Ke"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="V2L-HE-C2A">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MoU-c2-TOF">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的积分：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qm7-Py-RCK">
-                                        <rect key="frame" x="10" y="10" width="85" height="20"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="2Yg-3m-tCi"/>
-                                            <constraint firstAttribute="width" constant="85" id="osX-J4-RF5"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WmG-2m-qv1">
-                                        <rect key="frame" x="115" y="10" width="10" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="7lN-xN-jnu"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="Qm7-Py-RCK" firstAttribute="leading" secondItem="MoU-c2-TOF" secondAttribute="leading" constant="10" id="9do-vJ-bSa"/>
-                                    <constraint firstItem="WmG-2m-qv1" firstAttribute="top" secondItem="MoU-c2-TOF" secondAttribute="top" constant="10" id="XHn-P6-Aw1"/>
-                                    <constraint firstItem="WmG-2m-qv1" firstAttribute="leading" secondItem="Qm7-Py-RCK" secondAttribute="trailing" constant="20" id="aiS-k2-Wmx"/>
-                                    <constraint firstItem="Qm7-Py-RCK" firstAttribute="top" secondItem="MoU-c2-TOF" secondAttribute="top" constant="10" id="iu2-xi-dkz"/>
-                                    <constraint firstAttribute="height" constant="44" id="rQ0-wP-khW"/>
-                                </constraints>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dxa-jI-fYI" customClass="FETableView">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="scoreCell" rowHeight="90" id="MRt-Kg-CEZ">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MRt-Kg-CEZ" id="BxO-L9-Pkk">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="wWK-Pp-YVC" id="1Dd-81-Y9i"/>
-                                    <outlet property="delegate" destination="wWK-Pp-YVC" id="i3U-jd-eRb"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="MoU-c2-TOF" secondAttribute="trailing" id="Cjt-xx-DTy"/>
-                            <constraint firstItem="MoU-c2-TOF" firstAttribute="top" secondItem="V2L-HE-C2A" secondAttribute="top" id="GR2-AS-bfB"/>
-                            <constraint firstAttribute="bottom" secondItem="dxa-jI-fYI" secondAttribute="bottom" id="Lno-bM-fbm"/>
-                            <constraint firstAttribute="trailing" secondItem="dxa-jI-fYI" secondAttribute="trailing" id="Q0N-m7-Hks"/>
-                            <constraint firstItem="MoU-c2-TOF" firstAttribute="leading" secondItem="V2L-HE-C2A" secondAttribute="leading" id="Tj0-yf-eab"/>
-                            <constraint firstItem="dxa-jI-fYI" firstAttribute="top" secondItem="MoU-c2-TOF" secondAttribute="bottom" id="thf-6l-NgW"/>
-                            <constraint firstItem="dxa-jI-fYI" firstAttribute="leading" secondItem="V2L-HE-C2A" secondAttribute="leading" id="wq0-Qm-Ktn"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="scoreLabel" destination="WmG-2m-qv1" id="coZ-rf-qRo"/>
-                        <outlet property="scoreView" destination="MoU-c2-TOF" id="doN-Lg-5vy"/>
-                        <segue destination="bj7-iv-YW5" kind="presentation" identifier="userSiginSegue" id="lTz-To-Zvu"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="t6Q-4L-dv9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1469" y="1993"/>
+            <point key="canvasLocation" x="1476" y="1993"/>
         </scene>
         <!--Setting-->
         <scene sceneID="4yL-or-2gl">
@@ -2516,7 +2434,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hnn-65-DGe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="226" y="1993"/>
+            <point key="canvasLocation" x="854" y="1993"/>
         </scene>
         <!--个人中心-->
         <scene sceneID="Jb1-yH-OAW">
@@ -2549,8 +2467,8 @@
         <image name="usersetting" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WI5-vc-442"/>
-        <segue reference="bQS-oA-evg"/>
         <segue reference="Uzw-LT-jJ7"/>
+        <segue reference="WI5-vc-442"/>
+        <segue reference="2fI-Lb-rPX"/>
     </inferredMetricsTieBreakers>
 </document>

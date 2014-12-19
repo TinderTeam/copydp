@@ -68,7 +68,7 @@
 }
 
 -(void)setNumber:(NSInteger)number{
-    _numberTextFeild.text = [NSString stringWithFormat:@"%ld",number];
+    _numberTextFeild.text = [NSString stringWithFormat:@"%ld",(long)number];
 }
 
 -(NSInteger)number{
@@ -78,7 +78,7 @@
 -(void)minus:(id)sender{
     [self resignFirstResponder];
     if ([_numberTextFeild.text integerValue] > 1) {
-        _numberTextFeild.text = [NSString stringWithFormat:@"%ld",[_numberTextFeild.text integerValue] - 1];
+        _numberTextFeild.text = [NSString stringWithFormat:@"%ld",(long)([_numberTextFeild.text integerValue] - 1)];
         if ([self.delegate respondsToSelector:@selector(checkViewDidChange:)]) {
             [self.delegate checkViewDidChange:[_numberTextFeild.text integerValue]];
         }
@@ -88,7 +88,7 @@
 -(void)plus:(id)sender{
     [self resignFirstResponder];
     if ([_numberTextFeild.text integerValue] < 100) {
-        _numberTextFeild.text = [NSString stringWithFormat:@"%ld",[_numberTextFeild.text integerValue] + 1];
+        _numberTextFeild.text = [NSString stringWithFormat:@"%ld",(long)([_numberTextFeild.text integerValue] + 1)];
         if ([self.delegate respondsToSelector:@selector(checkViewDidChange:)]) {
             [self.delegate checkViewDidChange:[_numberTextFeild.text integerValue]];
         }
