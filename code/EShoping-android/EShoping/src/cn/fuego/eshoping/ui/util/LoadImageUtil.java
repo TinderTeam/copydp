@@ -31,7 +31,7 @@ public class LoadImageUtil
 		}
 
 		// Show a "Loading" image here
-		imageView.setImageResource(R.drawable.image_loading);
+		imageView.setImageResource(R.drawable.loading_image);
 
 		log.info("Image url:" + urlString);
 
@@ -64,7 +64,7 @@ public class LoadImageUtil
 							"Image download failed", e);
 					// Show a "download fail" image
 					drawable = imageView.getResources().getDrawable(
-							R.drawable.image_load_failed);
+							R.drawable.load_image_failed);
 				}
 
 				// Notify UI thread to show this image using Handler

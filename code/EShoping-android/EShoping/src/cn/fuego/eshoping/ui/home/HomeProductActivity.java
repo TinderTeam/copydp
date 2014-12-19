@@ -5,14 +5,15 @@ import android.os.Bundle;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
+import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
 
-public class ProductActivity extends BaseActivtiy
+public class HomeProductActivity extends BaseActivtiy
 {
-	private FuegoLog log = FuegoLog.getLog(ProductActivity.class);
+	private FuegoLog log = FuegoLog.getLog(HomeProductActivity.class);
 
 	MapView mMapView = null;
 
@@ -28,6 +29,7 @@ public class ProductActivity extends BaseActivtiy
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		
 		Intent intent = this.getIntent();
+		ProductJson product = (ProductJson) intent.getSerializableExtra("product");
 	}
 
 	@Override

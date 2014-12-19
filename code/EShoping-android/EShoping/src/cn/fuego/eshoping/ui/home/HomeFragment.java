@@ -83,6 +83,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
 	      
 	      productAdapter = new ProductDataAdapter(this.getActivity(),this.productList);
 	      productView.setAdapter(productAdapter);
+	      productView.setOnItemClickListener(this);
 	     
 	      update();
      
@@ -142,7 +143,8 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
 	{
  
 		ProductJson product =  this.productAdapter.getItem(position); 
-		Intent intent = new Intent(this.getActivity(),ProductActivity.class);
+		Intent intent = new Intent(this.getActivity(),HomeProductActivity.class);
+		intent.putExtra("product", product);
 
 		this.startActivity(intent); 
 

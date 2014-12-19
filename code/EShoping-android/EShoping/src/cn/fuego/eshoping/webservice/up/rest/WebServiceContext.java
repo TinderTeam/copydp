@@ -64,6 +64,15 @@ public class WebServiceContext
 
 		return rest;
 	}
+	
+	public NewsManageRest getNewsManageRest(HttpListener handler)
+	{
+ 
+		NewsManageRest rest = MispProxyFactory.create( hostURL,NewsManageRest.class, getHttpClient(),handler);
+
+		return rest;
+	}
+	
 	public CommunityManageRest getCommunityManageRest(HttpListener handler)
 	{
  

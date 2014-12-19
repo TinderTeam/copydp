@@ -14,7 +14,7 @@ import cn.fuego.eshoping.ui.activity.ActivityFragment;
 import cn.fuego.eshoping.ui.base.BaseFragment;
 import cn.fuego.eshoping.ui.base.ExitApplication;
 import cn.fuego.eshoping.ui.home.HomeFragment;
-import cn.fuego.eshoping.ui.news.NewsFrament;
+import cn.fuego.eshoping.ui.news.NewsFragment;
 import cn.fuego.eshoping.ui.user.UserFragment;
 
 /** 
@@ -35,7 +35,7 @@ public class MainTabbarActivity extends FragmentActivity
     private LayoutInflater layoutInflater;  
               
     //定义数组来存放Fragment界面  
-    private Class fragmentArray[] = {HomeFragment.class,ActivityFragment.class,NewsFrament.class,UserFragment.class};  
+    private Class fragmentArray[] = {HomeFragment.class,ActivityFragment.class,NewsFragment.class,UserFragment.class};  
           
  
           
