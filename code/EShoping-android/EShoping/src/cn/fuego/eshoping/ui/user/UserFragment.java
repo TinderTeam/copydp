@@ -16,6 +16,8 @@ public class UserFragment extends BaseFragment
 	@Override
 	public FragmentResInfo getResource()
 	{
+		FragmentResInfo resource = new FragmentResInfo();
+
 		resource.setImage(R.drawable.tabbar_user_icon);
 		resource.setName(R.string.tabbar_user);
 		

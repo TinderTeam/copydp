@@ -1,8 +1,9 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class NewsJson
+public class NewsJson implements Serializable
 {
 	private int news_id;
 	private String title;

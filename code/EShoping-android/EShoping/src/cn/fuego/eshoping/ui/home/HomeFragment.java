@@ -51,6 +51,8 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
 	@Override
 	public FragmentResInfo getResource()
 	{
+		FragmentResInfo resource = new FragmentResInfo();
+
 		resource.setImage(R.drawable.tabbar_home_icon);
 		resource.setName(R.string.tabbar_home);
 		

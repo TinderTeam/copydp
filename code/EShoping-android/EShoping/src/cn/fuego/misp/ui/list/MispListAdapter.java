@@ -1,4 +1,4 @@
-package cn.fuego.eshoping.ui.base;
+package cn.fuego.misp.ui.list;
 
 import java.util.List;
 
@@ -14,8 +14,9 @@ public class MispListAdapter<E> extends ArrayAdapter<E>
 
 	public MispListAdapter(MispListFragment context,List<E> dataList)
 	{
+		
         super(context.getActivity(), context.getResource().getListView(),dataList);
-	 
+	    this.context = context;
 		// TODO Auto-generated constructor stub
 	}
 	

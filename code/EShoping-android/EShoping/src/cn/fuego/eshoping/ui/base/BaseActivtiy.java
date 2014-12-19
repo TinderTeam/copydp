@@ -21,10 +21,7 @@ public abstract class BaseActivtiy extends MispHttpActivtiy implements HttpListe
 	private Context contextDialog ;
 
  
-	public void showMessage(MispHttpMessage message)
-	{
-		super.showMessage(message.getErrorCode());	
-	}
+	
 	public void exitDialog(Context context) { 
 		contextDialog = context;
         AlertDialog.Builder builder = new Builder(contextDialog);   

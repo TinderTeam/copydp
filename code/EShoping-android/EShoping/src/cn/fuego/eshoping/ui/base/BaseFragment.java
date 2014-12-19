@@ -12,28 +12,7 @@ import cn.fuego.misp.ui.base.MispHttpFragment;
 
 public abstract class BaseFragment extends MispHttpFragment  
 { 
-	protected FragmentResInfo resource = new FragmentResInfo();
-	
-	
-	public FragmentResInfo getResource()
-	{
-		return resource;
-	}
-	public void showMessage(int errorCode)
-	{
-		showMessage(MISPErrorMessageConst.getMessageByErrorCode(errorCode));
-	}
-	public void showMessage(String message)
-	{
-		Toast toast;
-		toast = Toast.makeText(this.getActivity(), message , Toast.LENGTH_LONG);
-		toast.show();
-	}
-	public void showMessage(MispHttpMessage message)
-	{
-		showMessage(message.getErrorCode());	
-	}
-	
+ 
 	 //用于scrollview 中自适应listview
     public void setListViewHeightBasedOnChildren(ListView listView)
     {   

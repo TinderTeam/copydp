@@ -1,6 +1,8 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
-public class ActivityJson
+import java.io.Serializable;
+
+public class ActivityJson implements Serializable
 {
 	private int activity_id;
 	private String title;

@@ -9,6 +9,7 @@ public class FragmentResInfo
 	private int image = R.drawable.tabbar_defualt_icon;
 	private int name = R.string.tabbar_default;
 	
+	private int fragmentView;
 	private int listView;
 	private int listItemView;
 	private Class clickActivityClass;
@@ -52,6 +53,14 @@ public class FragmentResInfo
 	public void setClickActivityClass(Class clickActivityClass)
 	{
 		this.clickActivityClass = clickActivityClass;
+	}
+	public int getFragmentView()
+	{
+		return fragmentView;
+	}
+	public void setFragmentView(int fragmentView)
+	{
+		this.fragmentView = fragmentView;
 	}
  
  }

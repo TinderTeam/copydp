@@ -10,6 +10,11 @@ import android.widget.Toast;
 public class MispBaseActivtiy extends Activity 
 {
 
+	public void showMessage(MispHttpMessage message)
+	{
+		showMessage(message.getErrorCode());	
+	}
+	
 	public void showMessage(int errorCode)
 	{
 		showMessage(MISPErrorMessageConst.getMessageByErrorCode(errorCode));
