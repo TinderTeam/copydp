@@ -16,6 +16,7 @@ import cn.fuego.eshoping.ui.base.ExitApplication;
 import cn.fuego.eshoping.ui.home.HomeFragment;
 import cn.fuego.eshoping.ui.news.NewsFragment;
 import cn.fuego.eshoping.ui.user.UserFragment;
+import cn.fuego.misp.ui.base.MispBaseFragment;
 
 /** 
 * @ClassName: MainTabbarActivity 
@@ -78,10 +79,10 @@ public class MainTabbarActivity extends FragmentActivity
     
     public FragmentResInfo getResource(Class clazz)
     {
-    	BaseFragment fragment = null;
+    	MispBaseFragment fragment = null;
 		try
 		{
-			fragment = (BaseFragment) clazz.newInstance();
+			fragment = (MispBaseFragment) clazz.newInstance();
 		} catch (Exception e)
 		{
 			

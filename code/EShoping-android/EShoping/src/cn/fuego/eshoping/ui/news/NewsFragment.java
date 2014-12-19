@@ -48,36 +48,13 @@ public class NewsFragment extends MispListFragment<NewsJson>
  		WebServiceContext.getInstance().getNewsManageRest(this).getNewsList(req);
 	}
  
+	@Override
 	public List<NewsJson> loadListRecv(Object obj)
 	{
 		GetNewsListRsp rsp = (GetNewsListRsp) obj;
 		 return rsp.getNewsList();
 	}
  
-	@Override
-	public void handle(MispHttpMessage message)
-	{
-		if (message.isSuccess())
-		{
-			 this.dataList.clear();
-
-			 GetNewsListRsp rsp = (GetNewsListRsp) message.getMessage().obj;
-					if(!ValidatorUtil.isEmpty(rsp.getNewsList()))
-					{
-						this.adapter.addAll(rsp.getNewsList());
-					}
-
-					this.adapter.notifyDataSetChanged();
- 
-
-		}
-		else
-		{
-			log.error("query product failed");
-			this.showMessage(message);
-		}
-	}
-
 
 	@Override
 	public View getListItemView(View view, NewsJson item)
