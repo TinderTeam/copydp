@@ -4,28 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
-import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.ui.FragmentResInfo;
-import cn.fuego.eshoping.ui.base.BaseFragment;
+import cn.fuego.eshoping.ui.util.DataConvertUtil;
+import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
-import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.list.MispListFragment;
 
-public class HomeFragment extends BaseFragment implements OnItemClickListener
+public class HomeFragment extends MispListFragment<ProductJson> implements OnItemClickListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
     //定义数组来存放按钮图片  
@@ -35,18 +34,16 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
     //Tab选项卡的文字  
     private int mTextviewArray[] = {R.string.home_food, R.string.home_car,R.string.home_photo,R.string.home_education,
     								R.string.home_entertainment,R.string.home_hotel,R.string.home_beauty,R.string.home_service}; 
-
-    
-    private ProductDataAdapter productAdapter;
-    private List<ProductJson> productList = new ArrayList<ProductJson>();
-    
-
+ 
     private static final int GET_CUR_CITY = 1;
     private static final int GET_CITY_LIST = 2;
     private static final int GET_TYPE_LIST = 3;
     private static final int GET_PRODUCT = 4;
     private int cmdcode = 0; 
     
+    
+	private LoadImageUtil loadImageUtil = new LoadImageUtil();
+
     
 	@Override
 	public FragmentResInfo getResource()
@@ -55,6 +52,10 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
 
 		resource.setImage(R.drawable.tabbar_home_icon);
 		resource.setName(R.string.tabbar_home);
+		resource.setFragmentView(R.layout.home_fragment);
+		resource.setListView(R.id.home_latest_list);
+		resource.setListItemView(R.layout.home_list_item);
+		resource.setClickActivityClass(HomeProductActivity.class);
 		
 		return resource;
 	}
@@ -64,8 +65,9 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
 			Bundle savedInstanceState)
 	{
 		 
+		 
 
-		  View rootView = inflater.inflate(R.layout.home_fragment, null);
+		  View rootView = super.onCreateView(inflater, container, savedInstanceState);
 		  MyGridView gridview = (MyGridView) rootView.findViewById(R.id.home_gridview);  
 
 	      //生成动态数组，并且转入数据  
@@ -81,19 +83,15 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
 	      SimpleAdapter saImageItems = new SimpleAdapter(this.getActivity(), lstImageItem, R.layout.home_grid_item, new String[] {"ItemImage","ItemText"},new int[] {R.id.grid_item_img,R.id.grid_item_title});  
 	      //添加并且显示  
 	      gridview.setAdapter(saImageItems);  
-	      ListView  productView = (ListView) rootView .findViewById(R.id.home_latest_list);
-	      
-	      productAdapter = new ProductDataAdapter(this.getActivity(),this.productList);
-	      productView.setAdapter(productAdapter);
-	      productView.setOnItemClickListener(this);
-	     
-	      update();
+ 
+ 
      
 
 		return rootView;
 	}
-	
-	public void update()
+
+	@Override
+	public void loadSendList()
 	{
 		
 		GetProductListReq req = new GetProductListReq();
@@ -101,56 +99,35 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener
 		this.cmdcode = GET_PRODUCT;
 		WebServiceContext.getInstance().getProductManageRest(this).getNewProductList(req);
 	}
-
 	
 	@Override
-	public void handle(MispHttpMessage message)
+	public List<ProductJson> loadListRecv(Object obj)
 	{
-		if (message.isSuccess())
-		{
-			switch(cmdcode)
-			{
-			 case GET_CUR_CITY:
-				 break;
-			 case GET_PRODUCT:
-			 {
-					this.productList.clear();
-
-					GetProductListRsp rsp = (GetProductListRsp) message.getMessage().obj;
-					if(!ValidatorUtil.isEmpty(rsp.getProductList()))
-					{
-						this.productList.addAll(rsp.getProductList());
-					}
-
-					this.productAdapter.notifyDataSetChanged();
-			 }
-				 break;
-			 default:
-				 break;
-			
-			}
-
-		}
-		else
-		{
-			log.error("query product failed");
-			this.showMessage(message);
-		}
-		
-		
+		GetProductListRsp rsp = (GetProductListRsp) obj;
+		return rsp.getProductList();
 	}
-	
+
 	@Override
-	public void onItemClick(AdapterView<?> parent,View view, int position, long id)
+	public View getListItemView(View view, ProductJson item)
 	{
+	    TextView titleView = (TextView) view.findViewById(R.id.home_list_item_title);
+        titleView.setText(item.getName());
+        
+        TextView curPrice = (TextView) view.findViewById(R.id.home_list_item_curPrice);
+        curPrice.setText(String.valueOf(item.getPrice()));
+        TextView oldPrice = (TextView) view.findViewById(R.id.home_list_item_oldPrice);
+        oldPrice.setText(String.valueOf(item.getOriginal_price()));
+
+        TextView desp = (TextView) view.findViewById(R.id.home_list_item_desp);
+        desp.setText(String.valueOf(item.getDscr()));
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.home_list_item_img);
  
-		ProductJson product =  this.productAdapter.getItem(position); 
-		Intent intent = new Intent(this.getActivity(),HomeProductActivity.class);
-		intent.putExtra("product", product);
-
-		this.startActivity(intent); 
-
+        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()), false);
+        return view;
 	}
+
+
 
  
 

@@ -85,7 +85,7 @@ public abstract class MispListFragment<E> extends MispHttpFragment implements
 	{
 
 		E item = this.adapter.getItem(position);
-		Intent intent = new Intent(this.getActivity(), getResource().getClass());
+		Intent intent = new Intent(this.getActivity(), getResource().getClickActivityClass());
 		intent.putExtra(SELECT_ITEM, (Serializable) item);
 
 		this.startActivity(intent);
