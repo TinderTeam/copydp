@@ -26,3 +26,18 @@ code/EShoping-android/EShoping/bin/
 
 code/EShoping-android/EShoping/.settings/org.eclipse.jdt.core.prefs
 
+
+code/EShoping-android/EShoping/.project
+
+code/EShoping-android/EShoping/.classpath
+
+code/EShoping-android/EShoping/.settings/*
+
+
+code/EShoping-android/EShoping/gen/cn/fuego/eshoping/R.java
+
+code/EShoping-android/EShoping/lint.xml
+
+code/EShoping-android/EShoping/gen/*
+
+code/EShoping-android/EShoping/build/*

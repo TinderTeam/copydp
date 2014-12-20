@@ -22,6 +22,16 @@
 
 @implementation FENewsVC
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        UITabBarItem *tabitem = [[UITabBarItem alloc] initWithTitle:FEString(@"最新资讯") image:[UIImage imageNamed:@"tabbar_news_normal"] selectedImage:[UIImage imageNamed:@"tabbar_news_pressed"]];
+        self.tabBarItem = tabitem;
+    }
+    return self;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

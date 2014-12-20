@@ -21,6 +21,15 @@
 
 @implementation FEActivityVC
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        UITabBarItem *tabitem = [[UITabBarItem alloc] initWithTitle:FEString(@"活动") image:[UIImage imageNamed:@"tabbar_activity_normal"] selectedImage:[UIImage imageNamed:@"tabbar_activity_pressed"]];
+        self.tabBarItem = tabitem;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

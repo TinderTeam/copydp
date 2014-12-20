@@ -68,6 +68,15 @@
 
 @implementation FEShopingHomeVC
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        UITabBarItem *tabitem = [[UITabBarItem alloc] initWithTitle:FEString(@"首页") image:[UIImage imageNamed:@"tabbar_home_normal"] selectedImage:[UIImage imageNamed:@"tabbar_home_pressed"]];
+        self.tabBarItem = tabitem;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -84,6 +93,7 @@
 
 
 -(void)initUI{
+    self.tabBarController.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_home_pressed"];
     [self.regionBarItem setTitle:FEUserDefaultsObjectForKey(FEShopRegionKey)];
     self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.navigationItem.leftBarButtonItem = self.regionBarItem;

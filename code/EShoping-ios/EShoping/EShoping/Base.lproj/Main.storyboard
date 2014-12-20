@@ -27,11 +27,11 @@
             </objects>
             <point key="canvasLocation" x="104" y="729"/>
         </scene>
-        <!--首页-->
+        <!--Common Navgation Controller-->
         <scene sceneID="rIF-5k-Nub">
             <objects>
                 <navigationController id="WvI-mz-QH0" customClass="FECommonNavgationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="首页" image="tabbar_home_normal" id="ful-U9-0Sa"/>
+                    <tabBarItem key="tabBarItem" title="" id="ful-U9-0Sa"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kku-il-we9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -82,7 +82,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3C812D22-38D5-415C-BECA-5D190495A43C" translatesAutoresizingMaskIntoConstraints="NO" id="9LJ-gL-YxH">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="E2436770-B7FA-4E75-9E88-53C57BB3D680" translatesAutoresizingMaskIntoConstraints="NO" id="9LJ-gL-YxH">
                                                                         <rect key="frame" x="15" y="8" width="45" height="45"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="45" id="OIb-L4-4tJ"/>
@@ -338,7 +338,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="190"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="80B13860-2EF1-4FBE-B8E5-37A50572C836" translatesAutoresizingMaskIntoConstraints="NO" id="8hy-1I-tk8">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="571E5BB4-DD98-49E9-84BA-7C2F876FF4CC" translatesAutoresizingMaskIntoConstraints="NO" id="8hy-1I-tk8">
                                                                         <rect key="frame" x="0.0" y="0.0" width="600" height="190"/>
                                                                         <variation key="widthClass=compact" misplaced="YES">
                                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -813,11 +813,11 @@
             </objects>
             <point key="canvasLocation" x="3512" y="-257"/>
         </scene>
-        <!--活动-->
+        <!--Common Navgation Controller-->
         <scene sceneID="Muf-J1-g2m">
             <objects>
                 <navigationController id="We7-m4-PJ8" customClass="FECommonNavgationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="活动" image="tabbar_activity_normal" id="dji-1z-lmv"/>
+                    <tabBarItem key="tabBarItem" title="" id="dji-1z-lmv"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="T77-xw-r5c">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1369,11 +1369,11 @@
             </objects>
             <point key="canvasLocation" x="2190" y="-216"/>
         </scene>
-        <!--最新资讯-->
+        <!--Common Navgation Controller-->
         <scene sceneID="bJ7-oM-cyw">
             <objects>
                 <navigationController id="qRS-pf-sJp" customClass="FECommonNavgationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="最新资讯" image="tabbar_news_normal" id="ATz-lX-6om"/>
+                    <tabBarItem key="tabBarItem" title="" id="ATz-lX-6om"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5uH-Dg-qSU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1398,7 +1398,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-lL-lsw" customClass="FETableView">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-lL-lsw" customClass="FETableView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1439,6 +1439,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dhf-lL-lsw" firstAttribute="leading" secondItem="bVB-eq-MAD" secondAttribute="leading" id="5O5-mP-GhY"/>
+                            <constraint firstAttribute="bottom" secondItem="dhf-lL-lsw" secondAttribute="bottom" id="75N-RF-ZB1"/>
+                            <constraint firstAttribute="trailing" secondItem="dhf-lL-lsw" secondAttribute="trailing" id="7Jb-OW-eUB"/>
+                            <constraint firstItem="dhf-lL-lsw" firstAttribute="top" secondItem="bVB-eq-MAD" secondAttribute="top" id="jb7-vA-5QK"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="enx-qP-bsu"/>
                     <connections>
@@ -2370,11 +2376,11 @@
             </objects>
             <point key="canvasLocation" x="774" y="1985"/>
         </scene>
-        <!--个人中心-->
+        <!--Common Navgation Controller-->
         <scene sceneID="Jb1-yH-OAW">
             <objects>
                 <navigationController navigationBarHidden="YES" id="K6J-7s-bwJ" customClass="FECommonNavgationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="个人中心" image="tabbar_user_normal" id="pVj-hj-NNv"/>
+                    <tabBarItem key="tabBarItem" title="" id="pVj-hj-NNv"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="B9e-te-7xd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2390,7 +2396,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="3C812D22-38D5-415C-BECA-5D190495A43C" width="25" height="25">
+        <image name="571E5BB4-DD98-49E9-84BA-7C2F876FF4CC" width="25" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -2482,7 +2488,7 @@ sgC1ALcAuQC7AL0AwgDZANsA3RMTExgTIxMsEz8TQxNWE2ETahNvE3cTehN/E44TkhOZE6ETrhOzE7UT
 txO8E8QTxxPME9QT1xPpE+wT8QAAAAAAAAIBAAAAAAAAAEIAAAAAAAAAAAAAAAAAABPzA
 </mutableData>
         </image>
-        <image name="80B13860-2EF1-4FBE-B8E5-37A50572C836" width="25" height="25">
+        <image name="E2436770-B7FA-4E75-9E88-53C57BB3D680" width="25" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPj9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQsLzI4O1UkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -2579,10 +2585,6 @@ txO8E8QTxxPME9QT1xPpE+wT8QAAAAAAAAIBAAAAAAAAAEIAAAAAAAAAAAAAAAAAABPzA
         <image name="my_order" width="25" height="25"/>
         <image name="my_setting" width="25" height="25"/>
         <image name="oversea_navibar_icon_qr" width="20" height="20"/>
-        <image name="tabbar_activity_normal" width="34" height="34"/>
-        <image name="tabbar_home_normal" width="27" height="27"/>
-        <image name="tabbar_news_normal" width="27" height="27"/>
-        <image name="tabbar_user_normal" width="27" height="27"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yvT-If-Rl9"/>

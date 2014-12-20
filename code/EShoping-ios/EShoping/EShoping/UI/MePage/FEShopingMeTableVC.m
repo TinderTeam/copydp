@@ -20,6 +20,15 @@
 
 @implementation FEShopingMeTableVC
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        UITabBarItem *tabitem = [[UITabBarItem alloc] initWithTitle:FEString(@"个人中心") image:[UIImage imageNamed:@"tabbar_user_normal"] selectedImage:[UIImage imageNamed:@"tabbar_user_pressed"]];
+        self.tabBarItem = tabitem;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
