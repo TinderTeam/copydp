@@ -18,7 +18,7 @@ import cn.fuego.eshoping.ui.FragmentResInfo;
 import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.base.MispHttpFragment;
 
-public abstract class MispListFragment<E> extends MispHttpFragment implements
+public abstract class MispListFragment<E> extends MispBaseListFragment<E> implements
 		OnItemClickListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
@@ -26,23 +26,23 @@ public abstract class MispListFragment<E> extends MispHttpFragment implements
 	public static final String SELECT_ITEM = "SELECT_ITEM";
  
 
-	protected List<E> dataList = new ArrayList<E>();
+	private List<E> dataList = new ArrayList<E>();
 
-	protected MispListAdapter<E> adapter;
+	private MispListAdapter<E> adapter;
 
-
+	protected ListViewResInfo listViewRes = new ListViewResInfo();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
 
-		View rootView = inflater.inflate(getResource().getFragmentView(), null);
+		this.initRes();
+		View rootView = inflater.inflate(this.fragmentRes.getFragmentView(), null);
 
-		ListView productView = (ListView) rootView.findViewById(getResource()
-				.getListView());
+		ListView productView = (ListView) rootView.findViewById(this.listViewRes.getListView());
 
-		adapter = new MispListAdapter<E>(this, this.dataList);
+		adapter = new MispListAdapter<E>(this, this.listViewRes,this.dataList);
 		productView.setAdapter(adapter);
 		productView.setOnItemClickListener(this);
 		loadSendList();
@@ -53,7 +53,7 @@ public abstract class MispListFragment<E> extends MispHttpFragment implements
 
 	public abstract void loadSendList();
 
-	public abstract View getListItemView(View view, E item);
+
 
 	public abstract List<E> loadListRecv(Object obj);
 
@@ -67,7 +67,7 @@ public abstract class MispListFragment<E> extends MispHttpFragment implements
 			List<E> newData = loadListRecv(message.getMessage().obj);
 			if (!ValidatorUtil.isEmpty(newData))
 			{
-				this.adapter.addAll(newData);
+				this.dataList.addAll(newData);
 			}
 
 			this.adapter.notifyDataSetChanged();
@@ -85,7 +85,7 @@ public abstract class MispListFragment<E> extends MispHttpFragment implements
 	{
 
 		E item = this.adapter.getItem(position);
-		Intent intent = new Intent(this.getActivity(), getResource().getClickActivityClass());
+		Intent intent = new Intent(this.getActivity(),this.listViewRes.getClickActivityClass());
 		intent.putExtra(SELECT_ITEM, (Serializable) item);
 
 		this.startActivity(intent);

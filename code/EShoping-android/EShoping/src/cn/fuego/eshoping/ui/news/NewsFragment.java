@@ -25,20 +25,17 @@ public class NewsFragment extends MispListFragment<NewsJson>
 	private FuegoLog log = FuegoLog.getLog(getClass());
 
 	@Override
-	public FragmentResInfo getResource()
-	{
-		FragmentResInfo resource = new FragmentResInfo();
-
-		resource.setImage(R.drawable.tabbar_news_icon);
-		resource.setName(R.string.tabbar_news);
+	public void initRes()
+	{ 
+		this.fragmentRes.setImage(R.drawable.tabbar_news_icon);
+		this.fragmentRes.setName(R.string.tabbar_news);
+		this.fragmentRes.setFragmentView(R.layout.news_fragment);
 		
-		resource.setFragmentView(R.layout.news_fragment);
-		resource.setListView(R.id.news_list);
-		resource.setListItemView(R.layout.news_list_item);
-		resource.setClickActivityClass(NewsInfoActivity.class);
+		this.listViewRes.setListView(R.id.news_list);
+		this.listViewRes.setListItemView(R.layout.news_list_item);
+		this.listViewRes.setClickActivityClass(NewsInfoActivity.class);
 		
-		return resource;
-	}
+ 	}
 
 	@Override
 	public void loadSendList()

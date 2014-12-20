@@ -14,15 +14,14 @@ public class UserFragment extends BaseFragment
 
 	
 	@Override
-	public FragmentResInfo getResource()
+	public void initRes()
 	{
 		FragmentResInfo resource = new FragmentResInfo();
 
 		resource.setImage(R.drawable.tabbar_user_icon);
 		resource.setName(R.string.tabbar_user);
 		
-		return resource;
-	}
+ 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

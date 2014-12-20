@@ -23,5 +23,6 @@ public abstract class MispBaseFragment extends Fragment implements HttpListener
 	{
 		showMessage(message.getErrorCode());	
 	}
-	public abstract FragmentResInfo getResource();
+	public FragmentResInfo fragmentRes = new FragmentResInfo();
+	public abstract void initRes();
 }

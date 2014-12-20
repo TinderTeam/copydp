@@ -83,6 +83,7 @@ public class MainTabbarActivity extends FragmentActivity
 		try
 		{
 			fragment = (MispBaseFragment) clazz.newInstance();
+			fragment.initRes();
 		} catch (Exception e)
 		{
 			
@@ -90,7 +91,7 @@ public class MainTabbarActivity extends FragmentActivity
 			return null;
 			 
 		}
-    	return fragment.getResource();
+    	return fragment.fragmentRes;
     }
                       
     /** 

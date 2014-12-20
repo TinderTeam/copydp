@@ -10,11 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.ui.FragmentResInfo;
 import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
@@ -22,9 +23,10 @@ import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
-import cn.fuego.misp.ui.list.MispListFragment;
+import cn.fuego.misp.ui.list.ListViewResInfo;
+import cn.fuego.misp.ui.list.MispMultiListFragment;
 
-public class HomeFragment extends MispListFragment<ProductJson> implements OnItemClickListener
+public class HomeFragment extends MispMultiListFragment<ProductJson> implements OnItemClickListener,OnCheckedChangeListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
     //定义数组来存放按钮图片  
@@ -44,21 +46,28 @@ public class HomeFragment extends MispListFragment<ProductJson> implements OnIte
     
 	private LoadImageUtil loadImageUtil = new LoadImageUtil();
 
-    
-	@Override
-	public FragmentResInfo getResource()
-	{
-		FragmentResInfo resource = new FragmentResInfo();
 
-		resource.setImage(R.drawable.tabbar_home_icon);
-		resource.setName(R.string.tabbar_home);
-		resource.setFragmentView(R.layout.home_fragment);
-		resource.setListView(R.id.home_latest_list);
-		resource.setListItemView(R.layout.home_list_item);
-		resource.setClickActivityClass(HomeProductActivity.class);
+	@Override
+	public void initRes()
+	{ 
+		this.fragmentRes.setImage(R.drawable.tabbar_home_icon);
+		this.fragmentRes.setName(R.string.tabbar_home);
+		this.fragmentRes.setFragmentView(R.layout.home_fragment);
 		
-		return resource;
-	}
+		ListViewResInfo newListInfo = new ListViewResInfo();
+		newListInfo.setListView(R.id.home_new_product_list);
+		newListInfo.setListItemView(R.layout.home_list_item);
+		newListInfo.setClickActivityClass(HomeProductActivity.class);
+		this.listViewRes.add(newListInfo);
+
+		ListViewResInfo typeListInfo = new ListViewResInfo();
+		typeListInfo.setListView(R.id.home_type_product_list);
+		typeListInfo.setListItemView(R.layout.home_list_item);
+		typeListInfo.setClickActivityClass(HomeProductActivity.class);
+		this.listViewRes.add(typeListInfo);
+		
+ 	}
+ 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +92,8 @@ public class HomeFragment extends MispListFragment<ProductJson> implements OnIte
 	      SimpleAdapter saImageItems = new SimpleAdapter(this.getActivity(), lstImageItem, R.layout.home_grid_item, new String[] {"ItemImage","ItemText"},new int[] {R.id.grid_item_img,R.id.grid_item_title});  
 	      //添加并且显示  
 	      gridview.setAdapter(saImageItems);  
+			RadioGroup group = (RadioGroup) rootView.findViewById(R.id.home_radio_group);
+			group.setOnCheckedChangeListener(this);
  
  
      
@@ -91,24 +102,34 @@ public class HomeFragment extends MispListFragment<ProductJson> implements OnIte
 	}
 
 	@Override
-	public void loadSendList()
+	public void loadSendList(int index)
 	{
 		
 		GetProductListReq req = new GetProductListReq();
 		req.setCity(MemoryCache.getCurCity());
-		this.cmdcode = GET_PRODUCT;
-		WebServiceContext.getInstance().getProductManageRest(this).getNewProductList(req);
+		switch(index)
+		{
+		case 0:
+			WebServiceContext.getInstance().getProductManageRest(this).getNewProductList(req);
+			break;
+			
+		case 1:
+			WebServiceContext.getInstance().getProductManageRest(this).getTypeRecProductList(req);
+			break;
+		default:
+			break;
+		}
 	}
 	
 	@Override
-	public List<ProductJson> loadListRecv(Object obj)
+	public List<ProductJson> loadListRecv(int index,Object obj)
 	{
 		GetProductListRsp rsp = (GetProductListRsp) obj;
 		return rsp.getProductList();
 	}
 
 	@Override
-	public View getListItemView(View view, ProductJson item)
+	public View getListItemView(int index,View view, ProductJson item)
 	{
 	    TextView titleView = (TextView) view.findViewById(R.id.home_list_item_title);
         titleView.setText(item.getName());
@@ -125,6 +146,23 @@ public class HomeFragment extends MispListFragment<ProductJson> implements OnIte
  
         loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()), false);
         return view;
+	}
+
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId)
+	{
+		
+		int radioButtonId = group.getCheckedRadioButtonId();
+		if (radioButtonId == R.id.home_radio_new)
+		{   
+			this.displayList(0);
+			
+		}
+		if (radioButtonId == R.id.home_radio_type)
+		{
+			this.displayList(1);
+		}		
 	}
 
 

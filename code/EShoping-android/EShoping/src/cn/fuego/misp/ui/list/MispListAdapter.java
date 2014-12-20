@@ -10,19 +10,21 @@ import android.widget.ArrayAdapter;
 public class MispListAdapter<E> extends ArrayAdapter<E>
 {
 
-	private MispListFragment context;
+	private MispBaseListFragment context;
+	private ListViewResInfo resInfo;
 
-	public MispListAdapter(MispListFragment context,List<E> dataList)
+	public MispListAdapter(MispBaseListFragment context,ListViewResInfo resInfo,List<E> dataList)
 	{
 		
-        super(context.getActivity(), context.getResource().getListView(),dataList);
+        super(context.getActivity(), resInfo.getListView(),dataList);
 	    this.context = context;
+	    this.resInfo = resInfo;
 		// TODO Auto-generated constructor stub
 	}
 	
 	  @Override
 	    public View getView(int position, View convertView, ViewGroup parent) {
-	        View view = LayoutInflater.from(context.getActivity()).inflate(context.getResource().getListItemView(), null);
+	        View view = LayoutInflater.from(context.getActivity()).inflate(resInfo.getListItemView(), null);
 	        E item = getItem(position);
 
 	        view = context.getListItemView(view,item);
