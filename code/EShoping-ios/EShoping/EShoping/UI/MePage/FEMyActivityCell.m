@@ -27,6 +27,7 @@
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(activity.imgsrc)] placeholderImage:nil];
     self.activityTitleLabel.text = activity.activity_title;
     self.limitLabel.text = [NSString stringWithFormat:@"限制人数:%@",activity.memberlimit];
+    self.passTimeLabel.text = @"";
     self.activityStatusLabel.text = activity.status;
     
 }

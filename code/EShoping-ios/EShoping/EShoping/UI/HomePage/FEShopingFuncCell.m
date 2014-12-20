@@ -30,7 +30,25 @@
     _categoryData = [[FECoreData fetchCategory] filteredArrayUsingPredicate:userPredicate];
     _categorypng = @[@"food_u",@"ktv_u",@"takeaway_u",@"hotel_u",@"marry_u",@"discount_u",@"booking_u",@"locate_u"];
     
-//    _categoryData = @[@{__PNG:@"food_u",__TITLE:FEString(@"餐饮美食")},@{__PNG:@"ktv_u",__TITLE:FEString(@"休闲娱乐")},@{__PNG:@"takeaway_u",__TITLE:FEString(@"汽车服务")},@{__PNG:@"hotel_u",__TITLE:FEString(@"酒店旅游")},@{__PNG:@"marry_u",__TITLE:FEString(@"摄影写真")},@{__PNG:@"discount_u",__TITLE:FEString(@"都市丽人")},@{__PNG:@"booking_u",__TITLE:FEString(@"教育培训")},@{__PNG:@"locate_u",__TITLE:FEString(@"生活服务")}];
+}
+
+-(void)drawRect:(CGRect)rect{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(context, 0.5);
+    
+    CGContextSetStrokeColorWithColor(context, FEColor(225, 225, 225, 1).CGColor);
+    
+    CGContextMoveToPoint(context, 0, 0);
+    
+    CGContextAddLineToPoint(context, self.bounds.size.width, 0);
+    
+    //    CGContextSetStrokeColorWithColor(context, FEColor(225, 225, 225, 1).CGColor);
+    
+    CGContextMoveToPoint(context, 0, self.bounds.size.height - 0.5f);
+    
+    CGContextAddLineToPoint(context, self.bounds.size.width, self.bounds.size.height - 0.5);
+    
+    CGContextStrokePath(context);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -56,6 +74,40 @@
 //    cell.funcTitle.text = _categoryData[indexPath.row][__TITLE];
     cell.funcIcon.image = [UIImage imageNamed:_categorypng[indexPath.row]];
     return cell;
+}
+
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    if (height == 667) {
+        return UIEdgeInsetsMake(10, 10, 10, 10);
+    }else if(height == 736){
+        return UIEdgeInsetsMake(10, 15, 10, 15);
+    }else{
+        return UIEdgeInsetsMake(10, 5, 10, 5);
+    }
+}
+
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    if (height == 667) {
+        return 2;
+    }else if(height == 736){
+        return 2;
+    }else{
+        return 2;
+    }
+}
+
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    if (height == 667) {
+        return 15;
+    }else if(height == 736){
+        return 28;
+    }else{
+        return 2;
+    }
 }
 
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{

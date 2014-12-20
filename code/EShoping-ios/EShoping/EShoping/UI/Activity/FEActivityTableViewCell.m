@@ -15,6 +15,7 @@
 - (void)awakeFromNib {
     // Initialization code
     self.activityDescriptionLabel.numberOfLines = 0;
+    self.activityImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 

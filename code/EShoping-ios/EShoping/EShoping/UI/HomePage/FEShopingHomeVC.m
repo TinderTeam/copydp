@@ -293,7 +293,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
-        return 44;
+        return 45;
     }
     return 0;
 }
@@ -304,14 +304,14 @@
     }
     switch (self.segment.selectedSegmentIndex) {
         case 0:
-            return 110;
+            return 100;
         case 1:
             if ([self.productTypeRecommed[indexPath.row] isKindOfClass:[CDCategory class]]) {
                 return 35;
             }
-            return 110;
+            return 100;
         case 2:
-            return 110;
+            return 100;
         default:
             return 0;
     }
