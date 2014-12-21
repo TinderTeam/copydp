@@ -10,6 +10,7 @@
 #import "FECoreDataHandler.h"
 #import "CDCity.h"
 #import "AppDelegate.h"
+#import <CoreLocation/CoreLocation.h>
 
 #define FIRSTLETTER @"key"
 #define CITYS       @"citys"
@@ -21,6 +22,7 @@
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (strong, nonatomic) NSArray *searchResult;
 @property (strong, nonatomic) NSArray *allcitys;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -46,6 +48,8 @@
         }
     }
     
+    _locationManager = [[CLLocationManager alloc] init];
+    [_locationManager startUpdatingLocation];
     
     
 //    __weak typeof(self) weakself = self;
