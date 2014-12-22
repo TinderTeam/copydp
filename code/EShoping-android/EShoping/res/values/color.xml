@@ -6,7 +6,11 @@
 	<color name="lightyellow">#FFFFE0</color><!--亮黄色 -->
 	<color name="yellow">#FFFF00</color><!--黄色 -->
 	<color name="tabbarback">#E9EAED</color>
-	<color name="themecolor">#FC9C38</color> <!-- 主题橘色 -->
+	<!-- <color name="themecolor">#FC9C38</color> 主题橘色 -->
+	<color name="themecolor">#FF643F</color> <!-- 橘红色 -->
+	
+	<color name="presscolor">#D25000</color><!-- button按下颜色 -->
+	<color name="disablcolor">#FF8400</color><!-- button禁用颜色 -->
 	
 	<color name="backcolor">#E7E6E3</color>  <!-- 背景墙纸颜色 -->
 	<color name="focuscolor">#0378FF</color> <!-- nav 选中字体颜色 -->

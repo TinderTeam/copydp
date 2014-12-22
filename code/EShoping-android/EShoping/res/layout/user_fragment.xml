@@ -11,7 +11,7 @@
         android:background="@drawable/personal_bkg" >
 
         <ImageButton
-            android:id="@+id/imageButton1"
+            android:id="@+id/user_head_btn"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentLeft="true"
@@ -48,10 +48,10 @@
             android:id="@+id/user_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageButton1"
+            android:layout_alignBottom="@+id/user_head_btn"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="18dp"
-            android:layout_toRightOf="@+id/imageButton1"
+            android:layout_toRightOf="@+id/user_head_btn"
             android:text="常居地：广州"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/black"
