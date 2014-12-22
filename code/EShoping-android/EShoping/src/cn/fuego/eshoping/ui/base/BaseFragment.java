@@ -5,9 +5,9 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import cn.fuego.eshoping.ui.FragmentResInfo;
 import cn.fuego.misp.constant.MISPErrorMessageConst;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.base.MispHttpFragment;
 
 public abstract class BaseFragment extends MispHttpFragment  

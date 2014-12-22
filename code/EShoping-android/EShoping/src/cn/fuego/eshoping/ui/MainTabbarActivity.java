@@ -16,6 +16,7 @@ import cn.fuego.eshoping.ui.base.ExitApplication;
 import cn.fuego.eshoping.ui.home.HomeFragment;
 import cn.fuego.eshoping.ui.news.NewsFragment;
 import cn.fuego.eshoping.ui.user.UserFragment;
+import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.base.MispBaseFragment;
 
 /** 

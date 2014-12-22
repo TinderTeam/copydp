@@ -2,7 +2,6 @@ package cn.fuego.misp.ui.base;
 
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
-import cn.fuego.eshoping.ui.FragmentResInfo;
 import cn.fuego.misp.constant.MISPErrorMessageConst;
 import cn.fuego.misp.service.http.HttpListener;
 import cn.fuego.misp.service.http.MispHttpMessage;

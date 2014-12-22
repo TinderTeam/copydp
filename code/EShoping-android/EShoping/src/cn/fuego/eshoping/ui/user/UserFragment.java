@@ -8,9 +8,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.ui.FragmentResInfo;
 import cn.fuego.eshoping.ui.base.BaseFragment;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.base.FragmentResInfo;
 
 public class UserFragment extends BaseFragment implements OnClickListener
 {

@@ -2,6 +2,8 @@ package cn.fuego.misp.ui.list;
 
 public class ListViewResInfo
 {
+	public static final String SELECT_ITEM = "SELECT_ITEM";
+
 	private int listView;
 	private int listItemView;
 	private Class clickActivityClass;

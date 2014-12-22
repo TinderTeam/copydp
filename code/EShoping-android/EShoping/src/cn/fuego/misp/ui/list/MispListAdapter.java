@@ -2,6 +2,7 @@ package cn.fuego.misp.ui.list;
 
 import java.util.List;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,26 +11,25 @@ import android.widget.ArrayAdapter;
 public class MispListAdapter<E> extends ArrayAdapter<E>
 {
 
-	private MispBaseListFragment context;
-	private ListViewResInfo resInfo;
-
-	public MispListAdapter(MispBaseListFragment context,ListViewResInfo resInfo,List<E> dataList)
+	private MispListViewInteface mispList;
+	private Context context;
+ 
+	public MispListAdapter(Context context,MispListViewInteface mispList,ListViewResInfo resInfo,List<E> dataList)
 	{
 		
-        super(context.getActivity(), resInfo.getListView(),dataList);
+        super(context, resInfo.getListView(),dataList);
+	    this.mispList = mispList;
 	    this.context = context;
-	    this.resInfo = resInfo;
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	  @Override
-	    public View getView(int position, View convertView, ViewGroup parent) {
-	        View view = LayoutInflater.from(context.getActivity()).inflate(resInfo.getListItemView(), null);
+	public View getView(int position, View convertView, ViewGroup parent) 
+	{
+		  LayoutInflater inflater = LayoutInflater.from(context);
 	        E item = getItem(position);
 
-	        view = context.getListItemView(view,item);
- 
-	        return view;
-	    }
+		  return mispList.getView(inflater, item);
+	}
 
 }

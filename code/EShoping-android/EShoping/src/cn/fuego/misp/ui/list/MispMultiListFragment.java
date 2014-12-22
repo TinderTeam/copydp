@@ -14,13 +14,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
-import cn.fuego.eshoping.ui.FragmentResInfo;
 import cn.fuego.misp.service.MISPException;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.base.MispHttpFragment;
 
 public abstract class MispMultiListFragment<E> extends MispBaseListFragment<E> implements
-		OnItemClickListener
+OnItemClickListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
 
@@ -58,7 +58,7 @@ public abstract class MispMultiListFragment<E> extends MispBaseListFragment<E> i
 		for(int i=0;i<listViewRes.size();i++)
 		{
 			tableDataList.add(new ArrayList<Object>());
-			MispListAdapter<Object> adapter = new MispListAdapter<Object>(this,this.listViewRes.get(i),this.tableDataList.get(i));
+			MispListAdapter<Object> adapter = new MispListAdapter<Object>(this.getActivity(), this,this.listViewRes.get(i),this.tableDataList.get(i));
 			adapterList.add(adapter);
 			ListView listView = (ListView) rootView.findViewById(this.listViewRes.get(i).getListView());
 			listView.setAdapter(adapter);
@@ -91,6 +91,13 @@ public abstract class MispMultiListFragment<E> extends MispBaseListFragment<E> i
 
 	public abstract List<E> loadListRecv(int index,Object obj);
 
+	@Override
+	public View getView(LayoutInflater inflater, Object item)
+	{
+		View view = inflater.inflate(this.listViewRes.get(currentIndex).getListItemView(), null);
+		return getListItemView(currentIndex,view,(E)item);
+	}
+	
 	final public View getListItemView(View view, E item)
 	{
 		return getListItemView(currentIndex,view,item);

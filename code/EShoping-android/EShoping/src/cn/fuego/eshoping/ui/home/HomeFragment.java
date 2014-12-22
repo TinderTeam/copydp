@@ -44,7 +44,7 @@ public class HomeFragment extends MispMultiListFragment<ProductJson> implements 
     private int cmdcode = 0; 
     
     
-	private LoadImageUtil loadImageUtil = new LoadImageUtil();
+	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
 
 
 	@Override
@@ -144,7 +144,7 @@ public class HomeFragment extends MispMultiListFragment<ProductJson> implements 
 
         ImageView imageView = (ImageView) view.findViewById(R.id.home_list_item_img);
  
-        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()), false);
+        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()));
         return view;
 	}
 

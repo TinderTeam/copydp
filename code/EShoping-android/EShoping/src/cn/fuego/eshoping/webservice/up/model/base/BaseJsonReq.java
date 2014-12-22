@@ -1,5 +1,7 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import cn.fuego.misp.service.MemoryCache;
+
 
 /**
  * 
@@ -11,7 +13,7 @@ package cn.fuego.eshoping.webservice.up.model.base;
  */
 public class BaseJsonReq
 {
-	protected String token;
+	protected String token = MemoryCache.getToken();
 
 	public String getToken()
 	{

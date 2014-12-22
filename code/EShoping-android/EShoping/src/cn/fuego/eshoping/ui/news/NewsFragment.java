@@ -2,12 +2,12 @@ package cn.fuego.eshoping.ui.news;
 
 import java.util.List;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.ui.FragmentResInfo;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListReq;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetNewsListReq;
@@ -17,6 +17,7 @@ import cn.fuego.eshoping.webservice.up.model.base.NewsJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.list.MispListFragment;
 
 public class NewsFragment extends MispListFragment<NewsJson>
@@ -60,5 +61,6 @@ public class NewsFragment extends MispListFragment<NewsJson>
 		titleView.setText(item.getTitle());
 		return view;
 	}
+
  
 }

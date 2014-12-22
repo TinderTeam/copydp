@@ -1,4 +1,4 @@
-package cn.fuego.eshoping.ui;
+package cn.fuego.misp.ui.base;
 
 import cn.fuego.eshoping.R;
 

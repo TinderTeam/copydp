@@ -21,13 +21,30 @@ public class LoadImageUtil
 	private FuegoLog log = FuegoLog.getLog(getClass());
 	private final Map<String, Drawable> cache = new HashMap<String, Drawable>();
  
+	private static LoadImageUtil instance;
 	
-	public void loadImage(final ImageView imageView, final String urlString,
-			boolean useCache)
+	private boolean isAllCache = true;
+	
+	private  LoadImageUtil()
 	{
-		if (useCache && cache.containsKey(urlString))
+		
+	}
+	
+	public synchronized static LoadImageUtil getInstance()
+	{
+		if(null == instance)
+		{
+			instance = new LoadImageUtil();
+		}
+		return instance;
+	}
+	
+	public void loadImage(final ImageView imageView, final String urlString)
+	{
+		if (isAllCache && cache.containsKey(urlString))
 		{
 			imageView.setImageDrawable(cache.get(urlString));
+			return;
 		}
 
 		// Show a "Loading" image here

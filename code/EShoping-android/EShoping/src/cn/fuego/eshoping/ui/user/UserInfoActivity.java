@@ -1,91 +1,110 @@
 package cn.fuego.eshoping.ui.user;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.constant.ListItemTypeConst;
-import cn.fuego.eshoping.ui.base.BaseActivtiy;
-import cn.fuego.eshoping.ui.base.MyAdapter;
-import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.eshoping.ui.base.CommonItemMeta;
+import cn.fuego.misp.ui.list.MispDistinctListActivity;
 
-public class UserInfoActivity extends BaseActivtiy implements OnClickListener
+public class UserInfoActivity extends MispDistinctListActivity<CommonItemMeta> implements OnClickListener
 {
 
 
-    
+	@Override
+	public void initRes()
+	{
+		this.activityRes.setAvtivityView(R.layout.user_info);
+		this.listViewRes.setListView(R.id.user_info_list);
+		this.dataList.clear();
+		this.dataList.addAll(getBtnData());
+
+	}
+	
+	@Override
+	public void loadSendList()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<CommonItemMeta> loadListRecv(Object obj)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+ 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.user_info);
-		ListView user_info_list = (ListView) findViewById(R.id.user_info_list);
-		//ArrayList<HashMap<String,Object>> datasource = new ArrayList<HashMap<String,Object>>();
-		//String[] data={"昵称","user1",};
-		MyAdapter userInfoAdapter = new MyAdapter(this, getBtnData());
-		user_info_list.setAdapter(userInfoAdapter);
 		
 		Button back_btn=(Button)findViewById(R.id.user_info_back);
 		back_btn.setOnClickListener(this);
 		back_btn.setTag(1);
 	}
 
-	@Override
-	public void handle(MispHttpMessage message)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-	private List<Map<String, Object>> getBtnData()
+	
+	private List<CommonItemMeta> getBtnData()
 	{
 		// 生成数据源
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<CommonItemMeta> list = new ArrayList<CommonItemMeta>();
 		// 每个Map结构为一条数据，key与Adapter中定义的String数组中定义的一一对应。
-		Map<String, Object> map1 = new HashMap<String, Object>();
-		map1.put("title", "头像");
-		map1.put("content", R.drawable.default_head);
-		map1.put("type", ListItemTypeConst.IMG_CONTENT);
-		list.add(map1);
-		Map<String, Object> map2 = new HashMap<String, Object>();
-		map2.put("title", "昵称");
-		map2.put("content", "user11");
-		map2.put("type", ListItemTypeConst.TEXT_CONTENT);
-		list.add(map2);
-		Map<String, Object> map3 = new HashMap<String, Object>();
-		map3.put("title", "积分");
-		map3.put("content", "6分");
-		map3.put("type", ListItemTypeConst.TEXT_CONTENT);
-		list.add(map3);
-		//分割区域
-		Map<String, Object> map4 = new HashMap<String, Object>();
-		map4.put("title", "");
-		map4.put("content", "");
-		map4.put("type", ListItemTypeConst.NULL_CONTENT);
-		list.add(map4);	
+		CommonItemMeta meta1 = new CommonItemMeta();
+		meta1.setTitle("头像");
+		meta1.setType(ListItemTypeConst.IMG_CONTENT);
+ 		list.add(meta1);
 		
-		Map<String, Object> map5 = new HashMap<String, Object>();
-		map5.put("title", "手机号");
-		map5.put("content", "18620783355");
-		map5.put("type", ListItemTypeConst.TEXT_CONTENT);
-		list.add(map5);
-		Map<String, Object> map6 = new HashMap<String, Object>();
-		map6.put("title", "邮箱");
-		map6.put("content", "test@163.com");
-		map6.put("type", ListItemTypeConst.TEXT_CONTENT);
-		list.add(map6);
-		Map<String, Object> map7 = new HashMap<String, Object>();
-		map7.put("title", "修改密码");
-		map7.put("content", "");
-		map7.put("type", ListItemTypeConst.DEFAULT_CONTENT);
-		list.add(map7);
+		CommonItemMeta meta2 = new CommonItemMeta();
+		meta2.setTitle("昵称");
+		meta2.setType(ListItemTypeConst.TEXT_CONTENT);
+		meta2.setContent("user11");
+		list.add(meta2);
+		
+		CommonItemMeta meta3 = new CommonItemMeta();
+		meta3.setTitle("积分");
+		meta3.setType(ListItemTypeConst.TEXT_CONTENT);
+		meta3.setContent("6分");
+		list.add(meta3);
+		
+		
+		
+		CommonItemMeta meta4 = new CommonItemMeta();
+ 
+		meta4.setType(ListItemTypeConst.NULL_CONTENT);
+		list.add(meta4);
+		
+		CommonItemMeta meta5 = new CommonItemMeta();
 
+		meta5.setTitle("手机号");
+		meta5.setType(ListItemTypeConst.TEXT_CONTENT);
+		meta5.setContent("18620783355");
+		list.add(meta5);
+		
+		
+		CommonItemMeta meta6 = new CommonItemMeta();
+
+		meta6.setTitle("邮箱");
+		meta6.setType(ListItemTypeConst.TEXT_CONTENT);
+		meta6.setContent("test@163.com");
+		
+		list.add(meta6);
+		
+		CommonItemMeta meta7 = new CommonItemMeta();
+		meta7.setTitle("修改密码");
+		meta7.setType(ListItemTypeConst.DEFAULT_CONTENT);
+		list.add(meta7);
+		
 		return list;
 	}
 
@@ -103,4 +122,49 @@ public class UserInfoActivity extends BaseActivtiy implements OnClickListener
 		}
 		
 	}
+
+	@Override
+	public View getListItemView(LayoutInflater inflater, CommonItemMeta item)
+	{
+ 		View view =null;
+		String type= item.getType();
+		String title= item.getTitle();
+		
+		if(type.equals(ListItemTypeConst.IMG_CONTENT))
+		{
+			view = inflater.inflate(R.layout.list_item_imgtype, null);
+			TextView title_view = (TextView) view.findViewById(R.id.item_imgtype_name);
+			ImageView img = (ImageView) view.findViewById(R.id.item_imgtype_img);
+			title_view.setText(title);
+			//String title=mylist.get(position).get("data");
+			//img.setImageResource((Integer) item.getContent());
+			
+		}
+		if(type.equals(ListItemTypeConst.TEXT_CONTENT))
+		{
+			view = inflater.inflate(R.layout.list_item_texttype, null);
+			TextView title_view = (TextView) view.findViewById(R.id.item_texttype_name);
+			TextView content_view = (TextView) view.findViewById(R.id.item_texttype_text);
+			title_view.setText(title);
+			content_view.setText( (String) item.getContent());
+
+		}
+		if(type.equals(ListItemTypeConst.DEFAULT_CONTENT))
+		{
+			view = inflater.inflate(R.layout.list_item_btntype, null);
+			TextView title_view = (TextView) view.findViewById(R.id.item_btntype_name);
+			title_view.setText(title);
+
+		}
+		if(type.equals(ListItemTypeConst.NULL_CONTENT))
+		{
+			view = inflater.inflate(R.layout.list_item_divider, null);
+			//view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 30));
+		}
+		//根据type不同的数据类型构造不同的View
+		return view;
+	}
+ 
+
+
 }

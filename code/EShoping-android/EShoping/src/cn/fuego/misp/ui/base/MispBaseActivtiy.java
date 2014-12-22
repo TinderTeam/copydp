@@ -26,4 +26,6 @@ public class MispBaseActivtiy extends Activity
 		toast = Toast.makeText(getApplicationContext(), message , Toast.LENGTH_LONG);
 		toast.show();
 	}
+	
+
 }
