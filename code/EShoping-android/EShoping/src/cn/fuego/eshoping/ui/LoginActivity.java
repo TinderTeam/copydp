@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.cache.MemoryCache;
 import cn.fuego.eshoping.constant.ClientTypeEnum;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
@@ -22,7 +23,6 @@ import cn.fuego.eshoping.ui.base.ExitApplication;
 import cn.fuego.eshoping.webservice.up.model.LoginReq;
 import cn.fuego.eshoping.webservice.up.model.LoginRsp;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
-import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
 public class LoginActivity extends BaseActivtiy

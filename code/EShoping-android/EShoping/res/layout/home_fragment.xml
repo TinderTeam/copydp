@@ -17,109 +17,14 @@
         </SearchView>
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView1"
+    <ListView
+        android:id="@+id/home_main_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:measureAllChildren="true" >
+        android:layout_height="wrap_content"
+        android:background="@color/backcolor"
+        android:divider="@null"
+        android:dividerHeight="1dp" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
-
-            <cn.fuego.eshoping.ui.home.MyGridView
-                android:id="@+id/home_gridview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:horizontalSpacing="20dp"
-                android:numColumns="4"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="20dp" />
-           
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp" >
-
-                <RadioGroup
-                    android:id="@+id/home_radio_group"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:orientation="horizontal" >
-
-                    <RadioButton
-                        android:id="@+id/home_radio_new"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/nav_btn"
-                        android:button="@null"
-                        android:checked="true"
-                        android:gravity="center"
-                        android:text="最新特惠"
-                        android:textColor="@drawable/nav_text_color" />
-
-                    <RadioButton
-                        android:id="@+id/home_radio_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/nav_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="分类推荐"
-                        android:textColor="@drawable/nav_text_color" />
-
-                    <RadioButton
-                        android:id="@+id/home_radio_hot"
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/nav_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="热门推荐"
-                        android:textColor="@drawable/nav_text_color" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-                <ListView
-                    android:id="@+id/home_new_product_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:visibility="visible" >
-
-                </ListView>
-
-                <ListView
-                    android:id="@+id/home_type_product_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:visibility="gone" >
-
-                </ListView>
-
-                <ListView
-                    android:id="@+id/home_all_product_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:visibility="gone" >
-
-                </ListView>
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
+    </ListView>
 
 </LinearLayout>

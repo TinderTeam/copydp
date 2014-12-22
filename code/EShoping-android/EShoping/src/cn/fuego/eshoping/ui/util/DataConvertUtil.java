@@ -1,6 +1,6 @@
 package cn.fuego.eshoping.ui.util;
 
-import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.eshoping.cache.MemoryCache;
 
 public class DataConvertUtil
 {

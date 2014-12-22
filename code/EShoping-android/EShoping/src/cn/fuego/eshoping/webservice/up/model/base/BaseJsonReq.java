@@ -1,6 +1,6 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
-import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.eshoping.cache.MemoryCache;
 
 
 /**

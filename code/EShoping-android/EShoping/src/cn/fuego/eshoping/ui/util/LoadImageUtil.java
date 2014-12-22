@@ -14,7 +14,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
-import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.eshoping.cache.MemoryCache;
 
 public class LoadImageUtil
 {
@@ -24,6 +24,8 @@ public class LoadImageUtil
 	private static LoadImageUtil instance;
 	
 	private boolean isAllCache = true;
+	
+	private boolean isLoad = false;
 	
 	private  LoadImageUtil()
 	{
@@ -41,6 +43,11 @@ public class LoadImageUtil
 	
 	public void loadImage(final ImageView imageView, final String urlString)
 	{
+		if(!isLoad)
+		{
+			imageView.setImageResource(R.drawable.load_image_failed);
+			return;
+		}
 		if (isAllCache && cache.containsKey(urlString))
 		{
 			imageView.setImageDrawable(cache.get(urlString));

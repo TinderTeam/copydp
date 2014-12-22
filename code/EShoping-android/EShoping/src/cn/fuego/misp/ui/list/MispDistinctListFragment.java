@@ -37,11 +37,11 @@ public abstract class MispDistinctListFragment<E> extends MispBaseListFragment<E
 		this.initRes();
 		View rootView = inflater.inflate(this.fragmentRes.getFragmentView(), null);
 
-		ListView productView = (ListView) rootView.findViewById(this.listViewRes.getListView());
+		ListView listView = (ListView) rootView.findViewById(this.listViewRes.getListView());
 
 		adapter = new MispListAdapter<E>(this.getActivity(), this,this.listViewRes,this.dataList);
-		productView.setAdapter(adapter);
-		productView.setOnItemClickListener(this);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
 		loadSendList();
 
 		return rootView;
@@ -62,6 +62,16 @@ public abstract class MispDistinctListFragment<E> extends MispBaseListFragment<E
 	{
  
 		return getListItemView(inflater,(E)item);
+	}
+	
+	public void update(List<E> newList)
+	{
+		this.dataList.clear();
+		if(!ValidatorUtil.isEmpty(newList))
+		{
+			dataList.addAll(newList);
+		}
+		this.adapter.notifyDataSetChanged();
 	}
  
 
@@ -87,16 +97,19 @@ public abstract class MispDistinctListFragment<E> extends MispBaseListFragment<E
 		}
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id)
+	public void onItemClick(E item)
 	{
 
-		E item = this.adapter.getItem(position);
 		Intent intent = new Intent(this.getActivity(),this.listViewRes.getClickActivityClass());
 		intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item);
 
 		this.startActivity(intent);
-
+	}
+	@Override
+	final public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id)
+	{
+		E item = this.adapter.getItem(position);
+		onItemClick(item);
 	}
 }

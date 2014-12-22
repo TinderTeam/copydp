@@ -1,32 +1,37 @@
 package cn.fuego.eshoping.ui.home;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.cache.MemoryCache;
+import cn.fuego.eshoping.cache.ProductTypeCache;
+import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
+import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
-import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.ui.list.ListViewResInfo;
-import cn.fuego.misp.ui.list.MispMultiListFragment;
+import cn.fuego.misp.ui.list.MispDistinctListFragment;
 
-public class HomeFragment extends MispMultiListFragment<ProductJson> implements OnItemClickListener,OnCheckedChangeListener
+public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> implements OnItemClickListener,OnCheckedChangeListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
     //定义数组来存放按钮图片  
@@ -37,14 +42,25 @@ public class HomeFragment extends MispMultiListFragment<ProductJson> implements 
     private int mTextviewArray[] = {R.string.home_food, R.string.home_car,R.string.home_photo,R.string.home_education,
     								R.string.home_entertainment,R.string.home_hotel,R.string.home_beauty,R.string.home_service}; 
  
-    private static final int GET_CUR_CITY = 1;
-    private static final int GET_CITY_LIST = 2;
-    private static final int GET_TYPE_LIST = 3;
-    private static final int GET_PRODUCT = 4;
-    private int cmdcode = 0; 
+    private static final String ITEM_TYPE_GRID = "grid"; 
     
+    private static final String ITEM_TYPE_TAB = "tab"; 
+    private static final String ITEM_TYPE_PRODUCT_TYPE = "type"; 
+
+    private static final String ITEM_TYPE_PRODUCT = "product"; 
+    
+    private int tabID = 0;
+
+ 
     
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
+	
+	private View homeGridView;
+	private View homeTabView;
+	
+	private List<CommonItemMeta> newProductData;
+	private List<CommonItemMeta> typeProductData;
+	private List<CommonItemMeta> allProductData;
 
 
 	@Override
@@ -53,61 +69,24 @@ public class HomeFragment extends MispMultiListFragment<ProductJson> implements 
 		this.fragmentRes.setImage(R.drawable.tabbar_home_icon);
 		this.fragmentRes.setName(R.string.tabbar_home);
 		this.fragmentRes.setFragmentView(R.layout.home_fragment);
-		
-		ListViewResInfo newListInfo = new ListViewResInfo();
-		newListInfo.setListView(R.id.home_new_product_list);
-		newListInfo.setListItemView(R.layout.home_list_item);
-		newListInfo.setClickActivityClass(HomeProductActivity.class);
-		this.listViewRes.add(newListInfo);
-
-		ListViewResInfo typeListInfo = new ListViewResInfo();
-		typeListInfo.setListView(R.id.home_type_product_list);
-		typeListInfo.setListItemView(R.layout.home_list_item);
-		typeListInfo.setClickActivityClass(HomeProductActivity.class);
-		this.listViewRes.add(typeListInfo);
-		
+ 
+		listViewRes.setListView(R.id.home_main_list);
+		//listViewRes.setListItemView(R.layout.home_list_item);
+		listViewRes.setClickActivityClass(HomeProductActivity.class);
+ 
  	}
  
+	 
+
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState)
-	{
-		 
-		 
-
-		  View rootView = super.onCreateView(inflater, container, savedInstanceState);
-		  MyGridView gridview = (MyGridView) rootView.findViewById(R.id.home_gridview);  
-
-	      //生成动态数组，并且转入数据  
-	      ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();  
-	      for(int i=0;i<mImageViewArray.length;i++)  
-	      {  
-	        HashMap<String, Object> map = new HashMap<String, Object>();  
-	        map.put("ItemImage", mImageViewArray[i]);//添加图像资源的ID  
-	        map.put("ItemText", getString(mTextviewArray[i]));//按序号做ItemText  
-	        lstImageItem.add(map);  
-	      }  
-	      //生成适配器的ImageItem <====> 动态数组的元素，两者一一对应  
-	      SimpleAdapter saImageItems = new SimpleAdapter(this.getActivity(), lstImageItem, R.layout.home_grid_item, new String[] {"ItemImage","ItemText"},new int[] {R.id.grid_item_img,R.id.grid_item_title});  
-	      //添加并且显示  
-	      gridview.setAdapter(saImageItems);  
-			RadioGroup group = (RadioGroup) rootView.findViewById(R.id.home_radio_group);
-			group.setOnCheckedChangeListener(this);
- 
- 
-     
-
-		return rootView;
-	}
-
-	@Override
-	public void loadSendList(int index)
+	public void loadSendList()
 	{
 		
 		GetProductListReq req = new GetProductListReq();
 		req.setCity(MemoryCache.getCurCity());
-		switch(index)
+ 
+		switch(tabID)
 		{
 		case 0:
 			WebServiceContext.getInstance().getProductManageRest(this).getNewProductList(req);
@@ -116,53 +95,237 @@ public class HomeFragment extends MispMultiListFragment<ProductJson> implements 
 		case 1:
 			WebServiceContext.getInstance().getProductManageRest(this).getTypeRecProductList(req);
 			break;
+		case 2:
+			WebServiceContext.getInstance().getProductManageRest(this).getAllProductList(req);
+			break;
 		default:
 			break;
 		}
 	}
 	
 	@Override
-	public List<ProductJson> loadListRecv(int index,Object obj)
+	public List<CommonItemMeta> loadListRecv(Object obj)
 	{
 		GetProductListRsp rsp = (GetProductListRsp) obj;
-		return rsp.getProductList();
+		
+		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();
+		
+		CommonItemMeta gridItem = new CommonItemMeta();
+		gridItem.setType(ITEM_TYPE_GRID);
+		gridItem.setContent(gridInitData());
+		itemList.add(gridItem);
+		
+		CommonItemMeta tabItem = new CommonItemMeta();
+		tabItem.setType(ITEM_TYPE_TAB);
+		itemList.add(tabItem); 
+		if(tabID == 1)
+		{
+			Map<Integer,List<ProductJson>> productGroup = divideGroup(rsp.getProductList());
+			
+			for(Integer typeID : productGroup.keySet())
+			{
+				
+				List<ProductJson> productList = productGroup.get(typeID);
+				if(!ValidatorUtil.isEmpty(productList))
+				{
+					CommonItemMeta groupItem = new CommonItemMeta();
+					groupItem.setType(ITEM_TYPE_PRODUCT_TYPE);
+					ProductTypeJson type = ProductTypeCache.getInstance().getTypeByID(typeID);
+					if(null != type)
+					{
+						groupItem.setContent(type.getType_name());
+					}
+					else
+					{
+						groupItem.setContent("未知类型");
+					}
+					for(ProductJson product : productList)
+					{
+						CommonItemMeta item = new CommonItemMeta();
+						item.setType(ITEM_TYPE_PRODUCT);
+						item.setContent(product);
+						itemList.add(item);
+					}	
+				}
+			}
+		}
+		else
+		{
+			for(ProductJson product : rsp.getProductList())
+			{
+				CommonItemMeta item = new CommonItemMeta();
+				item.setType(ITEM_TYPE_PRODUCT);
+				item.setContent(product);
+				itemList.add(item);
+			}	
+		}
+		switch (tabID)
+		{
+		case 0:
+			this.newProductData = itemList;
+			break;
+		case 1:
+			this.typeProductData = itemList;
+			break;
+		case 2:
+			this.allProductData = itemList;
+			break;
+		default:
+			this.newProductData = itemList;
+			break;
+		}
+		
+		return itemList;
 	}
-
-	@Override
-	public View getListItemView(int index,View view, ProductJson item)
+	private List<Map<String,Object>> gridInitData()
 	{
-	    TextView titleView = (TextView) view.findViewById(R.id.home_list_item_title);
-        titleView.setText(item.getName());
-        
-        TextView curPrice = (TextView) view.findViewById(R.id.home_list_item_curPrice);
-        curPrice.setText(String.valueOf(item.getPrice()));
-        TextView oldPrice = (TextView) view.findViewById(R.id.home_list_item_oldPrice);
-        oldPrice.setText(String.valueOf(item.getOriginal_price()));
+		List<Map<String,Object>> mArrayList = new ArrayList<Map<String, Object>>();
+        for (int j = 0; j < mImageViewArray.length; j++)
+		{
+        	HashMap<String, Object> map = new HashMap<String, Object>();  
+        	map.put("ItemImage", mImageViewArray[j]);//添加图像资源的ID  
+        	map.put("ItemText", getString(mTextviewArray[j]));//按序号做ItemText  
+        	mArrayList.add(map); 
+		}
+			
+		 return mArrayList;
+	}
+	
+	public Map<Integer,List<ProductJson>> divideGroup(List<ProductJson> productList)
+	{
+		Map<Integer,List<ProductJson>> map = new HashMap<Integer,List<ProductJson>>();
+		for(ProductJson json : productList)
+		{
+			List<ProductJson> jsonList = map.get(json.getType_id());
+			if(null == jsonList)
+			{
+				jsonList = new ArrayList<ProductJson>();
+				map.put(json.getType_id(), jsonList);
+			}
+			jsonList.add(json);
+		}
+		
+		return map;
+	}
+	
+	@Override
+	public View getListItemView(LayoutInflater inflater, CommonItemMeta item)
+	{
+		View view = null;
+		if(ITEM_TYPE_GRID.equals(item.getType()))
+		{
+			if(null == homeGridView)
+			{
+				homeGridView = inflater.inflate(R.layout.home_list_item_gridview, null);
+				 
+				List<Map<String, Object>> arrayListForEveryGridView = (List<Map<String, Object>>) item.getContent();
+				GridViewAdapter gridViewAdapter = new GridViewAdapter(this.getActivity(),arrayListForEveryGridView);
+				GridView gridView = (GridView) homeGridView.findViewById(R.id.home_gridview);
+				gridView.setAdapter(gridViewAdapter);
+			}
+			view = homeGridView;
 
-        TextView desp = (TextView) view.findViewById(R.id.home_list_item_desp);
-        desp.setText(String.valueOf(item.getDscr()));
+		}
+		else if(ITEM_TYPE_TAB.equals(item.getType()))
+		{
+			if(null == homeTabView)
+			{
+				homeTabView = inflater.inflate(R.layout.home_list_item_radio, null);
+				 
+				RadioGroup group = (RadioGroup) homeTabView.findViewById(R.id.home_radio_group);
+				group.setOnCheckedChangeListener(this);
+			}
+			view = homeTabView;
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.home_list_item_img);
- 
-        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()));
+		}
+		else if(ITEM_TYPE_PRODUCT_TYPE.equals(item.getType()))
+		{
+			view = inflater.inflate(R.layout.list_item_divider, null);
+			TextView text = (TextView) view.findViewById(R.id.list_divider_label);
+			text.setText((String)item.getContent());
+		}
+		else
+		{
+			view = inflater.inflate(R.layout.home_list_item, null);
+
+			ProductJson product = (ProductJson) item.getContent();
+		    TextView titleView = (TextView) view.findViewById(R.id.home_list_item_title);
+	        titleView.setText(product.getName());
+	        
+	        TextView curPrice = (TextView) view.findViewById(R.id.home_list_item_curPrice);
+	        curPrice.setText(String.valueOf(product.getPrice()));
+	        TextView oldPrice = (TextView) view.findViewById(R.id.home_list_item_oldPrice);
+	        oldPrice.setText(String.valueOf(product.getOriginal_price()));
+
+	        TextView desp = (TextView) view.findViewById(R.id.home_list_item_desp);
+	        desp.setText(String.valueOf(product.getDscr()));
+
+	        ImageView imageView = (ImageView) view.findViewById(R.id.home_list_item_img);
+	 
+	        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));
+		}
+
         return view;
 	}
 
+	public void onItemClick(CommonItemMeta item)
+	{
+		if(ITEM_TYPE_PRODUCT.equals(item.getType()))
+		{
+			Intent intent = new Intent(this.getActivity(),this.listViewRes.getClickActivityClass());
+			intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
 
+			this.startActivity(intent);
+		}
+		
+
+	}
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId)
 	{
 		
 		int radioButtonId = group.getCheckedRadioButtonId();
-		if (radioButtonId == R.id.home_radio_new)
+		if (radioButtonId == R.id.home_radio_all)
 		{   
-			this.displayList(0);
+			tabID = 2;
+			if(ValidatorUtil.isEmpty(this.dataList))
+			{
+				loadSendList();	
+			}
+			else
+			{
+				update(this.allProductData);	
+			}
 			
 		}
-		if (radioButtonId == R.id.home_radio_type)
+		else if (radioButtonId == R.id.home_radio_type)
 		{
-			this.displayList(1);
+			tabID = 1;
+			if(ValidatorUtil.isEmpty(this.dataList))
+			{
+				loadSendList();	
+			}
+			else
+			{
+				update(this.typeProductData);	
+			}
 		}		
+		else 
+		{
+			tabID = 0;
+			if(ValidatorUtil.isEmpty(this.dataList))
+			{
+				loadSendList();	
+			}
+			else
+			{
+				update(this.newProductData);	
+			}
+			
+		}
+
+		
+		
 	}
 
 

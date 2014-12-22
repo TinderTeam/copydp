@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.cache.MemoryCache;
 import cn.fuego.eshoping.ui.news.NewsInfoActivity;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListReq;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ActivityJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
-import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.list.MispListFragment;
 

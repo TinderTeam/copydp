@@ -5,7 +5,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreConnectionPNames;
 
 import cn.fuego.common.log.FuegoLog;
-import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.eshoping.cache.MemoryCache;
 import cn.fuego.misp.service.http.HttpListener;
 import cn.fuego.misp.service.http.MispProxyFactory;
 
