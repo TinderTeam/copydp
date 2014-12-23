@@ -29,7 +29,21 @@ public class MispListAdapter<E> extends ArrayAdapter<E>
 		  LayoutInflater inflater = LayoutInflater.from(context);
 	        E item = getItem(position);
 
-		  return mispList.getView(inflater, item);
+		  return mispList.getView(inflater, convertView,parent,item);
 	}
+	  @Override
+	public int getItemViewType(int position)
+	{
+		   E item = getItem(position);
+		 return mispList.getItemViewType(item);
+	}
+
+	@Override
+	public int getViewTypeCount()
+	{
+		// TODO Auto-generated method stub
+		return mispList.getItemTypeCount();
+	}
+ 
 
 }

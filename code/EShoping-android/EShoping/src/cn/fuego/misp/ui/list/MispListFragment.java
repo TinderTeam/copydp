@@ -57,8 +57,21 @@ public abstract class MispListFragment<E> extends MispBaseListFragment<E> implem
 
 
 	public abstract List<E> loadListRecv(Object obj);
+	
+	
 	@Override
-	public View getView(LayoutInflater inflater, Object item)
+	public int getItemViewType(Object item)
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public int getItemTypeCount()
+	{
+		return 1;
+	}
+	
+	@Override
+	public View getView(LayoutInflater inflater,View convertView, ViewGroup parent, Object item)
 	{
 		View view = inflater.inflate(this.listViewRes.getListItemView(), null);
 		return getListItemView(view,(E)item);

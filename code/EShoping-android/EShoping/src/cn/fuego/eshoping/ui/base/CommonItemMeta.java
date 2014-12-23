@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CommonItemMeta implements Serializable
 {
 	private String title;
-	private String type;
+	private int layoutType;
 	private Integer titleIamge = null; //if no title image the value is empty
 	private Object content;
 	public String getTitle()
@@ -16,13 +16,13 @@ public class CommonItemMeta implements Serializable
 	{
 		this.title = title;
 	}
-	public String getType()
+	public int getLayoutType()
 	{
-		return type;
+		return layoutType;
 	}
-	public void setType(String type)
+	public void setLayoutType(int layoutType)
 	{
-		this.type = type;
+		this.layoutType = layoutType;
 	}
 	public Integer getTitleIamge()
 	{
@@ -40,6 +40,7 @@ public class CommonItemMeta implements Serializable
 	{
 		this.content = content;
 	}
+	
 	
 	
 

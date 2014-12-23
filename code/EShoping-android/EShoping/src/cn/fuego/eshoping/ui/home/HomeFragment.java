@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -42,12 +44,12 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
     private int mTextviewArray[] = {R.string.home_food, R.string.home_car,R.string.home_photo,R.string.home_education,
     								R.string.home_entertainment,R.string.home_hotel,R.string.home_beauty,R.string.home_service}; 
  
-    private static final String ITEM_TYPE_GRID = "grid"; 
+    private static final int ITEM_TYPE_GRID = 1; 
     
-    private static final String ITEM_TYPE_TAB = "tab"; 
-    private static final String ITEM_TYPE_PRODUCT_TYPE = "type"; 
+    private static final int ITEM_TYPE_TAB = 2; 
+    private static final int ITEM_TYPE_PRODUCT_TYPE = 3; 
 
-    private static final String ITEM_TYPE_PRODUCT = "product"; 
+    private static final int ITEM_TYPE_PRODUCT = 4; 
     
     private int tabID = 0;
 
@@ -73,10 +75,27 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 		listViewRes.setListView(R.id.home_main_list);
 		//listViewRes.setListItemView(R.layout.home_list_item);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
+		
+		
  
  	}
  
 	 
+
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState)
+	{
+		// TODO Auto-generated method stub
+		tabID = 0;
+		View view = super.onCreateView(inflater, container, savedInstanceState);
+		
+		
+		return view;
+	}
+
+
 
 
 	@Override
@@ -111,12 +130,12 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();
 		
 		CommonItemMeta gridItem = new CommonItemMeta();
-		gridItem.setType(ITEM_TYPE_GRID);
+		gridItem.setLayoutType(ITEM_TYPE_GRID);
 		gridItem.setContent(gridInitData());
 		itemList.add(gridItem);
 		
 		CommonItemMeta tabItem = new CommonItemMeta();
-		tabItem.setType(ITEM_TYPE_TAB);
+		tabItem.setLayoutType(ITEM_TYPE_TAB);
 		itemList.add(tabItem); 
 		if(tabID == 1)
 		{
@@ -129,7 +148,7 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 				if(!ValidatorUtil.isEmpty(productList))
 				{
 					CommonItemMeta groupItem = new CommonItemMeta();
-					groupItem.setType(ITEM_TYPE_PRODUCT_TYPE);
+					groupItem.setLayoutType(ITEM_TYPE_PRODUCT_TYPE);
 					ProductTypeJson type = ProductTypeCache.getInstance().getTypeByID(typeID);
 					if(null != type)
 					{
@@ -139,10 +158,11 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 					{
 						groupItem.setContent("未知类型");
 					}
+					itemList.add(groupItem);
 					for(ProductJson product : productList)
 					{
 						CommonItemMeta item = new CommonItemMeta();
-						item.setType(ITEM_TYPE_PRODUCT);
+						item.setLayoutType(ITEM_TYPE_PRODUCT);
 						item.setContent(product);
 						itemList.add(item);
 					}	
@@ -154,7 +174,7 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 			for(ProductJson product : rsp.getProductList())
 			{
 				CommonItemMeta item = new CommonItemMeta();
-				item.setType(ITEM_TYPE_PRODUCT);
+				item.setLayoutType(ITEM_TYPE_PRODUCT);
 				item.setContent(product);
 				itemList.add(item);
 			}	
@@ -209,68 +229,120 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 	}
 	
 	@Override
-	public View getListItemView(LayoutInflater inflater, CommonItemMeta item)
+	public int getListItemType(CommonItemMeta item)
+	{
+		// TODO Auto-generated method stub
+		return item.getLayoutType();
+	}
+	
+	@Override
+	public int getItemTypeCount()
+	{
+		// TODO Auto-generated method stub
+		return 5;
+	}
+
+
+
+
+	@Override
+	public View getListItemView(LayoutInflater inflater,View convertView,CommonItemMeta item)
 	{
 		View view = null;
-		if(ITEM_TYPE_GRID.equals(item.getType()))
+		
+		switch(item.getLayoutType())
 		{
-			if(null == homeGridView)
+		case ITEM_TYPE_GRID:
+			if(null == convertView)
 			{
-				homeGridView = inflater.inflate(R.layout.home_list_item_gridview, null);
-				 
-				List<Map<String, Object>> arrayListForEveryGridView = (List<Map<String, Object>>) item.getContent();
-				GridViewAdapter gridViewAdapter = new GridViewAdapter(this.getActivity(),arrayListForEveryGridView);
-				GridView gridView = (GridView) homeGridView.findViewById(R.id.home_gridview);
-				gridView.setAdapter(gridViewAdapter);
+				convertView = inflater.inflate(R.layout.home_list_item_gridview, null);
+				view = convertView;
+				convertView.setTag(view);
 			}
-			view = homeGridView;
-
-		}
-		else if(ITEM_TYPE_TAB.equals(item.getType()))
-		{
-			if(null == homeTabView)
+			else
 			{
-				homeTabView = inflater.inflate(R.layout.home_list_item_radio, null);
+				view = (View) convertView.getTag();
+			}
+ 			
+			List<Map<String, Object>> arrayListForEveryGridView = (List<Map<String, Object>>) item.getContent();
+			GridViewAdapter gridViewAdapter = new GridViewAdapter(this.getActivity(),arrayListForEveryGridView);
+			GridView gridView = (GridView) view.findViewById(R.id.home_gridview);
+			gridView.setAdapter(gridViewAdapter);
+			break;
+		case ITEM_TYPE_TAB:
+			if(null == convertView)
+			{
+				convertView  = inflater.inflate(R.layout.home_list_item_radio, null);
+				view = convertView;
 				 
-				RadioGroup group = (RadioGroup) homeTabView.findViewById(R.id.home_radio_group);
+				RadioGroup group = (RadioGroup) view.findViewById(R.id.home_radio_group);
 				group.setOnCheckedChangeListener(this);
+				convertView.setTag(view);
 			}
-			view = homeTabView;
+			else
+			{
+				view = (View) convertView.getTag();
+			}
+	
 
-		}
-		else if(ITEM_TYPE_PRODUCT_TYPE.equals(item.getType()))
-		{
-			view = inflater.inflate(R.layout.list_item_divider, null);
+		    break;
+		case ITEM_TYPE_PRODUCT_TYPE:
+		    
+			if(null == convertView)
+			{
+				convertView = inflater.inflate(R.layout.list_item_divider, null);
+		        view = convertView;
+		        convertView.setTag(view);
+			}
+			else
+			{
+				view = (View) convertView.getTag();
+			}
+
 			TextView text = (TextView) view.findViewById(R.id.list_divider_label);
 			text.setText((String)item.getContent());
-		}
-		else
-		{
-			view = inflater.inflate(R.layout.home_list_item, null);
+			break;
+		case ITEM_TYPE_PRODUCT:
+			if(null == convertView)
+			{
+				convertView = inflater.inflate(R.layout.home_list_item, null);
+	
 
+		        view = convertView;
+		        convertView.setTag(view);
+			}
+			else
+			{
+				view = (View) convertView.getTag();
+			}
+			
 			ProductJson product = (ProductJson) item.getContent();
-		    TextView titleView = (TextView) view.findViewById(R.id.home_list_item_title);
+		    TextView titleView = (TextView) convertView.findViewById(R.id.home_list_item_title);
 	        titleView.setText(product.getName());
 	        
-	        TextView curPrice = (TextView) view.findViewById(R.id.home_list_item_curPrice);
+	        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
 	        curPrice.setText(String.valueOf(product.getPrice()));
-	        TextView oldPrice = (TextView) view.findViewById(R.id.home_list_item_oldPrice);
+	        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
 	        oldPrice.setText(String.valueOf(product.getOriginal_price()));
 
-	        TextView desp = (TextView) view.findViewById(R.id.home_list_item_desp);
+	        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
 	        desp.setText(String.valueOf(product.getDscr()));
 
-	        ImageView imageView = (ImageView) view.findViewById(R.id.home_list_item_img);
+	        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img);
 	 
 	        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));
+	        
+	        break;
+		
 		}
+ 
 
         return view;
 	}
 
 	public void onItemClick(CommonItemMeta item)
 	{
-		if(ITEM_TYPE_PRODUCT.equals(item.getType()))
+		if(ITEM_TYPE_PRODUCT == item.getLayoutType())
 		{
 			Intent intent = new Intent(this.getActivity(),this.listViewRes.getClickActivityClass());
 			intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
@@ -288,7 +360,7 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 		if (radioButtonId == R.id.home_radio_all)
 		{   
 			tabID = 2;
-			if(ValidatorUtil.isEmpty(this.dataList))
+			if(ValidatorUtil.isEmpty(this.allProductData))
 			{
 				loadSendList();	
 			}
@@ -301,10 +373,10 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 		else if (radioButtonId == R.id.home_radio_type)
 		{
 			tabID = 1;
-			if(ValidatorUtil.isEmpty(this.dataList))
+			if(ValidatorUtil.isEmpty(this.typeProductData))
 			{
 				loadSendList();	
-			}
+			} 
 			else
 			{
 				update(this.typeProductData);	
@@ -313,7 +385,7 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 		else 
 		{
 			tabID = 0;
-			if(ValidatorUtil.isEmpty(this.dataList))
+			if(ValidatorUtil.isEmpty(this.newProductData))
 			{
 				loadSendList();	
 			}

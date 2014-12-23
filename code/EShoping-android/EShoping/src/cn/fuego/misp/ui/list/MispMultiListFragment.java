@@ -90,9 +90,13 @@ OnItemClickListener
 	public abstract View getListItemView(int index,View view, E item);
 
 	public abstract List<E> loadListRecv(int index,Object obj);
-
+	public int getItemTypeCount()
+	{
+		return 1;
+	}
+	
 	@Override
-	public View getView(LayoutInflater inflater, Object item)
+	public View getView(LayoutInflater inflater,View convertView, ViewGroup parent, Object item)
 	{
 		View view = inflater.inflate(this.listViewRes.get(currentIndex).getListItemView(), null);
 		return getListItemView(currentIndex,view,(E)item);

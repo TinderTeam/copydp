@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
+import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
 public abstract class MispDistinctListFragment<E> extends MispBaseListFragment<E> implements
@@ -56,12 +57,20 @@ public abstract class MispDistinctListFragment<E> extends MispBaseListFragment<E
 
 	public abstract List<E> loadListRecv(Object obj);
 	
-	public abstract View getListItemView(LayoutInflater inflater,E item);
+	public abstract View getListItemView(LayoutInflater inflater,View convertView,E item);
+	
 	@Override
-	public View getView(LayoutInflater inflater, Object item)
+	public int getItemViewType(Object item)
+	{
+		return getListItemType((CommonItemMeta)item);
+	}
+
+	public abstract int getListItemType(CommonItemMeta item);
+	@Override
+	public View getView(LayoutInflater inflater,View convertView, ViewGroup parent, Object item)
 	{
  
-		return getListItemView(inflater,(E)item);
+		return getListItemView(inflater,convertView,(E)item);
 	}
 	
 	public void update(List<E> newList)

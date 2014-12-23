@@ -16,6 +16,7 @@ import android.widget.ListView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.eshoping.ui.base.MyAdapter;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
@@ -59,8 +60,18 @@ public abstract class MispDistinctListActivity<E> extends MispBaseListActivity<E
 	public abstract List<E> loadListRecv(Object obj);
 	
 	public abstract View getListItemView(LayoutInflater inflater,E item);
+	
+
 	@Override
-	public View getView(LayoutInflater inflater, Object item)
+	public int getItemViewType(Object item)
+	{
+		return getListItemType((CommonItemMeta)item);
+	}
+	
+ 
+	public abstract int getListItemType(CommonItemMeta item);
+	@Override
+	public View getView(LayoutInflater inflater,View convertView, ViewGroup parent, Object item)
 	{
  
 		return getListItemView(inflater,(E)item);
