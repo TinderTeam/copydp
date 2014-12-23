@@ -27,6 +27,7 @@
 		</div>
 	</div>
 
+
 <div class="pgm">
     <div class="main_w">
         <div class="citylist-box">
@@ -38,12 +39,11 @@
 							<li class=""><strong class="tit">{$word}</strong>
 								<div class="cityes">
 									<ul>
-										<volist name="cityList" id="city" key="k">
-											<volist name="city" id="cityname" key="j">
-												<if condition="$i eq $k">
-													<li><a href="__URL__/selectCity?cityName={$cityname}" title="{$cityname}">{$cityname}</a></li>
-												</if>
-											</volist>
+									<?php														
+										$cityNameList=$cityList[$i-1];
+									?>
+										<volist name="cityNameList" id="cityName" key="k">
+											<li><a href="__URL__/selectCity?cityName={$cityName}&cityID={$cityIDList[$i-1][$k-1]}" title="{$cityName}">{$cityName}</a></li>
 										</volist>
 									 </ul>
 								</div>

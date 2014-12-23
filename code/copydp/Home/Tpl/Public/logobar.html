@@ -34,9 +34,13 @@
 				<h2 class="Fix switch-wrap"> 
 					<a class="switch J_city_switch" href="javascript:;"> 
 						<span class="current J_currentcityname">
-							<?php
-								echo $_SESSION['city'];
-							?>							
+							<?php								
+								$cityDB=M('city');
+								$cityNamecondition['city_id']=$_SESSION['cityID'];
+								$cityObList=$cityDB->where($cityNamecondition)->select();
+								$cityOb=$cityObList[0];
+							?>				
+							{$cityOb.city}
 						</span>
 					</a> 
 					<a  href="__APP__/Index/city" class="switch-city">

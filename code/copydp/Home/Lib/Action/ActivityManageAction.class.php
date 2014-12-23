@@ -24,10 +24,12 @@ class ActivityManageAction extends Action {
 			$nameFilter=$_POST['acty_title'];
 			$cityFilters=$_POST['acty_city'];
 			$endDateFilters=$_POST['endDate'];
+			$startDateFilters=$_POST['startDate'];
 			$this->assign("IDFilter",$IDFilter);
 			$this->assign("nameFilter",$nameFilter);
 			$this->assign("cityFilters",$cityFilters);
 			$this->assign("endDateFilters",$endDateFilters);
+			$this->assign("startDateFilters",$endDateFilters);
 			$this->display('index');
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");

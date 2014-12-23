@@ -25,7 +25,10 @@
 			<ul>
 				<li class="item"> 
 					<?php
-						$city=$_SESSION['city'];
+						$cityID=$_SESSION['cityID'];
+						$cityDB= M('city');
+						$cityIDCondition['city_id']=$cityID;
+						$city=$cityDB->where($cityIDCondition)->getField('city');
 						$activityViewDB=new Model('view_activity');
 						$activiyCityCondition['city']=$city;						
 						$activityID=$activityViewDB->where($activiyCityCondition)->order('rand()')->getField('activity_id');

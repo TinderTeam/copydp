@@ -221,8 +221,10 @@ class UserManageAction extends Action {
 			$customer = M('customer');
 			$userID=$_GET['id'];
 			$condition['user_id']=$userID;
+			$now = date("Y-m-d",strtotime("+1 year"));
 			$customer->where($condition)->setField('grade','SVIP');
-			$this->redirect('UserManage/index#UserRequest','',0,'操作成功');
+$customer->where($condition)->setField('vip_limit_date',$now);				
+			$this->redirect('UserManage/index','',0,'操作成功');
 		
 		}	
 

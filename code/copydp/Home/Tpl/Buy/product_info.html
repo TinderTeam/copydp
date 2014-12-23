@@ -251,7 +251,10 @@
 									<div class="detail">
 										<p id ="position" data="{$productPosition}"></p>
 										<?php
-											$city=$_SESSION['city'];
+											$cityID=$_SESSION['cityID'];
+											$cityDB= M('city');
+											$cityIDCondition['city_id']=$cityID;
+											$city=$cityDB->where($cityIDCondition)->getField('city');
 										?>
 										<p id ="city" data="{$city}"></p>
 										<h3 id="map" class="new-tit"><span class="name">在线地图</span></h3>	

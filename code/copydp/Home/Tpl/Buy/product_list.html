@@ -162,7 +162,10 @@
 					}
 					
 					//获取当前城市
-					$city=$_SESSION['city'];
+							$cityID=$_SESSION['cityID'];
+						$cityDB= M('city');
+						$cityIDCondition['city_id']=$cityID;
+						$city=$cityDB->where($cityIDCondition)->getField('city');
 					$productFilter['city']=$city;
 					
 					if($search=='true'){

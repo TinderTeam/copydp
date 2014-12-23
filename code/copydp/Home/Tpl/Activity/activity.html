@@ -58,7 +58,10 @@
 			<ul class="Fix">
 				<?php
 					//获取当前城市
-					$city=$_SESSION['city'];
+					$cityID=$_SESSION['cityID'];
+					$cityDB= M('city');
+					$cityIDCondition['city_id']=$cityID;
+					$city=$cityDB->where($cityIDCondition)->getField('city');
 					$activityFilter['city']=$city;
 					
 					//设置总筛选条件

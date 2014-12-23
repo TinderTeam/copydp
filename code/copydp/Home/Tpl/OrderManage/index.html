@@ -52,6 +52,28 @@ margin-right: 10px;
     height: 20px;
 }
 </style>
+<script type="text/javascript">
+
+	function selectChange(){
+		var id=$(".selectTarget").val();
+		
+		$(".showOption").each(function(){	
+			$(this).remove();
+		});
+		
+		$(".copy").each(function(){
+			var fatherID=$(this).attr("fatherID");
+			var typeID=$(this).attr("typeID");
+			var name=$(this).html();
+			if(fatherID==id){				
+				$("#type_id").append(
+					"<option class='showOption' value='"+typeID+"'>"+name +"</option>"
+				); 
+			}
+		});
+	
+	}
+	</script>
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
@@ -94,7 +116,12 @@ margin-right: 10px;
 									
 									<input type="text" name="orderID"/>
 								</div>							
-							</li>						
+							</li>	
+							<li>
+								<div class="span-input">
+									<span >模糊名称</span><input type="text" name="orderName"/>
+								</div>							
+							</li>							
 							<li>
 								<div class="span-input">
 									<span >订单日期</span>
@@ -102,9 +129,7 @@ margin-right: 10px;
 								</div>
 							</li>				
 							<li>
-								<div class="span-input">
-									<span >会员编号</span><input type="text" name="userID"/>
-								</div>
+							
 							</li>
 							<li>
 								<div class="span-input">
@@ -122,23 +147,70 @@ margin-right: 10px;
 								</div>							
 							</li>
 							<li>
+												
+							</li>
+								<li>
 								<div class="span-input">
-									<span >行业类别</span>
-									<select name="typeID" class="span-select" >
-										<?php					
-											$productTypeDB=M('product_type');
-											$allType=$productTypeDB->select();
-										?>
-										<option selected="selected" value="">请选择子类型</option>
-										<foreach name='allType' item='allvt'>
-											<option value="{$allvt.type_id}">{$allvt.type_name}</option>						
-										</foreach>
-									</select>								
-								</div>							
+									<span >会员编号</span><input type="text" name="userID"/>
+								</div>
 							</li>
 							<li>
 								<div class="span-input">
-									<span >模糊名称</span><input type="text" name="orderName"/>
+								<span >行业类别</span>
+									<?php
+											$productType=M('product_type');
+											$condition['father_id'] = 0;
+											$type=$productType->where($condition)->select();
+									?>
+																							
+									<select id="typeSelect"  class="selectTarget"  onchange="selectChange()">
+										<option  value="">请选择类型</option>
+									<foreach name='type' item='mainType'>
+										<option value="{$mainType.type_id}">{$mainType.type_name}</option>
+									</foreach>											
+									</select>
+								</div>							
+							</li>
+							<li>
+								<div class="span-input">.
+								<span >子类别</span>
+										<?php
+											$productType=M('product_type');
+											$all_type=$productType->select();
+									?>
+									<select id="type_id" name="typeID" class="form-select-sim form-select-sim-m zone-select ">
+										<option  selected="selected" value="">请选择子类型</option></span>
+										<foreach name='all_type' item='subtype'>
+											<if condition="$subtype.father_id eq 0">
+												<option class="showOption" value="{$subtype.type_id}">
+													{$subtype.type_name}
+												</option>	
+												<else/>
+												<option class="tpyeGroup{$subtype.father_id} showOption" value="{$subtype.type_id}">
+													{$subtype.type_name}
+												</option>
+												
+											</if>
+																												
+										</foreach>											
+									</select>
+									
+									<select id="copy" name="null" class="form-select-sim form-select-sim-m zone-select Hide">
+										<option  selected="selected" value="">请选择子类型</option></span>
+										<foreach name='all_type' item='subtype'>
+											<if condition="$subtype.father_id eq 0">
+												<option class="copy_tpyeGroup{$subtype.type_id} copy" value="{$subtype.type_id}"
+											>{$subtype.type_name}</option>
+												<else/>
+											
+													<option fatherID="{$subtype.father_id}" typeID="{$subtype.type_id}" class="copy_{$subtype.type_id} copy" value="{$subtype.type_id}">
+														{$subtype.type_name}
+													</option>
+									
+											</if>
+																												
+										</foreach>											
+									</select>															
 								</div>							
 							</li>
 							<li>

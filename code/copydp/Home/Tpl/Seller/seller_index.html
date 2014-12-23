@@ -29,10 +29,8 @@
 			<dd class="J_content">
 				<?php
 					//获取区域
-					$city=$_SESSION['city'];
-					$citydb=new Model('city');	
-					$citycondition['city']=$city;
-					$city_id=$citydb->where($citycondition)->getField('city_id');
+					$city_id=$_SESSION['cityID'];
+
 					
 					$zonedb=new Model('city_zone');							
 					$zonecondition['city_id']=$city_id;			

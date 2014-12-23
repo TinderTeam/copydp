@@ -1,8 +1,11 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
-
+import("@.Service.WebUtilService");
 
 class IndexAction extends IndexServiceAction {
+
+
+
 	public function passwordSetup(){
 		$this->display();
 	}
@@ -38,12 +41,12 @@ class IndexAction extends IndexServiceAction {
 	    $errorCode = $modifyResult['errorCode'];
 	    $this->returnJson($errorCode,null);
 	}
-	
+
 	public function index(){
-			
 		//处理城市
-		$city=$_SESSION['city'];
-		if(empty($_SESSION['city'])){			
+		$WebUtilService = new WebUtilService();
+		$city=$WebUtilService->getSessionCityName();
+		if(empty($city)){			
 			$iplookup=$this->iplookup(); 
 			if($iplookup['ip']=='127.0.0.1'){
 				$city="深圳";
@@ -52,15 +55,17 @@ class IndexAction extends IndexServiceAction {
 				$city=$this->unescape($iplookup['city']);
 			}					
 		}
-		$_SESSION['city']=$city;	
+		$WebUtilService->setSessionCityName($city);			
 		$this->display();
     }
 	
-	public function selectCity($cityName=0){	
+	public function selectCity($cityName=0,$cityID=0){	
 		session_start();
 		$_SESSION['city']=$cityName;
+		$_SESSION['cityID']=$cityID;
 		$this->redirect('Index/index');
     }
+	
 	//退出
 	public function logout(){
 		session_destroy();
@@ -91,8 +96,6 @@ class IndexAction extends IndexServiceAction {
 	  $user['password']=$req->password;
 	  
 	  $loginResult = parent::loginService($user);
-	   
-	   
 	  $errorCode = $loginResult['errorCode'];
 	  $Rsp['token'] = $this->uuid();
 	  $Rsp['user'] = $loginResult['user'];
@@ -130,11 +133,13 @@ class IndexAction extends IndexServiceAction {
 			
 			//处理用户登陆
 			if($role=='CUSTOMER'){
+			
 				$custmerDB= M('customer');
 				$customerIDCondition['user_id']=$userID;
 				$lastDate=$custmerDB->where($customerIDCondition)->getField('login_date');
 				$score=$custmerDB->where($customerIDCondition)->getField('score');
 				$status =$custmerDB->where($customerIDCondition)->getField('status');
+				$grade =$custmerDB->where($customerIDCondition)->getField('grade');
 				if($status=='待审批'){
 					$this->assign("jumpUrl","login");
 					$this->error("该用户尚未通过管理员审批，请耐心等待！");
@@ -147,6 +152,18 @@ class IndexAction extends IndexServiceAction {
 				    $this->assign("jumpUrl","login");
 				    $this->error("您的账户已被冻结，请联系管理员！");
 				}
+				//处理用户VIP时间限制
+				if($grade=='SVIP'){
+					$limitdate =$custmerDB->where($customerIDCondition)->getField('vip_limit_date');
+					$now = Date('Y-m-d H:i:s',time());
+
+					if(strtotime($now)>strtotime($limitdate)){
+						$data['grade']="VIP";
+						$data['vip_limit_date']=null;
+						$custmerDB->where($customerIDCondition)->save($data);							
+					}					
+				}
+				
 				//处理用户登陆送积分
 				$sysDB= M('sys_config');
 				$sysCondition['key']='login_score';
@@ -346,7 +363,7 @@ class IndexAction extends IndexServiceAction {
 		$select = $db->order('convert(city using gbk) asc')->select();
 		$pinyin= array();
 		$cityList= array();
-		
+		$cityIDList= array();
 		for($i=0;$i<count($select);$i++){			
 			$pinyinStr =  substr($this->pinyin($select[$i]['city']),0,1);			
 			$index = array_search($pinyinStr,$pinyin);
@@ -356,17 +373,24 @@ class IndexAction extends IndexServiceAction {
 			}	
 			if($cityList[$index]==null){
 				$ciryArray=array();
+				$ciryIDArray=array();
 				array_push($ciryArray,$select[$i]['city']);
+				array_push($ciryIDArray,$select[$i]['city_id']);
 				$cityList[$index]=$ciryArray;
+				$cityIDList[$index]=$ciryIDArray;
 			}else{		
 				$ciryArray=$cityList[$index];
-				array_push($ciryArray,$select[$i]['city']);				
+				$ciryIDArray=$cityIDList[$index];
+				array_push($ciryArray,$select[$i]['city']);	
+				array_push($ciryIDArray,$select[$i]['city_id']);					
 				$cityList[$index]=$ciryArray;
+				$cityIDList[$index]=$ciryIDArray;
 			}
 		}
 		
 		$this->assign('pinyin',$pinyin);
 		$this->assign('cityList',$cityList);
+		$this->assign('cityIDList',$cityIDList);
 		$this->assign('citySelect',"未选择");
 		$this->display();
     }
