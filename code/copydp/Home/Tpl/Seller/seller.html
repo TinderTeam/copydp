@@ -43,6 +43,10 @@
 				<ul id="carousel-list" class="promo-wrap J_promo_wrap" data-mode="render" style="position: absolute; left: -366520px;">	
 					<?php
 						$sellerViewDB=new Model('view_seller');
+								$cityID=$_SESSION['cityID'];
+		$cityDB= M('city');
+		$cityIDCondition['city_id']=$cityID;
+		$city=$cityDB->where($cityIDCondition)->getField('city');
 						$sellerViewCondition['city']=$city;
 						$sellerStatusCondition['status']="正常";							
 						$sellerIDList=$sellerViewDB->where($sellerStatusCondition)->where($sellerViewCondition)->order('rand()')->limit(4)->getField('user_id',true);
