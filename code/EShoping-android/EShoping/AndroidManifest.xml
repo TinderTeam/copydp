@@ -79,6 +79,10 @@
             android:name="cn.fuego.eshoping.ui.user.UserInfoActivity"
             android:label="@string/title_activity_user_info" >
         </activity>
+        <activity
+            android:name="cn.fuego.eshoping.ui.home.ProductSearchActivity"
+            android:label="@string/title_activity_product_search" >
+        </activity>
     </application>
 
 </manifest>

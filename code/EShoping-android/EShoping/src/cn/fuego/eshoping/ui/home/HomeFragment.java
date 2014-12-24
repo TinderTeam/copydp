@@ -11,12 +11,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
@@ -267,6 +269,19 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 			List<Map<String, Object>> arrayListForEveryGridView = (List<Map<String, Object>>) item.getContent();
 			GridViewAdapter gridViewAdapter = new GridViewAdapter(this.getActivity(),arrayListForEveryGridView);
 			GridView gridView = (GridView) view.findViewById(R.id.home_gridview);
+			gridView.setOnItemClickListener(new OnItemClickListener()
+			{
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,	int position, long id)
+				{
+					//Toast.makeText(parent.getContext(), "position"+position, Toast.LENGTH_LONG);
+					Intent i= new Intent();
+					i.setClass(parent.getContext(), ProductSearchActivity.class);
+					parent.getContext().startActivity(i);
+				}
+				
+			});
 			gridView.setAdapter(gridViewAdapter);
 			break;
 		case ITEM_TYPE_TAB:
