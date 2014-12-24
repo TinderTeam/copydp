@@ -31,36 +31,26 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar" >
-
         <activity
-            android:name="cn.fuego.eshoping.ui.LoginActivity"
+            android:name=".ui.LoginActivity"
             android:label="@string/app_name" >
-
         </activity>
- 
-         <activity
-            android:name="cn.fuego.eshoping.ui.MainActivity"
+        <activity
+            android:name=".ui.MainActivity"
             android:label="@string/app_name" >
-            
         </activity>
-        
         <activity
             android:name=".ui.home.HomeProductActivity"
             android:label="@string/app_name" >
-            
         </activity>
-       
         <activity
             android:name=".ui.news.NewsInfoActivity"
             android:label="@string/app_name" >
-            
         </activity>
         <activity
             android:name=".ui.activity.ActivityInfoActivity"
             android:label="@string/app_name" >
-            
         </activity>
-        
         <activity
             android:name=".ui.MainTabbarActivity"
             android:label="@string/app_name" >
@@ -76,7 +66,7 @@
             android:value="V8GryXnQL1nCHyIECQZbirSF" />
 
         <activity
-            android:name="cn.fuego.eshoping.ui.user.UserInfoActivity"
+            android:name=".ui.user.UserInfoActivity"
             android:label="@string/title_activity_user_info" >
         </activity>
         <activity
