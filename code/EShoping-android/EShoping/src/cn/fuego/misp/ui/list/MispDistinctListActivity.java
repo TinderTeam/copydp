@@ -20,16 +20,16 @@ import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.eshoping.ui.base.MyAdapter;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
-public abstract class MispDistinctListActivity<E> extends MispBaseListActivity<E> implements
+public abstract class MispDistinctListActivity extends MispBaseListActivity<CommonItemMeta> implements
      MispListViewInteface,OnItemClickListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
 
  
 
-	protected List<E> dataList = new ArrayList<E>();
+	protected List<CommonItemMeta> dataList = new ArrayList<CommonItemMeta>();
 
-	private MispListAdapter<E> adapter;
+	private MispListAdapter<CommonItemMeta> adapter;
 
 	protected ListViewResInfo listViewRes = new ListViewResInfo();
 
@@ -43,7 +43,7 @@ public abstract class MispDistinctListActivity<E> extends MispBaseListActivity<E
 		
 		setContentView(this.activityRes.getAvtivityView());
 		
-		adapter = new MispListAdapter<E>(this,this,this.listViewRes,this.dataList);
+		adapter = new MispListAdapter<CommonItemMeta>(this,this,this.listViewRes,this.dataList);
 		ListView productView = (ListView) findViewById(this.listViewRes.getListView());
 ;
 		productView.setAdapter(adapter);
@@ -57,9 +57,9 @@ public abstract class MispDistinctListActivity<E> extends MispBaseListActivity<E
 
 
 
-	public abstract List<E> loadListRecv(Object obj);
+	public abstract List<CommonItemMeta> loadListRecv(Object obj);
 	
-	public abstract View getListItemView(LayoutInflater inflater,E item);
+	public abstract View getListItemView(LayoutInflater inflater,CommonItemMeta item);
 	
 
 	@Override
@@ -74,7 +74,7 @@ public abstract class MispDistinctListActivity<E> extends MispBaseListActivity<E
 	public View getView(LayoutInflater inflater,View convertView, ViewGroup parent, Object item)
 	{
  
-		return getListItemView(inflater,(E)item);
+		return getListItemView(inflater,(CommonItemMeta)item);
 	}
  
 
@@ -85,7 +85,7 @@ public abstract class MispDistinctListActivity<E> extends MispBaseListActivity<E
 		{
 			this.dataList.clear();
 
-			List<E> newData = loadListRecv(message.getMessage().obj);
+			List<CommonItemMeta> newData = loadListRecv(message.getMessage().obj);
 			if (!ValidatorUtil.isEmpty(newData))
 			{
 				this.dataList.addAll(newData);
@@ -105,7 +105,7 @@ public abstract class MispDistinctListActivity<E> extends MispBaseListActivity<E
 			long id)
 	{
 
-		E item = this.adapter.getItem(position);
+		CommonItemMeta item = this.adapter.getItem(position);
 		Intent intent = new Intent(this,this.listViewRes.getClickActivityClass());
 		intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item);
 

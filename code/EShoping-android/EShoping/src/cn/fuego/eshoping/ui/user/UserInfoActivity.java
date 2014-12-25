@@ -15,7 +15,7 @@ import cn.fuego.eshoping.constant.ListItemTypeConst;
 import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.misp.ui.list.MispDistinctListActivity;
 
-public class UserInfoActivity extends MispDistinctListActivity<CommonItemMeta> implements OnClickListener
+public class UserInfoActivity extends MispDistinctListActivity implements OnClickListener
 {
 
 
