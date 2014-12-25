@@ -11,11 +11,13 @@
 #import "CDCity.h"
 #import "AppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
+#import <ZBUtilities/UIDevice+ZBUtilites.h>
+#import "FEGetCurrentCity.h"
 
 #define FIRSTLETTER @"key"
 #define CITYS       @"citys"
 
-@interface FECitySelectVC ()<UITableViewDataSource,UITableViewDelegate>{
+@interface FECitySelectVC ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>{
     NSMutableArray *_city;
 }
 @property (strong, nonatomic) IBOutlet UITableView *cityTableView;
@@ -23,6 +25,7 @@
 @property (strong, nonatomic) NSArray *searchResult;
 @property (strong, nonatomic) NSArray *allcitys;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) FEGetCurrentCity *getCurrentCity;
 
 @end
 
@@ -48,45 +51,27 @@
         }
     }
     
-    _locationManager = [[CLLocationManager alloc] init];
-    [_locationManager startUpdatingLocation];
-    
-    
-//    __weak typeof(self) weakself = self;
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        NSMutableArray *sortedarray = [NSMutableArray arrayWithArray:[_allcitys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
-//        for (int i = 0; i < 27; i++) {
-//            unichar ch = i + 65;
-//            NSString *key = [NSString stringWithFormat:@"%c",ch];
-//            if (i == 26) {
-//                key = @"#";
-//            }
-//
-//            NSMutableArray *citys = [[NSMutableArray alloc]init];
-//            for (NSString *city in sortedarray) {
-//                CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (CFStringRef)city);CFStringTransform(string, NULL, kCFStringTransformMandarinLatin,NO);
-//                CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);
-//                NSString *pinyin = (__bridge NSString *)string;
-//                if (pinyin.length && [[[pinyin substringToIndex:1] uppercaseString] isEqualToString:key]) {
-//                    [citys addObject:city];
-//                }
-//            }
-//            if (citys.count) {
-//                [_city addObject:@{FIRSTLETTER:key,CITYS:citys}];
-//                [sortedarray removeObjectsInArray:citys];
-//            }
-//        }
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [weakself.cityTableView reloadData];
-//        });
-//    
-//    });
+    self.getCurrentCity = [[FEGetCurrentCity alloc] init];
+    [self.getCurrentCity getCity:^(NSError *error, NSString *city) {
+        if (!error) {
+            NSLog(@"get city success - %@",city);
+        }else{
+            NSLog(@"get city error %@",error);
+        }
+    }];
    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+}
+
+#pragma mark - CLLocationManagerDelegate
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    if (status == kCLAuthorizationStatusAuthorizedAlways) {
+        [manager startUpdatingLocation];
+    }
 }
 
 
@@ -106,7 +91,12 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
-        cell.textLabel.text = ((CDCity *)_city[indexPath.section][CITYS][indexPath.row]).cityititle;
+        if(indexPath.section == 0){
+            cell.textLabel.text = @"定位城市";
+        }else{
+            cell.textLabel.text = ((CDCity *)_city[indexPath.section - 1][CITYS][indexPath.row]).cityititle;
+        }
+        
         return cell;
     }
 }
@@ -119,7 +109,11 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return self.searchResult.count;
     }else{
-        return [_city[section][CITYS] count];
+        if (section == 0) {
+            return 1;
+        }else{
+            return [_city[section - 1][CITYS] count];
+        }
     }
 }
 
@@ -127,7 +121,7 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return 1;
     }else{
-        return _city.count;
+        return _city.count + 1;
     }
     
 }
@@ -143,7 +137,10 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return nil;
     }else{
-        return [_city valueForKey:FIRSTLETTER];
+        NSMutableArray *a = [NSMutableArray array];
+        [a addObject:@""];
+        [a addObjectsFromArray:[_city valueForKey:FIRSTLETTER]];
+        return a;
     }
 }
 
@@ -161,7 +158,12 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return nil;
     }else{
-        return _city[section][FIRSTLETTER];
+        if (section == 0) {
+            return @"";
+        }else{
+            return _city[section-1][FIRSTLETTER];
+        }
+        
     }
 }
 
@@ -170,7 +172,10 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         FEUserDefaultsSetObjectForKey(((CDCity *)self.searchResult[indexPath.row]).cityititle, FEShopRegionKey);
     }else{
-        FEUserDefaultsSetObjectForKey(((CDCity *)_city[indexPath.section][CITYS][indexPath.row]).cityititle, FEShopRegionKey);
+        if (indexPath.section == 0) {
+            return;
+        }
+        FEUserDefaultsSetObjectForKey(((CDCity *)_city[indexPath.section - 1][CITYS][indexPath.row]).cityititle, FEShopRegionKey);
     }
     FEUserDefaultsSync;
     [[NSNotificationCenter defaultCenter] postNotificationName:FERegionCityDidChang object:nil];

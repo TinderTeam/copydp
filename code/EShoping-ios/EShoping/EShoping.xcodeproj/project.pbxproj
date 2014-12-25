@@ -106,6 +106,7 @@
 		148798C51A32CE2000565491 /* FECommunityTopicResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 148798C41A32CE2000565491 /* FECommunityTopicResponse.m */; };
 		148798C81A32CF2C00565491 /* FECommunityCreateResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 148798C71A32CF2C00565491 /* FECommunityCreateResponse.m */; };
 		149893EE1A46C75900903B22 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149893ED1A46C75900903B22 /* CoreLocation.framework */; };
+		1498941D1A4ABE7A00903B22 /* FEGetCurrentCity.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498941C1A4ABE7A00903B22 /* FEGetCurrentCity.m */; };
 		14A1EEE01A1F61CE007619E8 /* FESearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A1EEDF1A1F61CE007619E8 /* FESearchBar.m */; };
 		14A1EEE51A1F7F6E007619E8 /* FEShopWebServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A1EEE41A1F7F6E007619E8 /* FEShopWebServiceManager.m */; };
 		14AA2C401A259B01005FDA8F /* FEBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AA2C3F1A259B01005FDA8F /* FEBaseRequest.m */; };
@@ -365,6 +366,8 @@
 		148798C61A32CF2C00565491 /* FECommunityCreateResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECommunityCreateResponse.h; sourceTree = "<group>"; };
 		148798C71A32CF2C00565491 /* FECommunityCreateResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECommunityCreateResponse.m; sourceTree = "<group>"; };
 		149893ED1A46C75900903B22 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1498941B1A4ABE7A00903B22 /* FEGetCurrentCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEGetCurrentCity.h; sourceTree = "<group>"; };
+		1498941C1A4ABE7A00903B22 /* FEGetCurrentCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEGetCurrentCity.m; sourceTree = "<group>"; };
 		14A1EEDE1A1F61CE007619E8 /* FESearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESearchBar.h; sourceTree = "<group>"; };
 		14A1EEDF1A1F61CE007619E8 /* FESearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESearchBar.m; sourceTree = "<group>"; };
 		14A1EEE31A1F7F6E007619E8 /* FEShopWebServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEShopWebServiceManager.h; sourceTree = "<group>"; };
@@ -675,6 +678,8 @@
 				1408A79F1A39D58C00D02D52 /* FEShopCheckView.m */,
 				14DDD5B61A3AC79A00C5B190 /* FEMapView.h */,
 				14DDD5B71A3AC79A00C5B190 /* FEMapView.m */,
+				1498941B1A4ABE7A00903B22 /* FEGetCurrentCity.h */,
+				1498941C1A4ABE7A00903B22 /* FEGetCurrentCity.m */,
 			);
 			path = FECommon;
 			sourceTree = "<group>";
@@ -1196,6 +1201,7 @@
 				1408A74E1A35DC4000D02D52 /* FEUserSignoutResponse.m in Sources */,
 				140BB7201A2C4FB600A73ADF /* FEGroupCategoryProductCell.m in Sources */,
 				1408A76C1A37F13200D02D52 /* FEActivityShowImageCell.m in Sources */,
+				1498941D1A4ABE7A00903B22 /* FEGetCurrentCity.m in Sources */,
 				148798901A31ABD000565491 /* FEActivityOrderListRequest.m in Sources */,
 				148798AD1A32C6B800565491 /* FECommunityHotTopicRequest.m in Sources */,
 				148798BC1A32C92B00565491 /* FECommunityListResponse.m in Sources */,
