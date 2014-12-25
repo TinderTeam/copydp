@@ -35,7 +35,7 @@ import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.ui.list.ListViewResInfo;
 import cn.fuego.misp.ui.list.MispDistinctListFragment;
 
-public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> implements OnItemClickListener,OnCheckedChangeListener
+public class HomeFragment extends MispDistinctListFragment implements OnItemClickListener,OnCheckedChangeListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
     //定义数组来存放按钮图片  
@@ -228,13 +228,6 @@ public class HomeFragment extends MispDistinctListFragment<CommonItemMeta> imple
 		}
 		
 		return map;
-	}
-	
-	@Override
-	public int getListItemType(CommonItemMeta item)
-	{
-		// TODO Auto-generated method stub
-		return item.getLayoutType();
 	}
 	
 	@Override

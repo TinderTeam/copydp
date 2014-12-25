@@ -1,5 +1,10 @@
 package cn.fuego.eshoping.ui.home;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -11,12 +16,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
+import cn.fuego.eshoping.ui.util.DataConvertUtil;
+import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.list.ListViewResInfo;
 
@@ -32,7 +41,7 @@ public class HomeProductActivity extends BaseActivtiy
 	private ViewPager viewPager;
 	private ImageView[] tips;    
 
-	private ImageView[] mImageViews;  
+	private List<ImageView> mImageViews = new ArrayList<ImageView>();  
     
 	  
  	private ProductJson product;
@@ -55,26 +64,48 @@ public class HomeProductActivity extends BaseActivtiy
 		getSeller();
 		
 		priceView.setText(String.valueOf(product.getPrice()));
-		
+		 
 		
 		
 	}
-	
-	
-	private void displayImage()
+
+	public static List<String> getImgStr(String htmlStr)
 	{
+		String img = "";
+		Pattern p_image;
+		Matcher m_image;
+		List<String> pics = new ArrayList<String>();
+		String regEx_img = "]*?>";
+		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
+		m_image = p_image.matcher(htmlStr);
+		while (m_image.find())
+		{
+			img = img + "," + m_image.group();
+			Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)")
+					.matcher(img);
+			while (m.find())
+			{
+				pics.add(m.group(1));
+			}
+		}
+		return pics;
+	}
+	
+	
+	private void displayImage(List<String> imageUrlList)
+	{
+		 
 		ViewGroup group = (ViewGroup)findViewById(R.id.home_product_image_view_group);  
         viewPager = (ViewPager) findViewById(R.id.home_product_image);  
           
-        //载入图片资源ID  
-        int[] imgIdArray = new int[]{R.drawable.home_beauty, R.drawable.home_car,  
-                R.drawable.home_education };  
+ 
           
         //将点点加入到ViewGroup中  
-        tips = new ImageView[imgIdArray.length];  
-        for(int i=0; i<tips.length; i++){  
+        tips = new ImageView[imageUrlList.size()];  
+        for(int i=0; i<tips.length; i++)
+        {  
             ImageView imageView = new ImageView(this);  
-            imageView.setLayoutParams(new LayoutParams(10,10));  
+            imageView.setLayoutParams(new LayoutParams(2,2));  
             tips[i] = imageView;  
             if(i == 0){  
                 tips[i].setBackgroundResource(R.drawable.app_icon);  
@@ -90,27 +121,27 @@ public class HomeProductActivity extends BaseActivtiy
         }  
           
   
-        //将图片装载到数组中  
-        mImageViews = new ImageView[imgIdArray.length];  
-        for(int i=0; i<mImageViews.length; i++){  
-            ImageView imageView = new ImageView(this);  
-            mImageViews[i] = imageView;  
-            imageView.setBackgroundResource(imgIdArray[i]);  
-        }  
+ 
+        for(String url : imageUrlList)
+        {  
+            ImageView imageView = new ImageView(this);
+            LoadImageUtil.getInstance().loadImage(imageView, url);
+            mImageViews.add(imageView);
+         }  
           
         //设置Adapter  
         viewPager.setAdapter(new MyAdapter());  
         //设置监听，主要是设置点点的背景  
         //viewPager.setOnPageChangeListener(this);  
         //设置ViewPager的默认项, 设置为长度的100倍，这样子开始就能往左滑动  
-        viewPager.setCurrentItem((mImageViews.length) * 100);  
+        viewPager.setCurrentItem(0);  
 	}
 			
 	 public class MyAdapter extends PagerAdapter{  
 		  
 	        @Override  
 	        public int getCount() {  
-	            return Integer.MAX_VALUE;  
+	            return mImageViews.size(); 
 	        }  
 	  
 	        @Override  
@@ -120,7 +151,7 @@ public class HomeProductActivity extends BaseActivtiy
 	  
 	        @Override  
 	        public void destroyItem(View container, int position, Object object) {  
-	            ((ViewPager)container).removeView(mImageViews[position % mImageViews.length]);  
+	            ((ViewPager)container).removeView(mImageViews.get(position));  
 	              
 	        }  
 	  
@@ -129,8 +160,8 @@ public class HomeProductActivity extends BaseActivtiy
 	         */  
 	        @Override  
 	        public Object instantiateItem(View container, int position) {  
-	            ((ViewPager)container).addView(mImageViews[position % mImageViews.length], 0);  
-	            return mImageViews[position % mImageViews.length];  
+	            ((ViewPager)container).addView(mImageViews.get(position), 0);  
+	            return mImageViews.get(position);  
 	        }
  
 	          
@@ -155,6 +186,14 @@ public class HomeProductActivity extends BaseActivtiy
 			{
 				TextView view = (TextView) findViewById(R.id.home_product_seller_info);
 				view.setText(rsp.getSeller().getDscr());
+				List<String> imageList = getImgStr(rsp.getSeller().getInfo());
+				if(ValidatorUtil.isEmpty(imageList))
+				{
+					imageList = new ArrayList<String>();
+				}
+				imageList.add(0,DataConvertUtil.getAbsUrl(product.getImgsrc()));
+				displayImage(imageList);
+				
 			}
  
 		}
