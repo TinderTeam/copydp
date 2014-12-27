@@ -62,7 +62,9 @@
 
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
     if (status == kCLAuthorizationStatusNotDetermined) {
-        [manager requestWhenInUseAuthorization];
+        if (!SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+            [manager requestWhenInUseAuthorization];
+        }
     }else if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [manager startUpdatingLocation];
     }
