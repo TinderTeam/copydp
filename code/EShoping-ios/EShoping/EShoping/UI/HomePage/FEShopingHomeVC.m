@@ -287,7 +287,8 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         if (!self.segment) {
-            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[@"最新特惠",@"分类推荐",@"热门推荐"]];
+            
+            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[FEString(@"最新特惠"),FEString(@"分类推荐"),FEString(@"热门推荐")]];
             _segment.font = FEFont(14);//[UIFont systemFontOfSize:14];
             _segment.selectedTextColor = FEThemeOrange;
             _segment.selectionIndicatorColor = FEThemeOrange;
@@ -331,7 +332,7 @@
 
 #pragma mark - SegmentControllClick
 -(void)segmentedControlChangedValue:(FESegmentControl *)seg{
-    [self.shopingTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.shopingTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 //-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -434,10 +435,10 @@
 
 //get all city list and product category list
 -(void)getcityandcategory{
-//    if ([FECoreData fetchCity].count && [FECoreData fetchCategory].count) {
-//        [self requestRecommend];
-//        return;
-//    }
+    if ([FECoreData fetchCity].count && [FECoreData fetchCategory].count) {
+        [self requestRecommend];
+        return;
+    }
     [self displayHUD:FEString(@"加载中...")];
     __weak typeof(self) weakself = self;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);

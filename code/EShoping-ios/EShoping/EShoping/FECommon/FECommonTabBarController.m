@@ -35,7 +35,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    self.tabBar.backgroundImage = [UIImage imageFromColor:FEColor(233, 234, 237, 1)];
+    self.tabBar.backgroundImage = [UIImage imageFromColor:FEColor(233, 234, 237, 1)];
     
 //    self.tabBar.selectionIndicatorImage = [[UIImage imageFromColor:FEThemeColor] imageScaledToSize:CGSizeMake(64, 49)];
 //    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:

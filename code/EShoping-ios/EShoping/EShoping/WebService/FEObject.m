@@ -23,6 +23,7 @@
                 if (![dictionary[key] isKindOfClass:[NSNull class]] && dictionary[key] != nil) {
                     @try {
                         if (NSClassFromString([attributes[[property indexOfObject:key]] attribute]) == [NSNumber class] && ![dictionary[key] isKindOfClass:[NSNumber class]]) {
+                            
                             NSNumber *number = [f numberFromString:dictionary[key]];
                             [self setValue:number forKey:key];
                         }else{
