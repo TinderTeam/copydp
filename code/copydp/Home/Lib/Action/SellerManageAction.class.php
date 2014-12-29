@@ -51,6 +51,21 @@ class SellerManageAction extends Action {
 		$this->ajaxReturn($sellerInfo, 'Ajax 成功！', 1);
 	}
 	
+	public function showCode($id=0){
+		$sellerdb = M('seller');
+		$sellerIDCondition['user_id']=$id;
+		$Data['qr_code']='true';
+		$sellerdb->where($sellerIDCondition)->save($Data);
+		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向	
+	}
+		
+	public function hideCode($id=0){
+		$sellerdb = M('seller');
+		$sellerIDCondition['user_id']=$id;
+		$Data['qr_code']='false';
+		$sellerdb->where($sellerIDCondition)->save($Data);
+		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向
+	}
 	public function svipEdit($type=0,$id=0){
 		if($type=='edit'){
 			trace($info,'edit svip product. id='.$id);
@@ -72,6 +87,7 @@ class SellerManageAction extends Action {
 	
 	
 	public function saveSVIPProduct(){	
+			$type=$_POST['type'];
 	//图片处理
 		//导入图片上传类  
         import("ORG.Net.UploadFile");  
@@ -85,17 +101,21 @@ class SellerManageAction extends Action {
         $upload->savePath = "./Public/uploads/img/";//这里说明一下，由于ThinkPHP是有入口文件的，所以这里的./Public是指网站根目录下的Public文件夹  
         //设置文件上传名(按照时间)  
         //$upload->saveRule = "time";  
-        if (!$upload->upload()){  
-			$errMsg=($upload->getErrorMsg());				
+        if (!$upload->upload()){ 
+			if($_POST['type']=='edit'){
+			
+			}else{
+				$errMsg=($upload->getErrorMsg());
+			}					
         }else{  
             //上传成功，获取上传信息  
             $info = $upload->getUploadFileInfo();  
 			$imgsrc=$info[0]['savename'];
         }    
+		
 	//图片处理over
 	
-		$type=$_POST['type'];	
-		if($type!='edit'){
+
 			//log
 			trace($info,'create a svip product');
 			trace($info,'limit_consumption_num='.$_POST['limit_consumption_num']);
@@ -110,14 +130,17 @@ class SellerManageAction extends Action {
 			trace($info,'original_price='.$_POST['original_price']);
 			trace($info,'describe='.$_POST['describe']);
 			trace($info,'imgsrc='.$imgsrc);
-				
-			//create svip
+			
 			$svipProductdb= M('svip_product');
 			$datasvip['limit_consumption_num']=$_POST['limit_consumption_num'];
 			$datasvip['limit_consumption_period']=$_POST['limit_consumption_period'];
 			$datasvip['create_datetime']=date('y-m-d h:i:s',time());
+					
+		if($type!='edit'){
+		
+			//create svip
 			$svipid=$svipProductdb->add($datasvip);	
-			trace($info,'save svip product');
+			trace($info,'save svip product');	
 			
 			//create product
 			$productdb=M('product');
@@ -141,6 +164,53 @@ class SellerManageAction extends Action {
 				$productdb->add($datap);
 			}				
 			trace($info,'save product');
+		}else if($type=='edit'){
+			//update svip
+			$svipIDcondition['svup_product_id']=$_POST['svip_product_id'];
+			$svipid=$svipProductdb->where($svipIDcondition)->save($datasvip);	
+			trace($info,'save svip product');	
+			
+			//update product
+			$productdb=M('product');	
+
+/*			
+			//先获取已有的产品
+			$sproductList=$productdb->where($svipIDcondition)->select();
+			
+			$idListStr=$_POST['sellerIDList'];
+			$idList=explode(',',$idListStr);
+			
+			//进行ID比对，如果没有则删除该产品
+			foreach($sproductList as $product){
+				$exist='false';
+				foreach($idList as $id){
+					if($product['product_id']==$id){
+						$exist='true';
+					}
+				}
+				if($exist=='false'){
+					$deleteCondition['product_id']=$product['product_id'];					
+					$productdb->where($deleteCondition)->delete();
+				}
+			}
+			*/
+			foreach($idList as $id){
+				trace($info,'idList[]'.$id);
+				$productCondition['product_id']=$id;
+				$datap['name']=$_POST['name'];
+				$datap['type_id']=$_POST['type_id'];
+				$datap['seller_id']=$id;
+				$datap['update_date']=date('y-m-d h:i:s',time());
+				$datap['end_date_time']=$_POST['end_date_time'];
+				$datap['price']=$_POST['price'];
+				$datap['original_price']=$_POST['original_price'];
+				$datap['describe']=$_POST['dsrc'];
+				$datap['basic_infor']=$_POST['info'];
+				$datap['svip_product_id']=$svipid;
+				$datap['imgsrc']=$imgsrc;
+				$datap['product_status']='正常';
+				$productdb->where($productCondition)->save($datap);
+			}				
 		}
 		
 		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向

@@ -114,7 +114,7 @@
 									<td align="center" >{$product[0].dsrc}</td>
 									<td align="center" >{$n}</td>
 									<td align="center" >
-										<input type="submit" value="编辑"  onclick="editsvipProduct('{$v1.svip_product_id}')"/>
+										<!---<input type="submit" value="编辑"  onclick="editsvipProduct('{$v1.svip_product_id}')"/>--->
 										<input type="submit" value="删除"  onclick="svipProductRemove('{$v1.svip_product_id}')"/>
 									</td>
 								</tr>					
@@ -195,7 +195,8 @@
 									<th width="10%">商户类型</th>	
 									<th width="10%">所在城市</th>
 									<th width="10%">商户状态</th>
-									<th width="30%">商户描述</th>						
+									<th width="10%">二维码显示</th>
+									<th width="20%">商户描述</th>										
 									<th width="5%">操作</th>
 								</tr>
 						<foreach name='sellerInfo' item='v1'>	
@@ -209,12 +210,17 @@
 									<td align="center" >{$v1.type_name}</td>
 									<td align="center"> {$v1.city}</td>
 									<td align="center"> {$v1.status}</td>
+									<td align="center">
+									{$v1.qr_code}
+										<if condition="$v1.qr_code eq 'true'">
+											<input type="submit" value="隐藏"  onclick="javascript:this.form.action='__URL__/hideCode?id={$v1.user_id}';"/>
+										<else/>
+											<input type="submit" value="显示"  onclick="javascript:this.form.action='__URL__/showCode?id={$v1.user_id}';"/>
+										</if>
+									</td>
 									<td align="center" >{$v1.description}</td>
 									<td align="center" >
 										<input type="submit" value="编辑"  onclick="javascript:this.form.action='__URL__/sellerEditView?type=edit&sellerID={$v1.user_id}';"/>
-										<!----
-										<input type="submit" value="删除"  onclick="javascript:this.form.action='__URL__/sellerDelete?sellerID={$v1.user_id}';"/>
-										--->
 									</td>
 								</tr>					
 						</foreach>		

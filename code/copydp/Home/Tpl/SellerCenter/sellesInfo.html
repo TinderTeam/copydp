@@ -119,18 +119,28 @@ margin-right: 10px;
 			</div>
 								
 			<!--二维码-->
-			<div class="um-con" id="myEvaluation">
-				<div class="modebox my-comm J_my_comm" >
-					<div class="hd">
-						<h4>二维码</h4>			
+			<?php				
+				$sellerdb = M('seller');
+				$sellerIDCondition['user_id']=$userID;
+				$seller = $sellerdb->where($sellerIDCondition)->find();
+				$codeFlag= $seller['qr_code'];			
+			?>
+			
+				<if condition="$codeFlag eq 'true'">
+					<div class="um-con" id="myEvaluation">
+						<div class="modebox my-comm J_my_comm" >
+							<div class="hd">
+								<h4>二维码</h4>			
+							</div>
+							<div class="con">
+								<div class="">
+									<div id="output" data="__APP__/Buy/SellerOrder?id={$userID}"></div>		
+								</div>				
+							</div>
+						</div>
 					</div>
-					<div class="con">
-						<div class="">
-							<div id="output" data="__APP__/Buy/SellerOrder?id={$userID}"></div>		
-						</div>				
-					</div>
-				</div>
-			</div>
+				</if>
+		
 			<!--我的评价-->
 			<div class="um-con" id="myEvaluation">
 				<div class="modebox my-comm J_my_comm" >
