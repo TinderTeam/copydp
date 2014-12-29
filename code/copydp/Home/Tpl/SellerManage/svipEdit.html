@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+
+<title>团购网站</title>
+<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/index.min.05bc1f8116a303ec3ea228348bbf6db5.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/css/cssnew/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+	<script src="__PUBLIC__/js/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/jquery.validate.messages_cn.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/jquery.metadata.js" type="text/javascript"></script>
+  <script type="text/javascript">
+	window.UEDITOR_HOME_URL = "__ROOT__/Public/ueditor/";
+		function selectChange(){
+		var id=$(".selectTarget").val();
+		
+		$(".showOption").each(function(){	
+			$(this).remove();
+		});
+		
+		$(".copy").each(function(){
+			var fatherID=$(this).attr("fatherID");
+			var typeID=$(this).attr("typeID");
+			var name=$(this).html();
+			if(fatherID==id){				
+				$("#type_id").append(
+					"<option class='showOption' value='"+typeID+"'>"+name +"</option>"
+				); 
+			}
+		});
+	
+	}
+
+  </script>
+	<!---footer-->
+	<link href="__PUBLIC__/ueditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+	
+
+	
+</head>
+
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏---->
+	
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/> 
+		<!---Logo栏---->
+		
+		<div class="nav-bar">
+			<div class="cont">
+
+				<!-----主菜单---->
+					<include file="./Home/Tpl/Public/menu.html"/>
+				<!-----主菜单---->
+			</div>
+		</div>
+	</div>
+	
+	<!---主页面---->
+	<div class="wrap">
+		<!---左侧导航栏--->
+		<div class="user-nav J_user_nav">
+			<!-----管理菜单---->
+			<ul>
+				<li class="cur"><a href="#">SVIP产品新增</a><i class="n-arr"></i></li>
+			</ul>
+			<!-----管理菜单---->
+		</div><!---左侧导航栏--->
+		<!---中间主要内容--->
+		<div class="main_w Tabs-page user-main  page-account">	
+			<div class="user-main">
+				<!---产品信息编辑--->
+				<div class="um-con">
+					<!--标题-->
+					<form id="form" name="form" action="__URL__/saveSVIPProduct" method="post" enctype="multipart/form-data">
+					<div class="modebox my-booking J_my_booking">
+						<div class="hd">
+						
+							<h4>
+								<?php
+									if($type!='edit'){
+										print("新增SVIP产品");
+									}else{
+										print("编辑SVIP产品");
+										$svipProduct = M('view_svip_product');
+										$svipProductIDCondition['svip_product_id']=$id;
+										$svipProduct=$svipProduct->where($svipProductIDCondition)->find();
+										
+										$productDB=M('view_product');
+										$productIDCondiiton['svip_product_id']=$id;
+										$productItem= $productDB->where($svipProductIDCondition)->select();	
+	
+									}
+								?>
+								<input name="svip_product_id" style="display:none" value="{$id}"/>
+								<input id="type" name="type" style="display:none" value="{$type}"/>
+								<input id="sellerList" name="sellerIDList" style="display:none" value=""/>
+							</h4>	
+						</div> 	
+					</div> 	<!--标题--> 
+					<!--表单-->
+						<div class="con">
+							<div class="main page-sa page-sa-col Fix">
+								<div class="block shop-add-form">
+									<!--表单内容-->									
+										<div class="form-inner">
+										
+											<div class="form-block">
+												<label class="label label_required" >产品名称：<em>*</em></label>
+												<input type="text" maxlength="50" class="form-txt form-txt-l" 
+												autocomplete="off" size="60" value="{$svipProduct.product_name}"   name="name">
+												
+											</div>
+											
+											<div class="form-block">
+												<span class="label">概述：</span>
+												<input type="text" class="form-txt form-txt-l" 
+												 value="{$svipProduct.dsrc}"   name="dsrc">
+											
+											</div>
+											
+											<div class="form-block">
+												<span class="label">限制类型：</span>
+												<select name="limit_consumption_period">
+													<?php
+														if($type=='edit'){
+															print('<option value="'.$svipProduct['limit_consumption_period'].'"/>'.$svipProduct['limit_consumption_period']);							
+														}
+													?>
+													<option value='每周'/>每周
+													<option value='每两周'/>每两周
+													<option value='每半月'/>每半月
+													<option value='每月'/>每月
+													<option value='每季度'/>每季度
+													<option value='每年'/>每年
+												</select>
+											</div>
+											<div class="form-block">
+												<span class="label">限制次数：</span>
+												<input type="number" class="form-txt form-txt-l" 
+												 value="{$svipProduct['limit_consumption_num']}"   name="limit_consumption_num">
+												 次
+											</div>
+											
+											<div id="trPriceInfo"  class="form-block">
+											
+														<span class="label label_required">产品类型<em>*</em></span>
+													<?php
+															$productType=M('product_type');
+															$condition['father_id'] = 0;
+															$type=$productType->where($condition)->select();
+													?>
+																							
+													<select id="typeSelect"  class="form-select-sim selectTarget"  onchange="selectChange()">
+														<option  value="">请选择类型</option>
+													<foreach name='type' item='mainType'>
+														<option value="{$mainType.type_id}">{$mainType.type_name}</option>
+													</foreach>											
+													</select>
+
+													<?php
+															$productType=M('product_type');
+															$all_type=$productType->select();
+													?>
+													<select id="type_id" name="type_id" class="form-select-sim form-select-sim-m zone-select ">
+														<option  selected="selected" value="">请选择子类型</option></span>
+														<foreach name='all_type' item='subtype'>
+															<if condition="$subtype.father_id eq 0">
+																<option class="showOption" value="{$subtype.type_id}">
+																	{$subtype.type_name}
+																</option>	
+																<else/>
+																<option class="tpyeGroup{$subtype.father_id} showOption" value="{$subtype.type_id}">
+																	{$subtype.type_name}
+																</option>
+																
+															</if>
+																																
+														</foreach>											
+													</select>
+													
+													<select id="copy" name="null" class="form-select-sim form-select-sim-m zone-select Hide">
+														<option  selected="selected" value="">请选择子类型</option></span>
+														<foreach name='all_type' item='subtype'>
+															<if condition="$subtype.father_id eq 0">
+																<option class="copy_tpyeGroup{$subtype.type_id} copy" value="{$subtype.type_id}"
+															>{$subtype.type_name}</option>
+																<else/>
+															
+																	<option fatherID="{$subtype.father_id}" typeID="{$subtype.type_id}" class="copy_{$subtype.type_id} copy" value="{$subtype.type_id}">
+																		{$subtype.type_name}
+																	</option>
+													
+															</if>
+																																
+														</foreach>											
+													</select>
+											</div>
+											<div class="form-block">
+												<span class="label">截止日期:</span>
+												<input name="end_date_time" type="text" placeholder="格式：YYYY-mm-DD"  value="{$svipProduct['create_datetime']}" class="form-txt form-txt-l"/>
+											</div>
+											
+											
+											<div class="form-block">
+												<span class="label valuecheck">价格:</span>
+												<input name="price"  type="number" value="{$productItem[0]['price']}" class="form-txt form-txt-l valuecheck"/>
+											</div>
+											<div class="form-block">
+												<span class="label ">原价:</span>
+												<input name="original_price"  type="number" value="{$productItem[0]['original_price']}" class="form-txt form-txt-l valuecheck"/>
+											</div>
+											
+											<div class="form-block">
+												<span class="label">封面上传：</span>										
+												<input name="img[]" type="file" id="up0" onchange="viewmypic(showimg,this.form.up0);"
+												/>
+												(推荐大小 350*200)
+											</div>
+											<div class="form-block">
+												<if condition="$svipProduct['imgsrc'] eq ''">
+													
+												<else/>
+													<img name="img0" src="__PUBLIC__/uploads/img/{$productItem[0]['imgsrc']}" alt="请上传活动封面" style="margin-left:90px;height:200px;width:350px;" id="img0">
+												</if>
+											</div> 
+											<!---
+											<div class="form-block">
+												<span class="label">更多图片：</span>
+												<button>更多图片上传</button>									
+											</div>
+											--->
+											<div class="form-block">
+												<span class="label">详细描述：</span>									
+											</div>  
+											<div class="form-block" style="margin-left: 85px;">									
+												<textarea id="info-text" name="info" class="Hide" value=""></textarea>									
+												<script id="editor" type="text/plain" class="form-default" style="width:500px;">
+												</script>									
+											</div>  
+											
+											<div class="form-block">
+												<span class="label">已选商家:</span>
+												
+												<table width="500px" class="confirm-order-tab" style="margin-left: 85px;">
+													<tbody class='loaditem'>
+														<tr>
+															<th >用户编号</th>
+															<th >商户名称</th>														
+															<th >所在城市</th>				
+															<th >操作</th>
+														</tr>
+													</tbody>
+	
+													<foreach name='productItem' item='v1'>													
+														<tr class="load_{$v1.seller_id}">
+															<td valign="middle" align="left" class="sellerID_{$v1.seller_id}" data="{$v1.seller_id}">{$v1.seller_id}</td>
+															<td valign="middle" align="left" class="sellerName_{$v1.seller_id}" data="{$v1.username}">{$v1.username}</td>
+															<td class="sellerCity_{$v1.seller_id}" align="center" data="{$v1.city}"> {$v1.city}</td>														
+															<td align="center" >
+																<button type="button" value="" onclick="removeItem('{$v1.seller_id}')">移除</button>
+															</td>
+														</tr>					
+													</foreach>
+													
+												</table>
+												<span class="label">待选商家:</span>
+												<div class="span-input">
+													<span>名称：</span><input id='searchfilter' type="text" name="seller_name" value=''/>									
+													<button id='search-btn' type="button" onclick='search()'>查询</button>
+												</div>
+												<table width="500px" class="confirm-order-tab" style="margin-left: 85px;">
+													<tbody class='inittable'>
+														<tr>
+															<th >用户编号</th>
+															<th >商户名称</th>														
+															<th >所在城市</th>				
+															<th >操作</th>
+														</tr>
+														<foreach name='sellerInfo' item='v1'>													
+															<tr class='initItem'>
+																<td valign="middle" align="left" class="sellerID_{$v1.user_id}" data="{$v1.user_id}">{$v1.user_id}</td>
+																<td valign="middle" align="left" class="sellerName_{$v1.user_id}" data="{$v1.username}">{$v1.username}</td>
+																<td class="sellerCity_{$v1.user_id}" align="center" data="{$v1.city}"> {$v1.city}</td>														
+																<td align="center" >
+																	<button class="addin" type="button" value="" data="{$v1.user_id}" >加入</button>
+																</td>
+															</tr>					
+														</foreach>
+													</tbody>
+												</table>
+											</div>								
+									 </div><!--表单内容-->
+								 <!--提交区域-->
+									<div class="block form-btn-block form-block form-content-block">
+										<div class="btn-type-b btn-fn-c">										
+											<input type="button" value="提交" class="form-btn submit-btn"/>
+										</div> 
+									</div><!--提交区域-->
+								</div>
+							</div>		
+						</div><!--表单-->
+					</form>				
+            </div><!---产品信息编辑--->
+		</div>
+	</div><!---中间主要内容--->
+</div><!---主页面---->
+
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+	
+	<div id="htmldiv" class= "Hide">
+		{$productItem[0]['basic_infor']}
+	</div>
+	
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+	
+	<script type="text/javascript">	
+	   //实例化编辑器
+		var um = UM.getEditor('editor');
+		um.setContent($("#htmldiv").html());
+		$(".submit-btn").click(function(){
+			var txt=UM.getEditor('editor').getContent();//获得描述内容
+			//测试描述内容
+			//var txt = '<p><img src=\"http://127.0.0.1:89/DIYBuy/app/Public/ueditor/php/upload/20141008/14127569472248.jpg\" _src=\"http://127.0.0.1:89/DIYBuy/app/Public/ueditor/php/upload/20141008/14127569472248.jpg\"/></p><p><img src=\"http://127.0.0.1:89/DIYBuy/app/Public/ueditor/php/upload/20141008/14127569585354.jpg\" _src=\"http://127.0.0.1:89/DIYBu"';   
+			//var restr = /src\s*=\Shttp:\S{2,2}[\d]{1,3}.[\d]{1,3}.[\d]{1,3}.[\d]{1,3}:[\d]{0,4}\SDIYBuy\Sapp\SPublic\Sueditor\Sphp\Supload\S\w{0,}\S\w{0,}.jpg\"/g;    
+			//匹配正则表达式
+			//var ipStr = /<img src\s*=\Shttp:\S{2,2}[\d]{1,3}.[\d]{1,3}.[\d]{1,3}.[\d]{1,3}:[\d]{0,4}\SDIYBuy\Sapp\SPublic\S/g; 
+			
+			var ipStr = /<img src\s*=\S{1,}(http|https):\S{2,2}\S{1,}\SDIYBuy\Sapp\SPublic\S/g;
+			//获取上传的路径		
+			var array=txt.match(ipStr);
+			//alert(array);
+			if(array!=null){
+				
+				//获取系统路径
+				var path=$("#info-text").attr('ip');				
+				for(var i = 0 ;i<array.length;i++ ){
+					//全文替换
+					txt = txt.replace(array[i],"<img src="+'"'+path);
+				}
+				
+			}
+			txt=txt.replace(/\"/g,"");			
+			$("#info-text").val(txt);
+			//alert("最终结果："+$("#info-text").val());
+			$("#form").submit();
+		});
+	</script>
+	
+	 <script>
+	 $('.valuecheck').change(function(){			
+			var num=$(this).val();
+			if(num<0){
+				alert('该数值不能小于0');
+				$(this).val(0);
+			}		
+		});	
+    </script>
+	
+	<script>
+	var idList = new Array();　//创建一个数组
+	
+	
+	$(".addin").click(function(){
+		var id=$(this).attr('data');
+		var ok=true;
+		if(idList.length!=0){
+			for(var i = 0; i<idList.length;i++){
+				if(idList[i]==id){
+					ok=false;;
+					alert('商家不能重复添加');
+				}
+			}
+		}
+		
+		if(ok){
+			$('.loaditem').append(
+				'<tr class="load_'+id+'">'+
+					'<td valign="middle" align="left">'+id+'</td>'+
+					'<td valign="middle" align="left">'+$('.sellerName_'+id).attr('data')+'</td>'+
+					'<td align="center">'+$('.sellerCity_'+id).attr('data')+'</td>'		+								
+					'<td align="center">'+
+						'<button type="button" value="" onclick="removeItem('+id+')">移除</button>'+
+					'</td>'+
+				'</tr>'
+			);
+			idList[idList.length]=id;
+			
+			$('#sellerList').val(idList);
+		}
+
+	});
+
+	function removeItem(id){
+		for(var i=0;i<idList.length;i++){
+			if(idList[i]==id){
+				idList.splice(i,1);
+				$('.load_'+id).remove();
+				$('#sellerList').val(idList);
+			}
+		}
+	}
+
+	function updateItem(array){
+		$('.initItem').remove();		
+		for(var i = 0;i<array.length;i++){
+			$('.inittable').append(
+				'<tr class="initItem">'+
+				'<td valign="middle" align="left" class="sellerID_'+array[i].user_id+'" data="'+array[i].user_id+'">'+array[i].user_id+'</td>'+
+				'<td valign="middle" align="left" class="sellerName_'+array[i].username+'" data="'+array[i].username+'">'+array[i].username+'</td>'+
+				'<td class="sellerCity_'+array[i].user_id+'" align="center" data="'+array[i].city+'"> '+array[i].city+'</td>'+													
+				'<td align="center" >'+
+					'<button class="addin" type="button" value="" data="'+array[i].user_id+'" >加入</button>'+
+				'</td>'+
+			'</tr>'	
+			);
+		}
+		$(".addin").click(function(){
+		var id=$(this).attr('data');
+		var ok=true;
+		if(idList.length!=0){
+			for(var i = 0; i<idList.length;i++){
+				if(idList[i]==id){
+					ok=false;;
+					alert('商家不能重复添加');
+				}
+			}
+		}
+		
+		if(ok){
+			$('.loaditem').append(
+				'<tr class="load_'+id+'">'+
+					'<td valign="middle" align="left">'+id+'</td>'+
+					'<td valign="middle" align="left">'+$('.sellerName_'+id).attr('data')+'</td>'+
+					'<td align="center">'+$('.sellerCity_'+id).attr('data')+'</td>'		+								
+					'<td align="center">'+
+						'<button type="button" value="" onclick="removeItem('+id+')">移除</button>'+
+					'</td>'+
+				'</tr>'
+			);
+			idList[idList.length]=id;
+			
+			$('#sellerList').val(idList);
+		}
+
+	});
+	}
+
+	function search(){
+			var id=$('#searchfilter').val();
+			//ajax
+			$.ajax({
+				  type:"post",
+				  url:"__URL__/searchsvip",
+				  data:"data="+id,
+				  dataType:"html",
+				  error:
+				  function(){
+					  alert("当前ajax操作出错！");
+				  },
+				  success:function(msg){				 
+					var json = eval('(' + msg + ')'); 
+					var array=json.data;
+					updateItem(array);
+				  }
+			});			
+	}
+	</script>
+</body>
+</html>

@@ -1,74 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"/>
+	<meta charset="UTF-8"/>
+	<title>团购网站</title>
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+	<!-- <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+	<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+	<link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+	<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" /> -->
+	<style>
+		body {
+			background-color: #f2f2f2;
+		}
+		.wrap{
+		width: 1190px;
+		margin: 15px auto;
+		}
+		.wrap .user-main {
+		float: right;
+		width: 1000px;
+		}
 
-<title>团购网站</title>
+		.user-main .um-con .modebox li {
+		float: left;
+		height: 39px;
+		width: 190px;
+		margin-right: 10px;
+		}
+		.span-input{
+			margin-top: 5px;
+		}
 
-<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" type="text/css" />
-<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
-<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" type="text/css" />
-<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
-<link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
-<link rel="stylesheet" href="__PUBLIC__/css/cssnew/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
-<!-- <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
-<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
-<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
-<link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
-<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" /> -->
-<style>
-body {
-	background-color: #f2f2f2;
-}
-.wrap{
-width: 1190px;
-margin: 15px auto;
-}
-.wrap .user-main {
-float: right;
-width: 1000px;
-}
-
-.user-main .um-con .modebox li {
-float: left;
-height: 39px;
-width: 190px;
-margin-right: 10px;
-}
-.span-input{
-	margin-top: 5px;
-}
-
-.span-select{
-    width: 129px;
-    height: 20px;
-}
-.btnbar{
-    margin-left: 5px;
-    margin-right: 5px;
-
-}
-</style>
+		.span-select{
+			width: 129px;
+			height: 20px;
+		}
+		.btnbar{
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+	</style>
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
 		<include file="./Home/Tpl/Public/header.html"/>
-	<!---标题栏---->
-	
+	<!---标题栏End---->
 	<div class="head responsive">
 		<!---Logo栏---->
 			<include file="./Home/Tpl/Public/logobar.html"/>
-		<!---Logo栏---->
+		<!---Logo栏End---->
 		
+		<!-----主菜单---->
 		<div class="nav-bar">
-			<div class="cont">			
-				<!-----主菜单---->
-					<include file="./Home/Tpl/Public/menu.html"/>
-				<!-----主菜单---->
+			<div class="cont">						
+				<include file="./Home/Tpl/Public/menu.html"/>
 			</div>
 		</div>
+		<!-----主菜单End---->
 	</div>
-	<!--	<div class="wrap">-->
+	<!--<div class="wrap">-->
 	<div class="wrap">
 		<div class="user-nav J_user_nav">
 			<!-----管理菜单---->
@@ -76,6 +72,63 @@ margin-right: 10px;
 			<!-----管理菜单---->
 		</div>
 		<div class="user-main">
+					<!--<div class="um-con">-->
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+					<input id="nav" value="{$nav}" style="display:none;"/>
+						<h4>SVIP 产品发布</h4>
+						<span>发布SVIP产品并分配到商家</span>
+					</div>					
+					<div class="pay-confirm">
+						<?php
+							$svipProductdb= M('svip_product');
+							$sviplist = $svipProductdb->select();						
+						?>
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="10%">SVIP产品编号</th>
+									<th width="10%">产品名称</th>
+									<th width="10%">产品类型</th>
+									<th width="30%">发起时间</th>	
+									<th width="10%">特权详情</th>									
+									<th width="10%">产品描述</th>
+									<th width="15%">参与商户数量</th>						
+									<th width="5%">操作</th>
+								</tr>
+						<foreach name='sviplist' item='v1'>	
+								<?php
+									$Productdb= M('view_svip_product');
+									$productCondition['svip_product_id']=$v1['svip_product_id'];
+									$product = $Productdb->where($productCondition)->select();
+									
+									$n=Count($product);
+								?>
+								<tr>
+									<td valign="middle" align="left" class="deal">{$v1.svip_product_id}</td>
+									<td valign="middle" align="left" class="deal">{$product[0].product_name}</td>
+									<td align="center" >{$product[0].type_name}</td>
+									<td align="center"> {$v1.create_datetime}</td>
+									<td align="center"> {$v1.limit_consumption_period}{$v1.limit_consumption_num}次</td>
+									<td align="center" >{$product[0].dsrc}</td>
+									<td align="center" >{$n}</td>
+									<td align="center" >
+										<input type="submit" value="编辑"  onclick="editsvipProduct('{$v1.svip_product_id}')"/>
+										<input type="submit" value="删除"  onclick="svipProductRemove('{$v1.svip_product_id}')"/>
+									</td>
+								</tr>					
+						</foreach>		
+						
+							</tbody>
+						</table>
+					</div>
+					
+					<strong class="btn-type-b btn-fn-c">
+										<input type="submit" value="发布新SVIP产品"  class="form-btn" onclick="newSVIPProduct()" />
+									</strong>	
+				</div>
+			</div>	<!--<div class="um-con">-->
 			<!--<div class="um-con">-->
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
@@ -124,7 +177,6 @@ margin-right: 10px;
 								<strong class="btn-type-b btn-fn-c btnbar">			
 									<input type="button" value="新增商家" class="form-btn" onclick="location.href='__APP__/SellerManage/sellerAdd'" />
 								</strong> 
-
 						</li>
 
 					</ul>
@@ -552,6 +604,24 @@ margin-right: 10px;
 		}
 	}
 	
+		//删除SVIP产品
+	function svipProductRemove(id)
+	{
+		var r=confirm("确定要删除这个产品？");
+		if(r==true)
+		{	
+			top.location="__APP__/SellerManage/svipProductRemove?id="+id;	
+		}
+		else
+		{	
+		}
+	}
+			//编辑SVIP产品
+	function editsvipProduct(id)
+	{
+		top.location="__APP__/SellerManage/svipEdit?id="+id+"&type=edit";	
+	}
+	
 	//冻结
 	function freezesbmt()
 	{
@@ -566,6 +636,12 @@ margin-right: 10px;
 			
 		}
 	}
+		//新建SVIP产品
+	function newSVIPProduct()
+	{
+		top.location="__APP__/SellerManage/svipEdit?type=create";
+	}
+	
 </script>			
 </body>
 </html>

@@ -22,16 +22,57 @@ class BuyAction extends BuyServiceAction {
 		{
 			$dbProduct =new Model('product');
 			$productCondition['product_id'] = $productID;
-			$privilege = $dbProduct->where($productCondition)->getField('svip_privilege');
+			$privilege = $dbProduct->where($productCondition)->getField('svip_product_id');
 			
 			$dbCustomer = new Model('customer');
 			$IDCondition['user_id'] = $userID;
 			$grade = $dbCustomer->where($IDCondition)->getField('grade');
 			
-			if(($privilege=="专享")&&($grade=="VIP"))
+			trace($info,'$privilege='.$privilege.";grade=".$grade);
+			//购买商品校验
+			if($privilege!="普通")
 			{
-				$this->assign("jumpUrl","__APP__/Buy/product_info?productID=".$productID);
-				$this->error("此产品为SVIP客户专享产品，请升级为SVIP之后再购买");
+				if($grade=="VIP"){
+					$this->assign("jumpUrl","__APP__/Buy/product_info?productID=".$productID);
+					$this->error("此产品为SVIP客户专享产品，请升级为SVIP之后再购买");
+				}
+				else {
+					
+					$svipProductdb= M('view_svip_product');
+					$productCondition['svip_product_id']=$privilege;
+					$svipProduct = $svipProductdb->where($productCondition)->select();
+					//获取限制信息
+					$limnum=$svipProduct[0]['limit_consumption_num'];
+					$limtype=$svipProduct[0]['limit_consumption_period'];
+					trace($info,'限制信息为：'.$limtype.$limnum.'次');
+					$standDiff=0;
+					
+					if($limtype=='每周'){
+						$standDiff=7;
+					}else if($limtype=='每月'){
+						$standDiff=30;
+					}else if($limtype=='每年'){
+						$standDiff=365;
+					}
+					
+					//获取该客户的该类商品购买信息
+					$svipOrderDB=M('view_svip_product_order');					
+					$SVIPOrderCondition['custoemr_id'] = $userID;
+					$SVIPOrderCondition['svip_product_id'] = $privilege;
+					$svipOrderList=$svipOrderDB->where($SVIPOrderCondition)->select();
+					$num=0;
+					foreach( $svipOrderList as $svipOrder){
+						$orderDate=$svipOrder['datetime'];
+						$diff=(date('y-m-d h:i:s',time())-$orderDate)/(3600*24);											
+						if($diff<$standDiff){
+							$num=$num+1;
+						}
+					}				
+					if($num>=$limnum){
+						$this->assign("jumpUrl","__APP__/Buy/product_info?productID=".$productID);
+						$this->error("您已超过专属产品消费次数限制，该产品限制为".$limtype.$limnum.'次');
+					}
+				}
 			}
 			
 			$this->assign('productID',$productID);

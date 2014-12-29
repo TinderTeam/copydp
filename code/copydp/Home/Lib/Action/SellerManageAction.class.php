@@ -22,6 +22,131 @@ class SellerManageAction extends Action {
 		}
 		
     }
+	
+	public function svipProductRemove($id=0){
+		trace($info,'id='.$id);
+		
+		//create product
+		$productdb=M('product');
+		$dataProduct['svip_product_id']=$id;
+		$productdb->where($dataProduct)->delete();	
+		
+		$svipProductdb= M('svip_product');
+		$datasvip['svip_product_id']=$id;
+		$svipProductdb->where($datasvip)->delete();	
+		trace($info,'delete svip product');
+		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向
+	}
+	
+	public function searchsvip($data=0){
+		
+		trace($info,'data='.$data);
+		//load seller list
+		$sellerdb= M('view_seller');
+		$sellercdt['username'] = array('LIKE','%'.$data.'%');
+		$sellerInfo=$sellerdb->where($sellercdt)->select();
+		
+		$json=json_decode($sellerInfo);
+		trace($info,'load seller list. list='.$sellerInfo);
+		$this->ajaxReturn($sellerInfo, 'Ajax 成功！', 1);
+	}
+	
+	public function svipEdit($type=0,$id=0){
+		if($type=='edit'){
+			trace($info,'edit svip product. id='.$id);
+			$this->assign('id',$id);
+		}
+		
+		//load seller list
+		$sellerdb= M('view_seller');		
+		$sellerInfo=$sellerdb->select();
+		trace($info,'load seller list. list='.$sellerInfo);
+		//log
+			trace($info,'create a svip product');
+
+		
+		$this->assign('sellerInfo',$sellerInfo);
+		$this->assign('type',$type);
+		$this->display();
+	}
+	
+	
+	public function saveSVIPProduct(){	
+	//图片处理
+		//导入图片上传类  
+        import("ORG.Net.UploadFile");  
+        //实例化上传类  
+        $upload = new UploadFile();  
+        $upload->maxSize = 4145728; 
+        //$upload->saveRule=time; 
+		//设置文件上传类型  
+        $upload->allowExts = array('jpg','gif','png','jpeg');  
+        //设置文件上传位置  
+        $upload->savePath = "./Public/uploads/img/";//这里说明一下，由于ThinkPHP是有入口文件的，所以这里的./Public是指网站根目录下的Public文件夹  
+        //设置文件上传名(按照时间)  
+        //$upload->saveRule = "time";  
+        if (!$upload->upload()){  
+			$errMsg=($upload->getErrorMsg());				
+        }else{  
+            //上传成功，获取上传信息  
+            $info = $upload->getUploadFileInfo();  
+			$imgsrc=$info[0]['savename'];
+        }    
+	//图片处理over
+	
+		$type=$_POST['type'];	
+		if($type!='edit'){
+			//log
+			trace($info,'create a svip product');
+			trace($info,'limit_consumption_num='.$_POST['limit_consumption_num']);
+			trace($info,'limit_consumption_period='.$_POST['limit_consumption_period']);
+			trace($info,'create_datetime='.date('y-m-d h:i:s',time()));		
+			trace($info,'sellerIDList='.$_POST['sellerIDList']);
+			
+			trace($info,'name='.$_POST['name']);		
+			trace($info,'type_id='.$_POST['type_id']);
+			trace($info,'end_date_time='.$_POST['end_date_time']);
+			trace($info,'price='.$_POST['price']);
+			trace($info,'original_price='.$_POST['original_price']);
+			trace($info,'describe='.$_POST['describe']);
+			trace($info,'imgsrc='.$imgsrc);
+				
+			//create svip
+			$svipProductdb= M('svip_product');
+			$datasvip['limit_consumption_num']=$_POST['limit_consumption_num'];
+			$datasvip['limit_consumption_period']=$_POST['limit_consumption_period'];
+			$datasvip['create_datetime']=date('y-m-d h:i:s',time());
+			$svipid=$svipProductdb->add($datasvip);	
+			trace($info,'save svip product');
+			
+			//create product
+			$productdb=M('product');
+			$idListStr=$_POST['sellerIDList'];
+			$idList=explode(',',$idListStr);
+			
+			foreach($idList as $id){
+				trace($info,'idList[]'.$id);
+				$datap['name']=$_POST['name'];
+				$datap['type_id']=$_POST['type_id'];
+				$datap['seller_id']=$id;
+				$datap['update_date']=date('y-m-d h:i:s',time());
+				$datap['end_date_time']=$_POST['end_date_time'];
+				$datap['price']=$_POST['price'];
+				$datap['original_price']=$_POST['original_price'];
+				$datap['describe']=$_POST['dsrc'];
+				$datap['basic_infor']=$_POST['info'];
+				$datap['svip_product_id']=$svipid;
+				$datap['imgsrc']=$imgsrc;
+				$datap['product_status']='正常';
+				$productdb->add($datap);
+			}				
+			trace($info,'save product');
+		}
+		
+		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向
+	}
+	
+	
 	public function recommend($id=0){
 		$recDB=M('recommend_product');
 		$rcondition['product_id']=$id;
