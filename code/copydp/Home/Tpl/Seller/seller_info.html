@@ -10,12 +10,13 @@
 <!-- <link rel="stylesheet" href="http://t1.s2.dpfile.com/t/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css"/>
 <link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/deal/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" rel="stylesheet"/> -->
 	<style type="text/css">
-		#allmap{width:100%;height:500px;}
-		
-		
+		#allmap{width:100%;height:500px;}	
 	</style>
+	
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DNGm7Kq87zslzLLkll9epKQY"></script>
-			<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.qrcode.min.js"></script>
+
 </head>
 <body id="body" data-type="">
 	<!---标题栏---->
@@ -143,14 +144,41 @@
 					<div class="box Tabs-box switch-box">
 						<div class="box-wrap">
 							<div id="J_tab_mod" data-id="tab_mod">
+															
+							<!--二维码-->
+							<?php				
+								$sellerdb = M('seller');
+								$sellerIDCondition['user_id']=$sellerID;
+								$seller = $sellerdb->where($sellerIDCondition)->find();
+								$codeFlag= $seller['qr_code'];			
+							?>
 								<ul class="switch-Tabs Fix J_Tabs" id="bodyTab" data-id="tab_list">
+									<if condition="$codeFlag eq 'true'">
+										<li class="new"> <a href="#qr"><span>二维码</span></a> </li>
+									</if>	
 									<li class="new"> <a href="#seller"><span>商家介绍</span></a> </li>
 									<li class="new"> <a href="#map"><span>在线地图</span></a> </li>
 									<li class="new"> <a href="#evaluation"><span>商户评价</span></a> </li>
 								</ul>
 							</div>
 							<div class="box-cont tradingQA Fix" id="J_tabcont" data-id="J_tab_content">
-								<div class="dptg-intro Fix">								
+								<div class="dptg-intro Fix">
+									<if condition="$codeFlag eq 'true'">
+										<div id="qr" class="detail">	
+											<div class="um-con" id="myEvaluation">
+												<div class="modebox my-comm J_my_comm" >
+													<div class="hd">
+														<h4>二维码</h4>			
+													</div>
+													<div class="con">
+														<div class="">
+															<div id="output" data="__APP__/Buy/SellerOrder?id={$sellerID}"></div>		
+														</div>				
+													</div>
+												</div>
+											</div>
+										</div>	
+									</if>													
 									<div id="seller" class="detail">
 										<h3 class="new-tit"><span class="name">商家介绍</span></h3>
 										<?php
@@ -327,5 +355,14 @@
 			$("#item_"+(start+4)).removeClass("Hide");
 			$("#item_"+(start+5)).removeClass("Hide");
 		}
+			
+	
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery.qrcode.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('#output').qrcode($('#output').attr('data'));
+		});
 	</script>
 </html>

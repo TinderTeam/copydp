@@ -1,12 +1,12 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
-
 header("Content-Type:text/html;charset=utf-8");
 class SellerManageAction extends Action {
     public function index(){
 		$this->assign("currentPage","seller");
-		if($_SESSION['login_user']!=""){
-		    
+		
+		if($_SESSION['login_user']!=""){  
+		
 		    $db = M('view_seller');
 		    import("ORG.Util.Page");
 		    $count = $db->count();
@@ -16,21 +16,22 @@ class SellerManageAction extends Action {
 		    $this->assign('page1',$show);
 		    $this->assign('sellerInfo',$list);
             $this->display();
+			
 		}else{
+		
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");
+			
 		}
 		
     }
 	
 	public function svipProductRemove($id=0){
 		trace($info,'id='.$id);
-		
 		//create product
 		$productdb=M('product');
 		$dataProduct['svip_product_id']=$id;
-		$productdb->where($dataProduct)->delete();	
-		
+		$productdb->where($dataProduct)->delete();			
 		$svipProductdb= M('svip_product');
 		$datasvip['svip_product_id']=$id;
 		$svipProductdb->where($datasvip)->delete();	
@@ -39,13 +40,11 @@ class SellerManageAction extends Action {
 	}
 	
 	public function searchsvip($data=0){
-		
 		trace($info,'data='.$data);
 		//load seller list
 		$sellerdb= M('view_seller');
 		$sellercdt['username'] = array('LIKE','%'.$data.'%');
-		$sellerInfo=$sellerdb->where($sellercdt)->select();
-		
+		$sellerInfo=$sellerdb->where($sellercdt)->select();	
 		$json=json_decode($sellerInfo);
 		trace($info,'load seller list. list='.$sellerInfo);
 		$this->ajaxReturn($sellerInfo, 'Ajax 成功！', 1);
@@ -66,7 +65,9 @@ class SellerManageAction extends Action {
 		$sellerdb->where($sellerIDCondition)->save($Data);
 		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向
 	}
+	
 	public function svipEdit($type=0,$id=0){
+	
 		if($type=='edit'){
 			trace($info,'edit svip product. id='.$id);
 			$this->assign('id',$id);
@@ -76,13 +77,14 @@ class SellerManageAction extends Action {
 		$sellerdb= M('view_seller');		
 		$sellerInfo=$sellerdb->select();
 		trace($info,'load seller list. list='.$sellerInfo);
+		
 		//log
-			trace($info,'create a svip product');
-
+		trace($info,'create a svip product');
 		
 		$this->assign('sellerInfo',$sellerInfo);
 		$this->assign('type',$type);
 		$this->display();
+	
 	}
 	
 	
