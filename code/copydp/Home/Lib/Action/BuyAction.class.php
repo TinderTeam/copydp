@@ -312,17 +312,36 @@ class BuyAction extends BuyServiceAction {
     public function GetSellerInfo_rest(){
     
         $req =  $this->getReqObj();
+        //获取商家信息
         $condition['user_id'] = $req->seller_id;
         $sellerViewDB = new Model('view_seller');
         $seller = $sellerViewDB->where($condition)->find();        
         $seller['dscr'] = $sellerViewDB->where($condition)->getField('description');
         unset($seller['description']);
+        
+        //获取商家对应的商品列表和商家评价列表
+        $IDcondition['seller_id'] = $req->seller_id;
+        $productViewDB = new Model('view_product');
+        $productList = $productViewDB->where($condition)->select();
+        $sellerEvalDB = new Model('seller_evaluation');
+        $sellerEvalList = $sellerEvalDB->where($condition)->select();
+        
         $errorCode = SUCCESS;
         if($seller==false)
         {
             $seller=null;
         }
+        if($productList==false)
+        {
+        	$productList=null;
+        }
+        if($sellerEvalList==false)
+        {
+        	$sellerEvalList=null;
+        }
         $Rsp['seller'] = $seller;
+        $Rsp['productList'] = $productList;
+        $Rsp['sellerEvalList'] = $sellerEvalList;
         $this->returnJson($errorCode,$Rsp);
     }
     //APP获取商家列表
@@ -334,21 +353,28 @@ class BuyAction extends BuyServiceAction {
     	$sellerListResult = parent::sellerListService($city);
     	
     	$errorCode = $sellerListResult['errorCode'];
-    	if($sellerListResult['productList']==false)
-    	{
-    		$sellerListResult['productList']=null;
-    	}
     	if($sellerListResult['sellerList']==false)
     	{
     		$sellerListResult['sellerList']=null;
     	}
-    	if($sellerListResult['sellerEvalList']==false)
-    	{
-    		$sellerListResult['sellerEvalList']=null;
-    	}
-    	$Rsp['productList'] = $sellerListResult['productList'];
     	$Rsp['sellerList'] = $sellerListResult['sellerList'];
-    	$Rsp['sellerEvalList'] = $sellerListResult['sellerEvalList'];
+    	$this->returnJson($errorCode,$Rsp);
+    }
+    //APP获取产品评价列表
+    public function GetProductEvalList_rest(){
+    	
+    	$req =  $this->getReqObj();
+    	//获取商家信息
+    	$condition['product_id'] = $req->product_id;
+    	$productEvaViewDB = new Model('view_product_eva');
+    	$productEvalList = $productEvaViewDB->where($condition)->select();
+    	
+    	$errorCode = SUCCESS;
+    	if($productEvalList==false)
+    	{
+    		$productEvalList=null;
+    	}
+    	$Rsp['productEvalList'] = $productEvalList;
     	$this->returnJson($errorCode,$Rsp);
     }
 	public function cancelFilter($crtCdtItm=0){

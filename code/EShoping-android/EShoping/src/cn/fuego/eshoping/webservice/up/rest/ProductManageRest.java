@@ -5,6 +5,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import cn.fuego.eshoping.webservice.up.model.GetProductEvalReq;
+import cn.fuego.eshoping.webservice.up.model.GetProductEvalRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductOrderListReq;
@@ -78,9 +80,14 @@ public interface ProductManageRest
 	@Path("/GetSellerInfo_rest")
 	GetSellerRsp getSellerInfo(GetSellerReq req);
 	
-	//APP获取商家信息
+	//APP获取商家列表
 	@POST
 	@Path("/GetSellerList_rest")
 	GetSellerListRsp getSellerList(GetProductListReq req);
+	
+	//APP获取商家列表
+	@POST
+	@Path("/GetProductEvalList_rest")
+	GetProductEvalRsp getProductEvalList(GetProductEvalReq req);
  
 }
