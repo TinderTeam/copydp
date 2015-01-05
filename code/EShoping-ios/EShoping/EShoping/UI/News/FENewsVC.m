@@ -13,10 +13,15 @@
 #import "FEShopWebServiceManager.h"
 #import "FENewsTableViewCell.h"
 #import "FENewsDetailVC.h"
+#import "FEActivityListRequest.h"
+#import "FEActivityListResponse.h"
+#import "FEActivityDeltailVC.h"
+#import "FEActivityTableViewCell.h"
 
 @interface FENewsVC ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet FETableView *newsTableView;
 @property (strong, nonatomic) NSArray *newsList;
+@property (strong, nonatomic) NSArray *activityList;
 
 @end
 
@@ -35,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self requestNews];
+    [self requestNewsAndActivity];
     self.title = FEString(@"最新咨询");
 }
 
@@ -55,8 +60,48 @@
     }];
 }
 
+-(void)requestNewsAndActivity{
+    __weak typeof(self) weakself = self;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FENewsListRequest *rdata = [[FENewsListRequest alloc] init];
+        [[FEShopWebServiceManager sharedInstance] newsList:rdata response:^(NSError *error, FENewsListResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.newsList = response.newsList;
+                [weakself.newsTableView reloadData];
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FEActivityListRequest *rdata = [[FEActivityListRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey)];
+        [[FEShopWebServiceManager sharedInstance] activityList:rdata response:^(NSError *error, FEActivityListResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.activityList = response.activityList;
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        [weakself.newsTableView reloadData];
+    });
+}
+
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        FEActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activityCell" forIndexPath:indexPath];
+        [cell configWithActivity:_activityList[indexPath.row]];
+        return cell;
+    }
     FENewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newsItemCell" forIndexPath:indexPath];
     FENews *news = self.newsList[indexPath.row];
     cell.textLabel.text = news.title;
@@ -65,11 +110,22 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section == 0) {
+        return self.activityList.count;
+    }
     return self.newsList.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 110;
+    }else{
+        return 50;
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -80,6 +136,9 @@
     if ([sender isKindOfClass:[FENewsTableViewCell class]]) {
         FENewsDetailVC *vc = (FENewsDetailVC *)segue.destinationViewController;
         vc.news = self.newsList[[self.newsTableView indexPathForCell:sender].row];
+    }else if ([sender isKindOfClass:[FEActivityTableViewCell class]]){
+        FEActivityDeltailVC *vc = (FEActivityDeltailVC *)segue.destinationViewController;
+        vc.activity = ((FEActivityTableViewCell *)sender).activity;
     }
 }
 

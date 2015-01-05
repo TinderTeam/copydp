@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FEShopSeller;
 
 @interface FECTInfoTableCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *itemImageView;
@@ -15,5 +16,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *cityLabel;
 @property (strong, nonatomic) IBOutlet UILabel *regionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *categoryLabel;
+
+@property (nonatomic, strong, readonly) FEShopSeller *seller;
+
+-(void)configWithSeller:(FEShopSeller *)seller;
 
 @end

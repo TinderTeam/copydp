@@ -28,6 +28,7 @@
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     FECTInfoTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ctItemInfoCell" forIndexPath:indexPath];
+    [cell configWithSeller:self.seller];
     return cell;
 }
 

@@ -27,6 +27,7 @@
 #define __METHOD_PRODUCT_CANCELORDER        @"Buy/CancelOrder_rest"     //
 #define __METHOD_PRODUCT_DELETEORDER        @"Buy/DeleteOrder_rest"
 #define __METHOD_PRODUCT_GETSELLER        @"Buy/GetSellerInfo_rest"   //获取商家信息
+#define __METHOD_PRODUCT_GETSELLERLIST      @"Buy/GetSellerList_rest"   //获取商家列表
 
 //news
 #define __METHOD_NEWS_GETNEWS       @"News/getNewsList_rest"

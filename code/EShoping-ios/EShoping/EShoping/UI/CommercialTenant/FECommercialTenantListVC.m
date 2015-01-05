@@ -7,9 +7,15 @@
 //
 
 #import "FECommercialTenantListVC.h"
-#import "FECTCTableViewCell.h"
+#import "FECTItemTableViewCell.h"
+#import "FEProductGetSellerListResponse.h"
+#import "FEProductGetSellerListRequest.h"
+#import "FEShopWebServiceManager.h"
+#import "FECTItemDetailVC.h"
 
 @interface FECommercialTenantListVC ()<UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet FETableView *sellerTableView;
+@property (nonatomic, strong) NSArray *sellerList;
 
 @end
 
@@ -28,6 +34,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self requestSellers];
+}
+
+-(void)requestSellers{
+    __weak typeof(self) weakself = self;
+    FEProductGetSellerListRequest *rdata = [[FEProductGetSellerListRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:0];
+    [[FEShopWebServiceManager sharedInstance] productGetSellerList:rdata response:^(NSError *error, FEProductGetSellerListResponse *response) {
+        if (!error && response.result.errorCode.integerValue == 0) {
+            weakself.sellerList = response.sellerList;
+            [weakself.sellerTableView reloadData];
+        }
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -37,8 +55,9 @@
 
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-        FECTCTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ctItemTableCell" forIndexPath:indexPath];
-        return cell;
+    FECTItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ctItemTableCell" forIndexPath:indexPath];
+    [cell configWithSeller:self.sellerList[indexPath.row]];
+    return cell;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -46,11 +65,25 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.sellerList.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 100;
+}
+
+#pragma mark - UITableViewDelegate
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+#pragma mark - segue
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([sender isKindOfClass:[FECTItemTableViewCell class]]) {
+        FECTItemTableViewCell *cell = (FECTItemTableViewCell *)sender;
+        FECTItemDetailVC *vc = (FECTItemDetailVC *)segue.destinationViewController;
+        vc.seller = cell.seller;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

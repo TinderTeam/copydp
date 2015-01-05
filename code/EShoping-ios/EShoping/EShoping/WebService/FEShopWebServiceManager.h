@@ -16,6 +16,7 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 }
 
 #import "AFHTTPRequestOperationManager.h"
+#import "FEBaseResponse.h"
 
 @class FEUserRegistRequest;
 @class FEUserRegistResponse;
@@ -65,6 +66,8 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 @class FECityResponse;
 @class FEProductGetSellerRequest;
 @class FEProductGetSellerResponse;
+@class FEProductGetSellerListRequest;
+@class FEProductGetSellerListResponse;
 
 @interface FEShopWebServiceManager : AFHTTPRequestOperationManager
 
@@ -115,6 +118,9 @@ DEFINE_WEBSERVICE_METHOD_HEADER(productOrderDelete, FEProductDeleteOrderRequest,
 
 //product seller info
 DEFINE_WEBSERVICE_METHOD_HEADER(productGetSeller, FEProductGetSellerRequest, FEProductGetSellerResponse)
+
+//get sellet list
+DEFINE_WEBSERVICE_METHOD_HEADER(productGetSellerList, FEProductGetSellerListRequest, FEProductGetSellerListResponse)
 
 /*-------------------------------------------
  ;product news interface

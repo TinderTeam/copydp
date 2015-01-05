@@ -7,11 +7,19 @@
 //
 
 #import "FECTItemTableViewCell.h"
+#import "FEShopSeller.h"
 
 @implementation FECTItemTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
+}
+
+-(void)configWithSeller:(FEShopSeller *)seller{
+    _seller = seller;
+    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(seller.img)]];
+//    self.titleLabel.text = seller.t
+    self.descriptionLabel.text = seller.dscr;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

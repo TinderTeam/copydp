@@ -7,7 +7,10 @@
 //
 
 #import "FECommonViewController.h"
+@class FEShopSeller;
 
 @interface FECTItemDetailVC : FECommonViewController
+
+@property (nonatomic, strong) FEShopSeller *seller;
 
 @end

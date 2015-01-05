@@ -7,11 +7,22 @@
 //
 
 #import "FECTInfoTableCell.h"
+#import "FEShopSeller.h"
 
 @implementation FECTInfoTableCell
 
 - (void)awakeFromNib {
     // Initialization code
+}
+
+-(void)configWithSeller:(FEShopSeller *)seller{
+    _seller = seller;
+    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(seller.img)]];
+    self.titleLabel.text = seller.dscr;
+    self.descriptionLabel.text = seller.dscr;
+    self.cityLabel.text = seller.city;
+    self.regionLabel.text = seller.zone_name;
+    self.categoryLabel.text = seller.type_name;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
