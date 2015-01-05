@@ -277,6 +277,40 @@ class BuyServiceAction extends BaseAction {
         }
     
     }
+    //获取商家列表
+    public function sellerListService($city)
+    {
+    
+    	$sellerViewDB=new Model('view_seller');
+    	$cityCondition['city']=$city;
+    	$sellerList = $sellerViewDB->where($cityCondition)->select();
+    	$this->log("the sellerList is".$sellerList);
+    	$this->log(count($sellerList));
+    	for($j=0;$j<count($sellerList);$j++)
+            {
+            	$this->log($j);
+            	$sellerList[$j]['dscr'] = $sellerList[$j]['description'];
+            	unset($sellerList[$j]['description']);
+            }
+    	$sellerIDList=$sellerViewDB->where($cityCondition)->getField('product_id',true);
+    
+    	$map['seller_id']=array('in',$sellerIDList);
+    	$productDB = new Model('view_product');
+    	$productList = $productDB->where($map)->select();
+    	
+    	$sellerEvalDB = new Model('seller_evaluation');
+    	$sellerEvalList = $productDB->where($map)->select();
+    	
+    	$rsp['errorCode'] = SUCCESS;
+    	$rsp['productList'] = $productList;
+    	$rsp['sellerList'] = $sellerList;
+    	$rsp['sellerEvalList'] = $sellerEvalList;
+    	$this->log("the productList is".$productList);
+    	$this->log("the sellerList is".$sellerList);
+    	$this->log("the sellerEvalList is".$sellerEvalList);
+    	return  $rsp;
+    
+    }
     
 }
 

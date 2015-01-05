@@ -325,6 +325,32 @@ class BuyAction extends BuyServiceAction {
         $Rsp['seller'] = $seller;
         $this->returnJson($errorCode,$Rsp);
     }
+    //APP获取商家列表
+    public function GetSellerList_rest(){
+    
+    	$req =  $this->getReqObj();
+    	$city = $req->city;
+    	$this->log($city);
+    	$sellerListResult = parent::sellerListService($city);
+    	
+    	$errorCode = $sellerListResult['errorCode'];
+    	if($sellerListResult['productList']==false)
+    	{
+    		$sellerListResult['productList']=null;
+    	}
+    	if($sellerListResult['sellerList']==false)
+    	{
+    		$sellerListResult['sellerList']=null;
+    	}
+    	if($sellerListResult['sellerEvalList']==false)
+    	{
+    		$sellerListResult['sellerEvalList']=null;
+    	}
+    	$Rsp['productList'] = $sellerListResult['productList'];
+    	$Rsp['sellerList'] = $sellerListResult['sellerList'];
+    	$Rsp['sellerEvalList'] = $sellerListResult['sellerEvalList'];
+    	$this->returnJson($errorCode,$Rsp);
+    }
 	public function cancelFilter($crtCdtItm=0){
 	
 		if($crtCdtItm!=0){
