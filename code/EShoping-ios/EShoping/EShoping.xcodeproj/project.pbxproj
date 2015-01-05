@@ -74,6 +74,12 @@
 		141546801A1786F6004C0500 /* FEShopingGroupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1415467F1A1786F6004C0500 /* FEShopingGroupVC.m */; };
 		141546831A178FF6004C0500 /* FECitySelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 141546821A178FF6004C0500 /* FECitySelectVC.m */; };
 		141546861A179E38004C0500 /* FEMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 141546851A179E38004C0500 /* FEMessageVC.m */; };
+		142FF9B21A5A5F7200210C06 /* FECommercialTenantListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9B11A5A5F7200210C06 /* FECommercialTenantListVC.m */; };
+		142FF9B51A5A615F00210C06 /* FECommenrcialTenantCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9B41A5A615F00210C06 /* FECommenrcialTenantCollectionView.m */; };
+		142FF9B81A5A61B300210C06 /* FECTCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9B71A5A61B300210C06 /* FECTCTableViewCell.m */; };
+		142FF9BB1A5A672B00210C06 /* FECTItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9BA1A5A672B00210C06 /* FECTItemTableViewCell.m */; };
+		142FF9BE1A5A6CC300210C06 /* FECTItemDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9BD1A5A6CC300210C06 /* FECTItemDetailVC.m */; };
+		142FF9C11A5A71AA00210C06 /* FECTInfoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9C01A5A71AA00210C06 /* FECTInfoTableCell.m */; };
 		145826E61A3B24CD00E0BE61 /* FEModifyPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */; };
 		145826EA1A3B29F800E0BE61 /* GAAlertObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 145826E91A3B29F800E0BE61 /* GAAlertObj.m */; };
 		145B21851A3327FB000AE204 /* SeverConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 145B21841A3327FB000AE204 /* SeverConfigVC.m */; };
@@ -303,6 +309,18 @@
 		141546821A178FF6004C0500 /* FECitySelectVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECitySelectVC.m; sourceTree = "<group>"; };
 		141546841A179E38004C0500 /* FEMessageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEMessageVC.h; sourceTree = "<group>"; };
 		141546851A179E38004C0500 /* FEMessageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEMessageVC.m; sourceTree = "<group>"; };
+		142FF9B01A5A5F7200210C06 /* FECommercialTenantListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECommercialTenantListVC.h; sourceTree = "<group>"; };
+		142FF9B11A5A5F7200210C06 /* FECommercialTenantListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECommercialTenantListVC.m; sourceTree = "<group>"; };
+		142FF9B31A5A615F00210C06 /* FECommenrcialTenantCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECommenrcialTenantCollectionView.h; sourceTree = "<group>"; };
+		142FF9B41A5A615F00210C06 /* FECommenrcialTenantCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECommenrcialTenantCollectionView.m; sourceTree = "<group>"; };
+		142FF9B61A5A61B300210C06 /* FECTCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECTCTableViewCell.h; sourceTree = "<group>"; };
+		142FF9B71A5A61B300210C06 /* FECTCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECTCTableViewCell.m; sourceTree = "<group>"; };
+		142FF9B91A5A672B00210C06 /* FECTItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECTItemTableViewCell.h; sourceTree = "<group>"; };
+		142FF9BA1A5A672B00210C06 /* FECTItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECTItemTableViewCell.m; sourceTree = "<group>"; };
+		142FF9BC1A5A6CC300210C06 /* FECTItemDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECTItemDetailVC.h; sourceTree = "<group>"; };
+		142FF9BD1A5A6CC300210C06 /* FECTItemDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECTItemDetailVC.m; sourceTree = "<group>"; };
+		142FF9BF1A5A71AA00210C06 /* FECTInfoTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FECTInfoTableCell.h; sourceTree = "<group>"; };
+		142FF9C01A5A71AA00210C06 /* FECTInfoTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FECTInfoTableCell.m; sourceTree = "<group>"; };
 		145826E41A3B24CD00E0BE61 /* FEModifyPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEModifyPasswordVC.h; sourceTree = "<group>"; };
 		145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEModifyPasswordVC.m; sourceTree = "<group>"; };
 		145826E81A3B29F800E0BE61 /* GAAlertObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAAlertObj.h; sourceTree = "<group>"; };
@@ -745,6 +763,7 @@
 		141546701A17853F004C0500 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				142FF9AF1A5A5F4000210C06 /* CommercialTenant */,
 				1408A76D1A38033800D02D52 /* News */,
 				1408A7601A37D47E00D02D52 /* Activity */,
 				140CA5901A1F18160076C4AC /* Product */,
@@ -841,6 +860,25 @@
 				145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */,
 			);
 			path = MePage;
+			sourceTree = "<group>";
+		};
+		142FF9AF1A5A5F4000210C06 /* CommercialTenant */ = {
+			isa = PBXGroup;
+			children = (
+				142FF9B01A5A5F7200210C06 /* FECommercialTenantListVC.h */,
+				142FF9B11A5A5F7200210C06 /* FECommercialTenantListVC.m */,
+				142FF9B31A5A615F00210C06 /* FECommenrcialTenantCollectionView.h */,
+				142FF9B41A5A615F00210C06 /* FECommenrcialTenantCollectionView.m */,
+				142FF9B61A5A61B300210C06 /* FECTCTableViewCell.h */,
+				142FF9B71A5A61B300210C06 /* FECTCTableViewCell.m */,
+				142FF9B91A5A672B00210C06 /* FECTItemTableViewCell.h */,
+				142FF9BA1A5A672B00210C06 /* FECTItemTableViewCell.m */,
+				142FF9BC1A5A6CC300210C06 /* FECTItemDetailVC.h */,
+				142FF9BD1A5A6CC300210C06 /* FECTItemDetailVC.m */,
+				142FF9BF1A5A71AA00210C06 /* FECTInfoTableCell.h */,
+				142FF9C01A5A71AA00210C06 /* FECTInfoTableCell.m */,
+			);
+			path = CommercialTenant;
 			sourceTree = "<group>";
 		};
 		145826E71A3B29F800E0BE61 /* GAAlert */ = {
@@ -1186,6 +1224,7 @@
 				14DDD5AD1A3A960800C5B190 /* FEProductGetSellerRequest.m in Sources */,
 				145B218D1A3495E3000AE204 /* FEShopCategory.m in Sources */,
 				14C8F5911A1B77F800E04B04 /* FEGroupProductCell.m in Sources */,
+				142FF9BE1A5A6CC300210C06 /* FECTItemDetailVC.m in Sources */,
 				14C8F5611A1982D000E04B04 /* FETableViewController.m in Sources */,
 				141546501A163A87004C0500 /* FERate.m in Sources */,
 				14AA2C871A283435005FDA8F /* FEProductTypeRecRequest.m in Sources */,
@@ -1227,6 +1266,7 @@
 				14DDD5B31A3A984E00C5B190 /* FEShopSeller.m in Sources */,
 				1408A7851A38895000D02D52 /* FEZone.m in Sources */,
 				1408A7971A38992100D02D52 /* CDZone.m in Sources */,
+				142FF9BB1A5A672B00210C06 /* FECTItemTableViewCell.m in Sources */,
 				14BD09A31A244EB20005C17F /* FEGroupCategoryCollectionView.m in Sources */,
 				1415467A1A1786C4004C0500 /* FEShopingDiscoverVC.m in Sources */,
 				14C8F5941A1B7CD000E04B04 /* FEGroupCategoryVC.m in Sources */,
@@ -1235,7 +1275,9 @@
 				14AA2CAE1A284262005FDA8F /* FEProductOrderCancelResponse.m in Sources */,
 				1415464B1A163A87004C0500 /* FECheckButtonGroup.m in Sources */,
 				1415466A1A163E71004C0500 /* NSString+MD5.m in Sources */,
+				142FF9B21A5A5F7200210C06 /* FECommercialTenantListVC.m in Sources */,
 				14C8F5461A18E77C00E04B04 /* FEMeView.m in Sources */,
+				142FF9B81A5A61B300210C06 /* FECTCTableViewCell.m in Sources */,
 				145826EA1A3B29F800E0BE61 /* GAAlertObj.m in Sources */,
 				148798841A319E9900565491 /* UIFont+AppFont.m in Sources */,
 				140BB7061A28D78500A73ADF /* FEProductOrder.m in Sources */,
@@ -1271,6 +1313,7 @@
 				14C8F59A1A1C313600E04B04 /* FEPersonProfileVC.m in Sources */,
 				14AA2CB11A28427E005FDA8F /* FEProductDeleteOrderResponse.m in Sources */,
 				1408A7821A38894200D02D52 /* FECity.m in Sources */,
+				142FF9B51A5A615F00210C06 /* FECommenrcialTenantCollectionView.m in Sources */,
 				148798BF1A32CA4700565491 /* FECommunity.m in Sources */,
 				148798C21A32CD4100565491 /* FECommunityTopic.m in Sources */,
 				148798A41A31FD0900565491 /* FENewsListResponse.m in Sources */,
@@ -1291,6 +1334,7 @@
 				1487988D1A31AA8500565491 /* FEActivityListResponse.m in Sources */,
 				140CA5931A1F188D0076C4AC /* FEProductImageShowCell.m in Sources */,
 				148798B91A32C7AE00565491 /* FECommunityReplyTopicRequest.m in Sources */,
+				142FF9C11A5A71AA00210C06 /* FECTInfoTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
