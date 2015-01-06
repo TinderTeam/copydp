@@ -8,7 +8,12 @@
 
 #import "FEBaseResponse.h"
 #import "FEShopSeller.h"
+#import "FEProduct.h"
+#import "FESellerEval.h"
 
 @interface FEProductGetSellerResponse : FEBaseResponse
 @property (nonatomic, strong, readonly) FEShopSeller *seller;
+@property (nonatomic, strong, readonly) NSArray *productList;
+@property (nonatomic, strong, readonly) NSArray *sellerEvalList;
+
 @end

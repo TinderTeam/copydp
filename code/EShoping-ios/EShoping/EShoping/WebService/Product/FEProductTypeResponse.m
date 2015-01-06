@@ -14,14 +14,7 @@
 -(id)initWithResponse:(id)response{
     self = [super initWithResponse:response];
     if (self) {
-        NSArray *productTypes = response[@"typeList"];
-        if (productTypes && ![productTypes isKindOfClass:[NSNull class]]) {
-            NSMutableArray *productTypesList = [NSMutableArray new];
-            for (id item in productTypes) {
-                [productTypesList addObject:[[FEProductType alloc] initWithDictionary:item]];
-            }
-            _typeList = productTypesList;
-        }
+        _typeList = [self getListFromObject:response[@"typeList"] class:[FEProductType class]];
     }
     return self;
 }

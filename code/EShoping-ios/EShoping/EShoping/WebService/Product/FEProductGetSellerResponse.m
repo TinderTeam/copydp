@@ -14,6 +14,9 @@
     self = [super initWithResponse:response];
     if (self) {
         _seller = [[FEShopSeller alloc] initWithDictionary:response[@"seller"]];
+        _productList = [self getListFromObject:response[@"productList"] class:[FEProduct class]];
+        _sellerEvalList = [self getListFromObject:response[@"sellerEvalList"] class:[FESellerEval class]];
+        
     }
     return self;
 }

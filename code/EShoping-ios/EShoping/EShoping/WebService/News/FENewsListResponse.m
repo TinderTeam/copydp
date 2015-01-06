@@ -14,14 +14,8 @@
 -(id)initWithResponse:(id)response{
     self = [super initWithResponse:response];
     if (self) {
-        NSArray *news = response[@"newsList"];
-        if (news && ![news isKindOfClass:[NSNull class]]) {
-            NSMutableArray *newsList = [NSMutableArray new];
-            for (id item in news) {
-                [newsList addObject:[[FENews alloc] initWithDictionary:item]];
-            }
-            _newsList = newsList;
-        }
+        _newsList = [self getListFromObject:response[@"newsList"] class:[FENews class]];
+
     }
     return self;
 }

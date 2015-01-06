@@ -14,14 +14,8 @@
 -(id)initWithResponse:(id)response{
     self = [super initWithResponse:response];
     if (self) {
-        NSArray *activitys = response[@"activityList"];
-        if (activitys && ![activitys isKindOfClass:[NSNull class]]) {
-            NSMutableArray *activityList = [NSMutableArray new];
-            for (id item in activitys) {
-                [activityList addObject:[[FEActivity alloc] initWithDictionary:item]];
-            }
-            _activityList = activityList;
-        }
+        
+        _activityList = [self getListFromObject:response[@"activityList"] class:[FEActivity class]];
     }
     return self;
 }

@@ -8,8 +8,18 @@
 
 #import "FECTItemDetailVC.h"
 #import "FECTInfoTableCell.h"
+#import "FEShopWebServiceManager.h"
+#import "FEProductGetSellerRequest.h"
+#import "FEProductGetSellerResponse.h"
+#import "FEShopSeller.h"
+#import "FESellerProductItemCell.h"
+#import "FESellerEvalCell.h"
+#import "FEShopingItemVC.h"
 
 @interface FECTItemDetailVC ()<UITableViewDelegate,UITableViewDataSource>
+@property (strong, nonatomic) IBOutlet FETableView *infoTableView;
+
+@property (nonatomic, strong) NSMutableArray *allInfo;
 
 @end
 
@@ -18,6 +28,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.allInfo = [NSMutableArray new];
+    [self.allInfo addObject:@[self.seller]];
+    [self requestSellerDetail];
+}
+
+-(void)requestSellerDetail{
+    __weak typeof(self) weakself = self;
+    FEProductGetSellerRequest *rdata = [[FEProductGetSellerRequest alloc] initWithSellerId:self.seller.user_id];
+    [[FEShopWebServiceManager sharedInstance] productGetSeller:rdata response:^(NSError *error, FEProductGetSellerResponse *response) {
+        
+        if (!error && response.result.errorCode.integerValue == 0) {
+            [weakself.allInfo removeAllObjects];
+            [weakself.allInfo addObject:@[self.seller]];
+            if (response.productList) {
+                [weakself.allInfo addObject:response.productList];
+            }
+            if (response.sellerEvalList) {
+                [weakself.allInfo addObject:response.sellerEvalList];
+            }
+            [weakself.infoTableView reloadData];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -27,17 +59,62 @@
 
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FECTInfoTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ctItemInfoCell" forIndexPath:indexPath];
-    [cell configWithSeller:self.seller];
-    return cell;
+    id item = self.allInfo[indexPath.section][indexPath.row];
+    if ([item isKindOfClass:[FEShopSeller class]]) {
+        FECTInfoTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ctItemInfoCell" forIndexPath:indexPath];
+        [cell configWithSeller:self.seller];
+        return cell;
+    }else if([item isKindOfClass:[FEProduct class]]){
+        FESellerProductItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sellerProductCell" forIndexPath:indexPath];
+        [cell configWithProduct:item];
+        return cell;
+    }else if([item isKindOfClass:[FESellerEval class]]){
+        FESellerEvalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sellerEvalCell" forIndexPath:indexPath];
+        cell.textLabel.text = ((FESellerEval *)item).eva_content;
+        return cell;
+    }
+    
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    id item = self.allInfo[indexPath.section][indexPath.row];
+    if ([item isKindOfClass:[FEShopSeller class]]) {
+        return 150;
+    }else if([item isKindOfClass:[FEProduct class]]){
+        return 70;
+    }else if([item isKindOfClass:[FESellerEval class]]){
+        return 55;
+    }
+    return 0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return self.allInfo.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return [self.allInfo[section] count];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    id item = [self.allInfo[section] firstObject];
+    if ([item isKindOfClass:[FEShopSeller class]]) {
+        return FEString(@"商家信息");
+    }else if([item isKindOfClass:[FEProduct class]]){
+        return FEString(@"商户产品");
+    }else if([item isKindOfClass:[FESellerEval class]]){
+        return FEString(@"商户评价");
+    }
+    return nil;
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([sender isKindOfClass:[FESellerProductItemCell class]]) {
+        FEShopingItemVC *vc = segue.destinationViewController;
+        vc.product = ((FESellerProductItemCell *)sender).product;
+    }
 }
 
 /*

@@ -14,14 +14,8 @@
 -(id)initWithResponse:(id)response{
     self = [super initWithResponse:response];
     if (self) {
-        NSArray *activityOrderLists = response[@"orderList"];
-        if (activityOrderLists && ![activityOrderLists isKindOfClass:[NSNull class]]) {
-            NSMutableArray *orderList = [NSMutableArray new];
-            for (id item in activityOrderLists) {
-                [orderList addObject:[[FEActivityOrder alloc] initWithDictionary:item]];
-            }
-            _orderList = orderList;
-        }
+        
+        _orderList = [self getListFromObject:response[@"orderList"] class:[FEActivityOrder class]];
     }
     return self;
 }

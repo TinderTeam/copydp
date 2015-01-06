@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *cityLabel;
 @property (strong, nonatomic) IBOutlet UILabel *regionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *categoryLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sellerScoreLabel;
 
 @property (nonatomic, strong, readonly) FEShopSeller *seller;
 

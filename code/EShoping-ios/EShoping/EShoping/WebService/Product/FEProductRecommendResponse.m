@@ -14,14 +14,16 @@
 -(id)initWithResponse:(id)response{
     self = [super initWithResponse:response];
     if (self) {
-        NSArray *products = response[@"productList"];
-        if (products && ![products isKindOfClass:[NSNull class]]) {
-            NSMutableArray *productList = [NSMutableArray new];
-            for (id item in products) {
-                [productList addObject:[[FEProduct alloc] initWithDictionary:item]];
-            }
-            _productList = productList;
-        }
+        
+        _productList = [self getListFromObject:response[@"productList"] class:[FEProduct class]];
+//        NSArray *products = response[@"productList"];
+//        if (products && ![products isKindOfClass:[NSNull class]]) {
+//            NSMutableArray *productList = [NSMutableArray new];
+//            for (id item in products) {
+//                [productList addObject:[[FEProduct alloc] initWithDictionary:item]];
+//            }
+//            _productList = productList;
+//        }
     }
     return self;
 }

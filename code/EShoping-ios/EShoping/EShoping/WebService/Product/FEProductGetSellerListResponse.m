@@ -13,14 +13,8 @@
 -(id)initWithResponse:(id)response{
     self = [super initWithResponse:response];
     if (self) {
-        NSArray *sellers = response[@"sellerList"];
-        if (sellers && ![sellers isKindOfClass:[NSNull class]]) {
-            NSMutableArray *sellerList = [NSMutableArray new];
-            for (id item in sellers) {
-                [sellerList addObject:[[FEShopSeller alloc] initWithDictionary:item]];
-            }
-            _sellerList = sellerList;
-        }
+        
+        _sellerList = [self getListFromObject:response[@"sellerList"] class:[FEShopSeller class]];
     }
     return self;
 }

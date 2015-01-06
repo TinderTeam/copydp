@@ -82,6 +82,10 @@
 		142FF9C11A5A71AA00210C06 /* FECTInfoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9C01A5A71AA00210C06 /* FECTInfoTableCell.m */; };
 		142FF9E41A5AD6B300210C06 /* FEProductGetSellerListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9E31A5AD6B300210C06 /* FEProductGetSellerListRequest.m */; };
 		142FF9E71A5AD6DC00210C06 /* FEProductGetSellerListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9E61A5AD6DC00210C06 /* FEProductGetSellerListResponse.m */; };
+		142FF9EA1A5B6C8000210C06 /* FESellerEval.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9E91A5B6C8000210C06 /* FESellerEval.m */; };
+		142FF9ED1A5B7A7F00210C06 /* FESellerProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9EC1A5B7A7F00210C06 /* FESellerProductItemCell.m */; };
+		142FF9F01A5B7AA100210C06 /* FESellerEvalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9EF1A5B7AA100210C06 /* FESellerEvalCell.m */; };
+		142FF9F31A5B7DA000210C06 /* NSString+Number.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9F21A5B7DA000210C06 /* NSString+Number.m */; };
 		145826E61A3B24CD00E0BE61 /* FEModifyPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */; };
 		145826EA1A3B29F800E0BE61 /* GAAlertObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 145826E91A3B29F800E0BE61 /* GAAlertObj.m */; };
 		145B21851A3327FB000AE204 /* SeverConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 145B21841A3327FB000AE204 /* SeverConfigVC.m */; };
@@ -327,6 +331,14 @@
 		142FF9E31A5AD6B300210C06 /* FEProductGetSellerListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductGetSellerListRequest.m; sourceTree = "<group>"; };
 		142FF9E51A5AD6DC00210C06 /* FEProductGetSellerListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProductGetSellerListResponse.h; sourceTree = "<group>"; };
 		142FF9E61A5AD6DC00210C06 /* FEProductGetSellerListResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductGetSellerListResponse.m; sourceTree = "<group>"; };
+		142FF9E81A5B6C8000210C06 /* FESellerEval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESellerEval.h; sourceTree = "<group>"; };
+		142FF9E91A5B6C8000210C06 /* FESellerEval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESellerEval.m; sourceTree = "<group>"; };
+		142FF9EB1A5B7A7F00210C06 /* FESellerProductItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESellerProductItemCell.h; sourceTree = "<group>"; };
+		142FF9EC1A5B7A7F00210C06 /* FESellerProductItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESellerProductItemCell.m; sourceTree = "<group>"; };
+		142FF9EE1A5B7AA100210C06 /* FESellerEvalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FESellerEvalCell.h; sourceTree = "<group>"; };
+		142FF9EF1A5B7AA100210C06 /* FESellerEvalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESellerEvalCell.m; sourceTree = "<group>"; };
+		142FF9F11A5B7DA000210C06 /* NSString+Number.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Number.h"; sourceTree = "<group>"; };
+		142FF9F21A5B7DA000210C06 /* NSString+Number.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Number.m"; sourceTree = "<group>"; };
 		145826E41A3B24CD00E0BE61 /* FEModifyPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEModifyPasswordVC.h; sourceTree = "<group>"; };
 		145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEModifyPasswordVC.m; sourceTree = "<group>"; };
 		145826E81A3B29F800E0BE61 /* GAAlertObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAAlertObj.h; sourceTree = "<group>"; };
@@ -762,6 +774,8 @@
 				148798831A319E9900565491 /* UIFont+AppFont.m */,
 				1408A7741A380E5D00D02D52 /* NSString+DateFromNow.h */,
 				1408A7751A380E5D00D02D52 /* NSString+DateFromNow.m */,
+				142FF9F11A5B7DA000210C06 /* NSString+Number.h */,
+				142FF9F21A5B7DA000210C06 /* NSString+Number.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -883,6 +897,10 @@
 				142FF9BD1A5A6CC300210C06 /* FECTItemDetailVC.m */,
 				142FF9BF1A5A71AA00210C06 /* FECTInfoTableCell.h */,
 				142FF9C01A5A71AA00210C06 /* FECTInfoTableCell.m */,
+				142FF9EB1A5B7A7F00210C06 /* FESellerProductItemCell.h */,
+				142FF9EC1A5B7A7F00210C06 /* FESellerProductItemCell.m */,
+				142FF9EE1A5B7AA100210C06 /* FESellerEvalCell.h */,
+				142FF9EF1A5B7AA100210C06 /* FESellerEvalCell.m */,
 			);
 			path = CommercialTenant;
 			sourceTree = "<group>";
@@ -987,6 +1005,8 @@
 				1408A7841A38895000D02D52 /* FEZone.m */,
 				14DDD5B11A3A984E00C5B190 /* FEShopSeller.h */,
 				14DDD5B21A3A984E00C5B190 /* FEShopSeller.m */,
+				142FF9E81A5B6C8000210C06 /* FESellerEval.h */,
+				142FF9E91A5B6C8000210C06 /* FESellerEval.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1235,6 +1255,8 @@
 				145B218D1A3495E3000AE204 /* FEShopCategory.m in Sources */,
 				14C8F5911A1B77F800E04B04 /* FEGroupProductCell.m in Sources */,
 				142FF9BE1A5A6CC300210C06 /* FECTItemDetailVC.m in Sources */,
+				142FF9ED1A5B7A7F00210C06 /* FESellerProductItemCell.m in Sources */,
+				142FF9EA1A5B6C8000210C06 /* FESellerEval.m in Sources */,
 				14C8F5611A1982D000E04B04 /* FETableViewController.m in Sources */,
 				141546501A163A87004C0500 /* FERate.m in Sources */,
 				14AA2C871A283435005FDA8F /* FEProductTypeRecRequest.m in Sources */,
@@ -1259,12 +1281,14 @@
 				14AA2C431A259B21005FDA8F /* FEBaseResponse.m in Sources */,
 				141546511A163A87004C0500 /* FETextField.m in Sources */,
 				14C8F5791A1985E800E04B04 /* FESettingVC.m in Sources */,
+				142FF9F01A5B7AA100210C06 /* FESellerEvalCell.m in Sources */,
 				14C8F58B1A1B494700E04B04 /* FEGroupCategoryCell.m in Sources */,
 				140BB7151A2B003800A73ADF /* FEActivity.m in Sources */,
 				1415466B1A163E71004C0500 /* NSString+UUID.m in Sources */,
 				1415466C1A163E71004C0500 /* UIColor+Theme.m in Sources */,
 				14AA2CA21A2841E9005FDA8F /* FEProductTypeRecResponse.m in Sources */,
 				14AA2C991A283B8C005FDA8F /* FEProductGetAllRequest.m in Sources */,
+				142FF9F31A5B7DA000210C06 /* NSString+Number.m in Sources */,
 				1408A77F1A3872ED00D02D52 /* FENewsDetailVC.m in Sources */,
 				14AA2C591A26BF41005FDA8F /* FECustomer.m in Sources */,
 				1408A74B1A35DC4000D02D52 /* FEUserRegistResponse.m in Sources */,
