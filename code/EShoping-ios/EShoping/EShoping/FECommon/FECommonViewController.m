@@ -40,6 +40,8 @@
 //    
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.view.backgroundColor = FEColor(229, 229, 229, 1); //[UIColor ];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:FEString(@"返回") style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationItem.backBarButtonItem = backButton;
 }
 
 -(void)setSearchControllerWithSearchBar:(UISearchBar *)searchbar{

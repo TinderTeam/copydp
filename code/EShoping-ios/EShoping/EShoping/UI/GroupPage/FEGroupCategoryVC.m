@@ -31,6 +31,7 @@
 @property (strong, nonatomic) NSArray *categoryContentArray;
 @property (strong, nonatomic) CDZone *productzone;
 @property (strong, nonatomic) NSArray *leftItems;
+@property (strong, nonatomic) UIBarButtonItem *backBarItem;
 
 @property (strong, nonatomic) NSArray *productDatas;
 
@@ -211,11 +212,13 @@
 
 #pragma mark - UISearchDisplayController
 -(void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller{
-    self.navigationController.navigationItem.leftBarButtonItems = nil;
+//    self.navigationItem.backBarButtonItem = nil;
+//    [self.navigationItem setHidesBackButton:YES];
 }
 
 -(void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller{
-    self.navigationItem.leftBarButtonItems = self.leftItems;
+//    self.navigationItem.backBarButtonItem = self.backBarItem;
+//    [self.navigationItem setHidesBackButton:NO];
 }
 
 #pragma mark - UITableVieDataSource

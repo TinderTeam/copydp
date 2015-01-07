@@ -40,7 +40,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self requestNewsAndActivity];
+    [self requestNews];
     self.title = FEString(@"最新咨询");
 }
 
@@ -97,11 +97,6 @@
 
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        FEActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activityCell" forIndexPath:indexPath];
-        [cell configWithActivity:_activityList[indexPath.row]];
-        return cell;
-    }
     FENewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"newsItemCell" forIndexPath:indexPath];
     FENews *news = self.newsList[indexPath.row];
     cell.textLabel.text = news.title;
@@ -110,22 +105,15 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
-        return self.activityList.count;
-    }
     return self.newsList.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        return 110;
-    }else{
-        return 50;
-    }
+    return 50;
 }
 
 #pragma mark - UITableViewDelegate

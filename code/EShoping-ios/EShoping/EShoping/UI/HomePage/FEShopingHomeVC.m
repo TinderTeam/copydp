@@ -36,11 +36,16 @@
 #import "FEProductType.h"
 #import "FEProductTypeRecRequest.h"
 #import "FEProductTypeRecResponse.h"
+#import "FEProductGetSellerListRequest.h"
+#import "FEProductGetSellerListResponse.h"
+#import "FECTItemDetailVC.h"
 
 #import "FECity.h"
 #import "FEZone.h"
 #import "CDZone.h"
 #import "GAAlertObj.h"
+
+#import "FECTItemTableViewCell.h"
 
 #import <ZBarSDK/ZBarReaderViewController.h>
 
@@ -58,6 +63,7 @@
 @property (nonatomic, strong) NSArray *productList;
 @property (strong, nonatomic) NSArray *productNew;
 @property (strong, nonatomic) NSArray *productTypeRecommed;
+@property (strong, nonatomic) NSArray *sellerList;
 
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *regionBarItem;
@@ -143,6 +149,10 @@
         vc.isSearch = YES;
         vc.searchKey = ((UISearchBar *)sender).text;
         
+    }else if ([sender isKindOfClass:[FECTItemTableViewCell class]]){
+        FECTItemTableViewCell *cell = (FECTItemTableViewCell *)sender;
+        FECTItemDetailVC *vc = (FECTItemDetailVC *)segue.destinationViewController;
+        vc.seller = cell.seller;
     }
 }
 
@@ -167,6 +177,20 @@
     
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+        FEProductGetSellerListRequest *rdata = [[FEProductGetSellerListRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:0];
+        [[FEShopWebServiceManager sharedInstance] productGetSellerList:rdata response:^(NSError *error, FEProductGetSellerListResponse *response) {
+            if (!error && response.result.errorCode.integerValue == 0) {
+                weakself.sellerList = response.sellerList;
+            }
+            dispatch_semaphore_signal(sem);
+        }];
+        dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
+    });
+    
+    /*
+     分类推荐 暂时剔除
+    dispatch_group_async(group, queue, ^{
+        dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         FEProductTypeRecRequest *rdata = [[FEProductTypeRecRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:0];
         [[FEShopWebServiceManager sharedInstance] productRecommedType:rdata response:^(NSError *error, FEProductTypeRecResponse *response) {
             if (!error && response.result.errorCode.integerValue == 0) {
@@ -187,7 +211,7 @@
         }];
         dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
     });
-    
+    */
     dispatch_group_async(group, queue, ^{
         dispatch_semaphore_t sem = dispatch_semaphore_create(0);
         FEProductRecommendRequest *rdata = [[FEProductRecommendRequest alloc] initWithCity:FEUserDefaultsObjectForKey(FEShopRegionKey) type:0 keyword:nil isSearch:NO zoneId:0];
@@ -214,11 +238,14 @@
             return cell;
         }else{
             if (self.segment.selectedSegmentIndex == 1) {
-                if ([self.productTypeRecommed[indexPath.row] isKindOfClass:[CDCategory class]]) {
-                    FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cateGoryTitleCell" forIndexPath:indexPath];
-                    cell.textLabel.text = ((CDCategory *)self.productTypeRecommed[indexPath.row]).type_name;
-                    return cell;
-                }
+//                if ([self.productTypeRecommed[indexPath.row] isKindOfClass:[CDCategory class]]) {
+//                    FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cateGoryTitleCell" forIndexPath:indexPath];
+//                    cell.textLabel.text = ((CDCategory *)self.productTypeRecommed[indexPath.row]).type_name;
+//                    return cell;
+                FECTItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ctItemTableCell" forIndexPath:indexPath];
+                [cell configWithSeller:self.sellerList[indexPath.row]];
+                return cell;
+                
             }
             FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
             
@@ -268,7 +295,8 @@
                 case 0:
                     return self.productNew.count;
                 case 1:
-                    return self.productTypeRecommed.count;
+                    return self.sellerList.count;
+//                    return self.productTypeRecommed.count;
                 case 2:
                     return self.productList.count;
                 default:
@@ -288,7 +316,7 @@
     if (section == 1) {
         if (!self.segment) {
             
-            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[FEString(@"最新特惠"),FEString(@"分类推荐"),FEString(@"热门推荐")]];
+            _segment = [[FESegmentControl alloc] initWithSectionTitles:@[FEString(@"最新特惠"),FEString(@"联盟商户"),FEString(@"热门推荐")]];
             _segment.font = FEFont(14);//[UIFont systemFontOfSize:14];
             _segment.selectedTextColor = FEThemeOrange;
             _segment.selectionIndicatorColor = FEThemeOrange;
@@ -313,20 +341,21 @@
     if (indexPath.section == 0) {
         return 190;
     }
-    switch (self.segment.selectedSegmentIndex) {
-        case 0:
-            return 100;
-        case 1:
-            if ([self.productTypeRecommed[indexPath.row] isKindOfClass:[CDCategory class]]) {
-                return 35;
-            }
-            return 100;
-        case 2:
-            return 100;
-        default:
-            return 0;
-    }
-//    return 110;
+//    switch (self.segment.selectedSegmentIndex) {
+//        case 0:
+//            return 100;
+//        case 1:
+////暂时去掉分类
+////            if ([self.productTypeRecommed[indexPath.row] isKindOfClass:[CDCategory class]]) {
+////                return 35;
+////            }
+//            return 100;
+//        case 2:
+//            return 100;
+//        default:
+//            return 0;
+//    }
+    return 110;
     
 }
 
