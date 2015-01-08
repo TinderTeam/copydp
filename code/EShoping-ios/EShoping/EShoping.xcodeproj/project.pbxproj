@@ -86,6 +86,7 @@
 		142FF9ED1A5B7A7F00210C06 /* FESellerProductItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9EC1A5B7A7F00210C06 /* FESellerProductItemCell.m */; };
 		142FF9F01A5B7AA100210C06 /* FESellerEvalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9EF1A5B7AA100210C06 /* FESellerEvalCell.m */; };
 		142FF9F31A5B7DA000210C06 /* NSString+Number.m in Sources */ = {isa = PBXBuildFile; fileRef = 142FF9F21A5B7DA000210C06 /* NSString+Number.m */; };
+		143C178C1A5EBC530014CF9B /* ErrorCode.plist in Resources */ = {isa = PBXBuildFile; fileRef = 143C178B1A5EBC530014CF9B /* ErrorCode.plist */; };
 		145826E61A3B24CD00E0BE61 /* FEModifyPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */; };
 		145826EA1A3B29F800E0BE61 /* GAAlertObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 145826E91A3B29F800E0BE61 /* GAAlertObj.m */; };
 		145B21851A3327FB000AE204 /* SeverConfigVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 145B21841A3327FB000AE204 /* SeverConfigVC.m */; };
@@ -339,6 +340,7 @@
 		142FF9EF1A5B7AA100210C06 /* FESellerEvalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESellerEvalCell.m; sourceTree = "<group>"; };
 		142FF9F11A5B7DA000210C06 /* NSString+Number.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Number.h"; sourceTree = "<group>"; };
 		142FF9F21A5B7DA000210C06 /* NSString+Number.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Number.m"; sourceTree = "<group>"; };
+		143C178B1A5EBC530014CF9B /* ErrorCode.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ErrorCode.plist; sourceTree = "<group>"; };
 		145826E41A3B24CD00E0BE61 /* FEModifyPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEModifyPasswordVC.h; sourceTree = "<group>"; };
 		145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEModifyPasswordVC.m; sourceTree = "<group>"; };
 		145826E81A3B29F800E0BE61 /* GAAlertObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAAlertObj.h; sourceTree = "<group>"; };
@@ -677,6 +679,7 @@
 				1415460F1A163A10004C0500 /* main.m */,
 				1487987A1A31489600565491 /* Localizable.strings */,
 				148798801A314DAB00565491 /* InfoPlist.strings */,
+				143C178B1A5EBC530014CF9B /* ErrorCode.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1165,6 +1168,7 @@
 			files = (
 				14DDD5A51A3A90AF00C5B190 /* Main.storyboard in Resources */,
 				148798781A31489600565491 /* Localizable.strings in Resources */,
+				143C178C1A5EBC530014CF9B /* ErrorCode.plist in Resources */,
 				1487987E1A314DAB00565491 /* InfoPlist.strings in Resources */,
 				14C8F5431A18E75700E04B04 /* FEMeView.xib in Resources */,
 				141546211A163A11004C0500 /* LaunchScreen.xib in Resources */,
