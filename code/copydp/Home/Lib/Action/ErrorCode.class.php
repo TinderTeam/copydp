@@ -11,7 +11,7 @@
     define('USER_EXISTED',7);               //用户已存在
     define('RESULT_NULL',8);                //搜索结果为空
     define('USERNAME_OR_PASSWORD_WRONG',9); //用户名或密码错误
-    define('ERROR_TOKEN_INVALID',10); //token 失效
+    define('ERROR_TOKEN_INVALID',10); 		//token 失效
     
     
     define('USER_UNCHECKED',10000);             //用户未审核
