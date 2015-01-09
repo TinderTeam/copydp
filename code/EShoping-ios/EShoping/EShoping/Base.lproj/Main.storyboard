@@ -2679,6 +2679,21 @@
                                             <outlet property="passTimeLabel" destination="BeF-LE-6qs" id="hqH-Jz-Aa1"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="noneActivityCell" textLabel="ecC-YK-sRP" rowHeight="25" style="IBUITableViewCellStyleDefault" id="BqM-ny-2n1">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BqM-ny-2n1" id="cyO-A7-rYT">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="没有参与活动~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ecC-YK-sRP">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="ghh-Fi-3I4" id="BRc-ve-VpB"/>
@@ -2785,6 +2800,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="WI5-vc-442"/>
         <segue reference="Uzw-LT-jJ7"/>
-        <segue reference="aSS-QL-3zN"/>
+        <segue reference="2fI-Lb-rPX"/>
     </inferredMetricsTieBreakers>
 </document>
