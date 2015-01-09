@@ -2649,6 +2649,9 @@
                                                 <constraint firstItem="sKW-ge-Eqf" firstAttribute="top" secondItem="Ir1-aE-JTB" secondAttribute="top" id="oVF-Ej-9pb"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Dt5-Ed-gVn" kind="show" id="BmS-Mn-MRw"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="AXD-KG-nSa" detailTextLabel="gmF-9t-LxS" rowHeight="35" style="IBUITableViewCellStyleValue1" id="f4C-Ad-dd5">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -2961,5 +2964,6 @@
         <segue reference="WI5-vc-442"/>
         <segue reference="Uzw-LT-jJ7"/>
         <segue reference="bQS-oA-evg"/>
+        <segue reference="BmS-Mn-MRw"/>
     </inferredMetricsTieBreakers>
 </document>

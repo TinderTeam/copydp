@@ -13,6 +13,7 @@
 #import "FEProductCancelOrderRequest.h"
 #import "FEProductDeleteOrderRequest.h"
 #import "FEProductDeleteOrderResponse.h"
+#import "FECTItemDetailVC.h"
 #import "FECoreDataHandler.h"
 #import "CDUser.h"
 
@@ -93,7 +94,8 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
+    FECTItemDetailVC *vc = segue.destinationViewController;
+    vc.sellerID = self.order.seller_id;
 }
 
 /*

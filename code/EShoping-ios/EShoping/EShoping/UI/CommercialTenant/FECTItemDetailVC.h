@@ -12,5 +12,6 @@
 @interface FECTItemDetailVC : FECommonViewController
 
 @property (nonatomic, strong) FEShopSeller *seller;
+@property (nonatomic, strong) NSNumber *sellerID;
 
 @end
