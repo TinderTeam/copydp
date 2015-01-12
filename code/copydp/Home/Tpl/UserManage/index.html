@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 
-<title>团购网站</title>
+<title>笑谣林</title>
 <link href="__PUBLIC__/css/fuego.management.css" type="text/css">
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" type="text/css" />
@@ -94,16 +94,14 @@ margin-right: 10px;
 							</div>							
 						</li>
 						<li>
-								<strong class="btn-type-b btn-fn-c btnbar">
-									<input id="btnAdd" type="submit" value="查询" class="form-btn">
-								</strong> 
-								<strong class="btn-type-b btn-fn-c btnbar">			
-									<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/UserManage/userAdd'" />
-								</strong> 
-
+							<strong class="btn-type-b btn-fn-c btnbar">
+								<input id="btnAdd" type="submit" value="查询" class="form-btn">
+							</strong> 
+							<strong class="btn-type-b btn-fn-c btnbar">			
+								<input type="button" value="新增" class="form-btn" onclick="location.href='__APP__/UserManage/userAdd'" />
+							</strong> 
 						</li>
 					</ul>
-
 				</form>	
 					<div class="pay-confirm">
 						<form id="freezeControl" action="__URL__/freezeControl?type=" method="post">
@@ -120,10 +118,8 @@ margin-right: 10px;
 									<th width="15%">手机</th>	
 									<th width="15%">用户状态</th>							
 									<th width="30%">操作</th>
-								</tr>
-						
-						<foreach name='userInfo' item='v1'>
-						
+								</tr>					
+						<foreach name='userInfo' item='v1'>						
 								<tr>
 									<td class="t-check">
 										<input type="checkbox" name="chkID_[]" id="chkID_[{$key+1}]" value="{$v1.user_id}"/>
@@ -147,6 +143,7 @@ margin-right: 10px;
 						</foreach>
 						
 						  <tr >
+						  
                             <td colspan="8" style=" text-align: center;" ><span>{$page}</span></td>
                           </tr>
 
@@ -217,9 +214,7 @@ margin-right: 10px;
 								<tr>
 									<td colspan="6" style=" text-align: center;" ><span>{$page2}</span></td>
 								</tr>
-
 							</tbody>
-							
 						</table>
 					</div>
 				</div>

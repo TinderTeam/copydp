@@ -69,12 +69,14 @@ class SellerCenterAction extends Action {
 		$data2['price']=$_POST['price'];	
 		$data2['original_price']=$_POST['original_price'];	
 		$data2['end_date_time']=$_POST['end_date_time'];
+		
+		/*会员专属改在Admin权限下配置
 		if($_POST['svip_privilege']=='on'){		
 			$data2['svip_privilege']='特权专属';
 		}else{
 			$data2['svip_privilege']='普通';
 		}
-		
+		*/
 		$data2['imglist']=$_POST['imglist'];	
 		$data2['product_status']='待审核';			
 		

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 
-<title>团购网站</title>
+<title>笑谣林</title>
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/index.min.05bc1f8116a303ec3ea228348bbf6db5.css" type="text/css" />
 <!-- <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/newhome/index.min.f0d842c5a6164286508bc847f37723b1.css" type="text/css" /> -->
 
@@ -79,7 +79,7 @@
 								<?php>
 													
 									$sellerViewIDCondition['user_id']=$sellerid;								
-									$p_name=$sellerViewDB->where($sellerViewIDCondition)->getField('username');
+									$p_name=$sellerViewDB->where($sellerViewIDCondition)->getField('seller_name');
 									$p_img=$sellerViewDB->where($sellerViewIDCondition)->getField('img');
 									$p_dscr=$sellerViewDB->where($sellerViewIDCondition)->getField('description');
 								?>
@@ -136,7 +136,7 @@
 					<div class="promo-window J_promo_window">
 						<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
 							<?php
-								$productViewDB=new Model('view_seller');
+								$sellerViewDB=new Model('view_seller');
 								$sellerCityCondition['city']=$city;
 								$sellerStatusCondition['status']="正常";	
 								$procuctIDList=$sellerViewDB->where($sellerStatusCondition)->where($sellerCityCondition)->order('rand()')->limit(4)->getField('user_id',true);		
@@ -149,7 +149,7 @@
 								<li class="promo-window-item J_promo_window_item">
 										<?php>											
 											$sellerIDCondition['user_id']=$sellerID;								
-											$p_name=$sellerViewDB->where($sellerIDCondition)->getField('title');
+											$p_name=$sellerViewDB->where($sellerIDCondition)->getField('seller_name');
 											$p_img=$sellerViewDB->where($sellerIDCondition)->getField('img');
 											$p_dscr=$sellerViewDB->where($sellerIDCondition)->getField('description');
 										?>
@@ -181,7 +181,7 @@
 					<div class="promo-window J_promo_window">
 					<ul class="promo-window-wrap J_promo_window_wrap" data-mode="render">
 						<?php
-							$productViewDB=new Model('view_seller');
+							$sellerViewDB=new Model('view_seller');
 							$sellerCityCondition['city']=$city;
 							$sellerStatusCondition['status']="正常";	
 							$procuctIDList=$sellerViewDB->where($sellerStatusCondition)->where($sellerCityCondition)->order('user_id desc')->limit(4)->getField('user_id',true);		
@@ -194,7 +194,7 @@
 							<li class="promo-window-item J_promo_window_item">
 									<?php>											
 										$sellerIDCondition['user_id']=$sellerID;								
-										$p_name=$sellerViewDB->where($sellerIDCondition)->getField('title');
+										$p_name=$sellerViewDB->where($sellerIDCondition)->getField('seller_name');
 										$p_img=$sellerViewDB->where($sellerIDCondition)->getField('img');
 										$p_dscr=$sellerViewDB->where($sellerIDCondition)->getField('description');
 									?>

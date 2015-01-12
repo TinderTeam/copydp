@@ -8,11 +8,12 @@ class UserManageAction extends Action {
             //加载会员管理列表
             import("ORG.Util.Page");
             $db = M('view_customer');
-            $list = $db->select();
-            $this->assign('userInfo',$list);
+
             $count = $db->count();
             $Page = new Page($count,5);
-            $show = $Page->show();
+			$list = $db->limit($Page->firstRow.','.$Page->listRows)->select();
+            $show = $Page->show();			
+			$this->assign('userInfo',$list);
             $this->assign('page',$show);
             
             //加载积分管理列表
@@ -112,13 +113,16 @@ class UserManageAction extends Action {
 		if($userID!='' or $userName!='' or $phoneNum!='')
 		{
 			//$map="user_name like('%".$userName."%') or user_id like('%".$userID."%' ) or cellphone like('%".$phoneNum."%')";
+			
+			
 			$condition['request'] = 'NULL';
-			$list = $db->where($condition)->select();
-			$this->assign('userInfo',$list);
+			
 			$count = $db->where($condition)->count(); 
 			$Page = new Page($count,5); 
+			$list = $db->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
 			$show = $Page->show();
 			$this->assign('page',$show);
+			$this->assign('userInfo',$list);
 			//$this->assign('nav','#UserManage');
 			$this->display('index');
 			

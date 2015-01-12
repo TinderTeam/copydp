@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 
-<title>团购网站</title>
+<title>笑谣林</title>
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/index.min.05bc1f8116a303ec3ea228348bbf6db5.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" type="text/css" />
@@ -121,15 +121,25 @@
 									<!--表单内容-->									
 										<div class="form-inner">
 											<div class="form-block">
-												<label class="label label_required" >商户名：<em>*</em></label>
+												<label class="label label_required" >账户名：<em>*</em></label>
 												<if condition="$pageType eq 'edit'">
-													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" readonly="readonly" name="seller_name">
+													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" readonly="readonly" name="seller_id">
 												<else/>
-													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" name="seller_name">
+													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.username}" name="seller_id">
 												</if>
 												
 												<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
-											</div>    
+											</div>  
+											<div class="form-block">
+												<label class="label label_required" >商户名称：<em>*</em></label>
+												<if condition="$pageType eq 'edit'">
+													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.seller_name}"  name="seller_name">
+												<else/>
+													<input type="text" maxlength="50"  class="form-txt form-txt-l" autocomplete="off" size="60" value="{$seller.seller_name}" name="seller_name">
+												</if>
+												
+												<span id="fv_shopname" style="visibility: hidden; " class="fv-def"></span>
+											</div> 											
 														
 											<div class="form-block">
 												<span class="label label_required">类型：<em>*</em></span>

@@ -18,12 +18,9 @@ class SellerManageAction extends Action {
             $this->display();
 			
 		}else{
-		
 		  	$this->assign("jumpUrl","__APP__/Index/login");
-			$this->error("您还没有登录呢");
-			
+			$this->error("您还没有登录呢");	
 		}
-		
     }
 	
 	public function svipProductRemove($id=0){
@@ -304,7 +301,7 @@ class SellerManageAction extends Action {
 	    //新增商家
 		public function add(){
 			$user = M('user');			
-			$newName=$_POST['seller_name'];
+			$newName=$_POST['seller_id'];
 			$condition['username'] = $newName;
 			$select=$user->where($condition)->count();			
 			if ($select!=0){
@@ -319,8 +316,7 @@ class SellerManageAction extends Action {
 						
 				if(empty($newID)){
 					$this->assign("jumpUrl","index");
-					$this->error("新增用户编号失败！");
-					
+					$this->error("新增用户编号失败！");				
 				}else{
 
 					//导入图片上传类  
@@ -346,6 +342,7 @@ class SellerManageAction extends Action {
 					
 					$seller = M('seller');
 					$data2['user_id']=$newID;
+					$data2['seller_name']=$_POST['seller_name'];
 					$data2['type_id']=$_POST['type_id'];
 					$data2['description']=$_POST['description'];
 					$data2['position']=$_POST['position'];
@@ -379,14 +376,14 @@ class SellerManageAction extends Action {
 					//设置文件上传名(按照时间)  
 					//$upload->saveRule = "time";  
 					if (!$upload->upload()){  
-						$errMsg=($upload->getErrorMsg());	
-						
+						$errMsg=($upload->getErrorMsg());						
 					}else{  
 						//上传成功，获取上传信息  
 						$info = $upload->getUploadFileInfo();  
 						$data2['img']=$info[0]['savename'];					
 					}    					
-					$seller = M('seller');			
+					$seller = M('seller');	
+					$data2['seller_name']=$_POST['seller_name'];					
 					$data2['type_id']=$_POST['type_id'];
 					$data2['description']=$_POST['description'];
 					$data2['position']=$_POST['position'];
@@ -530,14 +527,15 @@ class SellerManageAction extends Action {
 		        $this->success("批量解冻成功！");
 		    }
 		}
+		
 		public function searchRecProduct(){
 		
 		    if($_SESSION['login_user']!=""){
-		
+	
 		        $db = M('view_product');
 		        //import("ORG.Util.Page");
 		        //mysql_query("set names utf8");
-		
+				
 		        $productID=$_GET['product_id'];
 		        $productName=$_GET['product_name'];
 		        $cityID=$_GET['city_id'];
@@ -559,13 +557,13 @@ class SellerManageAction extends Action {
 		         
 		        if($productID!='' or $productName!='' or $cityID!='' or $typeID!='')
 		        {
-		
+					
 		            $this->assign('RecCondition',$condition);
 		            $this->assign('nav','#RecProduct');
 		            $this->display('index');
 		             
 		        }else{
-		
+					
 		            $this->redirect('SellerManage/index#RecProduct','',0,'全部查询');//页面重定向
 		             
 		        }

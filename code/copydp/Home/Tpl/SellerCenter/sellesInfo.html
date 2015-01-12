@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 
-<title>团购网站</title>
+<title>笑谣林</title>
 
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/index.min.05bc1f8116a303ec3ea228348bbf6db5.css" type="text/css" />
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/list-new.min.1cea6629ab1ef98647074215ab384f52.css" type="text/css" />
@@ -74,9 +74,12 @@ margin-right: 10px;
 						<?php
 							//获取用户名
 							$userName=$_SESSION['login_user'];
+							$sellerDB=M('view_seller');
+							$sellerCondition['user_name']=$userName;
+							$sellerName=$sellerDB->where($sellerCondition)->getField('seller_name');							
 						?>
 						<div class="tit">
-							<h2 class="name">{$userName}</h2>
+							<h2 class="name">{$sellerName}</h2>
 						</div>
 						
 					</div>

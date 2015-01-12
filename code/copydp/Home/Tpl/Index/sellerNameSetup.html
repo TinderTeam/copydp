@@ -41,25 +41,18 @@
 					<div class="box-cont box-cont-new" style="height: 350px;">
 						<div class="login-cont J_cont">
 							<div class="reg-switch J_switch">
-								<span class="switch-bg1 J_switch_tab reg-switch-sel">修改密码</span>
+								<span class="switch-bg1 J_switch_tab reg-switch-sel">修改商户名称</span>
 							</div>
 							<div class="reg-switch-box J_switch_box ">
 								<div class="J_login Fix">
-									<form  name="forml" action="__URL__/modifyPswd" method="post" id="pswdForm">
+									<form  name="forml" action="__URL__/modifySellerName" method="post" id="sellerNameForm">
 										<ul class="login-new-ul">
-											<li><span class="ws">原密码</span>
-												<input type="password" name="oldpswd" style="width:200px" tabindex="1"/>
+											<li><span class="ws">请输入新的商户名</span>
+												<input type="text" name="sellerName" style="width:200px" tabindex="1"/>
 												<span class="input-error J_err Hide"></span> <span class="prompt J_prmt Hide"></span> </li>
-											<li><span class="ws">设置新密码</span>
-												<input  style="width:200px"  type="password" id ="new" name="newpswd" tabindex="2"/>
-											</li>
-											<li><span class="ws">再次输入</span>
-												<input  style="width:200px"  id ="again"  type="password" name="confirm" tabindex="3"/>
-											</li>
-											
 											<li class="J_action"><span class="ws">&nbsp;</span>
 												<div class="reg-btn-new">
-													<button class="b-rbtn mob-login b-pswd" type="button"> <span>修改密码</span> </button>
+													<button class="b-rbtn mob-login b-seller" type="button"> <span>修改</span> </button>
 												</div>
 											</li>								
 										</ul>
@@ -80,17 +73,8 @@
 	<!---footer--> 
 	
 	<script>
-		$(".b-pswd").click(function(){
-			if($("#new").val()==$("#again").val()){	
-				if(($("#new").val()).length>5){	
-					$("#pswdForm").submit();
-				}else{
-					alert("请使用长度至少为6位的密码");
-				}			
-			}else{
-				alert("您两次输入的密码不相符！请重新输入");
-			}
-			
+		$(".b-seller").click(function(){
+			$("#sellerNameForm").submit();	
 		});
 	</script>
 </body>

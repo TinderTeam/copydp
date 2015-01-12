@@ -24,8 +24,21 @@ class IndexAction extends IndexServiceAction {
 			$this->assign("jumpUrl","login");
 			$this->success("操作成功");
 		}
- 
 	}
+	
+		public function modifySellerName(){
+		$UserDB= new Model("user");
+		$condition['username']=$_SESSION['login_user'];
+		$userID=$UserDB->where($condition)->getField('user_id');
+		
+		$sellerDB= new Model("seller");
+		$conditionSeller['user_id']=$userID;
+		$data['seller_name']=$_POST['sellerName'];
+		$sellerDB->where($conditionSeller)->save($data);
+		$this->assign("jumpUrl","login");
+		$this->success("操作成功");
+	}
+	
 	//APP修改密码
 	public function modifyPswd_rest()
 	{
@@ -41,6 +54,8 @@ class IndexAction extends IndexServiceAction {
 	    $errorCode = $modifyResult['errorCode'];
 	    $this->returnJson($errorCode,null);
 	}
+	
+	
 
 	public function index(){
 		//处理城市
@@ -274,6 +289,7 @@ class IndexAction extends IndexServiceAction {
 		$sellerData['user_id']=$userID;
 		$sellerData['city_id']=$_POST['city_id'];
 		$sellerData['type_id']=$_POST['type_id'];
+		$sellerData['seller_name']=$_POST['seller_name'];
 		$sellerData['description']=$_POST['description'];
 		$sellerDB->add($sellerData);
 		
