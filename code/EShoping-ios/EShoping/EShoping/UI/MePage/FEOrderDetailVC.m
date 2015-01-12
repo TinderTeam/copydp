@@ -21,8 +21,9 @@
 #import "FESegmentControl.h"
 #import "FESiginVC.h"
 #import "FEProductOrder.h"
+#import "FEOrderItemDetaiVC.h"
 
-@interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource,FESigninVCDelegate,FEOrderItemTableViewCellDelegate>
+@interface FEOrderDetailVC ()<UITableViewDelegate,UITableViewDataSource,FESigninVCDelegate,FEOrderItemTableViewCellDelegate,FEOrderItemDetaiVCDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *orderList;
 @property (nonatomic,strong) NSArray *orderDatas;
 @property (nonatomic, strong) NSArray *orderPlace;
@@ -46,6 +47,12 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([sender isKindOfClass:[FEOrderItemTableViewCell class]]) {
+        FEOrderItemDetaiVC *vc = segue.destinationViewController;
+        vc.order = ((FEOrderItemTableViewCell *)sender).order;
+        vc.delegate = self;
+        return;
+    }
     UINavigationController *nc = segue.destinationViewController;
     FESiginVC *vc = (FESiginVC *)nc.topViewController;
     vc.delegate = self;
@@ -106,16 +113,9 @@
     FEProductCancelOrderRequest *rdata = [[FEProductCancelOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:order.product_id.integerValue quantity:order.quantity.integerValue orderid:order.order_id];
     [[FEShopWebServiceManager sharedInstance] productOrderCancel:rdata response:^(NSError *error, FEProductOrderCancelResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
-            NSMutableArray *tarray = [NSMutableArray arrayWithArray:weakself.orderPlace];
-            [tarray removeObject:order];
-            weakself.orderPlace = tarray;
-            [weakself.orderList reloadData];
-            [order setValue:@"已取消" forKey:@"order_status"];
-            NSMutableArray *aarray = [NSMutableArray arrayWithArray:weakself.orderCancel];
-            [aarray addObject:order];
-            weakself.orderCancel = aarray;
+            [weakself cancelOrder:order];
         }
-        [self hideHUD:YES];
+        [weakself hideHUD:YES];
     }];
 }
 
@@ -125,12 +125,9 @@
     FEProductDeleteOrderRequest *rdata = [[FEProductDeleteOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:order.product_id.integerValue quantity:order.quantity.integerValue orderid:order.order_id];
     [[FEShopWebServiceManager sharedInstance] productOrderDelete:rdata response:^(NSError *error, FEProductDeleteOrderResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
-            NSMutableArray *tarray = [NSMutableArray arrayWithArray:weakself.orderCancel];
-            [tarray removeObject:order];
-            weakself.orderCancel = tarray;
-            [weakself.orderList reloadData];
+            [weakself deleteOrder:order];
         }
-        [self hideHUD:YES];
+        [weakself hideHUD:YES];
     }];
 }
 
@@ -193,6 +190,33 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
+}
+
+#pragma mark FEOrderItemDetailVCDelegate
+-(void)orderDidCancel:(FEProductOrder *)order{
+    [self cancelOrder:order];
+}
+
+-(void)orderDidDelete:(FEProductOrder *)order{
+    [self deleteOrder:order];
+}
+
+-(void)cancelOrder:(FEProductOrder *)order{
+    NSMutableArray *tarray = [NSMutableArray arrayWithArray:self.orderPlace];
+    [tarray removeObject:order];
+    self.orderPlace = tarray;
+    [self.orderList reloadData];
+    [order setValue:@"已取消" forKey:@"order_status"];
+    NSMutableArray *aarray = [NSMutableArray arrayWithArray:self.orderCancel];
+    [aarray addObject:order];
+    self.orderCancel = aarray;
+}
+
+-(void)deleteOrder:(FEProductOrder *)order{
+    NSMutableArray *tarray = [NSMutableArray arrayWithArray:self.orderCancel];
+    [tarray removeObject:order];
+    self.orderCancel = tarray;
+    [self.orderList reloadData];
 }
 
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

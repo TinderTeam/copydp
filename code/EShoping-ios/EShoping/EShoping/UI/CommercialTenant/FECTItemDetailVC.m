@@ -29,18 +29,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.allInfo = [NSMutableArray new];
-    [self.allInfo addObject:@[self.seller]];
+    if (self.seller) {
+        [self.allInfo addObject:@[self.seller]];
+    }
     [self requestSellerDetail];
 }
 
 -(void)requestSellerDetail{
     __weak typeof(self) weakself = self;
-    FEProductGetSellerRequest *rdata = [[FEProductGetSellerRequest alloc] initWithSellerId:self.seller.user_id];
+    NSNumber *sid;
+    if (self.seller) {
+        sid = self.seller.user_id;
+    }else{
+        sid = self.sellerID;
+    }
+    FEProductGetSellerRequest *rdata = [[FEProductGetSellerRequest alloc] initWithSellerId:sid];
     [[FEShopWebServiceManager sharedInstance] productGetSeller:rdata response:^(NSError *error, FEProductGetSellerResponse *response) {
         
         if (!error && response.result.errorCode.integerValue == 0) {
             [weakself.allInfo removeAllObjects];
-            [weakself.allInfo addObject:@[self.seller]];
+            [weakself.allInfo addObject:@[response.seller]];
+            weakself.seller = response.seller;
             if (response.productList) {
                 [weakself.allInfo addObject:response.productList];
             }

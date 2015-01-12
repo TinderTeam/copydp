@@ -90,10 +90,15 @@
 
 #pragma mark - UITableViewDataSource
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    FEMyActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myOrderActivityCell" forIndexPath:indexPath];
-    cell.delegate = self;
-    [cell configWithActivity:self.myactivityList[indexPath.row]];
+    if (self.myactivityList.count) {
+        FEMyActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myOrderActivityCell" forIndexPath:indexPath];
+        cell.delegate = self;
+        [cell configWithActivity:self.myactivityList[indexPath.row]];
+        return cell;
+    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noneActivityCell" forIndexPath:indexPath];
     return cell;
+    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -101,9 +106,19 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (!self.myactivityList.count) {
+        return 1;
+    }
     return self.myactivityList.count;
 }
 
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.myactivityList.count) {
+        return 90;
+    }
+    return 25;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
