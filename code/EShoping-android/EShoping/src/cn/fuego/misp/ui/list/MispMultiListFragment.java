@@ -16,8 +16,8 @@ import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.misp.service.MISPException;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.base.MispHttpFragment;
+import cn.fuego.misp.ui.model.FragmentResInfo;
 
 public abstract class MispMultiListFragment<E> extends MispBaseListFragment<E> implements
 OnItemClickListener

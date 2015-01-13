@@ -5,62 +5,32 @@
     android:background="@color/backcolor"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <include
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_head_height"
-        android:layout_marginBottom="2dp"
-        android:background="@color/white" >
-
-        <Button
-            android:id="@+id/user_register_back"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="10dp"
-            android:background="@null"
-            android:drawableLeft="@drawable/detail_back"
-            android:drawablePadding="5dp"
-            android:focusableInTouchMode="true"
-            android:text="返回"
-            android:textColor="@color/themecolor"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="我的订单"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        layout="@layout/com_head_back_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-
         <RadioGroup
-            android:id="@+id/my_order_radio_group"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal" >
-
+            android:orientation="horizontal"
+            >
             <RadioButton
-                android:id="@+id/user_order_radio_buy"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@drawable/nav_btn"
                 android:button="@null"
-                android:checked="true"
                 android:gravity="center"
                 android:text="已订购"
+                android:onClick="selectNormalOrder"
                 android:textColor="@drawable/nav_text_color" />
 
             <RadioButton
-                android:id="@+id/user_order_radio_use"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -68,10 +38,10 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="已使用"
+                 android:onClick="selectUsedOrder"
                 android:textColor="@drawable/nav_text_color" />
 
             <RadioButton
-                android:id="@+id/user_order_radio_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -79,10 +49,10 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="已取消"
+                 android:onClick="selectCancelOrder"
                 android:textColor="@drawable/nav_text_color" />
 
             <RadioButton
-                android:id="@+id/user_order_radio_past"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -90,13 +60,12 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="已过期"
+                 android:onClick="selectOverDueOrder"
                 android:textColor="@drawable/nav_text_color" />
         </RadioGroup>
-
     </LinearLayout>
-
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/order_listview"
         android:layout_width="match_parent"
         android:layout_height="fill_parent" >
     </ListView>

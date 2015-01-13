@@ -10,5 +10,4 @@
             android:bottomRightRadius="5dip" />  
       </shape>  
    </item> 
-
 </layer-list>

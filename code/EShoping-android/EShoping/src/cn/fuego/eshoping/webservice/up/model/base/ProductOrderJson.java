@@ -1,5 +1,7 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
+
 /**
  * 
 * @ClassName: OrderJson 
@@ -8,8 +10,10 @@ package cn.fuego.eshoping.webservice.up.model.base;
 * @date 2014-11-21 下午5:34:03 
 *
  */
-public class ProductOrderJson
+public class ProductOrderJson implements Serializable
 {
+	public static final String STATUS="order_status";
+	
 	private String order_id;
 	private String order_name;
 	private int customer_id;

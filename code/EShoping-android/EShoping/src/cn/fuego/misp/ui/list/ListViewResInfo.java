@@ -1,12 +1,20 @@
 package cn.fuego.misp.ui.list;
 
+import android.view.View.OnClickListener;
+import android.widget.AdapterView.OnItemClickListener;
+
 public class ListViewResInfo
 {
 	public static final String SELECT_ITEM = "SELECT_ITEM";
 
 	private int listView;
 	private int listItemView;
+	/**
+	 * 作用域：MispListActivity
+	 * 点击后跳转的目标Class
+	 */
 	private Class clickActivityClass;
+	
 	public int getListView()
 	{
 		return listView;

@@ -10,13 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
+import cn.fuego.eshoping.R;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.base.MispHttpFragment;
+import cn.fuego.misp.ui.model.FragmentResInfo;
 
 public abstract class MispListFragment<E> extends MispBaseListFragment<E> implements
 		OnItemClickListener
@@ -24,31 +27,57 @@ public abstract class MispListFragment<E> extends MispBaseListFragment<E> implem
 	private FuegoLog log = FuegoLog.getLog(getClass());
 
 	public static final String SELECT_ITEM = "SELECT_ITEM";
- 
 
-	private List<E> dataList = new ArrayList<E>();
+
+	protected List<E> dataList = new ArrayList<E>();
 
 	private MispListAdapter<E> adapter;
 
+	private ListView listView;
 	protected ListViewResInfo listViewRes = new ListViewResInfo();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
-
-		this.initRes();
-		View rootView = inflater.inflate(this.fragmentRes.getFragmentView(), null);
-
-		ListView productView = (ListView) rootView.findViewById(this.listViewRes.getListView());
-
+		View rootView=super.onCreateView(inflater, container, savedInstanceState);		
+		listView = (ListView) rootView.findViewById(this.listViewRes.getListView());
 		adapter = new MispListAdapter<E>(this.getActivity(), this,this.listViewRes,this.dataList);
-		productView.setAdapter(adapter);
-		productView.setOnItemClickListener(this);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
 		loadSendList();
-
 		return rootView;
+	}
+	
 
+
+	public void repaint()
+	{
+		this.adapter.notifyDataSetChanged();
+	}
+	
+	public void adapterForScrollView()
+	{
+    	ListAdapter listAdapter = listView.getAdapter();   
+        if (listAdapter == null) {   
+            return;   
+        }   
+   
+        int totalHeight = 0;   
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {   
+            // listAdapter.getCount()������������Ŀ   
+            View listItem = listAdapter.getView(i, null, listView);   
+            // ��������View �Ŀ��   
+            listItem.measure(0, 0);    
+            // ͳ������������ܸ߶�   
+            totalHeight += listItem.getMeasuredHeight();    
+        }   
+   
+        ViewGroup.LayoutParams params = listView.getLayoutParams();   
+        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));   
+        // listView.getDividerHeight()��ȡ�����ָ���ռ�õĸ߶�   
+        // params.height���õ����ListView������ʾ��Ҫ�ĸ߶�   
+        listView.setLayoutParams(params);  
 	}
 
 	public abstract void loadSendList();
@@ -110,4 +139,5 @@ public abstract class MispListFragment<E> extends MispBaseListFragment<E> implem
 		this.startActivity(intent);
 
 	}
+ 
 }

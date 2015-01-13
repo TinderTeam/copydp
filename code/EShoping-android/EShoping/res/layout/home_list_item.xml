@@ -17,6 +17,8 @@
             android:id="@+id/home_list_item_img"
             android:layout_width="120dp"
             android:layout_height="80dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:src="@drawable/load_image_failed" />
 
         <TextView
@@ -26,6 +28,8 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/home_list_item_img"
             android:text="标题"
+                        android:focusable="false"
+            android:focusableInTouchMode="false"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/black" />
 
@@ -33,6 +37,8 @@
             android:id="@+id/home_list_item_curPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+                        android:focusable="false"
+            android:focusableInTouchMode="false"
             android:layout_alignBottom="@+id/home_list_item_img"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/home_list_item_img"
@@ -43,6 +49,8 @@
             android:id="@+id/home_list_item_oldPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+                        android:focusable="false"
+            android:focusableInTouchMode="false"
             android:layout_alignBaseline="@+id/home_list_item_curPrice"
             android:layout_alignBottom="@+id/home_list_item_curPrice"
             android:layout_marginLeft="16dp"
@@ -53,6 +61,8 @@
             android:id="@+id/home_list_item_desp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+                        android:focusable="false"
+            android:focusableInTouchMode="false"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/home_list_item_img"

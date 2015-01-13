@@ -19,9 +19,6 @@ public abstract class BaseActivtiy extends MispHttpActivtiy implements HttpListe
 {
 
 	private Context contextDialog ;
-
- 
-	
 	public void exitDialog(Context context) { 
 		contextDialog = context;
         AlertDialog.Builder builder = new Builder(contextDialog);   
@@ -106,6 +103,5 @@ public abstract class BaseActivtiy extends MispHttpActivtiy implements HttpListe
         // params.height最后得到整个ListView完整显示需要的高度   
         listView.setLayoutParams(params);   
     } 
-
 
 }

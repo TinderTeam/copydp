@@ -3,186 +3,103 @@ package cn.fuego.eshoping.ui.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
+import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.model.KeyValuePair;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.constant.ListItemTypeConst;
-import cn.fuego.eshoping.ui.base.CommonItemMeta;
-import cn.fuego.misp.ui.list.MispDistinctListActivity;
+import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.ui.LoginActivity;
+import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.misp.ui.list.MispListActivity;
 
-public class UserInfoActivity extends MispDistinctListActivity implements OnClickListener
+public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 {
-
-
-	@Override
-	public void initRes()
-	{
-		this.activityRes.setAvtivityView(R.layout.user_info);
-		this.listViewRes.setListView(R.id.user_info_list);
-		this.dataList.clear();
-		this.dataList.addAll(getBtnData());
-
-	}
+	
+	FuegoLog log = FuegoLog.getLog(UserInfoActivity.class);
+	
+	List<KeyValuePair<String>> infoList;	//User info 
 	
 	@Override
-	public void loadSendList()
-	{
-		// TODO Auto-generated method stub
+	public void initRes()
+	{	
+		InitializationData();
 		
-	}
-
-	@Override
-	public List<CommonItemMeta> loadListRecv(Object obj)
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
- 
-	@Override
-	public int getItemTypeCount()
-	{
-		// TODO Auto-generated method stub
-		return 0;
+		//Basic
+		this.activityRes.setAvtivityView(R.layout.user_info);
+		this.activityRes.setBackBtn(R.id.com_back_btn);
+		this.activityRes.setTitleTextView(R.id.com_head_title);
+		this.activityRes.setName(R.string.page_user_info);	
+		
+		//List
+		this.setDataList(infoList);		
+		this.listViewRes.setListItemView(R.layout.list_item_texttype);
+		this.listViewRes.setListView(R.id.user_info_list);	
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		//初始化数据
 		super.onCreate(savedInstanceState);
-		
-		Button back_btn=(Button)findViewById(R.id.user_info_back);
-		back_btn.setOnClickListener(this);
-		back_btn.setTag(1);
 	}
 
-	
-	private List<CommonItemMeta> getBtnData()
+	//初始化数据
+	private void InitializationData()
 	{
-		// 生成数据源
-		List<CommonItemMeta> list = new ArrayList<CommonItemMeta>();
-		// 每个Map结构为一条数据，key与Adapter中定义的String数组中定义的一一对应。
-		CommonItemMeta meta1 = new CommonItemMeta();
-		meta1.setTitle("头像");
-		meta1.setLayoutType(ListItemTypeConst.IMG_CONTENT);
- 		list.add(meta1);
-		
-		CommonItemMeta meta2 = new CommonItemMeta();
-		meta2.setTitle("昵称");
-		meta2.setLayoutType(ListItemTypeConst.TEXT_CONTENT);
-		meta2.setContent("user11");
-		list.add(meta2);
-		
-		CommonItemMeta meta3 = new CommonItemMeta();
-		meta3.setTitle("积分");
-		meta3.setLayoutType(ListItemTypeConst.TEXT_CONTENT);
-		meta3.setContent("6分");
-		list.add(meta3);
-		
-		
-		
-		CommonItemMeta meta4 = new CommonItemMeta();
- 
-		meta4.setLayoutType(ListItemTypeConst.NULL_CONTENT);
-		list.add(meta4);
-		
-		CommonItemMeta meta5 = new CommonItemMeta();
-
-		meta5.setTitle("手机号");
-		meta5.setLayoutType(ListItemTypeConst.TEXT_CONTENT);
-		meta5.setContent("18620783355");
-		list.add(meta5);
-		
-		
-		CommonItemMeta meta6 = new CommonItemMeta();
-
-		meta6.setTitle("邮箱");
-		meta6.setLayoutType(ListItemTypeConst.TEXT_CONTENT);
-		meta6.setContent("test@163.com");
-		
-		list.add(meta6);
-		
-		CommonItemMeta meta7 = new CommonItemMeta();
-		meta7.setTitle("修改密码");
-		meta7.setLayoutType(ListItemTypeConst.DEFAULT_CONTENT);
-		list.add(meta7);
-		
-		return list;
+		/* 这里的KeyValuePair就是一个简单的二元项（一个类里面包含两个值），因为这里的列表项
+		 * 处理是做了抽象，本来应该是建立一个类对它进行处理来表示这里的一个Item有两个动态属性(一个标签一个值)，
+		 * 这里就做一个抽象的模型KeyValuePair来表示这个好了
+		 * 其中Key表示Label值，比如，手机、积分等等、Value代表它的值
+		 */
+		infoList = new ArrayList<KeyValuePair<String>>();
+		infoList.add(new KeyValuePair<String>("用户名",AppCache.getUser().getUsername()));
+		infoList.add(new KeyValuePair<String>("积分",AppCache.getCustomer().getScore()+"分"));
+		infoList.add(new KeyValuePair<String>("手机号",AppCache.getCustomer().getCellphone()));
+		infoList.add(new KeyValuePair<String>("邮箱",AppCache.getCustomer().getEmail()));
 	}
 
 	@Override
-	public void onClick(View v)
-	{
-		int tag = (Integer) v.getTag();
-		switch(tag)
-		{
-		case 1: 
-			this.finish();
-				break;
-
-		default:break;
-		}
+	public void loadSendList()
+	{		
 		
 	}
 
 	@Override
-	public View getListItemView(LayoutInflater inflater, CommonItemMeta item)
+	public List<KeyValuePair<String>> loadListRecv(Object obj)
 	{
- 		View view =null;
-		int type= item.getLayoutType();
-		String title= item.getTitle();
-		
-		switch(type)
-		{
-		case ListItemTypeConst.IMG_CONTENT:
-			{
-				view = inflater.inflate(R.layout.list_item_imgtype, null);
-				TextView title_view = (TextView) view.findViewById(R.id.item_imgtype_name);
-				ImageView img = (ImageView) view.findViewById(R.id.item_imgtype_img);
-				title_view.setText(title);
-			}
-			
-			break;
-		case ListItemTypeConst.TEXT_CONTENT:
-			{
-				view = inflater.inflate(R.layout.list_item_texttype, null);
-				TextView title_view = (TextView) view.findViewById(R.id.item_texttype_name);
-				TextView content_view = (TextView) view.findViewById(R.id.item_texttype_text);
-				title_view.setText(title);
-				content_view.setText( (String) item.getContent());
-			}
-			
-			break;
-		case ListItemTypeConst.DEFAULT_CONTENT:
-			{
-				view = inflater.inflate(R.layout.list_item_btntype, null);
-				TextView title_view = (TextView) view.findViewById(R.id.item_btntype_name);
-				title_view.setText(title);
-			}
-			
-			break;
-		case ListItemTypeConst.NULL_CONTENT:
-			{
-				view = inflater.inflate(R.layout.list_item_divider, null);
-			}
-			
-		}
-		 
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public View getListItemView(View view, KeyValuePair<String> item)
+	{		
+		TextView  title= (TextView) view.findViewById(R.id.item_texttype_name);
+		title.setText(item.getKey());
+		TextView  value= (TextView) view.findViewById(R.id.item_texttype_text);
+		value.setText(item.getValue());
 		return view;
 	}
 
 	@Override
-	public int getListItemType(CommonItemMeta item)
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id)
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		;
 	}
- 
 
-
+	public void logoutBtnEvent(View v){
+		log.info("user logout...");
+		MemoryCache.cleanToken();
+		//转至登陆页面
+		Intent intent = new Intent();
+		intent.setClass(this,LoginActivity.class);
+		startActivity(intent);
+	}
 }

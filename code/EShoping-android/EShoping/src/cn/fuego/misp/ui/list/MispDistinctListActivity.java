@@ -11,14 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
-import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.ui.base.CommonItemMeta;
-import cn.fuego.eshoping.ui.base.MyAdapter;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.model.CommonItemMeta;
 
 public abstract class MispDistinctListActivity extends MispBaseListActivity<CommonItemMeta> implements
      MispListViewInteface,OnItemClickListener
@@ -38,16 +35,13 @@ public abstract class MispDistinctListActivity extends MispBaseListActivity<Comm
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		this.initRes();
- 
-		
-		setContentView(this.activityRes.getAvtivityView());
+	 
 		
 		adapter = new MispListAdapter<CommonItemMeta>(this,this,this.listViewRes,this.dataList);
-		ListView productView = (ListView) findViewById(this.listViewRes.getListView());
+		ListView listView = (ListView) findViewById(this.listViewRes.getListView());
 ;
-		productView.setAdapter(adapter);
-		productView.setOnItemClickListener(this);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
 		loadSendList();
 
 	}

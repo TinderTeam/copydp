@@ -10,14 +10,9 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.ui.activity.ActivityFragment;
-import cn.fuego.eshoping.ui.base.BaseFragment;
 import cn.fuego.eshoping.ui.base.ExitApplication;
-import cn.fuego.eshoping.ui.home.HomeFragment;
-import cn.fuego.eshoping.ui.news.NewsFragment;
-import cn.fuego.eshoping.ui.user.UserFragment;
-import cn.fuego.misp.ui.base.FragmentResInfo;
 import cn.fuego.misp.ui.base.MispBaseFragment;
+import cn.fuego.misp.ui.model.FragmentResInfo;
 
 /** 
 * @ClassName: MainTabbarActivity 
@@ -30,16 +25,13 @@ public class MainTabbarActivity extends FragmentActivity
 {
 	FuegoLog log = FuegoLog.getLog(MainTabbarActivity.class);
 
+	public static String SELECTED_TAB = "selected_tab";
     //定义FragmentTabHost对象  
     private FragmentTabHost mTabHost;  
           
     //定义一个布局  
     private LayoutInflater layoutInflater;  
-              
-    //定义数组来存放Fragment界面  
-    private Class fragmentArray[] = {HomeFragment.class,ActivityFragment.class,NewsFragment.class,UserFragment.class};  
-          
- 
+  
           
     public void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
@@ -47,7 +39,16 @@ public class MainTabbarActivity extends FragmentActivity
         ExitApplication.getInstance().addActivity(this);
 
         initView();  
+        int index =  this.getIntent().getIntExtra(SELECTED_TAB, 0);
+      
+        log.info("select tab is " + index);
+        this.mTabHost.setCurrentTab(index);
     }  
+    
+    public void setDisplayTab(Class clazz)
+    {
+    	this.mTabHost.setCurrentTab(MainTabbarInfo.getIndexByClass(clazz));
+    }
            
     /** 
      * 初始化组件 
@@ -59,20 +60,19 @@ public class MainTabbarActivity extends FragmentActivity
         //实例化TabHost对象，得到TabHost  
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);  
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);   
-       mTabHost.setBackgroundColor(getResources().getColor(R.color.tabbarback)); 
-        //mTabHost.setBackgroundColor(R.drawable.tabbar_background);
+        mTabHost.setBackgroundResource(R.drawable.tabbar_background);
         //得到fragment的个数  
  
                       
-        for(int i = 0; i < fragmentArray.length; i++)
+        for(int i = 0; i < MainTabbarInfo.getFragments().length; i++)
         {    
-        	FragmentResInfo resource = getResource( fragmentArray[i]);
+        	FragmentResInfo resource = getResource( MainTabbarInfo.getFragments()[i]);
         	
             //为每一个Tab按钮设置图标、文字和内容  
         	String str = getString(resource.getName());
             TabSpec tabSpec = mTabHost.newTabSpec(str).setIndicator(getTabItemView(resource));  
             //将Tab按钮添加进Tab选项卡中  
-            mTabHost.addTab(tabSpec, fragmentArray[i], null);  
+            mTabHost.addTab(tabSpec, MainTabbarInfo.getFragments()[i], null);  
             //设置Tab按钮的背景 
             mTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.tabbar_background); 
         }  
@@ -101,7 +101,7 @@ public class MainTabbarActivity extends FragmentActivity
     private View getTabItemView(FragmentResInfo resource){  
         View view = layoutInflater.inflate(R.layout.tabbar_item_view, null);  
         view.setPadding(0, 0, 0, 10);  
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageview);  
+        ImageView imageView = (ImageView) view.findViewById(R.id.image_icon_view);  
         imageView.setImageResource(resource.getImage());  
               
         TextView textView = (TextView) view.findViewById(R.id.textview);          

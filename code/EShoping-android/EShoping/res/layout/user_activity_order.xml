@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backcolor"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/com_head_back_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/nav_btn"
+                android:button="@null"
+                android:gravity="center"
+                android:text="已订购"
+                android:onClick="selectNormalOrder"
+                android:textColor="@drawable/nav_text_color" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/nav_btn"
+                android:button="@null"
+                android:gravity="center"
+                android:text="已使用"
+                android:onClick="selectUsedOrder"
+                android:textColor="@drawable/nav_text_color" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/nav_btn"
+                android:button="@null"
+                android:gravity="center"
+                android:text="已过期"
+                 android:onClick="selectOverDueOrder"
+                android:textColor="@drawable/nav_text_color" />
+        </RadioGroup>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/order_listview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+    </ListView>
+
+</LinearLayout>

@@ -2,209 +2,181 @@ package cn.fuego.eshoping.ui.home;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.constant.SharedPreferenceConst;
+import cn.fuego.eshoping.service.verification.VerificationService;
+import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
+import cn.fuego.eshoping.ui.order.ProductOrderActivity;
 import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
+import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
-import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.misp.service.http.MispHttpHandler;
 import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.list.ListViewResInfo;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
 
-public class HomeProductActivity extends BaseActivtiy 
+public class HomeProductActivity extends BaseActivtiy
 {
 	private FuegoLog log = FuegoLog.getLog(HomeProductActivity.class);
-
-	private MapView mMapView = null;
-
-	private ViewPager viewPager;
-	private ImageView[] tips;    
-
-	private List<ImageView> mImageViews = new ArrayList<ImageView>();  
-    
-	  
+	//对象
  	private ProductJson product;
+ 	private SellerJson seller;
+ 	//组件
+	private ImageView[] tips=null;
+ 	private MapView mMapView = null;
+ 	private ViewGroup group =null;
+	private ViewPager viewPager=null;
+	private List<ImageView> mImageViews = new ArrayList<ImageView>();  
+	private TextView priceView ;
+	private TextView limitView;
+	private TextView view;
+	private Button orderBtn;
+	
+	/**
+	 * 操作
+	 */
+	//购买按钮
+	OnClickListener orderBtnHandel= new OnClickListener(){
+		@Override
+		public void onClick(View v)
+		{
+			if(!VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){
+				//转至登陆页面
+				Intent intent = new Intent();
+				intent.setClass(HomeProductActivity.this, LoginActivity.class);
+				startActivity(intent);
+			}else{
+				//转至购买页面
+				Intent intent = new Intent();
+				intent.setClass(HomeProductActivity.this, ProductOrderActivity.class);
+				intent.putExtra(SharedPreferenceConst.PRODUCT, product);
+				startActivity(intent);
+			}
+		}	
+	};
+	
+	@Override
+	public void initRes()
+	{
+		this.activityRes.setAvtivityView(R.layout.home_product);
+		this.activityRes.setBackBtn(R.id.com_back_btn);	
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
-		// 在使用SDK各组件之前初始化context信息，传入ApplicationContext
-		// 注意该方法要再setContentView方法之前实现
 		SDKInitializer.initialize(getApplicationContext());
-		setContentView(R.layout.home_product);
-		// 获取地图控件引用
-		mMapView = (MapView) findViewById(R.id.bmapView);
-		
-		Intent intent = this.getIntent();
-		
-		product = (ProductJson) intent.getSerializableExtra(ListViewResInfo.SELECT_ITEM);
-		TextView priceView = (TextView) findViewById(R.id.home_product_price);
-		
-		getSeller();
-		
-		priceView.setText(String.valueOf(product.getPrice()));
-		 
-		
-		
+		super.onCreate(savedInstanceState);
+		//初始化数据
+		InitializationData();
+		//初始化组件
+		InitializationComponent();
+		//组件加载数据
+		ComponentUpdateData();
 	}
 
-	public static List<String> getImgStr(String htmlStr)
+	/**
+	 * 初始化数据
+	 */
+	private void InitializationData()
 	{
-		String img = "";
-		Pattern p_image;
-		Matcher m_image;
-		List<String> pics = new ArrayList<String>();
-		String regEx_img = "]*?>";
-		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
-		m_image = p_image.matcher(htmlStr);
-		while (m_image.find())
-		{
-			img = img + "," + m_image.group();
-			Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)")
-					.matcher(img);
-			while (m.find())
+		//获取产品数据
+	 	Intent intent = this.getIntent();
+		product = (ProductJson) intent.getSerializableExtra(ListViewResInfo.SELECT_ITEM);
+		log.info(product.toString());
+		
+		//获取商家数据
+		GetSellerReq req = new GetSellerReq();
+		req.setSeller_id(product.getSeller_id());
+		/**
+		 * 获取商家信息
+		 */
+		MispHttpHandler getSellerHandel=new MispHttpHandler(){
+			@Override
+			public void handle(MispHttpMessage message)
 			{
-				pics.add(m.group(1));
+				if (message.isSuccess()){
+					GetSellerRsp rsp = (GetSellerRsp) message.getMessage().obj;
+					if(null != rsp.getSeller()){
+						seller=rsp.getSeller();
+						//update SellerCompoment
+						sellerComponentUpdateData();					
+					}
+				}
+				else{
+					showMessage(message);
+				}
 			}
-		}
-		return pics;
+		};
+		WebServiceContext.getInstance().getProductManageRest(getSellerHandel).getSellerInfo(req); 
 	}
 	
-	
-	private void displayImage(List<String> imageUrlList)
+	private void InitializationComponent()
 	{
-		 
-		ViewGroup group = (ViewGroup)findViewById(R.id.home_product_image_view_group);  
-        viewPager = (ViewPager) findViewById(R.id.home_product_image);  
-          
- 
-          
-        //将点点加入到ViewGroup中  
-        tips = new ImageView[imageUrlList.size()];  
-        for(int i=0; i<tips.length; i++)
-        {  
-            ImageView imageView = new ImageView(this);  
-            imageView.setLayoutParams(new LayoutParams(2,2));  
-            tips[i] = imageView;  
-            if(i == 0){  
-                tips[i].setBackgroundResource(R.drawable.app_icon);  
-            }else{  
-                tips[i].setBackgroundResource(R.drawable.app_logo);  
-            }  
-              
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT,    
-                    LayoutParams.WRAP_CONTENT));  
-            layoutParams.leftMargin = 5;  
-            layoutParams.rightMargin = 5;  
-            group.addView(imageView, layoutParams);  
-        }  
-          
-  
- 
-        for(String url : imageUrlList)
-        {  
-            ImageView imageView = new ImageView(this);
-            LoadImageUtil.getInstance().loadImage(imageView, url);
-            mImageViews.add(imageView);
-         }  
-          
+		// 获取地图控件引用
+		mMapView = (MapView) findViewById(R.id.bmapView);
+		//产品信息
+		priceView = (TextView) findViewById(R.id.home_product_price);
+		limitView = (TextView) findViewById(R.id.order_activity_status);
+		view = (TextView) findViewById(R.id.home_product_seller_info);
+		//产品图片
+		group = (ViewGroup)findViewById(R.id.home_product_image_view_group);  
+		viewPager = (ViewPager) findViewById(R.id.home_product_image);		
+		//按钮
+		orderBtn = (Button)findViewById(R.id.order_activity_cancel_btn); 
+	}
+	
+	/**
+	 * 组件加载数据（同步）
+	 */
+	private void ComponentUpdateData()
+	{		
+		priceView.setText(String.valueOf(product.getPrice()));
+		limitView.setText(String.valueOf(product.getEnd_date_time()));
+		orderBtn.setOnClickListener(orderBtnHandel);
+	}
+
+	/**
+	 * 加载商户组件数据（异步）
+	 */
+	private void sellerComponentUpdateData()
+	{
+		List<String> imageList = LoadImageUtil.getImgStr(seller.getInfo());
+		if(ValidatorUtil.isEmpty(imageList)){
+			imageList = new ArrayList<String>();
+		}
+		imageList.add(0,DataConvertUtil.getAbsUrl(product.getImgsrc()));
+		ImagePagerAdapter adapter = new ImagePagerAdapter(this,group,imageList);
         //设置Adapter  
-        viewPager.setAdapter(new MyAdapter());  
+        viewPager.setAdapter(adapter);  
         //设置监听，主要是设置点点的背景  
         //viewPager.setOnPageChangeListener(this);  
         //设置ViewPager的默认项, 设置为长度的100倍，这样子开始就能往左滑动  
-        viewPager.setCurrentItem(0);  
-	}
-			
-	 public class MyAdapter extends PagerAdapter{  
-		  
-	        @Override  
-	        public int getCount() {  
-	            return mImageViews.size(); 
-	        }  
-	  
-	        @Override  
-	        public boolean isViewFromObject(View arg0, Object arg1) {  
-	            return arg0 == arg1;  
-	        }  
-	  
-	        @Override  
-	        public void destroyItem(View container, int position, Object object) {  
-	            ((ViewPager)container).removeView(mImageViews.get(position));  
-	              
-	        }  
-	  
-	        /** 
-	         * 载入图片进去，用当前的position 除以 图片数组长度取余数是关键 
-	         */  
-	        @Override  
-	        public Object instantiateItem(View container, int position) {  
-	            ((ViewPager)container).addView(mImageViews.get(position), 0);  
-	            return mImageViews.get(position);  
-	        }
- 
-	          
-	          
-	          
-	    }  
-	private void getSeller()
-	{
-		GetSellerReq req = new GetSellerReq();
-		req.setSeller_id(product.getSeller_id());
-		WebServiceContext.getInstance().getProductManageRest(this).getSellerInfo(req); 
+        viewPager.setCurrentItem(0); 
+        viewPager.setOnPageChangeListener(adapter);		
+		view.setText(seller.getDscr());
 	}
 
-
-	@Override
-	public void handle(MispHttpMessage message)
-	{
-		if (message.isSuccess())
-		{
-			GetSellerRsp rsp = (GetSellerRsp) message.getMessage().obj;
-			if(null != rsp.getSeller())
-			{
-				TextView view = (TextView) findViewById(R.id.home_product_seller_info);
-				view.setText(rsp.getSeller().getDscr());
-				List<String> imageList = getImgStr(rsp.getSeller().getInfo());
-				if(ValidatorUtil.isEmpty(imageList))
-				{
-					imageList = new ArrayList<String>();
-				}
-				imageList.add(0,DataConvertUtil.getAbsUrl(product.getImgsrc()));
-				displayImage(imageList);
-				
-			}
- 
-		}
-		else
-		{
-			this.showMessage(message);
-		}
-		
-
-	}
-	
 	@Override
 	protected void onDestroy()
 	{
@@ -228,5 +200,11 @@ public class HomeProductActivity extends BaseActivtiy
 		// 在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
 		mMapView.onPause();
 	}
-
+	
+	@Override
+	public void handle(MispHttpMessage message)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

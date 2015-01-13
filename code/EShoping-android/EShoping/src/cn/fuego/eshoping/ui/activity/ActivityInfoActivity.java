@@ -2,11 +2,41 @@ package cn.fuego.eshoping.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.constant.ErrorMessageConst;
+import cn.fuego.eshoping.constant.SharedPreferenceConst;
+import cn.fuego.eshoping.service.verification.VerificationService;
+import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
+import cn.fuego.eshoping.ui.home.HomeProductActivity;
+import cn.fuego.eshoping.ui.order.ActivityOrderSuccess;
+import cn.fuego.eshoping.ui.order.ProductOrderActivity;
+import cn.fuego.eshoping.ui.order.ProductOrderSuccess;
+import cn.fuego.eshoping.ui.util.DataConvertUtil;
+import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
+import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
+import cn.fuego.eshoping.webservice.up.model.SetActivityOrderReq;
+import cn.fuego.eshoping.webservice.up.model.SetActivityOrderRsp;
+import cn.fuego.eshoping.webservice.up.model.SetProductOrderReq;
+import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
+import cn.fuego.eshoping.webservice.up.model.base.ActivityJson;
+import cn.fuego.eshoping.webservice.up.model.base.ActivityOrderJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
+import cn.fuego.eshoping.webservice.up.model.base.ProductOrderJson;
+import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.misp.service.http.MispHttpHandler;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.list.ListViewResInfo;
+import cn.fuego.misp.ui.util.LoadImageUtil;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
@@ -16,51 +46,115 @@ public class ActivityInfoActivity extends BaseActivtiy
 	private FuegoLog log = FuegoLog.getLog(ActivityInfoActivity.class);
 
 	MapView mMapView = null;
-
+	ActivityJson activity;
+	@Override
+	public void initRes()
+	{
+		this.activityRes.setAvtivityView(R.layout.activity_details);
+		this.activityRes.setBackBtn(R.id.com_back_btn);		
+		this.activityRes.setName(R.string.page_activity_info);
+		this.activityRes.setTitleTextView(R.id.com_head_title);
+	}
+ 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
-		// 在使用SDK各组件之前初始化context信息，传入ApplicationContext
-		// 注意该方法要再setContentView方法之前实现
 		SDKInitializer.initialize(getApplicationContext());
-		setContentView(R.layout.home_product);
-		// 获取地图控件引用
-		mMapView = (MapView) findViewById(R.id.bmapView);
+		super.onCreate(savedInstanceState);
+		//初始化数据
+		InitializationData();
+		//初始化组件
+		InitializationComponent();
+	}
+
+
+
+
+	//参加按钮时间
+	public void attendEvent(View v)
+	{
+		if(!VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){
+			//转至登陆页面
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+		}else{
+			//转至确认订单页面		
+			activityAttend();
+		}
+	}	
+	
+	//参与活动
+	private void activityAttend()
+	{
+		SetActivityOrderReq orderReq = new SetActivityOrderReq();
+		orderReq.setActivityID(activity.getActivity_id());
+		orderReq.setToken(MemoryCache.getToken());
+		orderReq.setUserID(AppCache.getUser().getUser_id());
 		
-		Intent intent = this.getIntent();
-	 
+		MispHttpHandler handler = new  MispHttpHandler(){
+
+			@Override
+			public void handle(MispHttpMessage message)
+			{
+				log.info(message.toString());
+				boolean result = message.isSuccess();
+				log.info("message.isSuccess()="+result);
+				if(result)
+				{
+						SetActivityOrderRsp rsp = (SetActivityOrderRsp) message.getMessage().obj;
+						// get order rsp data
+						ActivityOrderJson order=rsp.getActivityOrder();
+						log.info("create order rsp: "+order);
+						// jump to order success
+						Intent intent = new Intent();
+						intent.setClass(getApplicationContext(), ActivityOrderSuccess.class);
+						intent.putExtra(SharedPreferenceConst.ACTIVITY_ORDER, order);
+						startActivity(intent);
+				}
+				else
+				{
+					showMessage(message);
+				}
+			}
+		};
+		//call create order api
+		WebServiceContext.getInstance().getActivityManageRest(handler).createActivityOrder(orderReq);
+
 	}
 
-	@Override
-	protected void onDestroy()
+
+	private void InitializationData()
 	{
-		super.onDestroy();
-		// 在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-		mMapView.onDestroy();
+		//获取活动数据
+	 	Intent intent = this.getIntent();
+		activity = (ActivityJson) intent.getSerializableExtra(ListViewResInfo.SELECT_ITEM);
+		log.info(activity.toString());
+	
 	}
 
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		// 在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
-		mMapView.onResume();
-	}
 
-	@Override
-	protected void onPause()
+	private void InitializationComponent()
 	{
-		super.onPause();
-		// 在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
-		mMapView.onPause();
+		// 获取地图控件引用
+		mMapView = (MapView) findViewById(R.id.bmapView);		
+		//活动图片
+		ImageView imageView = (ImageView)findViewById(R.id.order_product_img);
+		LoadImageUtil.getInstance().loadImage(imageView, DataConvertUtil.getAbsUrl(activity.getImgsrc()));
+		
+		TextView titleView = (TextView) findViewById(R.id.activity_title);
+		titleView.setText(activity.getTitle());
+		
+		TextView contentView = (TextView) findViewById(R.id.activity_dscr);
+		contentView.setText(activity.getDscr());
 	}
 
 	@Override
 	public void handle(MispHttpMessage message)
 	{
 		// TODO Auto-generated method stub
-
+		
 	}
+	
 
 }

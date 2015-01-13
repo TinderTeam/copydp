@@ -6,4 +6,8 @@
     
     
     <dimen name="top_head_height">60dp</dimen>
+    <dimen name="pad_basic">10dp</dimen>
+    <dimen name="label_font_size">20dp</dimen>
+    <dimen name="pad_large">16dp</dimen>
+    <dimen name="pad_50">50dp</dimen>
 </resources>

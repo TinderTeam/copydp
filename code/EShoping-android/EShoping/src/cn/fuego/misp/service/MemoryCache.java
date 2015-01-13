@@ -4,27 +4,10 @@ package cn.fuego.misp.service;
 
 public class MemoryCache
 {
-	private static String token;
-
-	private static String curCity = "广州";
-	
+	private static String token="12345";
 	private static String version = "0.1";
 	private static String serverIp = "120.24.217.173";
-	private static String serverPort= "9000";
-	
-	
-	 
- 
-	 
-	public static String getCurCity()
-	{
-		return curCity;
-	}
-
-	public static void setCurCity(String curCity)
-	{
-		MemoryCache.curCity = curCity;
-	}
+	private static String serverPort = "9000";
 
 	public static String getToken()
 	{
@@ -41,14 +24,10 @@ public class MemoryCache
 		return version;
 	}
 
- 
-
 	public static String getServerIp()
 	{
 		return serverIp;
 	}
-
- 
 
 	public static String getServerPort()
 	{
@@ -59,8 +38,8 @@ public class MemoryCache
 	{
 		return "http://"+MemoryCache.getServerIp()+":"+MemoryCache.getServerPort();
 	}
- 
 	
- 
-
+	public static void cleanToken(){
+		token=null;
+	}
 }

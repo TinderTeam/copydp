@@ -3,7 +3,7 @@ package cn.fuego.misp.service.http;
 import android.os.Handler;
 import android.os.Message;
 
-public class MispHttpHandler implements HttpListener
+public abstract class MispHttpHandler implements HttpListener
 {
 	private Handler handler = new Handler()
 	{
@@ -17,18 +17,31 @@ public class MispHttpHandler implements HttpListener
 		}
 	
 	};
-	@Override
-	public void handle(MispHttpMessage message)
-	{
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void sendMessage(MispHttpMessage message)
 	{
 		handler.sendMessage(message.getMessage());
 		
+	}
+
+
+	/**
+	 * @return the handler
+	 */
+	public Handler getHandler()
+	{
+		return handler;
+	}
+
+
+	/**
+	 * @param handler the handler to set
+	 */
+	public void setHandler(Handler handler)
+	{
+		this.handler = handler;
 	}
  
 

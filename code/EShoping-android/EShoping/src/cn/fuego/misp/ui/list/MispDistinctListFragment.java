@@ -14,8 +14,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
-import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.model.CommonItemMeta;
 
 public abstract class MispDistinctListFragment extends MispBaseListFragment<CommonItemMeta> implements
      MispListViewInteface,OnItemClickListener
@@ -37,16 +37,12 @@ public abstract class MispDistinctListFragment extends MispBaseListFragment<Comm
 
 		this.initRes();
 		View rootView = inflater.inflate(this.fragmentRes.getFragmentView(), null);
-
 		ListView listView = (ListView) rootView.findViewById(this.listViewRes.getListView());
-
-		adapter = new MispListAdapter<CommonItemMeta>(this.getActivity(), this,this.listViewRes,this.dataList);
+		adapter = new MispListAdapter<CommonItemMeta>(this.getActivity(), this,this.listViewRes,this.dataList);		
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
 		loadSendList();
-
 		return rootView;
-
 	}
  
 	

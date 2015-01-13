@@ -12,5 +12,21 @@
     <string name="home_service">生活服务</string>
     <string name="title_activity_user_info">UserInfoActivity</string>
     <string name="title_activity_product_search">ProductSearchActivity</string>
-
+    <string name="com_back">返回</string>
+ 	<string name="sys_null"> </string>
+ 	<string name="page_order_submit">提交订单</string>
+ 	<string name="page_order_success">下单成功</string>
+ 	<string name="page_attend_success">参与成功</string>
+ 	<string name="page_user_sysconfig">系统设置</string>
+ 	<string name="page_user_info">用户信息</string>
+ 	<string name="page_user_activity_order">活动订单</string>
+ 	<string name="page_user_order">产品订单</string> 	
+ 	<string name="page_activity_info">活动详情</string> 	
+ 	<string name="order_type_attend">已报名</string>
+ 	<string name="order_type_used">已参加</string>
+ 	<string name="order_type_overdue">已过期</string>
+ 	<string name="order_type_cancel">已取消</string>
+ 	<string name="order_type_ordered">已下单</string>
+ 	
+ 	
 </resources>

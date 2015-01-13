@@ -1,9 +1,12 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ActivityOrderJson
+public class ActivityOrderJson implements Serializable 
 {
+	public static final String STATUS="status";
+	
 	private String activity_order_id;
 	private int activity_id;
 	private int customer_id;
@@ -46,11 +49,11 @@ public class ActivityOrderJson
 		this.activity_title = activity_title;
 	}
 	
-	public String getActivity_disc() {
+	public String getActivity_dscr() {
 		return activity_disc;
 	}
-	public void setActivity_disc(String activity_disc) {
-		this.activity_disc = activity_disc;
+	public void setActivity_dscr(String activity_dscr) {
+		this.activity_disc = activity_dscr;
 	}
 	public String getImgsrc() {
 		return imgsrc;

@@ -166,10 +166,17 @@ public class DateUtil
 	{
 		String strTime=null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		
 		strTime=sdf.format(new Date(l_stamp));
 		return strTime;
 		
+	}
+
+	public static CharSequence DateToShotString(Date datetime)
+	{
+		String strTime=null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");		
+		strTime=sdf.format(datetime);
+		return strTime;
 	}
 
 }

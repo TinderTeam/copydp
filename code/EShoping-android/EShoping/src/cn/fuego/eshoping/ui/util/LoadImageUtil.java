@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -14,7 +18,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.cache.MemoryCache;
 
 public class LoadImageUtil
 {
@@ -26,6 +29,7 @@ public class LoadImageUtil
 	private boolean isAllCache = true;
 	
 	private boolean isLoad = false;
+
 	
 	private  LoadImageUtil()
 	{
@@ -105,4 +109,27 @@ public class LoadImageUtil
 		InputStream inputStream = (InputStream) new URL(urlString).getContent();
 		return inputStream;
 	}
+	
+	public static List<String> getImgStr(String htmlStr)
+	{
+		String img = "";
+		Pattern p_image;
+		Matcher m_image;
+		List<String> pics = new ArrayList<String>();
+		String regEx_img = "]*?>";
+		p_image = Pattern.compile(regEx_img, Pattern.CASE_INSENSITIVE);
+		m_image = p_image.matcher(htmlStr);
+		while (m_image.find())
+		{
+			img = img + "," + m_image.group();
+			Matcher m = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)")
+					.matcher(img);
+			while (m.find())
+			{
+				pics.add(m.group(1));
+			}
+		}
+		return pics;
+	}
+	
 }

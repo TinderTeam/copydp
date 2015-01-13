@@ -20,4 +20,9 @@ public class SharedPreferenceConst
     public static final String UESR_INFO ="user_info";
     public static final String NAME = "name"; 
     public static final String PASSWORD = "password"; 
+    public static final String PRODUCT = "product";
+	public static final String SELLER = "seller";
+	public static final String PRODUCT_ORDER = "product_order";
+	public static final String ACTIVITY_ORDER = "activity_order";
+
 }

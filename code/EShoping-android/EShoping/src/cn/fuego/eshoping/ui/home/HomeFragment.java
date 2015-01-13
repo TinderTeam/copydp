@@ -21,9 +21,8 @@ import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.cache.MemoryCache;
+import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.cache.ProductTypeCache;
-import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
@@ -31,8 +30,10 @@ import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.ui.list.ListViewResInfo;
 import cn.fuego.misp.ui.list.MispDistinctListFragment;
+import cn.fuego.misp.ui.model.CommonItemMeta;
 
 public class HomeFragment extends MispDistinctListFragment implements OnItemClickListener,OnCheckedChangeListener
 {
@@ -45,22 +46,16 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
     private int mTextviewArray[] = {R.string.home_food, R.string.home_car,R.string.home_photo,R.string.home_education,
     								R.string.home_entertainment,R.string.home_hotel,R.string.home_beauty,R.string.home_service}; 
  
-    private static final int ITEM_TYPE_GRID = 1; 
-    
+    private static final int ITEM_TYPE_GRID = 1;     
     private static final int ITEM_TYPE_TAB = 2; 
     private static final int ITEM_TYPE_PRODUCT_TYPE = 3; 
-
     private static final int ITEM_TYPE_PRODUCT = 4; 
     
     private int tabID = 0;
-
- 
     
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
-	
 	private View homeGridView;
 	private View homeTabView;
-	
 	private List<CommonItemMeta> newProductData;
 	private List<CommonItemMeta> typeProductData;
 	private List<CommonItemMeta> allProductData;
@@ -72,39 +67,25 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		this.fragmentRes.setImage(R.drawable.tabbar_home_icon);
 		this.fragmentRes.setName(R.string.tabbar_home);
 		this.fragmentRes.setFragmentView(R.layout.home_fragment);
- 
 		listViewRes.setListView(R.id.home_main_list);
-		//listViewRes.setListItemView(R.layout.home_list_item);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
-		
-		
- 
  	}
  
-	 
-
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
-		// TODO Auto-generated method stub
 		tabID = 0;
-		View view = super.onCreateView(inflater, container, savedInstanceState);
-		
-		
+		View view = super.onCreateView(inflater, container, savedInstanceState);	
 		return view;
 	}
-
-
-
 
 	@Override
 	public void loadSendList()
 	{
 		
 		GetProductListReq req = new GetProductListReq();
-		req.setCity(MemoryCache.getCurCity());
+		req.setCity(AppCache.getCurCity());
  
 		switch(tabID)
 		{
@@ -406,9 +387,4 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		
 		
 	}
-
-
-
- 
-
 }

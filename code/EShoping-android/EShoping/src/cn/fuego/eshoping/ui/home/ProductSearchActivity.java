@@ -18,7 +18,6 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Toast;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.misp.service.http.MispHttpMessage;
@@ -42,6 +41,13 @@ public class ProductSearchActivity extends BaseActivtiy implements OnCheckedChan
     private int checkFlag=0;
     private RadioGroup searchGroup;
     private RadioButton typeRadioBtn,areaRadioBtn;
+	@Override
+	public void initRes()
+	{
+		this.activityRes.setAvtivityView(R.layout.product_search);
+	} 
+	
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -221,8 +227,8 @@ public class ProductSearchActivity extends BaseActivtiy implements OnCheckedChan
                 }  */
             }  
         });  
-    } 
-	
+    }
+
 	
 
 }

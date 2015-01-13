@@ -16,14 +16,18 @@ public class MainActivity extends BaseActivtiy
 	public static boolean isForeground = false;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.main);
+	public void initRes()
+	{
+		this.activityRes.setAvtivityView(R.layout.main_welcome);
 		
+	}
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+		//setContentView(R.layout.main);		
 		//init baidu map
-		SDKInitializer.initialize(getApplicationContext());
-		setContentView(R.layout.main_welcome);
-	 
+		SDKInitializer.initialize(getApplicationContext()); 
 		Intent intent = new Intent();
 		//SharedPreferences userInfo = getSharedPreferences(SharedPreferenceConst.UESR_INFO, 0);
 		 
@@ -40,6 +44,8 @@ public class MainActivity extends BaseActivtiy
 		// TODO Auto-generated method stub
 		
 	}
+
+
 	
  
 

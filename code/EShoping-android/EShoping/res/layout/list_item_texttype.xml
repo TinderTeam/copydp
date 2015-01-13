@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:background="@color/white" >
 
         <TextView
@@ -15,17 +15,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:text="昵  称"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/black" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/order_product_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/item_texttype_name"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:src="@drawable/forward_sm" />
 
         <TextView
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="50dp"
-            android:layout_toLeftOf="@+id/imageView1"
+            android:layout_toLeftOf="@+id/order_product_img"
             android:layout_toRightOf="@+id/item_texttype_name"
             android:gravity="right"
             android:singleLine="true"

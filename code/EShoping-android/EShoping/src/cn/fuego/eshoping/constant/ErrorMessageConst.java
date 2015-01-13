@@ -21,6 +21,7 @@ public class ErrorMessageConst extends MISPErrorMessageConst
 {
  
 	
-	public static final int OPREATE_DEVICE_FAiLED= 10000 ; // 操作设备失败 
-
+	public static final int OPREATE_DEVICE_FAILED= 10000 ; // 操作设备失败 
+	public static final int GET_PRODUCT_ORDER_FAILED = 10001 ; // 获取产品订单失败
+	public static final int GET_ACTIVITY_ORDER_FAILED = 10002 ; // 获取产品订单失败
 }

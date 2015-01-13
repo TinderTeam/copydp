@@ -14,7 +14,7 @@
         android:background="@color/themecolor" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/order_activity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

@@ -14,48 +14,58 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
-import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.ui.base.CommonItemMeta;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
-public abstract class MispListActivity<E> extends MispBaseListActivity<E> implements
-MispListViewInteface,OnItemClickListener
+/**
+ * 
+* @ClassName: MispListActivity 
+* @Description: TODO
+* @author Tangjun 
+* @edit Nan Bowen
+* @date 2015年1月8日 上午9:30:56 
+* 
+* @param <E>
+ */
+public abstract class MispListActivity<E> extends MispBaseListActivity<E> implements MispListViewInteface,OnItemClickListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
-
- 
-
-	private List<E> dataList = new ArrayList<E>();
-
+	
+	//数据列表
+	private  List<E> dataList = new ArrayList<E>();
+	//适配器
 	private MispListAdapter<E> adapter;
-
+	//列表视图资源文件
 	protected ListViewResInfo listViewRes = new ListViewResInfo();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		this.initRes();
-		
-		setContentView(this.activityRes.getAvtivityView());
-		//ListView user_info_list = (ListView) findViewById(R.id.user_info_list);
-		//ArrayList<HashMap<String,Object>> datasource = new ArrayList<HashMap<String,Object>>();
-		//String[] data={"昵称","user1",};
-		
 		adapter = new MispListAdapter<E>(this, this,this.listViewRes,this.dataList);
-		ListView productView = (ListView) findViewById(this.listViewRes.getListView());
-;
-		productView.setAdapter(adapter);
-		productView.setOnItemClickListener(this);
+		ListView listView = (ListView) findViewById(this.listViewRes.getListView());
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
 		loadSendList();
-
 	}
 	
 
 	public abstract void loadSendList();
-
-
-
+	
+	public void refreshList(List<E> newDataList)
+	{
+		this.dataList.clear();
+		if(!ValidatorUtil.isEmpty(newDataList))
+		{
+			this.dataList.addAll(newDataList);
+		}
+		repaint();
+	}
+	
+	public void repaint()
+	{
+		this.adapter.notifyDataSetChanged();
+	}
+	
 	@Override
 	public int getItemViewType(Object item)
 	{
@@ -114,5 +124,26 @@ MispListViewInteface,OnItemClickListener
 
 		this.startActivity(intent);
 
+	}
+
+
+	/**
+	 * @return the dataList
+	 */
+	public List<E> getDataList()
+	{
+		return dataList;
+	}
+
+
+	/**
+	 * @param dataList the dataList to set
+	 */
+	public void setDataList(List<E> dataList)
+	{
+		if(dataList==null){
+			dataList = new ArrayList<E>();
+		}
+		this.dataList = dataList;
 	}
 }

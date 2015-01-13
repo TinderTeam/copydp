@@ -12,7 +12,7 @@
         android:paddingTop="20dp" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/order_activity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -23,12 +23,12 @@
             android:textColor="@color/black" />
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/order_product_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="25dp"
-            android:layout_toRightOf="@+id/textView1"
+            android:layout_toRightOf="@+id/order_activity_name"
             android:src="@drawable/arrow_drop" />
 
     </RelativeLayout>

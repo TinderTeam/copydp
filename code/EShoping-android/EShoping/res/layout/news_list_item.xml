@@ -4,22 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingBottom="20dp"
-    android:paddingTop="10dp" >
+    android:gravity="center"
+    android:orientation="vertical" >
 
- 
-
-    <TextView
-        android:id="@+id/news_list_item_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@+id/home_list_item_img"
-        android:text="标题"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/black" />
+        android:layout_centerInParent="true"
+        android:baselineAligned="false" >
 
- 
+        <TextView
+            android:id="@+id/news_list_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:text="谁大法官的萨菲跟得上各地市公司佛顶骨防晒霜的股份"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/news_list_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="right|center"
+            android:text="2014-12-31" />
+
+    </LinearLayout>
 
 </RelativeLayout>
