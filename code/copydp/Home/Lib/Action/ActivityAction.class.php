@@ -104,7 +104,7 @@ class ActivityAction extends ActivityServiceAction {
 			$data2['activity_id']=$activityID;			
 			$data2['customer_id']=$customer_id;
 			$data2['activity_title']=$activity_title;
-			$data2['activity_dscr']=$activity_dscr;
+			$data2['activity_disc']=$activity_dscr;
 			$data2['imgsrc']=$imgsrc;
 			$data2['memberlimit']=$memberlimit;
 			$data2['datelimit']=$datelimit;
