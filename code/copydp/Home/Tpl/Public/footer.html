@@ -27,18 +27,18 @@
 								$condition['name']='linkname4';
 								$linkname4=$siteCfg->where($condition)->getField('content');
 								$condition['name']='link4';
-								$link2=$siteCfg->where($condition)->getField('content');
+								$link4=$siteCfg->where($condition)->getField('content');
 							?>
 							<if condition="$linkname1 neq ''">
 								<li>·<a href="http://{$link1}">{$linkname1}</a></li>
 							</if>
-							<if condition="$linkname1 neq ''">
+							<if condition="$linkname2 neq ''">
 								<li>·<a href="http://{$link2}">{$linkname2}</a></li>
 							</if>
-							<if condition="$linkname1 neq ''">
+							<if condition="$linkname3 neq ''">
 								<li>·<a href="http://{$link3}">{$linkname3}</a></li>
 							</if>
-							<if condition="$linkname1 neq ''">
+							<if condition="$linkname4 neq ''">
 								<li>·<a href="http://{$link4}">{$linkname4}</a></li>
 							</if>
 						</ul>

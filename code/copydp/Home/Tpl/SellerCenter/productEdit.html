@@ -96,34 +96,64 @@
 											</div>
 											<div id="trPriceInfo"  class="form-block">
 												<span class="label label_required">产品类型<em>*</em></span>
-
-												<?php
-
-													$typedb= M('product_type');
-												
-													$mainType=$typedb->select();										
-												?>
-												<select class="form-select-sim selectTarget" name="type_id">
-													<option  value="">请选择分类</option>	
-												<foreach name='mainType' item='vc'>
-													<option value="{$vc.type_id}">{$vc.type_name}</option>	
-												</foreach>
-
-												</select>																			
+											<?php
+													$productType=M('product_type');
+													$condition['father_id'] = 0;
+													$type=$productType->where($condition)->select();
+											?>
+																									
+											<select class="selectTarget3 span-select"  onchange="selectChange(3)">
+												<option  value="">请选择类型</option>
+											<foreach name='type' item='mainType'>
+												<option value="{$mainType.type_id}">{$mainType.type_name}</option>
+											</foreach>											
+											</select>	
+<?php
+										$productType=M('product_type');
+										$all_type=$productType->select();
+								?>
+								<select id="type_id3" name="type_id" class="span-select">
+									<option  selected="selected" value="">请选择子类型</option></span>
+									<foreach name='all_type' item='subtype'>
+										<if condition="$subtype.father_id eq 0">
+											<option class="showOption3" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>	
+											<else/>
+											<option class="showOption3" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>
+											
+										</if>
+																											
+									</foreach>											
+								</select>								
+								<select name="null" class="form-select-sim form-select-sim-m zone-select Hide">
+									<option  selected="selected" value="">请选择子类型</option></span>
+									<foreach name='all_type' item='subtype'>
+										<if condition="$subtype.father_id eq 0">
+											<option class="copy3" value="{$subtype.type_id}"
+										>{$subtype.type_name}</option>
+											<else/>											
+											<option fatherID="{$subtype.father_id}" typeID="{$subtype.type_id}" class="copy3" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>
+										</if>																												
+									</foreach>											
+								</select>														
 											</div>
 											<div class="form-block">
 												<span class="label">截止日期:</span>
 												<input name="end_date_time" type="text" placeholder="格式：YYYY-mm-DD"  value="{$productItem['end_date_time']}" class="form-txt form-txt-l"/>
 											</div>
 											
-											
 											<div class="form-block">
-												<span class="label valuecheck">价格:</span>
-												<input name="price"  type="number" value="{$productItem['price']}" class="form-txt form-txt-l valuecheck"/>
+												<span class="label ">价格:</span>
+												<input name="price"  type="number" value="{$productItem['price']}" class="form-txt form-txt-l "/>
 											</div>
 											<div class="form-block">
 												<span class="label ">原价:</span>
-												<input name="original_price"  type="number" value="{$productItem['original_price']}" class="form-txt form-txt-l valuecheck"/>
+												<input name="original_price"  type="number" value="{$productItem['original_price']}" class="form-txt form-txt-l "/>
 											</div>
 											
 											<!---- 会员专属不在这里配置
@@ -241,6 +271,25 @@
 			}		
 		});	
     </script>
-
+<script type="text/javascript">
+	function selectChange(num){
+		var id=$(".selectTarget"+num).val();
+		
+		$(".showOption"+num).each(function(){	
+			$(this).remove();
+		});
+		
+		$(".copy"+num).each(function(){
+			var fatherID=$(this).attr("fatherID");
+			var typeID=$(this).attr("typeID");
+			var name=$(this).html();
+			if(fatherID==id){				
+				$("#type_id"+num).append(
+					"<option class='showOption"+num+"' value='"+typeID+"'>"+name +"</option>"
+				); 
+			}
+		});
+	}
+	</script>
 </body>
 </html>

@@ -66,7 +66,7 @@ class SellerCenterAction extends Action {
 		$data2['seller_id']=$seller_id;	
 		$data2['basic_infor']=$_POST['info'];	
 		$data2['type_id']=$_POST['type_id'];	
-		$data2['price']=$_POST['price'];	
+		$data2['price']=$_POST['price'];
 		$data2['original_price']=$_POST['original_price'];	
 		$data2['end_date_time']=$_POST['end_date_time'];
 		
@@ -87,10 +87,10 @@ class SellerCenterAction extends Action {
 			$product->add($data2);
 		}
 
+		
+		
 		$this->redirect('SellerCenter/productManage');
-		//$this->display('sellesInfo');
-		//$this->assign("jumpUrl","sellesInfo");
-		//$this->success("成功提交");
+
     }
 	
 	public function orderManage($filter_type=0){
@@ -355,18 +355,26 @@ class SellerCenterAction extends Action {
 	$condition['order_id'] = $order_id;
 	$data['order_status']="已取消";
 
-	if($order->where($condition)->save($data))
-		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
-			$this->success("成功取消");
-		} 
-	else
-		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
-			$this->error("操作失败，请重新取消");
-		}
+		if($order->where($condition)->save($data))
+			{
+				$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
+				$this->success("成功取消");
+			} 
+		else
+			{
+				$this->assign("jumpUrl","__APP__/SellerCenter/orderManage");
+				$this->error("操作失败，请重新取消");
+			}
     }
-	
-	
+	public function sellerInfoEdit(){
+	$seller = M('seller');
+	$condition['user_id'] = $_POST['userID'];
+	$edit['seller_name']= $_POST['seller_name'];
+	$edit['city_id']= $_POST['city_id'];
+	$edit['type_id']= $_POST['type_id'];
+	$edit['description']= $_POST['description'];
+	$seller -> where($condition)->save($edit);
+	$this->success("修改成功");
+	}
 }
 ?>

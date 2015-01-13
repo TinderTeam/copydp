@@ -137,7 +137,12 @@ margin-right: 10px;
 											<input type="button" value="冻结" class="form-btn"  onclick="show_freeze_confirm('{$v1.user_id}')"/>
 											<!--<input type="submit" value="冻结"  onclick="javascript:this.form.action='__URL__/freeze?id={$v1.user_id}';"/>-->
 										</if>
-										<input type="submit" value="升级"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
+										<if condition="$v1.grade eq 'SVIP' ">
+											<input type="submit" value="降级"  onclick="javascript:this.form.action='__URL__/downgrade?id={$v1.user_id}';"/>
+										<else/>
+											<input type="submit" value="升级"  onclick="javascript:this.form.action='__URL__/upgrade?id={$v1.user_id}';"/>
+										</if>
+										
 									</td>
 								</tr>
 						</foreach>

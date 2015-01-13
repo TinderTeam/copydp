@@ -76,10 +76,10 @@ margin-right: 10px;
 							$userName=$_SESSION['login_user'];
 							$sellerDB=M('view_seller');
 							$sellerCondition['user_name']=$userName;
-							$sellerName=$sellerDB->where($sellerCondition)->getField('seller_name');							
+							$seller=$sellerDB->where($sellerCondition)->find();							
 						?>
 						<div class="tit">
-							<h2 class="name">{$sellerName}</h2>
+							<h2 class="name">{$seller.seller_name}</h2>
 						</div>
 						
 					</div>
@@ -120,7 +120,102 @@ margin-right: 10px;
 					</div>
 				</div>
 			</div>
-								
+				
+			<div class="um-con" id="myEvaluation">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<h4>商家信息修改</h4>			
+					</div>
+					<?php
+						
+						
+					?>
+					<form id="SellerForm" name="form2" action="__URL__/sellerInfoEdit" method="post">
+						<input name="userID" value ="{$userID}" class="Hide">
+						<ul style="height:300px">
+							<li>
+								<span class="ws">商家名称</span>
+								<input class="text" name="seller_name" type="text" value="{$seller.seller_name}" />
+							</li>
+							<li> 
+								<span class="ws">选择城市</span>
+									<?php
+											$CityDB= M('city');
+											$cityList=$CityDB->select();
+									?>
+								<select name="city_id">
+									<option value={$seller.city_id} selected="selected" >{$seller.city}</option>
+									<foreach name='cityList' item='city'>
+										<option value={$city.city_id} >{$city.city}</option>
+									</foreach>											
+								</select>
+							</li>
+							<li> 
+								<span class="ws" >类型：</span>
+								<?php
+										$productType=M('product_type');
+										$condition['father_id'] = 0;
+										$type=$productType->where($condition)->select();
+								?>
+																			
+								<select id="typeSelect1"  class="selectTarget1"  onchange="selectChange(1)">
+									<option  value="">请选择类型</option>
+								<foreach name='type' item='mainType'>
+									<option value="{$mainType.type_id}">{$mainType.type_name}</option>
+								</foreach>											
+								</select>
+
+							</li>
+							<li>
+								<span class="ws" >子类型</span>
+								<?php
+										$productType=M('product_type');
+										$all_type=$productType->select();
+								?>
+								<select id="type_id1" name="type_id" class="form-select-sim form-select-sim-m zone-select ">
+									<option  selected="selected" value="{$seller.type_id}">{$seller.type_name}</option></span>
+									
+									<foreach name='all_type' item='subtype'>
+										<if condition="$subtype.father_id eq 0">
+											<option class="showOption1" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>	
+											<else/>
+											<option class="showOption1" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>
+											
+										</if>
+																											
+									</foreach>											
+								</select>
+								<select id="copy" name="null" class="form-select-sim form-select-sim-m zone-select Hide">
+										<option  selected="selected" value="">请选择子类型</option></span>
+										<foreach name='all_type' item='subtype'>
+											<if condition="$subtype.father_id eq 0">
+												<option class="copy_tpyeGroup{$subtype.type_id} copy1" value="{$subtype.type_id}"
+											>{$subtype.type_name}</option>
+												<else/>
+											
+												<option fatherID="{$subtype.father_id}" typeID="{$subtype.type_id}" class="copy1" value="{$subtype.type_id}">
+													{$subtype.type_name}
+												</option>									
+											</if>																												
+										</foreach>											
+									</select>
+							</li>			
+							<li>
+								<span>描述</span>
+								<div>
+								<textarea class="text" style="height:200px;width:400px" value="{$seller.description}" name="description"></textarea>
+								</div>
+							</li>
+							
+						</ul>
+						<input type="submit" name="submit" value="提交"/>
+					</form>				
+				</div>
+			</div>				
 			<!--二维码-->
 			<?php				
 				$sellerdb = M('seller');
@@ -184,4 +279,24 @@ margin-right: 10px;
 		location.href='__APP__/SellerCenter/sellesInfo?filter_type='+$(this).val();
 	});	
 </script>
+<script type="text/javascript">
+	function selectChange(num){
+		var id=$(".selectTarget"+num).val();
+		
+		$(".showOption"+num).each(function(){	
+			$(this).remove();
+		});
+		
+		$(".copy"+num).each(function(){
+			var fatherID=$(this).attr("fatherID");
+			var typeID=$(this).attr("typeID");
+			var name=$(this).html();
+			if(fatherID==id){				
+				$("#type_id"+num).append(
+					"<option class='showOption"+num+"' value='"+typeID+"'>"+name +"</option>"
+				); 
+			}
+		});
+	}
+	</script>
 </html>

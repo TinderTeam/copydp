@@ -232,6 +232,16 @@ $customer->where($condition)->setField('vip_limit_date',$now);
 		
 		}	
 
+				//升级账户
+		public function downgrade(){
+			$customer = M('customer');
+			$userID=$_GET['id'];
+			$condition['user_id']=$userID;
+			$customer->where($condition)->setField('grade','VIP');			
+			$this->redirect('UserManage/index','',0,'操作成功');
+		
+		}	
+		
 		//验证码查询
 		public function SearchCode(){
 			if($_POST['codeStatus']==""){
