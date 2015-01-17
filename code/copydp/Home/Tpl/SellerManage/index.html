@@ -125,10 +125,61 @@
 					</div>
 					
 					<strong class="btn-type-b btn-fn-c">
-										<input type="submit" value="发布新SVIP产品"  class="form-btn" onclick="newSVIPProduct()" />
-									</strong>	
+						<input type="submit" value="发布新SVIP产品"  class="form-btn" onclick="newSVIPProduct()" />
+					</strong>	
 				</div>
 			</div>	<!--<div class="um-con">-->
+			
+				<!--<div class="um-con">-->
+			<div class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+					<input id="nav" value="{$nav}" style="display:none;"/>
+						<h4>积分兑换产品发布</h4>
+						<span>发布积分兑换产品</span>
+					</div>					
+					<div class="pay-confirm">
+						<?php
+							$Productdb= M('product');
+							$scoreCondition['type_id']='1000';
+							$scoreProductList = $Productdb->where($scoreCondition)->select();						
+						?>
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th width="10%">产品编号</th>
+									<th width="10%">产品名称</th>
+									<th width="10%">产品类型</th>
+									<th width="30%">发起时间</th>	
+									<th width="10%">产品积分</th>									
+									<th width="10%">产品描述</th>					
+									<th width="5%">操作</th>
+								</tr>
+						<foreach name='scoreProductList' item='v1'>	
+								<tr>
+									<td valign="middle" align="left" class="deal">{$v1.product_id}</td>
+									<td valign="middle" align="left" class="deal">{$v1.name}</td>
+									<td align="center" >积分兑换</td>
+									<td align="center"> {$v1.update_date}</td>
+									<td align="center"> {$v1.price}</td>
+									<td align="center" >{$v1.describe}</td>
+									<td align="center" >
+										<input type="submit" value="编辑"  onclick="scoreProductEdit('{$v1.product_id}')"/>
+										<input type="submit" value="删除"  onclick="scoreProductRemove('{$v1.product_id}')"/>
+									</td>
+								</tr>					
+						</foreach>		
+						
+							</tbody>
+						</table>
+					</div>
+					
+					<strong class="btn-type-b btn-fn-c">
+						<input type="submit" value="积分兑换产品"  class="form-btn" onclick="newScroeProduct()" />
+					</strong>	
+				</div>
+			</div>	<!--<div class="um-con">-->
+			
 			<!--<div class="um-con">-->
 			<div class="um-con">
 				<div class="modebox my-comm J_my_comm" >
@@ -758,7 +809,21 @@
 	{
 		top.location="__APP__/SellerManage/svipEdit?type=create";
 	}
-	
+		//新建Score产品
+	function newScroeProduct()
+	{
+		top.location="__APP__/SellerCenter/newScoreProduct ";
+	}
+	//修改Score产品
+	function scoreProductEdit(id)
+	{
+		top.location="__APP__/SellerCenter/editScoreProduct?productID="+id;
+	}
+	//修改Score产品
+	function scoreProductRemove(id)
+	{
+		top.location="__APP__/SellerCenter/productDelete?productID="+id;
+	}
 </script>
 <script type="text/javascript">
 	function selectChange(num){
@@ -779,6 +844,9 @@
 			}
 		});
 	}
-	</script>			
+	</script>
+
+
+	
 </body>
 </html>

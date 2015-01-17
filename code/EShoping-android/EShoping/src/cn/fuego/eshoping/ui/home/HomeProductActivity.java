@@ -167,11 +167,7 @@ public class HomeProductActivity extends BaseActivtiy
 		}
 		imageList.add(0,DataConvertUtil.getAbsUrl(product.getImgsrc()));
 		ImagePagerAdapter adapter = new ImagePagerAdapter(this,group,imageList);
-        //设置Adapter  
         viewPager.setAdapter(adapter);  
-        //设置监听，主要是设置点点的背景  
-        //viewPager.setOnPageChangeListener(this);  
-        //设置ViewPager的默认项, 设置为长度的100倍，这样子开始就能往左滑动  
         viewPager.setCurrentItem(0); 
         viewPager.setOnPageChangeListener(adapter);		
 		view.setText(seller.getDscr());

@@ -117,27 +117,39 @@ class CommunityAction extends CommunityServiceAction {
         $errorCode = SUCCESS;
         $this->returnJson($errorCode,null);
     }
-	public function newTopic(){
+	public function newTopic($communityID=0){
+		$this->assign("communityID",$communityID);
 		$this->display();
 	}
+	
 	public function saveTopic(){
-		$this->assign("currentPage","user");
+		$this->assign("currentPage","user");	
 		if($_SESSION['login_user']!=""){
-			//获取用户信息
-			$db=new Model('user');
-			$userName=$_SESSION['login_user'];
-			$condition['username']=$userName;	
-			$user_id= $db->where($condition)->getField('user_id');
+			if($_POST['type']=="edit"){
+				$communityDB=M('community');	
+				$condition['conmmunity_id']=$_POST['communityID'];			
+				$Data['context']=$_POST['info'];
+				$Data['title']=$_POST['title'];	
+				$Data['datetime']=date('Y-m-d H:i:s',time());			
+				$communityDB->where($condition)->save($Data);
+				$this->assign("jumpUrl","__APP__/CommunityManage/Index");
+				$this->success("操作成功");
+			}else{
+				//获取用户信息
+				$db=new Model('user');
+				$userName=$_SESSION['login_user'];
+				$condition['username']=$userName;	
+				$user_id= $db->where($condition)->getField('user_id');
+				$communityDB=M('community');	
+				$Data['context']=$_POST['info'];
+				$Data['title']=$_POST['title'];	
+				$Data['datetime']=date('Y-m-d H:i:s',time());
+				$Data['community_type']=$_POST['community_type'];			
+				$Data['customer_id']=$user_id;
+				$communityDB->add($Data);	
+				$this->display('community');
+			}
 			
-			$communityDB=M('community');	
-			$Data['context']=$_POST['info'];
-			$Data['title']=$_POST['title'];	
-			$Data['datetime']=date('Y-m-d H:i:s',time());
-			$Data['community_type']=$_POST['community_type'];			
-			$Data['customer_id']=$user_id;
-			$communityDB->add($Data);
-			
-			$this->display('community');
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");

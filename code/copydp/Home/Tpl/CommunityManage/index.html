@@ -123,7 +123,7 @@ margin-right: 10px;
 							</thead>
 
 							<?php
-								$communityDB = M('view_community_customer');
+								$communityDB = M('community');
 								if($IDFilter!=""){
 									$communityCondition['community_id']=$IDFilter;
 								}
@@ -131,7 +131,7 @@ margin-right: 10px;
 									$communityCondition['title']=$titleFilter;
 								}
 								if($userFilters!=""){
-									$communityCondition['username']=$userFilters;
+									$communityCondition['customer_id']=$userFilters;
 								}
 								if($datetimeFilters!=""){
 									$communityCondition['datetime']=$datetimeFilters;
@@ -152,9 +152,10 @@ margin-right: 10px;
 										</td>
 										<td align="center" >{$communityItem['community_type']}</td>
 										<td align="center"> {$communityItem['datetime']}</td>
-										<td align="center"> {$communityItem['username']}</td>
+										<td align="center"> {$communityItem['customer_id']}</td>
 										<td align="center" >									
 											<input type="button" value="删除" class="form-btn" onclick="show_delete_confirm({$communityItem['community_id']})" />
+											<input type="button" value="编辑" class="form-btn" onclick="show_edit_confirm({$communityItem['community_id']})" />
 										</td>
 									</tr>
 								</volist>
@@ -260,6 +261,10 @@ function show_delete_confirm(CommunityID)
 	else
 	{
 	}
+}
+function show_edit_confirm(CommunityID)
+{
+	top.location="__APP__/Community/newTopic?communityID="+CommunityID;
 }
 </script>
 </html>

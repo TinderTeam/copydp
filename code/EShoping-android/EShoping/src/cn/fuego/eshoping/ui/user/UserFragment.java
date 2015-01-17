@@ -65,7 +65,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	private void ComponentUpdateData()
 	{
 		userName.setText(AppCache.getUser().getUsername());
-		userPlace.setText(AppCache.getCurCity());
+		userPlace.setText(AppCache.getCityInfo().getCity());
 		
 		userInfoBtn.setOnClickListener(new OnClickListener(){
 			@Override

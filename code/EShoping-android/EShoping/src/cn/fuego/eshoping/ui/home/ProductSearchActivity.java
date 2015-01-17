@@ -3,232 +3,160 @@ package cn.fuego.eshoping.ui.home;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.PopupWindow.OnDismissListener;
-import android.widget.RadioButton;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
+import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.ui.base.BaseActivtiy;
-import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.constant.SharedPreferenceConst;
+import cn.fuego.eshoping.ui.util.DataConvertUtil;
+import cn.fuego.eshoping.ui.widget.FilterPopupMenu;
+import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
+import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
+import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
+import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.ui.list.MispListActivity;
+import cn.fuego.misp.ui.util.LoadImageUtil;
 
-public class ProductSearchActivity extends BaseActivtiy implements OnCheckedChangeListener
+public class ProductSearchActivity extends  MispListActivity<ProductJson>
 {
-	//父节点显示列表,测试用
-	private  static final String[] strs= new String[]{"全部分类","餐饮美食","汽车服务","摄影写真","教育培训","休闲娱乐","酒店旅游","都市丽人","生活服务"	};
 	
-
-	private ListView fatherList,childList;
-	private GroupAdapter fatherAdapter,childAdapter;
-	
-	private PopupWindow popupWindow=null;  
-  
-    private View view;  
-
-    private List<String> fatherListData = new ArrayList<String>();
-    private List<String> childListData = new ArrayList<String>() ; 
-    //用于标记radiogroup点击次数
-    private int checkFlag=0;
+	private FuegoLog log = FuegoLog.getLog(ProductSearchActivity.class);
+	//页面组件
     private RadioGroup searchGroup;
-    private RadioButton typeRadioBtn,areaRadioBtn;
+    private FilterPopupMenu popupMenu;
+    private int selectType=0;
+    private int selectZone=0;
+    
+
 	@Override
 	public void initRes()
 	{
 		this.activityRes.setAvtivityView(R.layout.product_search);
+		this.activityRes.setBackBtn(R.id.com_back_btn);
+		
+		//List
+		this.listViewRes.setListItemView(R.layout.home_list_item);
+		this.listViewRes.setListView(R.id.product_search_list);	
+		this.listViewRes.setClickActivityClass(HomeProductActivity.class);
 	} 
 	
-    
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		InitializationData();
+		
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.product_search);
-		
-	    searchGroup = (RadioGroup) findViewById(R.id.product_serch_radio_group);   
-		searchGroup.setOnCheckedChangeListener(this);		
+		//初始化数据
 
-		//监听radiobutton,再次点击取消选中状态
-		typeRadioBtn = (RadioButton) searchGroup.findViewById(R.id.product_serch_radio_type);
-		typeRadioBtn.setOnClickListener(typeBtnClickListener);
-
-		areaRadioBtn = (RadioButton) searchGroup.findViewById(R.id.product_serch_radio_area);
-		areaRadioBtn.setOnClickListener(areaBtnClickListener);
-
-
-
+		//初始化组件
+		InitializationView();
+		//初始化监听器
+		InitializationListener();
 	}
-	private RadioButton.OnClickListener typeBtnClickListener = new OnClickListener()
+	
+	private void InitializationData()
 	{
-		@Override
-		public void onClick(View v)
-		{
-			clearCheck();
-		
-		}
-	};
-	 private RadioButton.OnClickListener areaBtnClickListener = new OnClickListener()
+		Intent intent = this.getIntent();
+		selectType = (Integer) intent.getSerializableExtra(SharedPreferenceConst.SELECT_TYPE_ID);
+		log.info("default select type is = "+ selectType );
+	}	
+	
+	private void InitializationView()
 	{
-		
-		@Override
-		public void onClick(View v)
-		{
-			
-			clearCheck();
-		}
-	};
-    private void clearCheck()
-    {
-		if(checkFlag==0)
-		{
-
-			checkFlag=1;
-		}
-		else
-		{
-			searchGroup.clearCheck();			
-			checkFlag=0;
-		}
-    }
-	@Override
-	public void handle(MispHttpMessage message)
-	{
-		// TODO Auto-generated method stub
-		
+		searchGroup = (RadioGroup) findViewById(R.id.product_serch_radio_group);   
+		popupMenu=new FilterPopupMenu(this,searchGroup);			
 	}
-
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId)
+	
+	private void InitializationListener()
 	{
-
-		int radioButtonId = group.getCheckedRadioButtonId();
-		if (radioButtonId == R.id.product_serch_radio_type)
-		{   
-
-			
-			if(typeRadioBtn.isChecked())
-			{
-				showWindow(group);
-			}
-			else
-			{
-				return;
-			}
-			
-		}
-		if(radioButtonId == R.id.product_serch_radio_area)
-		{
-			
-			if(areaRadioBtn.isChecked())
-			{
-				showWindow(group);
-			}
-			else
-			{
-				return;
-			}
-		}
-
-		
-	}
-	private void showWindow(View parent) {  
-		  
-        if (popupWindow == null) {  
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);  
-  
-            view = layoutInflater.inflate(R.layout.pop_window, null);  
-  
-            fatherList = (ListView) view.findViewById(R.id.search_father_list); 
-            childList = (ListView) view.findViewById(R.id.search_child_list);
-
-			 
-            
-			//fatherListData = new ArrayList<String>();  
-            for(int i=0;i<strs.length;i++)
-            {
-            	fatherListData.add(strs[i]);
-            }
-
-            fatherAdapter = new GroupAdapter(this, fatherListData);  
-            fatherList.setAdapter(fatherAdapter);  
-           
-
-            // 创建一个PopuWidow对象  
-            //popupWindow = new PopupWindow(view, 300, 350);
-            popupWindow = new PopupWindow(view,
-			getWindowManager().getDefaultDisplay().getWidth(),
-			getWindowManager().getDefaultDisplay().getHeight());
-        }  
-  
-        // 使其聚集  
-        popupWindow.setFocusable(true);  
-        // 设置允许在外点击消失  
-        popupWindow.setOutsideTouchable(true);  
-
-        //实例化一个ColorDrawable颜色为半透明 
-        ColorDrawable dw = new ColorDrawable(0xb0000000);  
-        popupWindow.setBackgroundDrawable(dw);
-        //点击底部页面消失pop
-        View bottomview = view.findViewById(R.id.pop_window_bottom);
-        bottomview.setOnClickListener(new OnClickListener()
-		{
-			
+		//按钮组监听器
+		searchGroup.setOnCheckedChangeListener(new OnCheckedChangeListener(){
 			@Override
-			public void onClick(View v)
+			public void onCheckedChanged(RadioGroup group, int checkedId)
 			{
-				popupWindow.dismiss(); 
-				
-			}
-		});
-       
-        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);  
-        // 显示的位置为:屏幕的宽度的一半-PopupWindow的高度的一半  
-        int xPos = windowManager.getDefaultDisplay().getWidth() / 2  
-                - popupWindow.getWidth() / 2;  
-  
-        popupWindow.showAsDropDown(parent, xPos, 0); 
-        //监听popwindow消失事件，并对radioGroup清零
-        popupWindow.setOnDismissListener(new OnDismissListener()
-		{		
-			@Override
-			public void onDismiss()
-			{
-				searchGroup.clearCheck();			
-				checkFlag=0;			
-			}
-		});
-        fatherList.setOnItemClickListener(new OnItemClickListener(){  
-  
-            @Override  
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {  
-               //使item为选中状态
-                fatherAdapter.setSelectedPosition(position);
-                fatherAdapter.notifyDataSetInvalidated();
-                
-                childListData.clear();
-                //for test
-                childListData.add(strs[position]);
-                childAdapter = new GroupAdapter(adapterView.getContext(), childListData);
-                childList.setAdapter(childAdapter);
-                //childAdapter.notifyDataSetChanged();
-                
-/*                if (popupWindow != null) 
-                {  
-                    popupWindow.dismiss();  
-                }  */
-            }  
-        });  
-    }
+				int radioButtonId = group.getCheckedRadioButtonId();
+				if (radioButtonId == R.id.product_serch_radio_type)
+				{   
+					log.info("type filter clicked...");
+					popupMenu.showTypeFilter();
+					group.clearCheck();
+				}else if(radioButtonId == R.id.product_serch_radio_area)
+				{
+					log.info("zone filter clicked...");
+					popupMenu.showZoneFilter();
+					group.clearCheck();
+				}
+			}	
+		});		
+	}
+	
 
+
+	public void zoneFilter(int selectedId)
+	{
+		log.info("select by  zoneFilter: "+selectedId);
+		selectZone=selectedId;
+		selectType=0;
+		super.refreshList(new ArrayList<ProductJson>());
+		loadSendList();
+	}
+
+	public void tpyeFilter(int selectedId)
+	{
+		log.info("select by  tpyeFilter: "+selectedId);	
+		selectType=selectedId;
+		selectZone=0;
+		super.refreshList(new ArrayList<ProductJson>());
+		loadSendList();
+	}
+
+	@Override
+	public void loadSendList()
+	{
+		log.info("load list : type="+selectType+"zoen="+selectZone);
+		GetProductListReq req = new GetProductListReq();
+		req.setToken(AppCache.getToken());
+		req.setCity(AppCache.getCityInfo().getCity());
+		req.setTypeRoot(selectType);
+		req.setZone_id(selectZone);
+		req.setSearch(false);
+		WebServiceContext.getInstance().getProductManageRest(this).getAllProductList(req);
+	}
+
+	@Override
+	public List<ProductJson> loadListRecv(Object obj)
+	{
+		GetProductListRsp rsp = (GetProductListRsp)obj;
+		List<ProductJson> data = rsp.getProductList();
+		if(data==null){
+			data = new ArrayList<ProductJson>();
+		}
+		log.info("product list num = "+data.size());
+		this.repaint();	
+		return data;
+	}
+	
+	@Override
+	public View getListItemView(View view, ProductJson item)
+	{
+		TextView nameView= (TextView) view.findViewById(R.id.home_list_item_title);
+		nameView.setText(item.getName());	
+		TextView oldPriceView= (TextView) view.findViewById(R.id.home_list_item_oldPrice);
+		oldPriceView.setText(String.valueOf(item.getOriginal_price()));
+		TextView curPriceView= (TextView) view.findViewById(R.id.home_list_item_curPrice);
+		curPriceView.setText(String.valueOf(item.getPrice()));
+		TextView despView= (TextView) view.findViewById(R.id.home_list_item_desp);
+		despView.setText(item.getDscr());
+		ImageView imageView = (ImageView)view.findViewById(R.id.home_list_item_img);
+		LoadImageUtil.getInstance().loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()));
+		return view;
+	}
 	
 
 }

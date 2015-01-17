@@ -277,6 +277,7 @@ class SellerManageAction extends Action {
 		$this->display("sellerAdd");
 		
 	}
+
 	
 	//搜索
 	public function searchSeller(){
@@ -554,7 +555,7 @@ class SellerManageAction extends Action {
 		        $this->success("批量解冻成功！");
 		    }
 		}
-		
+
 		public function searchRecProduct(){
 		
 		    if($_SESSION['login_user']!=""){

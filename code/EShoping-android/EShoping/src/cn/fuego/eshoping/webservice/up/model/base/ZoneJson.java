@@ -2,6 +2,8 @@ package cn.fuego.eshoping.webservice.up.model.base;
 
 public class ZoneJson
 {
+	public static final String ZONE_NAME = "zone_name";
+	
 	private int zone_id;
 	private String zone_name;
 	private int city_id;

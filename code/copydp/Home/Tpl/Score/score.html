@@ -62,7 +62,7 @@
 			<ul class="Fix">
 				<?php
 					//设置总筛选条件			
-					$productViewDB=new Model('view_product');
+					$productViewDB=new Model('product');
 					$productFilter['type_id']=1000;
 					$productList =$productViewDB->where($productFilter)->getField('product_id',true);
 					

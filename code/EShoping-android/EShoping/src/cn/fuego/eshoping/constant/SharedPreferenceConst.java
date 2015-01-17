@@ -24,5 +24,6 @@ public class SharedPreferenceConst
 	public static final String SELLER = "seller";
 	public static final String PRODUCT_ORDER = "product_order";
 	public static final String ACTIVITY_ORDER = "activity_order";
+	public static final String SELECT_TYPE_ID="typeID";
 
 }

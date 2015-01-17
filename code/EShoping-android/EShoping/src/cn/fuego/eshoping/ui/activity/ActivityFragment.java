@@ -41,7 +41,7 @@ public class ActivityFragment extends MispListFragment<ActivityJson>
 	public void loadSendList()
 	{
 		GetActivityListReq req = new GetActivityListReq();
-		req.setCity(AppCache.getCurCity());
+		req.setCity(AppCache.getCityInfo().getCity());
  		WebServiceContext.getInstance().getActivityManageRest(this).getActivityList(req);
 	}
 	@Override

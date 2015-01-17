@@ -63,9 +63,18 @@
 							<h4>
 								<?php
 									if($newProduct){
-										print("新增产品");
+										if($scoreType){
+											print("新增积分兑换产品");
+										}else{
+											print("新增产品");
+										}
+										
 									}else{
-										print("编辑产品");
+										if($scoreType){
+											print("编辑积分兑换产品");
+										}else{
+											print("编辑产品");
+										}						
 										$product = M('product');
 										$productIDCondition['product_id']=$productID;
 										$productItem=$product->where($productIDCondition)->find();
@@ -80,8 +89,7 @@
 							<div class="main page-sa page-sa-col Fix">
 								<div class="block shop-add-form">
 									<!--表单内容-->									
-										<div class="form-inner">
-										
+										<div class="form-inner">										
 											<div class="form-block">
 												<label class="label label_required" >产品名称：<em>*</em></label>
 												<input type="text" maxlength="50" class="form-txt form-txt-l" 
@@ -93,54 +101,55 @@
 												<input type="text" class="form-txt form-txt-l" 
 												 value="{$productItem['describe']}"   name="describe">
 											
-											</div>
-											<div id="trPriceInfo"  class="form-block">
-												<span class="label label_required">产品类型<em>*</em></span>
-											<?php
-													$productType=M('product_type');
-													$condition['father_id'] = 0;
-													$type=$productType->where($condition)->select();
-											?>
-																									
-											<select class="selectTarget3 span-select"  onchange="selectChange(3)">
-												<option  value="">请选择类型</option>
-											<foreach name='type' item='mainType'>
-												<option value="{$mainType.type_id}">{$mainType.type_name}</option>
-											</foreach>											
-											</select>	
-<?php
-										$productType=M('product_type');
-										$all_type=$productType->select();
-								?>
-								<select id="type_id3" name="type_id" class="span-select">
-									<option  selected="selected" value="">请选择子类型</option></span>
-									<foreach name='all_type' item='subtype'>
-										<if condition="$subtype.father_id eq 0">
-											<option class="showOption3" value="{$subtype.type_id}">
-												{$subtype.type_name}
-											</option>	
+											</div>											
+											<if condition="$scoreType eq true">	
 											<else/>
-											<option class="showOption3" value="{$subtype.type_id}">
-												{$subtype.type_name}
-											</option>
-											
-										</if>
-																											
-									</foreach>											
-								</select>								
-								<select name="null" class="form-select-sim form-select-sim-m zone-select Hide">
-									<option  selected="selected" value="">请选择子类型</option></span>
-									<foreach name='all_type' item='subtype'>
-										<if condition="$subtype.father_id eq 0">
-											<option class="copy3" value="{$subtype.type_id}"
-										>{$subtype.type_name}</option>
-											<else/>											
-											<option fatherID="{$subtype.father_id}" typeID="{$subtype.type_id}" class="copy3" value="{$subtype.type_id}">
-												{$subtype.type_name}
-											</option>
-										</if>																												
-									</foreach>											
-								</select>														
+												<div id="trPriceInfo"  class="form-block">
+													<span class="label label_required">产品类型<em>*</em></span>
+												<?php
+														$productType=M('product_type');
+														$condition['father_id'] = 0;
+														$type=$productType->where($condition)->select();
+												?>
+																										
+												<select class="selectTarget3 span-select"  onchange="selectChange(3)">
+													<option  value="">请选择类型</option>
+												<foreach name='type' item='mainType'>
+													<option value="{$mainType.type_id}">{$mainType.type_name}</option>
+												</foreach>											
+												</select>	
+												<?php
+													$productType=M('product_type');
+													$all_type=$productType->select();
+												?>
+												<select id="type_id3" name="type_id" class="span-select">
+													<option  selected="selected" value="">请选择子类型</option></span>
+													<foreach name='all_type' item='subtype'>
+														<if condition="$subtype.father_id eq 0">
+															<option class="showOption3" value="{$subtype.type_id}">
+																{$subtype.type_name}
+															</option>	
+															<else/>
+															<option class="showOption3" value="{$subtype.type_id}">
+																{$subtype.type_name}
+															</option>															
+														</if>																	
+													</foreach>											
+												</select>	
+											</if>
+											<select name="null" class="form-select-sim form-select-sim-m zone-select Hide">
+												<option  selected="selected" value="">请选择子类型</option></span>
+												<foreach name='all_type' item='subtype'>
+													<if condition="$subtype.father_id eq 0">
+														<option class="copy3" value="{$subtype.type_id}"
+													>{$subtype.type_name}</option>
+														<else/>											
+														<option fatherID="{$subtype.father_id}" typeID="{$subtype.type_id}" class="copy3" value="{$subtype.type_id}">
+															{$subtype.type_name}
+														</option>
+													</if>																												
+												</foreach>											
+											</select>														
 											</div>
 											<div class="form-block">
 												<span class="label">截止日期:</span>
@@ -148,13 +157,23 @@
 											</div>
 											
 											<div class="form-block">
-												<span class="label ">价格:</span>
+												<span class="label ">
+												<if condition="$scoreType eq true">
+													积分：
+												<else/>
+													价格:
+												</if>
+												</span>
 												<input name="price"  type="number" value="{$productItem['price']}" class="form-txt form-txt-l "/>
 											</div>
-											<div class="form-block">
-												<span class="label ">原价:</span>
-												<input name="original_price"  type="number" value="{$productItem['original_price']}" class="form-txt form-txt-l "/>
+											<if condition="$scoreType eq true">
+												<else/>
+													<div class="form-block">
+													<span class="label ">原价:</span>
+													<input name="original_price"  type="number" value="{$productItem['original_price']}" class="form-txt form-txt-l "/>
 											</div>
+												</if>
+											
 											
 											<!---- 会员专属不在这里配置
 											<div class="form-block">
@@ -196,6 +215,12 @@
 											<div class="form-block" style="margin-left: 85px;">									
 												<textarea id="info-text" name="info" class="Hide" value=""></textarea>								
 												<input name="sellerID" type="text" value="{$sellerID}" class="Hide"/>
+												<if condition="$scoreType eq true">
+													<input name="scoreType" type="text" value="true" class="Hide"/>
+												<else/>
+													<input name="scoreType" type="text" value="false" class="Hide"/>
+												</if>
+												
 												<script id="editor" type="text/plain" class="form-default" style="width:500px;">
 												</script>									
 											</div>  	

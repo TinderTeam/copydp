@@ -2,6 +2,10 @@ package cn.fuego.eshoping.webservice.up.model.base;
 
 public class ProductTypeJson
 {
+	public static final String FATHER_ID="father_id";
+	public static final String TYPE_NAME="type_name";
+	public static final String TYPE_ID = "type_id";
+	
 	private int type_id;
 	private String type_name;
 	private int father_id;

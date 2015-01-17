@@ -5,46 +5,22 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <include
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/top_head_height" >
-
-            <Button
-                android:id="@+id/product_search_back"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="10dp"
-                android:background="@null"
-                android:drawableLeft="@drawable/detail_back"
-                android:drawablePadding="5dp"
-                android:focusableInTouchMode="true"
-                android:text="返回"
-                android:textColor="@color/themecolor"
-                android:textSize="20sp" />
-
-            <SearchView
-                android:id="@+id/searchView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/Button01" >
-            </SearchView>
-        </RelativeLayout>
-
-    </LinearLayout>
+        layout="@layout/com_head_back_search" />
 
     <View
         android:id="@+id/view1"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
         android:background="@color/backcolor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -84,7 +60,7 @@
                 android:drawableRight="@drawable/arrow_drop"
                 android:gravity="center_vertical|right"
                 android:paddingRight="30dp"
-                android:text="全部商家"
+                android:text="全部商圈"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

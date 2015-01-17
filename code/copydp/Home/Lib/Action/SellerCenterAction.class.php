@@ -4,11 +4,27 @@ class SellerCenterAction extends Action {
 
    public function newProduct($sellerID=0){
 		$this->assign("newProduct",true);
+		$this->assign("scoreType",false);
 		$this->assign("sellerID",$sellerID);
 		$this->display('productEdit');
 	}
+	
+	public function newScoreProduct(){
+		$this->assign("newProduct",true);
+		$this->assign("scoreType",true);
+		$this->display('productEdit');
+	}
+	
+	public function editScoreProduct($productID=0){
+		$this->assign("newProduct",false);
+		$this->assign("scoreType",true);
+		$this->assign("productID",$productID);
+		$this->display('productEdit');
+	}
+	
 	public function productEdit($productID=0){	
 		$this->assign("newProduct",false);
+		$this->assign("scoreType",false);
 		$this->assign("productID",$productID);
 		$this->display();
 	}
@@ -16,15 +32,28 @@ class SellerCenterAction extends Action {
 		//
 		$product = M('product');
 		$conditionDelete['product_id'] = $productID;
+		
+		
 		if($product->where($conditionDelete)->delete())
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/productManage");
-			$this->success("删除成功");
+			if($_POST['scoreType']=="true"){
+				$this->assign("jumpUrl","__APP__/SellerManage/index");
+				$this->success("删除成功");
+			}else{
+				$this->assign("jumpUrl","__APP__/SellerCenter/productManage");
+				$this->success("删除成功");
+			}	
 		} 
 		else
 		{
-			$this->assign("jumpUrl","__APP__/SellerCenter/productManage");
-			$this->error("删除失败，请重试");
+		if($_POST['scoreType']=="true"){
+				$this->assign("jumpUrl","__APP__/SellerManage/index");
+				$this->error("删除失败，请重试");
+			}else{
+				$this->assign("jumpUrl","__APP__/SellerCenter/productManage");
+				$this->error("删除失败，请重试");
+			}	
+
 		}
 	}
 	public function seller_edit(){
@@ -63,9 +92,15 @@ class SellerCenterAction extends Action {
 		$data2['name']=$_POST['name'];			
 		$data2['update_date']=date('Y-m-d',time());
 		$data2['describe']=$_POST['describe'];	
-		$data2['seller_id']=$seller_id;	
-		$data2['basic_infor']=$_POST['info'];	
-		$data2['type_id']=$_POST['type_id'];	
+		
+		if($_POST['scoreType']=="true"){
+			$data2['seller_id']="1";	
+			$data2['type_id']=1000;
+		}else{
+			$data2['seller_id']=$seller_id;	
+			$data2['type_id']=$_POST['type_id'];
+		}
+		$data2['basic_infor']=$_POST['info'];			
 		$data2['price']=$_POST['price'];
 		$data2['original_price']=$_POST['original_price'];	
 		$data2['end_date_time']=$_POST['end_date_time'];
@@ -87,9 +122,13 @@ class SellerCenterAction extends Action {
 			$product->add($data2);
 		}
 
+		if($_POST['scoreType']=="true"){
+			$this->redirect('SellerManage/index');
+		}else{
+			$this->redirect('SellerCenter/productManage');
+		}
 		
 		
-		$this->redirect('SellerCenter/productManage');
 
     }
 	

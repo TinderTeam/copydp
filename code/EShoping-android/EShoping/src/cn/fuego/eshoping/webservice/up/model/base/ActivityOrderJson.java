@@ -49,10 +49,10 @@ public class ActivityOrderJson implements Serializable
 		this.activity_title = activity_title;
 	}
 	
-	public String getActivity_dscr() {
+	public String getActivity_disc() {
 		return activity_disc;
 	}
-	public void setActivity_dscr(String activity_dscr) {
+	public void setActivity_disc(String activity_dscr) {
 		this.activity_disc = activity_dscr;
 	}
 	public String getImgsrc() {

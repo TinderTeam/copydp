@@ -41,6 +41,7 @@ class CommunityManageAction extends Action {
 		$this->assign("jumpUrl","index");
 		$this->success("操作成功");
 	}
+
 	
 	public function deleteReply($replyID=0){
 		$communityDiscussDB = M('community_discuss');

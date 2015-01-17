@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import cn.fuego.misp.service.http.HttpListener;
-import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.base.MispHttpActivtiy;
 
 public abstract class BaseActivtiy extends MispHttpActivtiy implements HttpListener
@@ -102,6 +101,7 @@ public abstract class BaseActivtiy extends MispHttpActivtiy implements HttpListe
         // listView.getDividerHeight()获取子项间分隔符占用的高度   
         // params.height最后得到整个ListView完整显示需要的高度   
         listView.setLayoutParams(params);   
-    } 
+    }
+
 
 }

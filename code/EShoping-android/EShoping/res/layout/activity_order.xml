@@ -92,6 +92,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/common_btn"
+            android:onClick="moreEvent"
             android:text="继续浏览"
             android:textColor="@color/white"
             android:textSize="20sp" />

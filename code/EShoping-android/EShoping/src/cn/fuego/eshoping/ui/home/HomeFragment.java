@@ -18,11 +18,13 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.cache.ProductTypeCache;
+import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
@@ -38,6 +40,7 @@ import cn.fuego.misp.ui.model.CommonItemMeta;
 public class HomeFragment extends MispDistinctListFragment implements OnItemClickListener,OnCheckedChangeListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
+	
     //定义数组来存放按钮图片  
     private int mImageViewArray[] = {R.drawable.home_food,R.drawable.home_car,R.drawable.home_photo,R.drawable.home_education,
                                      R.drawable.home_entertainment,R.drawable.home_hotel,R.drawable.home_beauty,R.drawable.home_service};  
@@ -69,6 +72,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		this.fragmentRes.setFragmentView(R.layout.home_fragment);
 		listViewRes.setListView(R.id.home_main_list);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
+		ProductTypeCache.getInstance();
  	}
  
 	@Override
@@ -85,7 +89,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	{
 		
 		GetProductListReq req = new GetProductListReq();
-		req.setCity(AppCache.getCurCity());
+		req.setCity(AppCache.getCityInfo().getCity());
  
 		switch(tabID)
 		{
@@ -238,20 +242,26 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			{
 				view = (View) convertView.getTag();
 			}
- 			
 			List<Map<String, Object>> arrayListForEveryGridView = (List<Map<String, Object>>) item.getContent();
 			GridViewAdapter gridViewAdapter = new GridViewAdapter(this.getActivity(),arrayListForEveryGridView);
 			GridView gridView = (GridView) view.findViewById(R.id.home_gridview);
 			gridView.setOnItemClickListener(new OnItemClickListener()
 			{
 
+
+
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,	int position, long id)
 				{
-					//Toast.makeText(parent.getContext(), "position"+position, Toast.LENGTH_LONG);
-					Intent i= new Intent();
-					i.setClass(parent.getContext(), ProductSearchActivity.class);
-					parent.getContext().startActivity(i);
+					log.info("type grid icon clicked: position="+position+"content="+getString(mTextviewArray[position]));
+					int typeID=ProductTypeCache.getInstance().getTypeIDByName(getString(mTextviewArray[position]));
+					log.info("select type id is : "+typeID);
+					if(typeID!=-1){
+						Intent i= new Intent();
+						i.setClass(parent.getContext(), ProductSearchActivity.class);
+						i.putExtra(SharedPreferenceConst.SELECT_TYPE_ID, typeID);
+						parent.getContext().startActivity(i);
+					}
 				}
 				
 			});
@@ -334,11 +344,8 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		{
 			Intent intent = new Intent(this.getActivity(),this.listViewRes.getClickActivityClass());
 			intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
-
 			this.startActivity(intent);
 		}
-		
-
 	}
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId)

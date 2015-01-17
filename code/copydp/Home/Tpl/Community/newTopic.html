@@ -64,6 +64,17 @@
 					<div class="modebox my-booking J_my_booking">
 						<div class="hd">
 							<h4>
+							<?php
+								if($communityID==0){
+									$type = 'create';
+								}else{
+									$type='edit';
+								}
+								$communityDB = M('community');
+								$condition['community_id']=$communityID;
+								$community = $communityDB->where($condition)->find();
+			
+							?>
 								发表新话题
 							</h4>	
 						</div> 	
@@ -79,25 +90,33 @@
 											<div class="form-block">
 												<label class="label label_required" >标题：<em>*</em></label>
 												<input type="text" maxlength="50" class="form-txt form-txt-l" 
-												autocomplete="off" size="60" value=""   name="title">
+												autocomplete="off" size="60" value="{$community.title}"   name="title">
+												
 											</div>
-											<div id="trPriceInfo"  class="form-block">
-												<span class="label label_required">话题类型<em>*</em></span>
-
-												<select class="form-select-sim selectTarget" name="community_type">
-													<option  value="">请选择分类</option>													
-													<option  value="房介信息">房介信息</option>	
-													<option  value="应聘信息">应聘信息</option>	
-													<option  value="招聘信息">招聘信息</option>	
-												</select>																			
-											</div>
+											<if condition=" $type eq 'edit'">
+											
+											<else/>
+												<div id="trPriceInfo"  class="form-block">
+													<span class="label label_required">话题类型<em>*</em></span>
+										
+													<select class="form-select-sim selectTarget" name="community_type">
+														<option  value="">请选择分类</option>													
+														<option  value="房介信息">房介信息</option>	
+														<option  value="应聘信息">应聘信息</option>	
+														<option  value="招聘信息">招聘信息</option>	
+													</select>																			
+												</div>
+											</if>
+											
 											
 											<div class="form-block">
 												<span class="label">话题内容</span>									
 											</div>  
-											<div class="form-block" style="margin-left: 85px;">									
-												<textarea id="info-text" ip="__PUBLIC__/" name="info" class="Hide" value=""></textarea>								
-											
+											<div class="form-block" style="margin-left: 85px;">				
+												<div class="Hide typehide" data="{$type}">{$community.context}</div>
+												<input class="Hide" value="edit" name="type">
+												<input class="Hide" value="{$community.community_id}" name="communityID">
+												<textarea id="info-text" ip="__PUBLIC__/" name="info" class="Hide" value="{$community.context}"></textarea>
 												<script id="editor" type="text/plain" class="form-default" style="width:500px;">
 												</script>									
 											</div>  	
@@ -129,6 +148,12 @@
 	<script type="text/javascript">	
 	   //实例化编辑器		//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 		var um = UM.getEditor('editor');
+		
+		var type = $('.typehide').attr('data');
+		if(type == 'edit' ){
+			um.setContent($('.typehide').html());
+		}
+		
 		$(".submit-btn").click(function(){
 			var txt=UM.getEditor('editor').getContent();//获得描述内容
 			//测试描述内容

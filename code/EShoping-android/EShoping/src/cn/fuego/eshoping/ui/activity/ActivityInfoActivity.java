@@ -59,7 +59,6 @@ public class ActivityInfoActivity extends BaseActivtiy
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		SDKInitializer.initialize(getApplicationContext());
 		super.onCreate(savedInstanceState);
 		//初始化数据
 		InitializationData();
@@ -108,7 +107,7 @@ public class ActivityInfoActivity extends BaseActivtiy
 						log.info("create order rsp: "+order);
 						// jump to order success
 						Intent intent = new Intent();
-						intent.setClass(getApplicationContext(), ActivityOrderSuccess.class);
+						intent.setClass(ActivityInfoActivity.this, ActivityOrderSuccess.class);
 						intent.putExtra(SharedPreferenceConst.ACTIVITY_ORDER, order);
 						startActivity(intent);
 				}

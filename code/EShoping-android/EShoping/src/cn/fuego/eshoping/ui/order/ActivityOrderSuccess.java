@@ -27,11 +27,6 @@ public class ActivityOrderSuccess extends BaseActivtiy
 	private TextView orderInfo;
 	private TextView orderID;
 
-	
-
-	
-
-	
 	@Override
 	public void initRes()
 	{
@@ -56,12 +51,13 @@ public class ActivityOrderSuccess extends BaseActivtiy
 	private void InitializationComponent()
 	{
 		//View
-		orderInfo = (TextView) findViewById(R.id.order_success_label);
+		orderInfo = (TextView) findViewById(R.id.activity_order_title);
 		orderID= (TextView) findViewById(R.id.order_success_id);
 	}
 
 	private void ComponentUpdateData()
 	{
+		
 		orderInfo.setText(order.getActivity_title()+" 活动参与成功");	
 		orderID.setText(order.getActivity_order_id());
 	}
@@ -76,6 +72,7 @@ public class ActivityOrderSuccess extends BaseActivtiy
 
 	public void moreEvent(View v)
 	{
+		log.info("more button event...");
 		Intent intent = new Intent();
 		intent.setClass(ActivityOrderSuccess.this, MainTabbarActivity.class);
 		intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(HomeFragment.class));

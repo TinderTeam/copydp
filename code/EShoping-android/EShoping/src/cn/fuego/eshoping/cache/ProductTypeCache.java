@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.list.tools.IteratorSelector;
+import cn.fuego.eshoping.constant.BusinessConst;
 import cn.fuego.eshoping.webservice.up.model.GetProductTypeReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductTypeRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
@@ -19,7 +21,7 @@ public class ProductTypeCache
 	private static ProductTypeCache instance;
 	private ProductTypeCache()
 	{
-		
+		load();
 	}
 	
 	public synchronized static ProductTypeCache getInstance()
@@ -29,14 +31,13 @@ public class ProductTypeCache
 			instance = new ProductTypeCache();
 		}
 		return instance;
-		
 	}
 	
 	public void load()
 	{
 		GetProductTypeReq req = new GetProductTypeReq();
 		req.setTypeRoot(0);
-	 
+		req.setToken(AppCache.getToken()); 
 		WebServiceContext.getInstance().getProductManageRest(new MispHttpHandler()
 		{
 			@Override
@@ -45,8 +46,7 @@ public class ProductTypeCache
 				if(message.isSuccess())
 				{
 					GetProductTypeRsp rsp = (GetProductTypeRsp) message.getMessage().obj;
-					typeList = rsp.getTypeList();
-					
+					typeList = rsp.getTypeList();					
 				}
 				else
 				{
@@ -87,5 +87,19 @@ public class ProductTypeCache
 			}
 		}
 		return null;
+	}
+
+	public int getTypeIDByName(String string)
+	{
+
+			for(ProductTypeJson json : typeList)
+			{
+				if(json.getType_name().equals(string))
+				{
+					return json.getType_id();
+				}
+			}
+
+		return -1;
 	}
 }
