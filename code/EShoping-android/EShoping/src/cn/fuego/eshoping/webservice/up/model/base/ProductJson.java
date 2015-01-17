@@ -14,15 +14,15 @@ public class ProductJson implements Serializable
 	private float original_price;
 	private String dscr;
 	private String basic_infor;
-	private String svip_privilege;
+	private String svip_product_id;
 	private String imgsrc;
 	private String imglist;
 	private String product_status;
-	private int city_id;
-	private String city;
+	private String username;
 	private int zone_id;
 	private String zone_name;
-	private String username;
+	private int city_id;
+	private String city;
 	private int current_member;
 	
 	public int getProduct_id() {
@@ -86,11 +86,12 @@ public class ProductJson implements Serializable
 	public void setBasic_infor(String basic_infor) {
 		this.basic_infor = basic_infor;
 	}
-	public String getSvip_privilege() {
-		return svip_privilege;
+	
+	public String getSvip_product_id() {
+		return svip_product_id;
 	}
-	public void setSvip_privilege(String svip_privilege) {
-		this.svip_privilege = svip_privilege;
+	public void setSvip_product_id(String svip_product_id) {
+		this.svip_product_id = svip_product_id;
 	}
 	public String getImgsrc() {
 		return imgsrc;
@@ -156,12 +157,13 @@ public class ProductJson implements Serializable
 				+ ", update_date=" + update_date + ", end_date_time="
 				+ end_date_time + ", price=" + price + ", original_price="
 				+ original_price + ", dscr=" + dscr + ", basic_infor="
-				+ basic_infor + ", svip_privilege=" + svip_privilege
+				+ basic_infor + ", svip_product_id=" + svip_product_id
 				+ ", imgsrc=" + imgsrc + ", imglist=" + imglist
-				+ ", product_status=" + product_status + ", city_id=" + city_id
-				+ ", city=" + city + ", zone_id=" + zone_id + ", zone_name="
-				+ zone_name + ", username=" + username + ", current_member="
-				+ current_member + "]";
+				+ ", product_status=" + product_status + ", username="
+				+ username + ", zone_id=" + zone_id + ", zone_name="
+				+ zone_name + ", city_id=" + city_id + ", city=" + city
+				+ ", current_member=" + current_member + "]";
 	}
+	
 
 }

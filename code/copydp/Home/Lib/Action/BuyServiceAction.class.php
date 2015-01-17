@@ -134,7 +134,7 @@ class BuyServiceAction extends BaseAction {
 		$productFilter['city']=$city;
 		
 		//获取区域
-		if($zone_id != "")
+		if($zone_id != "0")
 		{
 		      $productFilter['zone_id'] = $zone_id;   
 		}
