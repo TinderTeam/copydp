@@ -148,6 +148,7 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityReplyTopic, FECommunityReplyTopicReq
 -(AFHTTPRequestOperation *)postmanager:(FEBaseRequest *)data responseClass:(Class)class response:(void (^)(NSError *error,  id response))block {
     return [self POST:data.method parameters:data.dictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         id response = [[class alloc] initWithResponse:responseObject];
+        NSLog(@"response %@",responseObject);
         block(NULL,response);
         [self showerrorResponse:response];
         NSLog(@"success!");
@@ -163,7 +164,6 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityReplyTopic, FECommunityReplyTopicReq
 }
 
 -(void)showerrorResponse:(FEBaseResponse *)response{
-   
     if (response.result.errorCode.integerValue != 0) {
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:[self getErrorCode:response.result.errorCode.stringValue] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];

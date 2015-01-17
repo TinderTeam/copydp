@@ -13,12 +13,14 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.descriptionLabel.numberOfLines = 0;
+    self.descriptionLabel.lineBreakMode = NSLineBreakByCharWrapping;
 }
 
 -(void)configWithSeller:(FEShopSeller *)seller{
     _seller = seller;
     [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(seller.img)]];
-    self.titleLabel.text = seller.dscr;
+    self.titleLabel.text = seller.seller_name;
     self.descriptionLabel.text = seller.dscr;
 }
 

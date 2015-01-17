@@ -13,6 +13,8 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.descriptionLabel.numberOfLines = 0;
+    self.descriptionLabel.lineBreakMode = NSLineBreakByCharWrapping;
 }
 
 -(void)configWithSeller:(FEShopSeller *)seller{

@@ -11,6 +11,8 @@
 @interface FEShopSeller : FEObject
 
 @property (nonatomic, strong, readonly) NSNumber *user_id;
+@property (nonatomic, strong, readonly) NSString *seller_name;
+@property (nonatomic, strong, readonly) NSString *qr_code;
 @property (nonatomic, strong, readonly) NSString *city_id;
 @property (nonatomic, strong, readonly) NSString *zone_id;
 @property (nonatomic, strong, readonly) NSNumber *type_id;

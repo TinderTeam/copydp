@@ -21,7 +21,7 @@
 @property (nonatomic, strong, readonly) NSNumber *original_price;
 @property (nonatomic, strong, readonly) NSString *dscr;
 @property (nonatomic, strong, readonly) NSString *basic_infor;
-@property (nonatomic, strong, readonly) NSString *svip_privilege;
+@property (nonatomic, strong, readonly) NSString *svip_product_id;
 @property (nonatomic, strong, readonly) NSString *imgsrc;
 @property (nonatomic, strong, readonly) NSString *imglist;
 @property (nonatomic, strong, readonly) NSString *product_status;
@@ -30,6 +30,6 @@
 @property (nonatomic, strong, readonly) NSNumber *zone_id;
 @property (nonatomic, strong, readonly) NSString *zone_name;
 @property (nonatomic, strong, readonly) NSString *username;
-@property (nonatomic, strong, readonly) NSNumber *current_member;
+@property (nonatomic, strong, readonly) NSString *current_member;
 
 @end
