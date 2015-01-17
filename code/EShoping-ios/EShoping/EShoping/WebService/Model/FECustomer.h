@@ -13,9 +13,9 @@
 @property (nonatomic, strong, readonly) NSNumber *user_id;
 @property (nonatomic, strong, readonly) NSString *grade;
 @property (nonatomic, strong, readonly) NSNumber *score;
-@property (nonatomic, strong, readonly) NSString *cellphone;
-@property (nonatomic, strong, readonly) NSString *email;
-@property (nonatomic, strong, readonly) NSString *car_id;//车牌号
+@property (nonatomic, strong) NSString *cellphone;
+@property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong) NSString *car_id;//车牌号
 @property (nonatomic, strong, readonly) NSNumber *recommender_id;
 @property (nonatomic, strong, readonly) NSString *status;
 @property (nonatomic, strong, readonly) NSString *request;//请求类型 激活/升级/解冻

@@ -12,6 +12,7 @@
 #import "FEUserModifyPswRequest.h"
 #import "FEUserModifyPswResponse.h"
 #import "FEShopWebServiceManager.h"
+#import "FEShopingMeTableVC.h"
 
 @interface FEModifyPasswordVC ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *originPassword;
@@ -51,13 +52,21 @@
 -(void)submitPassword{
    
     if ([self.originPassword.text isEqualToString:FELoginUser.password]) {
-        if (![self.passwordNew.text isEqualToString:@""] && ![self.confirmPassword.text isEqualToString:@""] && [self.passwordNew.text isEqualToString:self.confirmPassword.text]) {
+        if (self.passwordNew.text.length < 6) {
+            kAlert(@"请输入6位以上新密码");
+            return;
+        }
+        if (self.passwordNew.text.length && self.confirmPassword.text.length && [self.passwordNew.text isEqualToString:self.confirmPassword.text]) {
             __weak typeof(self) weakself = self;
             [self displayHUD:FEString(@"加载中...")];
             FEUserModifyPswRequest *rdata = [[FEUserModifyPswRequest alloc] initWithUname:FELoginUser.username oldPassword:FELoginUser.password newPassword:self.passwordNew.text];
             [[FEShopWebServiceManager sharedInstance] modifyPassword:rdata response:^(NSError *error, FEUserModifyPswResponse *response) {
                 if (!error && response.result.errorCode.integerValue == 0) {
-                    [weakself.navigationController popViewControllerAnimated:YES];
+                    FEShopingMeTableVC *vc = [weakself.navigationController.viewControllers firstObject];
+                    [weakself.navigationController popToRootViewControllerAnimated:NO];
+                    FEDeletUser();
+                    [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
+                    [vc toSignin];
                 }
                 [weakself hideHUD:YES];
             }];

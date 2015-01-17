@@ -55,11 +55,11 @@
             footview.userInteractionEnabled = YES;
             self.footView = footview;
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [btn setBackgroundImage:[UIImage imageFromColor:FEColor(255, 100, 63, 1)] forState:UIControlStateNormal];
+            [btn setBackgroundImage:[UIImage imageFromColor:FEThemeOrange] forState:UIControlStateNormal];
             btn.layer.cornerRadius = 4;
             btn.layer.masksToBounds = YES;
             [btn addTarget:self action:@selector(signout:) forControlEvents:UIControlEventTouchUpInside];
-            btn.frame = CGRectMake(40, (footview.bounds.size.height - 40.0) / 2.0f, self.view.bounds.size.width - 40.0 * 2, 40);
+            btn.frame = CGRectMake(40, (footview.bounds.size.height - 35.0) / 2.0f, self.view.bounds.size.width - 40.0 * 2, 35);
             [btn setTitle:FEString(@"退出账号") forState:UIControlStateNormal];
             [footview addSubview:btn];
         }
@@ -82,8 +82,7 @@
     [[FEShopWebServiceManager sharedInstance] signout:rdate response:^(NSError *error, FEUserSignoutResponse *response) {
         if (!error && response.result.errorCode.integerValue == 0) {
             [weakself.navigationController popViewControllerAnimated:YES];
-            [FECoreData deleteCoreData:@[FELoginUser]];
-            [FECoreData saveCoreData];
+            FEDeletUser();
             [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
         }
     }];

@@ -12,14 +12,22 @@
 #import "FEUserRegistRequest.h"
 #import "FEUserRegistResponse.h"
 #import "FEResult.h"
+#import "FECustomer.h"
 
 
 
-@interface FERegistVC ()<UITextFieldDelegate>
+@interface FERegistVC ()<UITextFieldDelegate>{
+    CGRect scrollFrame;
+}
 @property (strong, nonatomic) IBOutlet UITextField *userIdentifierTextField;
 @property (strong, nonatomic) IBOutlet UITextField *userPasswordTextField;
 @property (strong, nonatomic) IBOutlet UIButton *registButton;
 @property (strong, nonatomic) IBOutlet UIButton *checkButton;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UITextField *activeCode;
+@property (strong, nonatomic) IBOutlet UITextField *email;
+@property (strong, nonatomic) IBOutlet UITextField *carID;
+@property (strong, nonatomic) IBOutlet UITextField *phoneNumber;
 
 @end
 
@@ -28,22 +36,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.registButton setBackgroundImage:[UIImage imageFromColor:FEColor(255, 100, 63, 1)] forState:UIControlStateNormal];
+    self.scrollView.frame = self.view.bounds;
+    scrollFrame = self.view.frame;
+    self.scrollView.contentSize = self.view.bounds.size;
+    [self.registButton setBackgroundImage:[UIImage imageFromColor:FEThemeOrange] forState:UIControlStateNormal];
     self.registButton.layer.cornerRadius = 4;
     self.registButton.layer.masksToBounds = YES;
 }
 - (IBAction)regist:(id)sender {
-    if (![self.userIdentifierTextField.text isEqualToString:@""] && ![self.userPasswordTextField.text isEqualToString:@""]) {
+    [self.userIdentifierTextField resignFirstResponder];
+    [self.userPasswordTextField resignFirstResponder];
+    [self.activeCode resignFirstResponder];
+    [self.email resignFirstResponder];
+    [self.carID resignFirstResponder];
+    [self.phoneNumber resignFirstResponder];
+    if (self.userIdentifierTextField.text.length && self.userPasswordTextField.text.length && self.email.text.length) {
+        if (self.userPasswordTextField.text.length < 6) {
+            kAlert(@"请输入6位以上密码");
+            return;
+        }
+        if (![self.email.text isEmailType]) {
+            kAlert(@"请输入正确的邮箱格式");
+            return;
+        }
         __weak typeof(self) weakself = self;
         [self displayHUD:FEString(@"加载中...")];
         FEUser *user = [[FEUser alloc] initWithUserName:self.userIdentifierTextField.text password:self.userPasswordTextField.text];
-        FEUserRegistRequest *rdata = [[FEUserRegistRequest alloc] initWithUser:user customer:nil code:@""];
+        
+        FECustomer *custom = [[FECustomer alloc] initWithDictionary:@{@"cellphone":self.phoneNumber.text,@"email":self.email.text,@"car_id":self.carID.text}];
+        FEUserRegistRequest *rdata = [[FEUserRegistRequest alloc] initWithUser:user customer:custom code:@""];
         [[FEShopWebServiceManager sharedInstance] regist:rdata response:^(NSError *error, FEUserRegistResponse *response) {
             [weakself hideHUD:YES];
             if (!error && response.result.errorCode.integerValue == 0) {
                 [weakself.navigationController popViewControllerAnimated:YES];
             }
         }];
+    }else{
+        if (!self.userIdentifierTextField.text.length) {
+            kAlert(@"请输入用户名");
+        }else if (!self.userPasswordTextField.text.length){
+            kAlert(@"请输入密码");
+        }else{
+            kAlert(@"请输入邮箱");
+        }
     }
     
     
@@ -58,14 +93,28 @@
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
+//    [textField resignFirstResponder];
     if (textField == self.userIdentifierTextField) {
-        [textField resignFirstResponder];
         [self.userPasswordTextField becomeFirstResponder];
     }else if(textField == self.userPasswordTextField){
-        [textField resignFirstResponder];
+        [self.activeCode becomeFirstResponder];
+    }else if(textField == self.activeCode){
+        [self.email becomeFirstResponder];
+    }else if(textField == self.email){
+        [self.carID becomeFirstResponder];
+    }else if(textField == self.carID){
+        [self.phoneNumber becomeFirstResponder];
+    }else if(textField == self.phoneNumber){
         [self regist:nil];
     }
     return YES;
+}
+
+- (void)keyboardWillShow:(CGRect)newRect duration:(NSTimeInterval)duration{
+    self.view.frame = CGRectMake(scrollFrame.origin.x, scrollFrame.origin.y, scrollFrame.size.width, scrollFrame.size.height - newRect.size.height);
+}
+- (void)keyboardWillHide:(CGRect)newRect duration:(NSTimeInterval)duration{
+    self.view.frame = scrollFrame;
 }
 
 /*

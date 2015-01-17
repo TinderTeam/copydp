@@ -11,4 +11,6 @@
 
 @interface FEShopingMeTableVC :FETableViewController
 
+-(void)toSignin;
+
 @end

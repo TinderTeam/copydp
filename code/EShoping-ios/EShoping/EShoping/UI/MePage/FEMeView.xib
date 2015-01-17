@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -35,7 +35,7 @@
                     </variation>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNP-qg-NJC">
-                    <rect key="frame" x="85" y="50" width="100" height="20"/>
+                    <rect key="frame" x="85" y="60" width="100" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="DMZ-S5-WjD"/>
                         <constraint firstAttribute="width" constant="100" id="Vm9-H9-Jit"/>
@@ -47,8 +47,8 @@
                         <rect key="frame" x="85" y="50" width="68" height="21"/>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="常居地" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baC-N9-ore">
-                    <rect key="frame" x="85" y="80" width="100" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="常居地" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="baC-N9-ore">
+                    <rect key="frame" x="85" y="90" width="100" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="DMa-LY-8BQ"/>
                         <constraint firstAttribute="height" constant="21" id="tLG-0M-vA4"/>
@@ -68,7 +68,7 @@
                 <constraint firstItem="Olk-Gd-heM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="55" id="R9F-ec-FfN"/>
                 <constraint firstAttribute="trailing" secondItem="Olk-Gd-heM" secondAttribute="trailing" constant="31" id="WqP-Xs-P9q"/>
                 <constraint firstItem="wka-8p-GrB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="45" id="dR7-HA-TDT"/>
-                <constraint firstItem="kNP-qg-NJC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="fnk-DS-MFD"/>
+                <constraint firstItem="kNP-qg-NJC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="60" id="fnk-DS-MFD"/>
                 <constraint firstItem="baC-N9-ore" firstAttribute="leading" secondItem="wka-8p-GrB" secondAttribute="trailing" constant="5" id="hVs-bV-MT0"/>
                 <constraint firstAttribute="bottom" secondItem="5VG-D4-ZON" secondAttribute="bottom" id="y6b-VE-JcK"/>
                 <constraint firstItem="5VG-D4-ZON" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="z54-e7-5mf"/>

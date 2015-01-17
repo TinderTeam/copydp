@@ -37,7 +37,7 @@
     self.title = @"登陆";
     self.signinButton.layer.cornerRadius = 4;
     self.signinButton.layer.masksToBounds = YES;
-    [self.signinButton setBackgroundImage:[UIImage imageFromColor:FEColor(255, 100, 63, 1)] forState:UIControlStateNormal];
+    [self.signinButton setBackgroundImage:[UIImage imageFromColor:FEThemeOrange] forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,7 +47,7 @@
 
 - (IBAction)signin:(id)sender {
     [self dismisskeyboard];
-    if (![self.userName.text isEqualToString:@""] && ![self.passWord.text isEqualToString:@""]) {
+    if (self.userName.text.length && self.passWord.text.length) {
         __weak typeof(self) weakself = self;
         [self displayHUD:FEString(@"登陆中...")];
         FEUserSigninRequest *rdata = [[FEUserSigninRequest alloc] initWithUname:self.userName.text password:self.passWord.text clienttype:@"1" clientversion:@"1.0" devtoken:[NSString UUID]];
@@ -74,19 +74,6 @@
                     cdcustomer.login_date = customer.login_date;
                     cdcustomer.user = user;
                     
-//                    [customer toObject:cdcustomer];
-//                    user.usercustomer = cdcustomer;
-//                    @property (nonatomic, retain) NSNumber * user_id;
-//                    @property (nonatomic, retain) NSString * grade;
-//                    @property (nonatomic, retain) NSNumber * score;
-//                    @property (nonatomic, retain) NSString * cellphone;
-//                    @property (nonatomic, retain) NSString * email;
-//                    @property (nonatomic, retain) NSString * car_id;
-//                    @property (nonatomic, retain) NSNumber * recommender_id;
-//                    @property (nonatomic, retain) NSString * status;
-//                    @property (nonatomic, retain) NSString * request;
-//                    @property (nonatomic, retain) NSString * login_date;
-//                    @property (nonatomic, retain) CDUser *user;
                     
                     [FECoreData saveCoreData];
                     [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
@@ -98,6 +85,8 @@
             }
             
         }];
+    }else{
+        kAlert(@"请填写用户名和密码");
     }
     
 }

@@ -76,11 +76,17 @@ return shared##className; \
 
 #define FELoginUser                             [FECoreData fetchUser]
 
+#define FEDeletUser()                             {[FECoreData deleteCoreData:\
+                                                @[FELoginUser,FELoginUser.usercustomer]];\
+                                                [FECoreData saveCoreData];}
+
 #define FEShopImageUrlSring(_A)                 [NSString stringWithFormat:@"%@/copydp/Public/uploads/img/%@",__WEB_SERVICE_IP,_A]
 
 //notification
 #define FERegionCityDidChang                    @"RegionCityDidChange"
 
 #define FEUserStatDidChang                      @"userStatDidChang"
+
+#define kAlert(_M)                              {[[[UIAlertView alloc] initWithTitle:FEString(@"提示") message:_M delegate:nil cancelButtonTitle:FEString(@"确定") otherButtonTitles: nil] show]; }
 
 #endif

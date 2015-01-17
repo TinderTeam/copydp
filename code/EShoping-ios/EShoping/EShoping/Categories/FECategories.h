@@ -14,5 +14,6 @@
 #import "UIColor+Theme.h"
 #import "NSString+UUID.h"
 #import "NSString+MD5.h"
+#import "NSString+Verify.h"
 
 #endif

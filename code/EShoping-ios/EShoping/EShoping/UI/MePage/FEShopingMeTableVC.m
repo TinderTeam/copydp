@@ -93,6 +93,10 @@
     }
 }
 
+-(void)toSignin{
+    [self performSegueWithIdentifier:@"userSiginSegue" sender:self];
+}
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
