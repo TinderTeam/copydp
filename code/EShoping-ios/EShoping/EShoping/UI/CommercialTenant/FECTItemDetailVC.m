@@ -89,7 +89,11 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     id item = self.allInfo[indexPath.section][indexPath.row];
     if ([item isKindOfClass:[FEShopSeller class]]) {
-        return 150;
+//        FECTInfoTableCell *cell = (FECTInfoTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+//        CGFloat height = cell.categoryLabel.frame.origin.y + cell.categoryLabel.frame.size.height + 10;
+        FEShopSeller *seller = item;
+        CGSize size = [seller.dscr boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 20, 99999) withTextFont:[UIFont appFontWithSize:14]];
+        return (160 - 15 + size.height);
     }else if([item isKindOfClass:[FEProduct class]]){
         return 70;
     }else if([item isKindOfClass:[FESellerEval class]]){

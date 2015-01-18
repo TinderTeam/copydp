@@ -15,12 +15,14 @@
     // Initialization code
     self.descriptionLabel.numberOfLines = 0;
     self.descriptionLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    self.titleLabel.numberOfLines = 0;
+    self.textLabel.lineBreakMode = NSLineBreakByCharWrapping;
 }
 
 -(void)configWithSeller:(FEShopSeller *)seller{
     _seller = seller;
     [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(seller.img)]];
-    self.titleLabel.text = seller.dscr;
+    self.titleLabel.text = seller.seller_name;
     self.descriptionLabel.text = seller.dscr;
     self.cityLabel.text = seller.city;
     self.regionLabel.text = seller.zone_name;

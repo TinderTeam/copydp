@@ -171,6 +171,7 @@
 		14C8F5941A1B7CD000E04B04 /* FEGroupCategoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5931A1B7CD000E04B04 /* FEGroupCategoryVC.m */; };
 		14C8F5971A1C310600E04B04 /* FESiginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5961A1C310600E04B04 /* FESiginVC.m */; };
 		14C8F59A1A1C313600E04B04 /* FEPersonProfileVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C8F5991A1C313600E04B04 /* FEPersonProfileVC.m */; };
+		14DD64A51A6BACC50074D9CA /* NSString+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DD64A41A6BACC50074D9CA /* NSString+Size.m */; };
 		14DDD5A51A3A90AF00C5B190 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14DDD5A71A3A90AF00C5B190 /* Main.storyboard */; };
 		14DDD5AD1A3A960800C5B190 /* FEProductGetSellerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DDD5AC1A3A960800C5B190 /* FEProductGetSellerRequest.m */; };
 		14DDD5B01A3A962500C5B190 /* FEProductGetSellerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DDD5AF1A3A962500C5B190 /* FEProductGetSellerResponse.m */; };
@@ -507,6 +508,8 @@
 		14C8F5961A1C310600E04B04 /* FESiginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FESiginVC.m; sourceTree = "<group>"; };
 		14C8F5981A1C313600E04B04 /* FEPersonProfileVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEPersonProfileVC.h; sourceTree = "<group>"; };
 		14C8F5991A1C313600E04B04 /* FEPersonProfileVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEPersonProfileVC.m; sourceTree = "<group>"; };
+		14DD64A31A6BACC50074D9CA /* NSString+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Size.h"; sourceTree = "<group>"; };
+		14DD64A41A6BACC50074D9CA /* NSString+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Size.m"; sourceTree = "<group>"; };
 		14DDD5AA1A3A955000C5B190 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		14DDD5AB1A3A960800C5B190 /* FEProductGetSellerRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProductGetSellerRequest.h; sourceTree = "<group>"; };
 		14DDD5AC1A3A960800C5B190 /* FEProductGetSellerRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductGetSellerRequest.m; sourceTree = "<group>"; };
@@ -782,6 +785,8 @@
 				1408A7751A380E5D00D02D52 /* NSString+DateFromNow.m */,
 				142FF9F11A5B7DA000210C06 /* NSString+Number.h */,
 				142FF9F21A5B7DA000210C06 /* NSString+Number.m */,
+				14DD64A31A6BACC50074D9CA /* NSString+Size.h */,
+				14DD64A41A6BACC50074D9CA /* NSString+Size.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1281,6 +1286,7 @@
 				1408A74E1A35DC4000D02D52 /* FEUserSignoutResponse.m in Sources */,
 				140BB7201A2C4FB600A73ADF /* FEGroupCategoryProductCell.m in Sources */,
 				1408A76C1A37F13200D02D52 /* FEActivityShowImageCell.m in Sources */,
+				14DD64A51A6BACC50074D9CA /* NSString+Size.m in Sources */,
 				1498941D1A4ABE7A00903B22 /* FEGetCurrentCity.m in Sources */,
 				148798901A31ABD000565491 /* FEActivityOrderListRequest.m in Sources */,
 				148798AD1A32C6B800565491 /* FECommunityHotTopicRequest.m in Sources */,
