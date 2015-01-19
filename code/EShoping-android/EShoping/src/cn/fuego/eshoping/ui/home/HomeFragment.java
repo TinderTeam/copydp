@@ -86,11 +86,10 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 
 	@Override
 	public void loadSendList()
-	{
-		
+	{		
 		GetProductListReq req = new GetProductListReq();
 		req.setCity(AppCache.getCityInfo().getCity());
- 
+		log.info("load req:"+req.toString());
 		switch(tabID)
 		{
 		case 0:
@@ -111,10 +110,8 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	@Override
 	public List<CommonItemMeta> loadListRecv(Object obj)
 	{
-		GetProductListRsp rsp = (GetProductListRsp) obj;
-		
-		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();
-		
+		GetProductListRsp rsp = (GetProductListRsp) obj;	
+		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
 		CommonItemMeta gridItem = new CommonItemMeta();
 		gridItem.setLayoutType(ITEM_TYPE_GRID);
 		gridItem.setContent(gridInitData());
@@ -157,13 +154,16 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		}
 		else
 		{
-			for(ProductJson product : rsp.getProductList())
-			{
-				CommonItemMeta item = new CommonItemMeta();
-				item.setLayoutType(ITEM_TYPE_PRODUCT);
-				item.setContent(product);
-				itemList.add(item);
-			}	
+			if(rsp.getProductList()!=null){
+				for(ProductJson product : rsp.getProductList())
+				{
+					CommonItemMeta item = new CommonItemMeta();
+					item.setLayoutType(ITEM_TYPE_PRODUCT);
+					item.setContent(product);
+					itemList.add(item);
+				}	
+			}
+			
 		}
 		switch (tabID)
 		{
@@ -316,25 +316,17 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			
 			ProductJson product = (ProductJson) item.getContent();
 		    TextView titleView = (TextView) convertView.findViewById(R.id.home_list_item_title);
-	        titleView.setText(product.getName());
-	        
+	        titleView.setText(product.getName());      
 	        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
 	        curPrice.setText(String.valueOf(product.getPrice()));
 	        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
 	        oldPrice.setText(String.valueOf(product.getOriginal_price()));
-
 	        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
 	        desp.setText(String.valueOf(product.getDscr()));
-
-	        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img);
-	 
-	        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));
-	        
-	        break;
-		
+	        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
+	        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));        
+	        break;	
 		}
- 
-
         return view;
 	}
 

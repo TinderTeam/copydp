@@ -22,8 +22,6 @@ public abstract class MispDistinctListFragment extends MispBaseListFragment<Comm
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
 
- 
-
 	protected List<CommonItemMeta> dataList = new ArrayList<CommonItemMeta>();
 
 	private MispListAdapter<CommonItemMeta> adapter;
@@ -84,8 +82,9 @@ public abstract class MispDistinctListFragment extends MispBaseListFragment<Comm
 	{
 		if (message.isSuccess())
 		{
+			log.info(message.toString());
 			this.dataList.clear();
-
+			
 			List<CommonItemMeta> newData = loadListRecv(message.getMessage().obj);
 			if (!ValidatorUtil.isEmpty(newData))
 			{

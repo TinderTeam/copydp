@@ -12,6 +12,7 @@ import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.MainTabbarActivity;
 import cn.fuego.eshoping.ui.base.BaseFragment;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
@@ -64,6 +65,10 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	
 	private void ComponentUpdateData()
 	{
+		
+		if(AppCache.getUser()==null){
+			nextActivity(LoginActivity.class);
+		}
 		userName.setText(AppCache.getUser().getUsername());
 		userPlace.setText(AppCache.getCityInfo().getCity());
 		
@@ -117,7 +122,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 		Intent intent = new Intent();
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 		intent.setClass(this.getActivity(), clazz);
-		this.startActivity(intent);
+		this.startActivity(intent);	
 	}
 
 }

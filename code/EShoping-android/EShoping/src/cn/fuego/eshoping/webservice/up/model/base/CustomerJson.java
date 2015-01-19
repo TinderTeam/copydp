@@ -19,6 +19,7 @@ public class CustomerJson
 	private String status;
 	private String request; //请求类型 激活/升级/解冻
 	private Date login_date;
+	private Date vip_limit_date;
 	public int getUser_id() {
 		return user_id;
 	}
@@ -89,6 +90,14 @@ public class CustomerJson
 				+ email + ", car_id=" + car_id + ", recommender_id="
 				+ recommender_id + ", status=" + status + ", request="
 				+ request + ", login_date=" + login_date + "]";
+	}
+	public Date getVip_limit_date()
+	{
+		return vip_limit_date;
+	}
+	public void setVip_limit_date(Date vip_limit_date)
+	{
+		this.vip_limit_date = vip_limit_date;
 	}
 	
 

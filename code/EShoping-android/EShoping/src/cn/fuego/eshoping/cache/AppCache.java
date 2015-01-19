@@ -18,7 +18,7 @@ public class AppCache extends MemoryCache
 
 	public static CityJson getCityInfo(){
 		cityInfo = new CityJson();
-		cityInfo.setCity("广州");
+		cityInfo.setCity("温州");
 		cityInfo.setCity_id(3);
 		List<ZoneJson> zone_list = new ArrayList<ZoneJson>();
 		ZoneJson zone = new ZoneJson();
@@ -33,9 +33,6 @@ public class AppCache extends MemoryCache
 	
 	public static UserJson getUser()
 	{
-		UserJson user=new UserJson();
-		user.setUser_id(85);
-		user.setUsername("test");
 		return user;
 	}
 
