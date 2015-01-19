@@ -2,10 +2,42 @@
 
 class BuyServiceAction extends BaseAction {
 
+	//更新产品状态
+	public function updateProductStatus()
+	{
+		$productViewDB=new Model('view_product');
+		$statusCondition['product_status']="正常";
+		
+		//更新所有产品状态
+		$productList = $productViewDB->where($statusCondition)->select();
+		$productCount = $productViewDB->where($statusCondition)->count();
+		for($i=0;$i<$productCount;$i++)
+		{
+			$productDB = M('product');
+			$conditionTime['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));
+        	$productIDCondition['product_id'] = $productList[$i]['product_id'];
+		    $data['product_status']="已过期";
+        	$productDB->where($productIDCondition)->where($conditionTime)->save($data);
+		}
+	}
+	//增加产品补充信息字段，补充已购买人数，剩余天数
+	public  function addProductInfo($productList)
+	{
+		for($i=0;$i<count($productList);$i++)
+		{
+			$productOrderDB = M('order');
+			$condition['product_id'] = $productList[$i]['product_id'];
+    		$productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
+	    	$endTime = $productList[$i]['end_date_time'];
+	    	$productDB = M('product');
+	    	$productList[$i]['leavingDays']=round((strtotime($endTime)-strtotime(date('Y-m-d H:i:s',time())))/3600/24);
+		}
+		return $productList;
+	}
     //获取推荐产品列表
     public function recommendProductService($city)
     {
-        
+    	$this->updateProductStatus();
 		$productViewDB=new Model('view_recommernd');
 		$rcmViewCondition['city']=$city;
 		$statusCondition['product_status']="正常";
@@ -14,13 +46,7 @@ class BuyServiceAction extends BaseAction {
 		$map['product_id']=array('in',$rcmIDList);
 		$productDB = new Model('view_product');
 		$productList = $productDB->where($map)->select();
-		$productCount = count($rcmIDList);
-	    for($i=0;$i<$productCount;$i++)
-		{
-		$productOrderDB = M('order');
-		$condition['product_id'] = $productList[$i]['product_id'];
-		$productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
-		}
+		$productList = $this->addProductInfo($productList);
 		$rsp['errorCode'] = SUCCESS;
 		$rsp['productList'] = $productList;
 		$this->log("the productList is".$productList);
@@ -30,18 +56,12 @@ class BuyServiceAction extends BaseAction {
     //获取最新特惠产品列表
     public function NewProductService($city)
     {
-        
+    	$this->updateProductStatus();
         $productViewDB=new Model('view_product');
         $productCityCondition['city']=$city;
         $statusCondition['product_status']="正常";
         $productList=$productViewDB->where($productCityCondition)->where($statusCondition)->order('update_date desc')->limit(4)->select();
-        for($i=0;$i<count($productList);$i++)
-        {
-        $productOrderDB = M('order');
-        $condition['product_id'] = $productList[$i]['product_id'];
-        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
-        }            
-        
+        $productList = $this->addProductInfo($productList);
         $rsp['errorCode'] = SUCCESS;
         $rsp['productList'] = $productList;
         $this->log("the productList is".$productList);
@@ -51,10 +71,8 @@ class BuyServiceAction extends BaseAction {
     //获取分类推荐产品列表
     public function TypeRecProductService($typeInfo)
     {
-    
+    	$this->updateProductStatus();
         $productViewDB=new Model('view_product');
-        
-        
         $typeDB=new Model('product_type');
         //查询子类列表
         $fatherTypeCondition['father_id'] = 0;
@@ -71,12 +89,7 @@ class BuyServiceAction extends BaseAction {
             }
         }
 
-        for($i=0;$i<count($productList);$i++)
-        {
-        $productOrderDB = M('order');
-        $condition['product_id'] = $productList[$i]['product_id'];
-        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
-        }
+        $productList = $this->addProductInfo($productList);
         
         $rsp['errorCode'] = SUCCESS;
         $rsp['productList'] = $productList;
@@ -87,17 +100,11 @@ class BuyServiceAction extends BaseAction {
     //获取积分产品列表
     public function ScoreProductService($typeInfo)
     {
-    
         $productViewDB=new Model('view_product');
         $condition['city']=$typeInfo['city'];
         $condition['type_id'] = 1000;               //积分商品
-        $productList=$productViewDB->where($condition)->select();
-        for($i=0;$i<count($productList);$i++)
-        {
-        $productOrderDB = M('order');
-        $condition['product_id'] = $productList[$i]['product_id'];
-        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
-        }
+        $productList =$productViewDB->where($condition)->select();
+        $productList = $this->addProductInfo($productList);
     
         $rsp['errorCode'] = SUCCESS;
         $rsp['productList'] = $productList;
@@ -105,9 +112,10 @@ class BuyServiceAction extends BaseAction {
         return  $rsp;
     
     }
+
     //根据产品类型，获取所有产品列表
     public function AllProductService($searchInfo)
-    {
+    {    	
         $typeRoot = $searchInfo['typeRoot'];
         $city = $searchInfo['city'];
         $zone_id = $searchInfo['zone_id'];
@@ -148,19 +156,12 @@ class BuyServiceAction extends BaseAction {
 			$productFilter['_complex']=$searchFilter;
 		}
 		
-		
 		//设置总筛选条件
 		$productViewDB=new Model('view_product');
 		$statusCondition['product_status']="正常";
 	    $productList =$productViewDB->where($productFilter)->where($statusCondition)->select();
-	    $productCount = $productViewDB->where($productFilter)->count();
-        for($i=0;$i<$productCount;$i++)
-        {
-        $productOrderDB = M('order');
-        $condition['product_id'] = $productList[$i]['product_id'];
-        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
-        }
-
+	    $productList = $this->addProductInfo($productList);
+	    
 	    $rsp['errorCode'] = SUCCESS;
 	    $rsp['productList'] = $productList;
 	    $this->log("the productList is".$productList);
@@ -196,6 +197,61 @@ class BuyServiceAction extends BaseAction {
         $this->log("the orderList is".$orderList);
         return  $rsp;
     }
+    public function GetSvipBuyTimes($productID=null,$userID=null)
+    {
+    	$dbProduct =new Model('product');
+    	$productCondition['product_id'] = $productID;
+    	$privilege = $dbProduct->where($productCondition)->getField('svip_product_id');
+    		
+    	$dbCustomer = new Model('customer');
+    	$IDCondition['user_id'] = $userID;
+    	$grade = $dbCustomer->where($IDCondition)->getField('grade');
+    	$errorCode = SUCCESS;
+    	//购买商品校验
+    	if($privilege!="普通")
+    	{
+    		if($grade=="VIP"){
+    			$errorCode = CLIENT_VERSION_LOW;
+    		}
+    		else 
+    		{
+    				
+    			$svipProductdb= M('view_svip_product');
+    			$productCondition['svip_product_id']=$privilege;
+    			$svipProduct = $svipProductdb->where($productCondition)->find();
+    			//获取限制信息
+    			$limnum=$svipProduct['limit_consumption_num'];
+    			$limtype=$svipProduct['limit_consumption_period'];
+    			$standDiff=0;
+    				
+    			if($limtype=='每周'){
+    				$standDiff=7;
+    			}else if($limtype=='每月'){
+    				$standDiff=30;
+    			}else if($limtype=='每年'){
+    				$standDiff=365;
+    			}
+    				
+    			//获取该客户的该类商品购买信息
+    			$svipOrderDB=M('view_svip_product_order');
+    			$SVIPOrderCondition['custoemr_id'] = $userID;
+    			$SVIPOrderCondition['svip_product_id'] = $privilege;
+    			$svipOrderList=$svipOrderDB->where($SVIPOrderCondition)->select();
+    			$num=0;
+    			foreach( $svipOrderList as $svipOrder){
+    				$orderDate=$svipOrder['datetime'];
+    				$diff=(date('y-m-d h:i:s',time())-$orderDate)/(3600*24);
+    				if($diff<$standDiff){
+    					$num=$num+1;
+    				}
+    			}
+    			if($num>=$limnum){
+    				$errorCode = BUY_TIMES_OVER;
+    			}
+    		}
+    	}
+    	return $errorCode;
+    }
     //生成产品订单
     public function CreateOrderService($orderInfo)
     {
@@ -203,9 +259,13 @@ class BuyServiceAction extends BaseAction {
         $customer_id=$orderInfo['userID'];
 		$product_id=$orderInfo['productID'];
 		$quantity=$orderInfo['quantity'];
-		
+		$rsp['errorCode']  = $this->GetSvipBuyTimes($product_id,$customer_id);
+		if($rsp['errorCode'] != SUCCESS)
+		{
+			$rsp['productOrder'] = NULL;
+			return  $rsp;
+		}
 		$datetime=date('Y-m-d H:i:s',time());
-		
 		$product=new Model('view_product');
 		$productIDCondition['product_id']  = $product_id;
 		$productItem=$product->where($productIDCondition)->find();

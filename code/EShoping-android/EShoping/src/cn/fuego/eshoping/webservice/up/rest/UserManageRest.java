@@ -14,6 +14,8 @@ import cn.fuego.eshoping.webservice.up.model.ModifyPwdReq;
 import cn.fuego.eshoping.webservice.up.model.ModifyPwdRsp;
 import cn.fuego.eshoping.webservice.up.model.RegisterReq;
 import cn.fuego.eshoping.webservice.up.model.RegisterRsp;
+import cn.fuego.eshoping.webservice.up.model.SetUserGradeReq;
+import cn.fuego.eshoping.webservice.up.model.base.BaseJsonRsp;
 
 
 /**
@@ -49,6 +51,11 @@ public interface UserManageRest
 	@POST
 	@Path("/register_rest")
 	RegisterRsp registerMemeber(RegisterReq req);
+	
+	//APP注册校验
+	@POST
+	@Path("/upGrade_rest")
+	BaseJsonRsp upGrade(SetUserGradeReq req);
 	
 	//APP获取城市列表
 	@POST

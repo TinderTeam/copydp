@@ -24,6 +24,7 @@ public class ProductJson implements Serializable
 	private int city_id;
 	private String city;
 	private int current_member;
+	private String leavingDays;
 	
 	public int getProduct_id() {
 		return product_id;
@@ -150,6 +151,13 @@ public class ProductJson implements Serializable
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	
+	public String getLeavingDays() {
+		return leavingDays;
+	}
+	public void setLeavingDays(String leavingDays) {
+		this.leavingDays = leavingDays;
+	}
 	@Override
 	public String toString() {
 		return "ProductJson [product_id=" + product_id + ", name=" + name
@@ -162,8 +170,10 @@ public class ProductJson implements Serializable
 				+ ", product_status=" + product_status + ", username="
 				+ username + ", zone_id=" + zone_id + ", zone_name="
 				+ zone_name + ", city_id=" + city_id + ", city=" + city
-				+ ", current_member=" + current_member + "]";
+				+ ", current_member=" + current_member + ", leavingDays="
+				+ leavingDays + "]";
 	}
+	
 	
 
 }

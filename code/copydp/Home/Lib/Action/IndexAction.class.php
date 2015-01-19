@@ -117,7 +117,23 @@ class IndexAction extends IndexServiceAction {
 	  $Rsp['customer'] = $loginResult['customer'];
 	  $this->returnJson($errorCode,$Rsp);
 	}
- 
+	//APP升级成SVIP
+	public function upGrade_rest(){
+		
+		$this->doAuth();
+		$req =  $this->getReqObj();
+		$user = $req->user;
+		$this->log(json_encode($user));
+		
+		$db=new Model('user');
+		$user_id= $user->user_id;
+		$customer = M('customer');
+		$userID=$user_id;
+		$condition['user_id']=$userID;
+		$customer->where($condition)->setField('request','升级');
+		$errorCode = SUCCESS;
+		$this->returnJson($errorCode,null);	
+	}
  
 	//登录校验
  	public function check(){

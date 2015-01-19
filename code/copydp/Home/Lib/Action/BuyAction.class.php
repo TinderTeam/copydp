@@ -320,15 +320,11 @@ class BuyAction extends BuyServiceAction {
         unset($seller['description']);
         
         //获取商家对应的商品列表和商家评价列表
+        parent::updateProductStatus();
         $IDcondition['seller_id'] = $req->seller_id;
         $productViewDB = new Model('view_product');
         $productList = $productViewDB->where($condition)->select();
-        for($i=0;$i<count($productList);$i++)
-        {
-        $productOrderDB = M('order');
-        $condition['product_id'] = $productList[$i]['product_id'];
-        $productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
-        }
+        $productList = parent::addProductInfo($productList);
         $sellerEvalDB = new Model('seller_evaluation');
         $sellerEvalList = $sellerEvalDB->where($condition)->select();
         

@@ -19,5 +19,6 @@
     define('CODE_IS_INVALID',10002);            //激活码已失效
     define('ACTIVITY_ORDER_DUPLICATE',10003);   //活动重复参与
     define('ACTIVITY_ORDER_MAXIMUM',10004);     //活动订单已达上限
+    define('BUY_TIMES_OVER',10005);     		//购买次数超过限制
 	
 ?>

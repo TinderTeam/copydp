@@ -53,6 +53,19 @@ class IndexServiceAction extends BaseAction {
 	          $lastDate=$custmerDB->where($customerIDCondition)->getField('login_date');
 	          $score=$custmerDB->where($customerIDCondition)->getField('score');
 	          $status =$custmerDB->where($customerIDCondition)->getField('status');
+	          $grade =$custmerDB->where($customerIDCondition)->getField('grade');
+	          //处理用户VIP时间限制
+	          if($grade=='SVIP'){
+	          	$limitdate =$custmerDB->where($customerIDCondition)->getField('vip_limit_date');
+	          	$now = Date('Y-m-d H:i:s',time());
+	          
+	          	if(strtotime($now)>strtotime($limitdate)){
+	          		$data['grade']="VIP";
+	          		$data['vip_limit_date']=null;
+	          		$custmerDB->where($customerIDCondition)->save($data);
+	          	}
+	          }
+	          //会员状态验证
 	          if($status=='待审批'){
 	              $rsp['errorCode'] = USER_UNCHECKED;
 	          }
