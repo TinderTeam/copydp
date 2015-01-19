@@ -11,38 +11,7 @@
 <link rel="stylesheet" href="__PUBLIC__/css/cssnew/account/login.min.87f3f79a1a6d4db0517fcf5c3eb42178.css" type="text/css" />
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
 <!-- <link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/account/login.min.87f3f79a1a6d4db0517fcf5c3eb42178.css" type="text/css"/> -->
-	<script src="__PUBLIC__/js/jquery.validate.min.js" type="text/javascript"></script>
-	<script src="__PUBLIC__/js/jquery.validate.messages_cn.js" type="text/javascript"></script>
-	<script src="__PUBLIC__/js/jquery.metadata.js" type="text/javascript"></script>
-	<script >
-
-		$(document).ready(function(){
-				$("#RegisterForm").validate({ 
-					SubmitHandler:function(){ 
-					alert( "success"); 
-					}
-					});
-		});
-	</script>
-	<script >
-		$(document).ready(function(){
-				$("#LoginForm").validate({ 
-					SubmitHandler:function(){ 
-					alert( "success"); 
-					}
-					});
-		});
-		
-	</script>
-	<script >
-		$(document).ready(function(){
-				$("#SellerForm").validate({ 
-					SubmitHandler:function(){ 
-					alert( "success"); 
-					}
-					});
-		});
-	</script>
+	
 		<style type="text/css">
 			#code
 			{
@@ -55,7 +24,7 @@
 				width:100px;
 			}
 		</style>
-		<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+
 <script type="text/javascript">
 
 	function selectChange(){
@@ -77,8 +46,6 @@
 		});
 	
 	}
-
-
 
 	function tableChange(obj){
 	var newtab;
@@ -120,7 +87,39 @@
 		<!---Logo栏---->
 			<include file="./Home/Tpl/Public/logobar.html"/>
 		<!---Logo栏---->
+	<!--此处引入JS及下方的验证实现不能移动位置，jquerey验证需要按顺序引入JS，由于jquery-1.9.1.min在logobar.html中引用，所以以下内容必须放在logobar.html之后  -->	
+	<script src="__PUBLIC__/js/jquery.validate.min.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/jquery.validate.messages_cn.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/js/jquery.metadata.js" type="text/javascript"></script>
+	<script >
 
+		$(document).ready(function(){
+				$("#RegisterForm").validate({ 
+					SubmitHandler:function(){ 
+					alert( "success"); 
+					}
+					});
+		});
+	</script>
+	<script >
+		$(document).ready(function(){
+				$("#LoginForm").validate({ 
+					SubmitHandler:function(){ 
+					alert( "success"); 
+					}
+					});
+		});
+		
+	</script>
+	<script >
+		$(document).ready(function(){
+				$("#SellerForm").validate({ 
+					SubmitHandler:function(){ 
+					alert( "success"); 
+					}
+					});
+		});
+	</script>
 
 		<input id="tabSelect" value="{$tabSelect}" style="display:none"/>
 		<div class="nav-bar">
