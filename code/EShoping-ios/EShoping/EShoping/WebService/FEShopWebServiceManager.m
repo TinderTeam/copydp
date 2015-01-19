@@ -61,6 +61,7 @@
 #import "FEProductGetSellerResponse.h"
 #import "FEProductGetSellerListRequest.h"
 #import "FEProductGetSellerListResponse.h"
+#import "FEUserGradeRequest.h"
 
 @implementation FEShopWebServiceManager
 
@@ -92,6 +93,8 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(signin, FEUserSigninRequest, FEUserSigninResp
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(signout, FEUserSignoutResquest, FEUserSignoutResponse)
 //modify password
 DEFINE_WEBSERVICE_METHOD_FOR_CLASS(modifyPassword, FEUserModifyPswRequest, FEUserModifyPswResponse)
+//up grade
+DEFINE_WEBSERVICE_METHOD_FOR_CLASS(userUpGrade, FEUserGradeRequest, FEBaseResponse);
 
 
 //product recommed

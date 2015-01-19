@@ -14,8 +14,12 @@
 #import "FECoreDataHandler.h"
 #import "FEProduct.h"
 #import "CDUser.h"
+#import "CDCustomerUser.h"
 #import "FEShopCheckView.h"
 #import "FEProductOrderDetailVC.h"
+#import "GAAlertObj.h"
+#import "FEShopWebServiceManager.h"
+#import "FEUserGradeRequest.h"
 
 @interface FEProductOrderVC ()<UIScrollViewDelegate,FEShopCheckViewDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *productPerPrice;
@@ -42,17 +46,39 @@
 
 - (IBAction)submitOrder:(id)sender {
     if (FELoginUser) {
-        [self.checkProductView resignFirstResponder];
-        [self displayHUD:FEString(@"订购中...")];
-        __weak typeof(self) weakself = self;
-        FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:self.product.product_id.integerValue quantity:self.checkProductView.number orderid:nil];
-        [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
-            if (!error && response.result.errorCode.integerValue == 0) {
-                NSLog(@"order sucess!");
-                [weakself performSegueWithIdentifier:@"showOrderDetailSegue" sender:response.productOrder];
-            }
-            [weakself hideHUD:YES];
-        }];
+        CDUser *user = FELoginUser;
+        if (![self.product.svip_product_id isEqualToString:@"普通"] && [user.usercustomer.grade isEqualToString:@"VIP"] ) {
+            __weak typeof(self) weakself = self;
+            GAAlertAction *action = [GAAlertAction actionWithTitle:FEString(@"升级") action:^{
+                [weakself displayHUD:FEString(@"请求中...")];
+
+                FEUser *feuser = [[FEUser alloc] initWithDictionary:@{@"user_id":user.user_id,@"password":user.password,@"username":user.username,@"role":user.role}];
+                FEUserGradeRequest *rdata = [[FEUserGradeRequest alloc] initWithUser:feuser];
+                [[FEShopWebServiceManager sharedInstance] userUpGrade:rdata response:^(NSError *error, FEBaseResponse *response) {
+                    if (!error && response.result.errorCode.intValue == 0) {
+                        kAlert(@"申请成功，请等待管理员审批！");
+                    }
+                    [weakself hideHUD:YES];
+                }];
+            }];
+            GAAlertAction *action1 = [GAAlertAction actionWithTitle:FEString(@"取消") action:^{
+                
+            }];
+            [GAAlertObj showAlertWithTitle:FEString(@"提示") message:@"该产品只有SVIP用户可以购买,现在升级！" actions:@[action,action1]];
+        }else{
+            [self.checkProductView resignFirstResponder];
+            [self displayHUD:FEString(@"订购中...")];
+            __weak typeof(self) weakself = self;
+            FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:self.product.product_id.integerValue quantity:self.checkProductView.number orderid:nil];
+            [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
+                if (!error && response.result.errorCode.integerValue == 0) {
+                    NSLog(@"order sucess!");
+                    [weakself performSegueWithIdentifier:@"showOrderDetailSegue" sender:response.productOrder];
+                }
+                [weakself hideHUD:YES];
+            }];
+        }
+        
     }else{
         [self performSegueWithIdentifier:@"productOrderToSignin" sender:sender];
     }

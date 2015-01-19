@@ -13,6 +13,7 @@
 #define __METHOD_REGIST             @"Index/register_rest" //注册
 #define __METHOD_MODIFY_PASSWORD    @"Index/modifyPswd_rest" //
 #define __METHOD_SIGOUT             @"Index/logout_rest"
+#define __METHOD_USER_UPGRADE       @"Index/upGrade_rest"
 
 #define __METHOD_CITY               @"Index/city_rest"  
 
