@@ -323,10 +323,11 @@ class BuyAction extends BuyServiceAction {
         parent::updateProductStatus();
         $IDcondition['seller_id'] = $req->seller_id;
         $productViewDB = new Model('view_product');
-        $productList = $productViewDB->where($condition)->select();
+        $productList = $productViewDB->where($IDcondition)->select();
+        $this->log("the seller has ".count($productList)." products, seller_id is ".$req->seller_id);
         $productList = parent::addProductInfo($productList);
         $sellerEvalDB = new Model('seller_evaluation');
-        $sellerEvalList = $sellerEvalDB->where($condition)->select();
+        $sellerEvalList = $sellerEvalDB->where($IDcondition)->select();
         
         $errorCode = SUCCESS;
         if($seller==false)

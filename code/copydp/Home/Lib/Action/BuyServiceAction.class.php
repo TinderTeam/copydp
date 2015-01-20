@@ -5,19 +5,23 @@ class BuyServiceAction extends BaseAction {
 	//更新产品状态
 	public function updateProductStatus()
 	{
-		$productViewDB=new Model('view_product');
+		$productDB=new Model('product');
 		$statusCondition['product_status']="正常";
 		
 		//更新所有产品状态
-		$productList = $productViewDB->where($statusCondition)->select();
-		$productCount = $productViewDB->where($statusCondition)->count();
+		$productList = $productDB->where($statusCondition)->select();
+		$productCount = $productDB->where($statusCondition)->count();
 		for($i=0;$i<$productCount;$i++)
 		{
-			$productDB = M('product');
 			$conditionTime['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));
         	$productIDCondition['product_id'] = $productList[$i]['product_id'];
 		    $data['product_status']="已过期";
-        	$productDB->where($productIDCondition)->where($conditionTime)->save($data);
+			if($productList[$i]['end_date_time']<date('Y-m-d H:i:s',time()))
+			{
+				$this->log("the product is to be updatestatus, product_id is ".$productList[$i]['product_id']);
+				$productDB->where($productIDCondition)->where($conditionTime)->save($data);
+			}
+        	
 		}
 	}
 	//增加产品补充信息字段，补充已购买人数，剩余天数

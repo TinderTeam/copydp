@@ -24,7 +24,7 @@ class ActivityServiceAction extends BaseAction {
 		return  $rsp;
 		
     }
-    //获取所有活动列表
+    //获取所有活动订单列表
     public function activityOrderService($userID)
     {
         $condition['customer_id'] = $userID;
