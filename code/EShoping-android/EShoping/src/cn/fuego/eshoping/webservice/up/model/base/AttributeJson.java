@@ -1,5 +1,7 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
+
 /**
  * 
 * @ClassName: AttributeJson 
@@ -8,7 +10,7 @@ package cn.fuego.eshoping.webservice.up.model.base;
 * @date 2014-10-20 上午10:57:36 
 *
  */
-public class AttributeJson
+public class AttributeJson implements Serializable
 {
 
 	private String attrName;

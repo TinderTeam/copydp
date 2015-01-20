@@ -54,7 +54,6 @@ public abstract class MispBaseActivtiy extends Activity
 				public void onClick(View v)
 				{
 					backOnClick();
-					
 				}
 			};
 			button.setOnClickListener(l);

@@ -1,7 +1,6 @@
 package cn.fuego.eshoping.cache;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
@@ -11,24 +10,23 @@ import cn.fuego.misp.service.MemoryCache;
 
 public class AppCache extends MemoryCache
 {
+	
 	private static CityJson cityInfo;
 	private static UserJson user;
 	private static CustomerJson customer;
 
 
 	public static CityJson getCityInfo(){
-		cityInfo = new CityJson();
-		cityInfo.setCity("温州");
-		cityInfo.setCity_id(3);
-		List<ZoneJson> zone_list = new ArrayList<ZoneJson>();
-		ZoneJson zone = new ZoneJson();
-		zone.setZone_name("荔湾区");
-		ZoneJson zone2 = new ZoneJson();
-		zone2.setZone_name("花都区");
-		zone_list.add(zone);
-		zone_list.add(zone2);
-		cityInfo.setZone_list(zone_list);
-		return cityInfo;
+		if(cityInfo==null){
+			CityJson defaltCity = new CityJson();
+			defaltCity.setCity("温州");
+			defaltCity.setCity_id(1);
+			defaltCity.setZone_list(new ArrayList<ZoneJson>());
+			cityInfo=defaltCity;
+			return defaltCity;
+		}else{
+			return cityInfo;
+		}
 	}
 	
 	public static UserJson getUser()
@@ -43,16 +41,17 @@ public class AppCache extends MemoryCache
 
 	public static CustomerJson getCustomer()
 	{
-		CustomerJson customer = new CustomerJson();
-		customer.setScore(1234);
-		customer.setCellphone("13456789784");
-		customer.setEmail("fuego@fuego.cn");
 		return customer;
 	}
 
 	public static void setCustomer(CustomerJson customer)
 	{
 		AppCache.customer = customer;
+	}
+
+	public static void setCityInfo(CityJson city)
+	{
+		AppCache.cityInfo = city;
 	}
 
 }

@@ -69,17 +69,17 @@ public class ActivityInfoActivity extends BaseActivtiy
 
 
 
-	//参加按钮时间
+	//参加按钮事件
 	public void attendEvent(View v)
 	{
-		if(!VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){
+		log.info("attend button clicked");
+		if(AppCache.getUser()!=null && VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){	
+			activityAttend();
+		}else{
 			//转至登陆页面
 			Intent intent = new Intent();
-			intent.setClass(getApplicationContext(), LoginActivity.class);
+			intent.setClass(this, LoginActivity.class);
 			startActivity(intent);
-		}else{
-			//转至确认订单页面		
-			activityAttend();
 		}
 	}	
 	

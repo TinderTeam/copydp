@@ -1,5 +1,7 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
+
 import cn.fuego.misp.service.MemoryCache;
 
 
@@ -11,7 +13,7 @@ import cn.fuego.misp.service.MemoryCache;
 * @date 2014-10-20 上午10:57:41 
 *
  */
-public class BaseJsonReq
+public class BaseJsonReq implements Serializable
 {
 	protected String token = MemoryCache.getToken();
 

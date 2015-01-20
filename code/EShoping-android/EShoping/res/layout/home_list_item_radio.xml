@@ -41,7 +41,7 @@
             android:background="@drawable/nav_btn"
             android:button="@null"
             android:gravity="center"
-            android:text="热门推荐"
+            android:text="合作商家"
             android:textColor="@drawable/nav_text_color" />
     </RadioGroup>
 

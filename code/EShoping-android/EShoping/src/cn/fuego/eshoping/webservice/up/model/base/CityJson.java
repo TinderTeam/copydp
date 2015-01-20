@@ -1,9 +1,12 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CityJson
+public class CityJson  implements Serializable
 {
+	public static final String CITY_ID="city_id";
+	
 	private int city_id;
 	private String city;
 	private String x;

@@ -26,8 +26,8 @@ public class ErrorMessageConst extends MISPErrorMessageConst
 	public static final int CODE_IS_INVALID = 10002 ;  //激活码已失效
 	public static final int ACTIVITY_ORDER_DUPLICATE= 10003 ; //活动重复参与
 	public static final int ACTIVITY_ORDER_MAXIMUM = 10004 ;  //活动订单已达上限
-	public static final int OPREATE_DEVICE_FAILED= 10005 ; // 操作设备失败 
+	public static final int BUY_TIMES_OVER= 10005 ; // 购买次数超过限制
 	public static final int GET_PRODUCT_ORDER_FAILED = 10006 ; // 获取产品订单失败
 	public static final int GET_ACTIVITY_ORDER_FAILED = 10007 ; // 获取产品订单失败
-	 
+	public static final int OPREATE_DEVICE_FAILED= 10008 ; // 操作设备失败  
 }

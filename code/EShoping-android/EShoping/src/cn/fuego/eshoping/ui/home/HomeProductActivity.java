@@ -60,13 +60,15 @@ public class HomeProductActivity extends BaseActivtiy
 		@Override
 		public void onClick(View v)
 		{
-			if(!VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){
+			if(AppCache.getUser()==null){ 
 				//转至登陆页面
 				Intent intent = new Intent();
 				intent.setClass(HomeProductActivity.this, LoginActivity.class);
 				startActivity(intent);
+			}
+			if(!VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){
+				;
 			}else{
-				//转至购买页面
 				Intent intent = new Intent();
 				intent.setClass(HomeProductActivity.this, ProductOrderActivity.class);
 				intent.putExtra(SharedPreferenceConst.PRODUCT, product);
@@ -130,7 +132,7 @@ public class HomeProductActivity extends BaseActivtiy
 		};
 		WebServiceContext.getInstance().getProductManageRest(getSellerHandel).getSellerInfo(req); 
 	}
-	
+	 
 	private void InitializationComponent()
 	{
 		// 获取地图控件引用
@@ -138,7 +140,7 @@ public class HomeProductActivity extends BaseActivtiy
 		//产品信息
 		priceView = (TextView) findViewById(R.id.home_product_price);
 		limitView = (TextView) findViewById(R.id.order_activity_status);
-		view = (TextView) findViewById(R.id.home_product_seller_info);
+		view = (TextView) findViewById(R.id.home_product_seller_info);	
 		//产品图片
 		group = (ViewGroup)findViewById(R.id.home_product_image_view_group);  
 		viewPager = (ViewPager) findViewById(R.id.home_product_image);		
@@ -199,8 +201,6 @@ public class HomeProductActivity extends BaseActivtiy
 	
 	@Override
 	public void handle(MispHttpMessage message)
-	{
-		// TODO Auto-generated method stub
-		
+	{	
 	}
 }

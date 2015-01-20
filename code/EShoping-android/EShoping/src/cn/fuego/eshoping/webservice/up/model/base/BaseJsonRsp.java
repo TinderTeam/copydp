@@ -1,5 +1,7 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
+
 
 /**
  * 
@@ -9,7 +11,7 @@ package cn.fuego.eshoping.webservice.up.model.base;
 * @date 2014-10-20 上午10:57:45 
 *
  */
-public class BaseJsonRsp
+public class BaseJsonRsp implements Serializable
 {
 	protected SetResultJson result = new SetResultJson();
 

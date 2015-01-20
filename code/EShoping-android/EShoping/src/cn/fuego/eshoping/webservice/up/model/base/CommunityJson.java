@@ -8,6 +8,8 @@
 */ 
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
+
  /** 
  * @ClassName: CommunityJson 
  * @Description: TODO
@@ -15,7 +17,7 @@ package cn.fuego.eshoping.webservice.up.model.base;
  * @date 2014-11-1 下午12:13:54 
  *  
  */
-public class CommunityJson
+public class CommunityJson implements Serializable
 {
 	private int community_id;
 	private String title;

@@ -1,7 +1,9 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
-public class ZoneJson
-{
+import java.io.Serializable;
+
+public class ZoneJson implements Serializable
+{ 
 	public static final String ZONE_NAME = "zone_name";
 	
 	private int zone_id;

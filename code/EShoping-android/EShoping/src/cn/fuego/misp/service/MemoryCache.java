@@ -7,7 +7,7 @@ public class MemoryCache
 	private static String token="12345";
 	private static String version = "0.1";
 	private static String serverIp = "120.24.217.173";
-	private static String serverPort = "9000";
+	private static String serverPort = "80";
 
 	public static String getToken()
 	{

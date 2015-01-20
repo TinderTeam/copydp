@@ -1,5 +1,8 @@
 package cn.fuego.eshoping.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -9,8 +12,18 @@ import android.widget.ImageView;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.list.tools.IteratorSelector;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.base.ExitApplication;
+import cn.fuego.eshoping.webservice.up.model.GetCityListRsp;
+import cn.fuego.eshoping.webservice.up.model.base.CityJson;
+import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.service.http.MispHttpHandler;
+import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.tool.MispLocation;
+import cn.fuego.misp.tool.MispLocationListener;
+import cn.fuego.misp.tool.MispLocationService;
 import cn.fuego.misp.ui.base.MispBaseFragment;
 import cn.fuego.misp.ui.model.FragmentResInfo;
 
@@ -31,8 +44,9 @@ public class MainTabbarActivity extends FragmentActivity
           
     //定义一个布局  
     private LayoutInflater layoutInflater;  
-  
-          
+
+ 
+	
     public void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
         setContentView(R.layout.activity_main_tabbar);  

@@ -8,6 +8,8 @@
 */ 
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
+
  /** 
  * @ClassName: ButtonJson 
  * @Description: TODO
@@ -15,7 +17,7 @@ package cn.fuego.eshoping.webservice.up.model.base;
  * @date 2014-11-1 下午5:46:35 
  *  
  */
-public class ButtonJson
+public class ButtonJson implements Serializable
 {
 	private int id;
 	private String name;

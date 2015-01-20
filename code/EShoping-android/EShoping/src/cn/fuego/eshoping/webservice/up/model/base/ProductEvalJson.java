@@ -1,6 +1,8 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
-public class ProductEvalJson
+import java.io.Serializable;
+
+public class ProductEvalJson implements Serializable
 {
 	private int product_eva_id;
 	private int product_id;

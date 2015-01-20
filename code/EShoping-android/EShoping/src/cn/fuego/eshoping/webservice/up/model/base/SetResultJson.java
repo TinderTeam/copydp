@@ -1,5 +1,7 @@
 package cn.fuego.eshoping.webservice.up.model.base;
 
+import java.io.Serializable;
+
 import cn.fuego.eshoping.constant.ErrorMessageConst;
 
 
@@ -12,7 +14,7 @@ import cn.fuego.eshoping.constant.ErrorMessageConst;
 * @date 2014-10-20 上午10:58:16 
 *
  */
-public class SetResultJson
+public class SetResultJson implements Serializable
 {
 	private int errorCode = ErrorMessageConst.SUCCESS;
 	private String errorMsg;

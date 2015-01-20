@@ -68,9 +68,10 @@ public class UserFragment extends BaseFragment implements OnClickListener
 		
 		if(AppCache.getUser()==null){
 			nextActivity(LoginActivity.class);
+		}else{			
+			userName.setText(AppCache.getUser().getUsername());
+			userPlace.setText(AppCache.getCityInfo().getCity());			
 		}
-		userName.setText(AppCache.getUser().getUsername());
-		userPlace.setText(AppCache.getCityInfo().getCity());
 		
 		userInfoBtn.setOnClickListener(new OnClickListener(){
 			@Override
@@ -118,11 +119,18 @@ public class UserFragment extends BaseFragment implements OnClickListener
 
 	//跳转
 	public void nextActivity(Class clazz){
-		log.info("next activity:"+clazz.toString());
-		Intent intent = new Intent();
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-		intent.setClass(this.getActivity(), clazz);
-		this.startActivity(intent);	
+		if(AppCache.getUser()==null){
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+			intent.setClass(this.getActivity(), LoginActivity.class);
+			this.startActivity(intent);	
+		}else{			
+			log.info("next activity:"+clazz.toString());
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+			intent.setClass(this.getActivity(), clazz);
+			this.startActivity(intent);			
+		}
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,19 +21,30 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.list.tools.IteratorSelector;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.cache.ProductTypeCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
+import cn.fuego.eshoping.ui.seller.SellerInfoActivity;
 import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.util.LoadImageUtil;
+import cn.fuego.eshoping.webservice.up.model.GetCityListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
+import cn.fuego.eshoping.webservice.up.model.GetSellerListRsp;
+import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
+import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.misp.service.http.MispHttpHandler;
+import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.tool.MispLocation;
+import cn.fuego.misp.tool.MispLocationListener;
+import cn.fuego.misp.tool.MispLocationService;
 import cn.fuego.misp.ui.list.ListViewResInfo;
 import cn.fuego.misp.ui.list.MispDistinctListFragment;
 import cn.fuego.misp.ui.model.CommonItemMeta;
@@ -63,7 +75,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	private List<CommonItemMeta> typeProductData;
 	private List<CommonItemMeta> allProductData;
 
-
 	@Override
 	public void initRes()
 	{ 
@@ -73,6 +84,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		listViewRes.setListView(R.id.home_main_list);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
 		ProductTypeCache.getInstance();
+
  	}
  
 	@Override
@@ -100,7 +112,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			WebServiceContext.getInstance().getProductManageRest(this).getTypeRecProductList(req);
 			break;
 		case 2:
-			WebServiceContext.getInstance().getProductManageRest(this).getAllProductList(req);
+			WebServiceContext.getInstance().getProductManageRest(this).getSellerList(req);
 			break;
 		default:
 			break;
@@ -110,23 +122,23 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	@Override
 	public List<CommonItemMeta> loadListRecv(Object obj)
 	{
-		GetProductListRsp rsp = (GetProductListRsp) obj;	
+		
+		
+	
 		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
 		CommonItemMeta gridItem = new CommonItemMeta();
 		gridItem.setLayoutType(ITEM_TYPE_GRID);
 		gridItem.setContent(gridInitData());
 		itemList.add(gridItem);
-		
 		CommonItemMeta tabItem = new CommonItemMeta();
 		tabItem.setLayoutType(ITEM_TYPE_TAB);
 		itemList.add(tabItem); 
 		if(tabID == 1)
 		{
+			GetProductListRsp rsp = (GetProductListRsp) obj;	
 			Map<Integer,List<ProductJson>> productGroup = divideGroup(rsp.getProductList());
-			
 			for(Integer typeID : productGroup.keySet())
-			{
-				
+			{			
 				List<ProductJson> productList = productGroup.get(typeID);
 				if(!ValidatorUtil.isEmpty(productList))
 				{
@@ -152,14 +164,29 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 				}
 			}
 		}
-		else
+		else if(tabID==0)
 		{
+			GetProductListRsp rsp = (GetProductListRsp) obj;	
 			if(rsp.getProductList()!=null){
 				for(ProductJson product : rsp.getProductList())
 				{
 					CommonItemMeta item = new CommonItemMeta();
 					item.setLayoutType(ITEM_TYPE_PRODUCT);
 					item.setContent(product);
+					itemList.add(item);
+				}	
+			}
+			
+		}
+		else if(tabID==2)
+		{
+			GetSellerListRsp rsp = (GetSellerListRsp) obj;	
+			if(rsp.getSellerList()!=null){
+				for(SellerJson seller : rsp.getSellerList())
+				{
+					CommonItemMeta item = new CommonItemMeta();
+					item.setLayoutType(ITEM_TYPE_PRODUCT);		
+					item.setContent(seller);
 					itemList.add(item);
 				}	
 			}
@@ -281,8 +308,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			{
 				view = (View) convertView.getTag();
 			}
-	
-
 		    break;
 		case ITEM_TYPE_PRODUCT_TYPE:
 		    
@@ -304,8 +329,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			if(null == convertView)
 			{
 				convertView = inflater.inflate(R.layout.home_list_item, null);
-	
-
 		        view = convertView;
 		        convertView.setTag(view);
 			}
@@ -313,18 +336,34 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			{
 				view = (View) convertView.getTag();
 			}
-			
-			ProductJson product = (ProductJson) item.getContent();
-		    TextView titleView = (TextView) convertView.findViewById(R.id.home_list_item_title);
-	        titleView.setText(product.getName());      
-	        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
-	        curPrice.setText(String.valueOf(product.getPrice()));
-	        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
-	        oldPrice.setText(String.valueOf(product.getOriginal_price()));
-	        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
-	        desp.setText(String.valueOf(product.getDscr()));
-	        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
-	        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));        
+			/*
+			 *  这里要判断类型 
+			 */
+			if(tabID==2){
+				SellerJson seller = (SellerJson) item.getContent();			
+			    TextView titleView = (TextView) convertView.findViewById(R.id.home_list_item_title);
+		        titleView.setText(seller.getSeller_name());      
+		        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
+		        curPrice.setText(String.valueOf(seller.getType_name()));
+		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
+		        oldPrice.setText("");
+		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
+		        desp.setText(String.valueOf(seller.getDscr()));
+		        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
+		        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(seller.getImg()));    		
+			}else{
+				ProductJson product = (ProductJson) item.getContent();			
+			    TextView titleView = (TextView) convertView.findViewById(R.id.home_list_item_title);
+		        titleView.setText(product.getName());      
+		        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
+		        curPrice.setText(String.valueOf(product.getPrice()));
+		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
+		        oldPrice.setText(String.valueOf(product.getOriginal_price()));
+		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
+		        desp.setText(String.valueOf(product.getDscr()));
+		        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
+		        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));        
+			}			
 	        break;	
 		}
         return view;
@@ -334,9 +373,15 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	{
 		if(ITEM_TYPE_PRODUCT == item.getLayoutType())
 		{
-			Intent intent = new Intent(this.getActivity(),this.listViewRes.getClickActivityClass());
-			intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
-			this.startActivity(intent);
+			if(tabID==2){
+				Intent intent = new Intent(this.getActivity(),SellerInfoActivity.class);
+				intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
+				this.startActivity(intent);
+			}else{
+				Intent intent = new Intent(this.getActivity(),this.listViewRes.getClickActivityClass());
+				intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
+				this.startActivity(intent);
+			}
 		}
 	}
 	@Override
