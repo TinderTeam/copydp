@@ -95,7 +95,6 @@ public class MainActivity extends BaseActivtiy
 		initApplication();
         startActivity(intent);
         this.finish();
- 
 	}
 	
 

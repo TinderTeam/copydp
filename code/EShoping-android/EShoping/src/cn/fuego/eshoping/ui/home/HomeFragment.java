@@ -285,8 +285,11 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 					log.info("select type id is : "+typeID);
 					if(typeID!=-1){
 						Intent i= new Intent();
+						ProductJson filter = new ProductJson();
+						filter.setType_id(typeID);
+						filter.setCity(AppCache.getCityInfo().getCity());
 						i.setClass(parent.getContext(), ProductSearchActivity.class);
-						i.putExtra(SharedPreferenceConst.SELECT_TYPE_ID, typeID);
+						i.putExtra(SharedPreferenceConst.PRODUCT_FILTER, typeID);
 						parent.getContext().startActivity(i);
 					}
 				}

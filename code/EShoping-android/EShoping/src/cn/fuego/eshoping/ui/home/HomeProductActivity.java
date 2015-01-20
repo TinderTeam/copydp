@@ -141,9 +141,9 @@ public class HomeProductActivity extends BaseActivtiy
 		priceView = (TextView) findViewById(R.id.home_product_price);
 		limitView = (TextView) findViewById(R.id.order_activity_status);
 		view = (TextView) findViewById(R.id.home_product_seller_info);	
+		group = (ViewGroup)findViewById(R.id.home_product_image_view_group);
 		//产品图片
-		group = (ViewGroup)findViewById(R.id.home_product_image_view_group);  
-		viewPager = (ViewPager) findViewById(R.id.home_product_image);		
+		viewPager = (ViewPager) findViewById(R.id.home_product_image);	
 		//按钮
 		orderBtn = (Button)findViewById(R.id.order_activity_cancel_btn); 
 	}
@@ -175,6 +175,7 @@ public class HomeProductActivity extends BaseActivtiy
 		view.setText(seller.getDscr());
 	}
 
+	
 	@Override
 	protected void onDestroy()
 	{

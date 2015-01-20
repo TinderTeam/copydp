@@ -18,8 +18,12 @@ import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.widget.FilterPopupMenu;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
+import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
+import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.service.http.MispHttpHandler;
+import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.list.MispListActivity;
 import cn.fuego.misp.ui.util.LoadImageUtil;
 
@@ -30,16 +34,13 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 	//页面组件
     private RadioGroup searchGroup;
     private FilterPopupMenu popupMenu;
-    private int selectType=0;
-    private int selectZone=0;
+    private ProductJson filter;
     
-
 	@Override
 	public void initRes()
 	{
 		this.activityRes.setAvtivityView(R.layout.product_search);
-		this.activityRes.setBackBtn(R.id.com_back_btn);
-		
+		this.activityRes.setBackBtn(R.id.com_back_btn);		
 		//List
 		this.listViewRes.setListItemView(R.layout.home_list_item);
 		this.listViewRes.setListView(R.id.product_search_list);	
@@ -50,10 +51,8 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		InitializationData();
-		
 		super.onCreate(savedInstanceState);
 		//初始化数据
-
 		//初始化组件
 		InitializationView();
 		//初始化监听器
@@ -63,14 +62,25 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 	private void InitializationData()
 	{
 		Intent intent = this.getIntent();
-		selectType = (Integer) intent.getSerializableExtra(SharedPreferenceConst.SELECT_TYPE_ID);
-		log.info("default select type is = "+ selectType );
+		filter = (ProductJson) intent.getSerializableExtra(SharedPreferenceConst.PRODUCT_FILTER);
+		if(filter == null){
+			filter = new ProductJson();
+		}
+		log.info("default select filter is = "+ filter );
+		filter.setType_id(0);
+		filter.setZone_id(0);
 	}	
 	
 	private void InitializationView()
 	{
 		searchGroup = (RadioGroup) findViewById(R.id.product_serch_radio_group);   
-		popupMenu=new FilterPopupMenu(this,searchGroup);			
+		/*
+		 * mark:如果已经设定了sellerid 的筛选条件，则不用显示上面的筛选框
+		 */
+		if(hasOtherFilter()){
+			searchGroup.setVisibility(android.view.View.GONE);
+		}
+		popupMenu=new FilterPopupMenu(this,searchGroup);
 	}
 	
 	private void InitializationListener()
@@ -92,6 +102,7 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 					popupMenu.showZoneFilter();
 					group.clearCheck();
 				}
+	
 			}	
 		});		
 	}
@@ -100,18 +111,16 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 
 	public void zoneFilter(int selectedId)
 	{
-		log.info("select by  zoneFilter: "+selectedId);
-		selectZone=selectedId;
-		selectType=0;
+		filter.setZone_id(selectedId);
+		log.info("select by filter: "+filter);
 		super.refreshList(new ArrayList<ProductJson>());
 		loadSendList();
 	}
 
 	public void tpyeFilter(int selectedId)
 	{
-		log.info("select by  tpyeFilter: "+selectedId);	
-		selectType=selectedId;
-		selectZone=0;
+		filter.setType_id(selectedId);
+		log.info("select by filter: "+filter);
 		super.refreshList(new ArrayList<ProductJson>());
 		loadSendList();
 	}
@@ -119,14 +128,44 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 	@Override
 	public void loadSendList()
 	{
-		log.info("load list : type="+selectType+"zoen="+selectZone);
-		GetProductListReq req = new GetProductListReq();
-		req.setToken(AppCache.getToken());
-		req.setCity(AppCache.getCityInfo().getCity());
-		req.setTypeRoot(selectType);
-		req.setZone_id(selectZone);
-		req.setSearch(false);
-		WebServiceContext.getInstance().getProductManageRest(this).getAllProductList(req);
+		/*
+		 * mark:如果已经设定了sellerid 的筛选条件，则不用进行数据通信，数据直接从上个界面带过来
+		 */
+		if(hasOtherFilter()){
+			log.info("load list by sellerID filter");
+			GetSellerReq req = new GetSellerReq();
+			req.setToken(AppCache.getToken());
+			req.setSeller_id(filter.getSeller_id());		
+			WebServiceContext.getInstance().getProductManageRest(new MispHttpHandler(){
+				@Override
+				public void handle(MispHttpMessage message)
+				{
+					if (message.isSuccess()){
+						GetSellerRsp rsp = (GetSellerRsp) message.getMessage().obj;
+						if(rsp.getProductList()!=null && !rsp.getProductList().isEmpty()){
+							showSelectedList(rsp.getProductList());
+						}
+					}
+					else{
+						showMessage(message);
+					}
+				}		
+			}).getSellerInfo(req);
+		}else{
+			log.info("load list by filter: filter="+filter);
+			GetProductListReq req = new GetProductListReq();
+			req.setToken(AppCache.getToken());
+			req.setCity(AppCache.getCityInfo().getCity());
+			req.setTypeRoot(filter.getType_id());
+			req.setZone_id(filter.getZone_id());
+			req.setSearch(false);
+			WebServiceContext.getInstance().getProductManageRest(this).getAllProductList(req);
+		}
+	}
+
+	protected void showSelectedList(List<ProductJson> productList)
+	{
+		 this.refreshList(productList);
 	}
 
 	@Override
@@ -137,6 +176,11 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 		if(data==null){
 			data = new ArrayList<ProductJson>();
 		}
+		/*
+		 * mark:
+		 * 因为接口没有提供根据sellerID查询
+		 */
+		
 		log.info("product list num = "+data.size());
 		this.repaint();	
 		return data;
@@ -158,5 +202,18 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 		return view;
 	}
 	
+	/**
+	 * 判断页面是否已经有其他非类型、地区的筛选条件了
+	 * 一般为sellerID
+	 * 此时不用通过
+	 * @return
+	 */
+	
+	private boolean hasOtherFilter(){
+		if(filter.getSeller_id()!=0){
+			return true;	
+		}
+		return false;	
+	}
 
 }

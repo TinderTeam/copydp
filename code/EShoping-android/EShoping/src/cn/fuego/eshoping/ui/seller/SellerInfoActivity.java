@@ -14,10 +14,13 @@ import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.home.ImagePagerAdapter;
+import cn.fuego.eshoping.ui.home.ProductSearchActivity;
 import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.ui.util.LoadImageUtil;
+import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.list.ListViewResInfo;
@@ -30,15 +33,16 @@ public class SellerInfoActivity extends BaseActivtiy
 	private FuegoLog log = FuegoLog.getLog(SellerInfoActivity.class);
 	//对象
  	private SellerJson seller;
+ 	private List<ProductJson> productList;
  	//组件
  	private MapView mMapView = null;
  	private ViewGroup group =null;
 	private ViewPager viewPager=null;
+	private ImageView imageView;
 	private TextView positionView ;
 	private TextView nameView;
 	private TextView infoView;
 	private TextView discView;
-	
 	
 	/**
 	 * 显示所有产品
@@ -46,10 +50,19 @@ public class SellerInfoActivity extends BaseActivtiy
 	public void showSellerProductEvent(View v)
 	{
 		log.info("show seller products list clicked...");
-//		Intent intent = new Intent();
-//		intent.setClass(SellerInfoActivity.this, ProductOrderActivity.class);
-//		intent.putExtra(SharedPreferenceConst.PRODUCT, product);
-//		startActivity(intent);
+		
+		ProductJson productFilter = new ProductJson();
+		productFilter.setSeller_id(seller.getUser_id());
+		
+		//jump to product list
+		Intent intent = new Intent();
+		intent.setClass(this, ProductSearchActivity.class);
+		/*
+		 * mark: 这里由于接口设计缘故没有提供条件话查询的通用接口，而是在seller获取的接口中代来了product的信息
+		 * 故而同search product activity的结构无法匹配。
+		 */
+		intent.putExtra(SharedPreferenceConst.PRODUCT_FILTER,productFilter);
+		startActivity(intent);
 	}	
 	
 	@Override
@@ -88,22 +101,19 @@ public class SellerInfoActivity extends BaseActivtiy
 		//产品信息
 		positionView = (TextView) findViewById(R.id.seller_city);
 		nameView = (TextView) findViewById(R.id.seller_name);
-		infoView = (TextView) findViewById(R.id.seller_info);
+	//infoView = (TextView) findViewById(R.id.seller_info);
 		discView = (TextView) findViewById(R.id.seller_disc);
-		//产品图片
-		
-		
+		viewPager = (ViewPager)findViewById(R.id.seller_img);
+		group= (ViewGroup)findViewById(R.id.seller_image_view_group);
 		
 		positionView.setText(seller.getCity()+seller.getZone_name());
 		nameView.setText(seller.getSeller_name());
-		infoView.setText(Html.fromHtml(seller.getInfo()));
+		sellerComponentUpdateData();
+		//infoView.setText(Html.fromHtml(seller.getInfo()));
 		discView.setText(seller.getDscr());
 	}
 
 
-	/**
-	 * 加载商户组件数据（异步）
-	 */
 	private void sellerComponentUpdateData()
 	{
 		List<String> imageList = LoadImageUtil.getImgStr(seller.getInfo());

@@ -180,8 +180,8 @@ public class FilterPopupMenu implements OnDismissListener
 		 childList.setOnItemClickListener(new OnItemClickListener(){  
 	            @Override  
 	            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) { 
-	            	log.info("children list item selected..."+position+"str="+fatherListData.get(position));
-	            	String selectStr=fatherListData.get(position);
+	            	log.info("children list item selected..."+position+"str="+childListData.get(position));
+	            	String selectStr=childListData.get(position);
 	            	int selectedId = IteratorSelector.findbyAttr(allList, ProductTypeJson.TYPE_NAME, selectStr).getType_id();
 	            	context.tpyeFilter(selectedId);
 	            	popupWindow.dismiss();
