@@ -33,7 +33,15 @@ import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.model.ListViewResInfo;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.model.LatLng;
 
 public class HomeProductActivity extends BaseActivtiy
 {
@@ -151,6 +159,18 @@ public class HomeProductActivity extends BaseActivtiy
 		viewPager = (ViewPager) findViewById(R.id.home_product_image);	
 		//按钮
 		orderBtn = (Button)findViewById(R.id.order_activity_cancel_btn); 
+		
+		//mMapView.setX((float)114.059319);
+		//mMapView.setY((float)22.550326);
+
+		//定义Maker坐标点  
+		LatLng point = new LatLng(22.550326,114.059319);  
+ 
+		//在地图上添加Marker，并显示  
+ 		MapStatus mMapStatus = new MapStatus.Builder().target(point).zoom(18).build();
+		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+		mMapView.getMap().setMapStatus(mMapStatusUpdate);
+ 		 
 	}
 	
 	/**
