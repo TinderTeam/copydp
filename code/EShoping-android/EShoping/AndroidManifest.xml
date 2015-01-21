@@ -114,8 +114,12 @@
             android:label="@string/app_name" >
         </activity>
         
-                      <activity
+        <activity
             android:name="cn.fuego.eshoping.ui.seller.SellerInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="cn.fuego.eshoping.ui.RegistActivity"
             android:label="@string/app_name" >
         </activity>
     </application>

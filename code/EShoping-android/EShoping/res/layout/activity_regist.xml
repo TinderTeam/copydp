@@ -32,7 +32,7 @@
             android:src="@drawable/login_input" />
 
         <EditText
-            android:id="@+id/EditText04"
+            android:id="@+id/reg_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/imageView2"
@@ -55,8 +55,8 @@
             android:id="@+id/TextView03"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/EditText04"
-            android:layout_alignBottom="@+id/EditText04"
+            android:layout_alignBaseline="@+id/reg_pwd"
+            android:layout_alignBottom="@+id/reg_pwd"
             android:layout_alignLeft="@+id/TextView04"
             android:gravity="start"
             android:text="密    码："
@@ -64,7 +64,7 @@
             android:textColor="@color/black" />
 
         <EditText
-            android:id="@+id/EditText03"
+            android:id="@+id/reg_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -84,8 +84,8 @@
             android:id="@+id/TextView04"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/EditText03"
-            android:layout_alignBottom="@+id/EditText03"
+            android:layout_alignBaseline="@+id/reg_user"
+            android:layout_alignBottom="@+id/reg_user"
             android:layout_alignLeft="@+id/ImageView02"
             android:layout_marginLeft="31dp"
             android:gravity="left"
@@ -106,7 +106,7 @@
             android:src="@drawable/login_input" />
 
         <EditText
-            android:id="@+id/EditText02"
+            android:id="@+id/reg_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/imageView2"
@@ -118,6 +118,7 @@
             android:capitalize="none"
             android:ems="10"
             android:gravity="fill_horizontal"
+            android:hint="不使用验证码请留空"
             android:inputType="text|textPassword"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -126,8 +127,8 @@
             android:id="@+id/txt_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/EditText02"
-            android:layout_alignBottom="@+id/EditText02"
+            android:layout_alignBaseline="@+id/reg_code"
+            android:layout_alignBottom="@+id/reg_code"
             android:layout_alignLeft="@+id/txt_email"
             android:gravity="start"
             android:text="验证码："
@@ -135,7 +136,7 @@
             android:textColor="@color/black" />
 
         <EditText
-            android:id="@+id/EditText01"
+            android:id="@+id/reg_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -155,8 +156,8 @@
             android:id="@+id/txt_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/EditText01"
-            android:layout_alignBottom="@+id/EditText01"
+            android:layout_alignBaseline="@+id/reg_email"
+            android:layout_alignBottom="@+id/reg_email"
             android:layout_alignLeft="@+id/ImageView01"
             android:layout_marginLeft="31dp"
             android:gravity="left"
@@ -188,6 +189,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/login_button"
+            android:onClick="submit"
             android:text="注  册"
             android:textColor="@color/white" />
 

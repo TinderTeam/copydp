@@ -1,5 +1,6 @@
 package cn.fuego.eshoping.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -8,9 +9,11 @@ import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.base.ExitApplication;
+import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.RegisterReq;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
+import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.http.MispHttpMessage;
 
 public class RegistActivity extends BaseActivtiy 
@@ -35,17 +38,23 @@ public class RegistActivity extends BaseActivtiy
 	{
 		super.onCreate(savedInstanceState);
 		ExitApplication.getInstance().addActivity(this);	
-		name=(EditText) this.findViewById(R.id.txt_username);
-		pwd=(EditText) this.findViewById(R.id.txt_password);
-		code=(EditText) this.findViewById(R.id.txt_code);
-		email=(EditText) this.findViewById(R.id.txt_email);
+		name=(EditText) this.findViewById(R.id.reg_user);
+		pwd=(EditText) this.findViewById(R.id.reg_pwd);
+		code=(EditText) this.findViewById(R.id.reg_code);
+		email=(EditText) this.findViewById(R.id.reg_email);
 	}
 
 	@Override
 	public void handle(MispHttpMessage message)
 	{
-		// TODO Auto-generated method stub
-		
+		if (message.isSuccess()){
+			RegisterReq rsp = (RegisterReq) message.getMessage().obj;
+			showMessage("注册成功，请等待管理员审核。");
+			backOnClick();
+		}
+		else{
+			showMessage(message);
+		}
 	}
 	
 	public void submit(View v){
@@ -58,5 +67,7 @@ public class RegistActivity extends BaseActivtiy
 		customer.setEmail(email.getText().toString().trim());
 		req.setCode(code.getText().toString().trim());
 		req.setUser(user);
+		log.info("Regist req = "+req);
+		WebServiceContext.getInstance().getUserManageRest(this).registerMemeber(req);	
 	}
 }

@@ -275,8 +275,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			gridView.setOnItemClickListener(new OnItemClickListener()
 			{
 
-
-
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,	int position, long id)
 				{
@@ -289,7 +287,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 						filter.setType_id(typeID);
 						filter.setCity(AppCache.getCityInfo().getCity());
 						i.setClass(parent.getContext(), ProductSearchActivity.class);
-						i.putExtra(SharedPreferenceConst.PRODUCT_FILTER, typeID);
+						i.putExtra(SharedPreferenceConst.PRODUCT_FILTER, filter);
 						parent.getContext().startActivity(i);
 					}
 				}

@@ -151,7 +151,6 @@ public class ProductOrderActivity extends BaseActivtiy
 				ProductOrderJson order= new ProductOrderJson();
 				order=rsp.getProductOrder();
 				log.info("create order rsp: "+order);
-				
 				// jump to order success
 				Intent intent = new Intent();
 				intent.setClass(ProductOrderActivity.this, ProductOrderSuccess.class);

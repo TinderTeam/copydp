@@ -52,18 +52,18 @@ public class MainActivity extends BaseActivtiy
 		}).getCityList(null);
 		
 		//获取当前城市
-		MispLocationService.getInstance().registerOne(this,new  MispLocationListener(){
+		
+		MispLocationService.getInstance().registerOne(this.getApplicationContext(),new  MispLocationListener(){
 			@Override
 			public void receiveLocation(MispLocation location)
 			{
 				currentCity=location.getCity();
 				setCurrentCity();
 			}
-			
-		});
-		
-		
-	}
+		}
+			);
+		MispLocationService.getInstance().requestLocation();
+		}
 	
 	protected void setCurrentCity()
 	{
@@ -88,17 +88,15 @@ public class MainActivity extends BaseActivtiy
 		//setContentView(R.layout.main);		
 		//init baidu map
 		SDKInitializer.initialize(getApplicationContext()); 
+		initApplication();
 		Intent intent = new Intent();
 		//SharedPreferences userInfo = getSharedPreferences(SharedPreferenceConst.UESR_INFO, 0);		 
         intent.setClass(MainActivity.this, MainTabbarActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-		initApplication();
         startActivity(intent);
-        this.finish();
-	}
-	
 
-	
+	}
+		  
 	@Override
 	public void handle(MispHttpMessage message)
 	{	
