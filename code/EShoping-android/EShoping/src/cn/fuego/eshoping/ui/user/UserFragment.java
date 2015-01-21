@@ -66,9 +66,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	private void ComponentUpdateData()
 	{
 		
-		if(AppCache.getInstance().getUser()==null){
-			nextActivity(LoginActivity.class);
-		}else{			
+		if(AppCache.getInstance().isLogined()){	
 			userName.setText(AppCache.getInstance().getUser().getUsername());
 			userPlace.setText(AppCache.getInstance().getCityInfo().getCity());			
 		}
@@ -76,27 +74,44 @@ public class UserFragment extends BaseFragment implements OnClickListener
 		userInfoBtn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
-				nextActivity(UserInfoActivity.class);
+				if(AppCache.getInstance().isLogined()){	
+					nextActivity(UserInfoActivity.class);
+				}
+				else{
+					nextActivity(LoginActivity.class);
+				}
 			}	
 		});
 		myOrderBtn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
-				nextActivity(UserOrderListActivity.class);
+				if(AppCache.getInstance().isLogined()){	
+					nextActivity(UserOrderListActivity.class);
+				}
+				else{
+					nextActivity(LoginActivity.class);
+				}
+			
 			}	
 		});
 		
 		myActivityBtn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
-				nextActivity(UserActivityListActivity.class);
+				if(AppCache.getInstance().isLogined()){	
+					nextActivity(UserActivityListActivity.class);
+				}
+				else{
+					nextActivity(LoginActivity.class);
+				}
+			
 			}	
 		});
 		
 		sysConfigBtn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
-				nextActivity(SystemConfigActivity.class);
+					nextActivity(SystemConfigActivity.class);	
 			}	
 		});
 	}
@@ -113,24 +128,18 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	{
 		Intent i = new Intent();
 		i.setClass(this.getActivity(), UserInfoActivity.class);
-       
         this.startActivity(i);
 	}
 
 	//跳转
-	public void nextActivity(Class clazz){
-		if(AppCache.getInstance().getUser()==null){
-			Intent intent = new Intent();
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-			intent.setClass(this.getActivity(), LoginActivity.class);
-			this.startActivity(intent);	
-		}else{			
+	public void nextActivity(Class clazz){		
 			log.info("next activity:"+clazz.toString());
 			Intent intent = new Intent();
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 			intent.setClass(this.getActivity(), clazz);
 			this.startActivity(intent);			
-		}
 	}
+	
+	
 
 }

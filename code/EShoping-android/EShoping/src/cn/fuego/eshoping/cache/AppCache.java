@@ -3,6 +3,7 @@ package cn.fuego.eshoping.cache;
 import java.util.ArrayList;
 
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
@@ -20,7 +21,14 @@ public class AppCache extends MemoryCache
 	private String versionNname;
 	private int versionCode;
 
-	
+	public boolean isLogined()
+	{
+		if(ValidatorUtil.isEmpty(MemoryCache.getToken()))
+		{
+			return false;
+		}
+		return true;
+	}
 
 	public String getVersionNname()
 	{
