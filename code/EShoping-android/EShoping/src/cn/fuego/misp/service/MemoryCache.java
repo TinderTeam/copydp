@@ -10,6 +10,29 @@ public class MemoryCache
 	private static String serverPort = "80";
 	private static float density = 1;
  
+	private static String versionNname;
+	private static int versionCode;
+	
+	
+	public static String getVersionNname()
+	{
+		return versionNname;
+	}
+
+	public static void setVersionNname(String versionNname)
+	{
+		MemoryCache.versionNname = versionNname;
+	}
+
+	public static int getVersionCode()
+	{
+		return versionCode;
+	}
+
+	public static void  setVersionCode(int versionCode)
+	{
+		MemoryCache.versionCode = versionCode;
+	}
 
 	public static float getDensity()
 	{

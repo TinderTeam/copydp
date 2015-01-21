@@ -35,8 +35,8 @@ public class EshopingApp extends Application
 		try
 		{
 			PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
-			AppCache.getInstance().setVersionCode(packInfo.versionCode);
-			AppCache.getInstance().setVersionNname(packInfo.versionName);
+			MemoryCache.setVersionCode(packInfo.versionCode);
+			MemoryCache.setVersionNname(packInfo.versionName);
 			MemoryCache.setDensity(getResources().getDisplayMetrics().density);
 	 
 			

@@ -18,8 +18,7 @@ public class AppCache extends MemoryCache
 	private  UserJson user;
 	private  CustomerJson customer;
 	private static AppCache instance;
-	private String versionNname;
-	private int versionCode;
+
 
 	public boolean isLogined()
 	{
@@ -29,23 +28,7 @@ public class AppCache extends MemoryCache
 		}
 		return true;
 	}
-
-	public String getVersionNname()
-	{
-		return versionNname;
-	}
-	public void setVersionNname(String versionNname)
-	{
-		this.versionNname = versionNname;
-	}
-	public int getVersionCode()
-	{
-		return versionCode;
-	}
-	public void setVersionCode(int versionCode)
-	{
-		this.versionCode = versionCode;
-	}
+ 
 	public  CityJson getCityInfo(){
 		if(cityInfo==null){
 			CityJson defaltCity = new CityJson();

@@ -22,7 +22,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.fuego.common.log.FuegoLog;
-import cn.fuego.laundry.cache.AppCache;
 import cn.fuego.misp.constant.MISPErrorMessageConst;
 import cn.fuego.misp.constant.MispCommonIDName;
 import cn.fuego.misp.service.MemoryCache;
@@ -69,7 +68,7 @@ public class UpgradeActivity extends MispBaseActivtiy
 		super.onCreate(savedInstanceState);
  
 		TextView version_desp = (TextView) findViewById(MispCommonIDName.misp_upgrade_old_version_txt);
-		version_desp.setText("当前版本："+AppCache.getInstance().getVersionNname());
+		version_desp.setText("当前版本：V"+MemoryCache.getVersionNname());
 		TextView newVersionView = (TextView) findViewById(MispCommonIDName.misp_upgrade_new_version_txt);
 		newVersionView.setText("最新版本："+newVerInfo.getVersion_name());
 		checkVersion();
@@ -93,7 +92,7 @@ public class UpgradeActivity extends MispBaseActivtiy
 	}
 	private void checkVersion()
 	{
-        int vercode = AppCache.getInstance().getVersionCode();
+        int vercode = MemoryCache.getVersionCode();
         if (null != newVerInfo && newVerInfo.getVersion_code() > vercode) 
         {  
         	log.info("there is a new version");
@@ -105,26 +104,7 @@ public class UpgradeActivity extends MispBaseActivtiy
         }  
 	}
 
-
-	private void notNewVersionShow() {  
- 	    String verName = AppCache.getInstance().getVersionNname();
-	    StringBuffer sb = new StringBuffer();  
-	    sb.append("当前版本:");  
-	    sb.append(verName);  
-	    sb.append(",\n已是最新版,无需更新!");  
-	    Dialog dialog = new AlertDialog.Builder(this).setTitle("软件更新")  
-	            .setMessage(sb.toString())// 设置内容  
-	            .setPositiveButton("确定",// 设置确定按钮  
-	                    new DialogInterface.OnClickListener() {  
-	                        @Override  
-	                        public void onClick(DialogInterface dialog,  
-	                                int which) {  
-	                            finish();  
-	                        }  
-	                    }).create();// 创建  
-	    // 显示对话框  
-	    dialog.show();  
-	}  
+ 
  
 	//更新UI的handler  
 	private Handler mhandler = new Handler() 
