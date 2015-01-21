@@ -57,7 +57,7 @@ class BuyAction extends BuyServiceAction {
 					
 					//获取该客户的该类商品购买信息
 					$svipOrderDB=M('view_svip_product_order');					
-					$SVIPOrderCondition['custoemr_id'] = $userID;
+					$SVIPOrderCondition['customer_id'] = $userID;
 					$SVIPOrderCondition['svip_product_id'] = $privilege;
 					$svipOrderList=$svipOrderDB->where($SVIPOrderCondition)->select();
 					$num=0;

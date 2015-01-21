@@ -238,7 +238,7 @@ class BuyServiceAction extends BaseAction {
     				
     			//获取该客户的该类商品购买信息
     			$svipOrderDB=M('view_svip_product_order');
-    			$SVIPOrderCondition['custoemr_id'] = $userID;
+    			$SVIPOrderCondition['customer_id'] = $userID;
     			$SVIPOrderCondition['svip_product_id'] = $privilege;
     			$svipOrderList=$svipOrderDB->where($SVIPOrderCondition)->select();
     			$num=0;
@@ -249,6 +249,7 @@ class BuyServiceAction extends BaseAction {
     					$num=$num+1;
     				}
     			}
+    			$this->log("customer has buy ".$num." times in ".$limtype);
     			if($num>=$limnum){
     				$errorCode = BUY_TIMES_OVER;
     			}

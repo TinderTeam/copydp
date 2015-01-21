@@ -87,9 +87,6 @@ class UserManageAction extends Action {
 				$this->error("用户名或密码不能为空！");
 	
 				}
-			 
-
-	
 	}
 	public function search(){
 		
@@ -101,23 +98,24 @@ class UserManageAction extends Action {
 		$phoneNum=$_POST['phoneNum'];
 		
 		if($userID!=''){
-		   $condition['user_id'] = $userID;
+			$keyID = '%'.$userID.'%';
+		   $condition['user_id'] = array('like',$keyID);
 		}
 		if($userName!=''){
-		   $condition['username'] = $userName;
+			$keyUser = '%'.$userName.'%';
+		   $condition['username'] = array('like',$keyUser);
 		}
 		if($phoneNum!=''){
-		   $condition['cellphone'] = $phoneNum;
+			$keyNum = '%'.$phoneNum.'%';
+		   $condition['cellphone'] = array('like',$keyNum);
 		}
         		
 		if($userID!='' or $userName!='' or $phoneNum!='')
 		{
 			//$map="user_name like('%".$userName."%') or user_id like('%".$userID."%' ) or cellphone like('%".$phoneNum."%')";
 			
-			
 			$condition['request'] = 'NULL';
-			
-			$count = $db->where($condition)->count(); 
+			$count = $db->where($condition)->count();
 			$Page = new Page($count,5); 
 			$list = $db->where($condition)->limit($Page->firstRow.','.$Page->listRows)->select();
 			$show = $Page->show();
