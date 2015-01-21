@@ -177,13 +177,13 @@ margin-right: 10px;
 										<div>{$v1.order_status}</div>
 									</td>
 									<td class="t-op">
-										<!-- 只有处于已下单的订单，商家可以做确认使用操作，其他订单商家无权操作，须等待消费者取消，删除订单 -->
+										<!-- 只有处于已下单的订单，商家可以做确认使用操作，其他订单商家无权操作，须等待消费者取消，删除订单
+											condition="$v1.order_status eq '已过期'"
+												<button onclick="show_cancel_confirm({$v1.order_id})">取消订单</button>
+											<button onclick="show_delete_confirm({$v1.order_id})" >删除订单</button>-->
 										<if condition="$v1.order_status eq '已下单' ">
 											<button onclick="show_order_confirm({$v1.order_id})">使用确认</button>
-										<!--<elseif condition="$v1.order_status eq '已过期' "/>
-											<button onclick="show_cancel_confirm({$v1.order_id})" >取消订单</button>
-										<else/>
-											<button onclick="show_delete_confirm({$v1.order_id})" >删除订单</button>-->
+										<else>
 										</if>
 									</td>
 									<td class="t-delete">
