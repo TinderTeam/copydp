@@ -66,14 +66,19 @@ public class HomeProductActivity extends BaseActivtiy
 				intent.setClass(HomeProductActivity.this, LoginActivity.class);
 				startActivity(intent);
 			}
-			if(!VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){
+			else
+			{			
+				if(!VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){
 				;
-			}else{
-				Intent intent = new Intent();
-				intent.setClass(HomeProductActivity.this, ProductOrderActivity.class);
-				intent.putExtra(SharedPreferenceConst.PRODUCT, product);
-				startActivity(intent);
+				}else{
+					Intent intent = new Intent();
+					intent.setClass(HomeProductActivity.this, ProductOrderActivity.class);
+					intent.putExtra(SharedPreferenceConst.PRODUCT, product);
+					startActivity(intent);
+				}
+				
 			}
+
 		}	
 	};
 	
