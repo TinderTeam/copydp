@@ -160,16 +160,8 @@ public class HomeProductActivity extends BaseActivtiy
 		viewPager = (ViewPager) findViewById(R.id.home_product_image);	
 		//按钮
 		orderBtn = (Button)findViewById(R.id.home_product_order_btn); 
-		//mMapView.setX((float)114.059319);
-		//mMapView.setY((float)22.550326);
 
-		//定义Maker坐标点  
-		LatLng point = new LatLng(22.550326,114.059319);  
- 
-		//在地图上添加Marker，并显示  
- 		MapStatus mMapStatus = new MapStatus.Builder().target(point).zoom(18).build();
-		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
-		mMapView.getMap().setMapStatus(mMapStatusUpdate);
+	
 	}
 	
 	/**
@@ -180,7 +172,9 @@ public class HomeProductActivity extends BaseActivtiy
 		priceView.setText(this.getString(R.string.misp_rmb_unit)+product.getPrice());
 		limitView.setText(String.valueOf(product.getEnd_date_time()));
 		orderBtn.setOnClickListener(orderBtnHandel);
-	}
+	
+		
+		}
 
 	/**
 	 * 加载商户组件数据（异步）
@@ -197,6 +191,19 @@ public class HomeProductActivity extends BaseActivtiy
         viewPager.setCurrentItem(0); 
         viewPager.setOnPageChangeListener(adapter);		
 		view.setText(seller.getDscr());
+		
+		//定义Maker坐标点  
+		String location = seller.getPosition();
+		log.info("location: "+location);
+		if(location!=null&&!location.isEmpty()&&location.split(",").length!=0){
+			log.info("location X: "+location.split(",")[0]);
+			log.info("location Y: "+location.split(",")[1]);
+			LatLng point = new LatLng(Float.valueOf(location.split(",")[0]),Float.valueOf(location.split(",")[1]));  
+			//在地图上添加Marker，并显示  
+	 		MapStatus mMapStatus = new MapStatus.Builder().target(point).zoom(18).build();
+			MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+			mMapView.getMap().setMapStatus(mMapStatusUpdate);
+		}
 	}
 
 	
