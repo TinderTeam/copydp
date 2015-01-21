@@ -18,9 +18,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.fuego.common.contanst.BasicSign;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.string.StringLengthLimit;
 import cn.fuego.common.util.list.tools.IteratorSelector;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
@@ -74,7 +78,8 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	private List<CommonItemMeta> newProductData;
 	private List<CommonItemMeta> typeProductData;
 	private List<CommonItemMeta> allProductData;
-
+	private SearchView searchView;
+	
 	@Override
 	public void initRes()
 	{ 
@@ -84,7 +89,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		listViewRes.setListView(R.id.home_main_list);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
 		ProductTypeCache.getInstance();
-
  	}
  
 	@Override
@@ -93,7 +97,33 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	{
 		tabID = 0;
 		View view = super.onCreateView(inflater, container, savedInstanceState);	
+		searchView= (SearchView)view.findViewById(R.id.search_view);
+		searchView.setOnQueryTextListener(new OnQueryTextListener(){
+
+			@Override
+			public boolean onQueryTextSubmit(String query)
+			{
+				log.info("search button clicked...");
+				searchEvent(query);
+				return false;
+			}
+			@Override
+			public boolean onQueryTextChange(String newText)
+			{
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+		});
 		return view;
+	}
+
+	protected void searchEvent(String query)
+	{
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), ProductSearchActivity.class);
+		intent.putExtra(SharedPreferenceConst.PRODUCT_FILTER_KEYWORD, query);
+		this.startActivity(intent);
 	}
 
 	@Override
@@ -122,9 +152,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	@Override
 	public List<CommonItemMeta> loadListRecv(Object obj)
 	{
-		
-		
-	
 		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
 		CommonItemMeta gridItem = new CommonItemMeta();
 		gridItem.setLayoutType(ITEM_TYPE_GRID);
@@ -337,32 +364,38 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			{
 				view = (View) convertView.getTag();
 			}
-			/*
-			 *  这里要判断类型 
-			 */
-			if(tabID==2){
-				SellerJson seller = (SellerJson) item.getContent();			
+		
+			if(item.getContent().getClass().equals(SellerJson.class)){	
+				SellerJson seller = (SellerJson) item.getContent();		
+				//商家名称 20字
 			    TextView titleView = (TextView) convertView.findViewById(R.id.home_list_item_title);
-		        titleView.setText(seller.getSeller_name());      
-		        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
-		        curPrice.setText(String.valueOf(seller.getType_name()));
-		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
-		        oldPrice.setText("");
+		        titleView.setText(StringLengthLimit.limitStringLen(seller.getSeller_name(),10));      
+		        //商家类别 25
+		        TextView typeView = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
+		        typeView.setText(String.valueOf(seller.getType_name()));
+		        //商家描述
 		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
-		        desp.setText(String.valueOf(seller.getDscr()));
+		        desp.setText(String.valueOf(StringLengthLimit.limitStringLen(seller.getDscr(), 20)));
+		        //商家图片
 		        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
 		        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(seller.getImg()));    		
 			}else{
-				ProductJson product = (ProductJson) item.getContent();			
+				ProductJson product = (ProductJson) item.getContent();		
+				//产品名称
 			    TextView titleView = (TextView) convertView.findViewById(R.id.home_list_item_title);
-		        titleView.setText(product.getName());      
+		        titleView.setText(StringLengthLimit.limitStringLen(product.getName(),10));      
+		        //产品现价
 		        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
-		        curPrice.setText(String.valueOf(product.getPrice()));
+		        curPrice.setText(String.valueOf(BasicSign.RMB+product.getPrice()));
+		        //产品原价
 		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
-		        oldPrice.setText(String.valueOf(product.getOriginal_price()));
+		        oldPrice.setText(String.valueOf(BasicSign.RMB+product.getOriginal_price()));
+		        //产品描述
 		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
-		        desp.setText(String.valueOf(product.getDscr()));
+		        desp.setText(String.valueOf(StringLengthLimit.limitStringLen(product.getDscr(),20)));
+		        
 		        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
+		        log.info("image source="+ DataConvertUtil.getAbsUrl(product.getImgsrc()));
 		        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));        
 			}			
 	        break;	

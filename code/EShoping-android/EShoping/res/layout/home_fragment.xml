@@ -10,11 +10,16 @@
         android:background="@color/themecolor"
         android:orientation="vertical" >
 
-        <SearchView
-            android:id="@+id/searchView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </SearchView>
+        
+         <SearchView
+	       android:id="@+id/search_view"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	       android:iconifiedByDefault="true"
+	       android:inputType="textCapWords"
+	       android:imeOptions="actionSearch"
+	       android:queryHint="">
+	       </SearchView>
     </LinearLayout>
 
     <ListView

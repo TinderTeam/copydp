@@ -10,4 +10,7 @@
     <dimen name="label_font_size">20dp</dimen>
     <dimen name="pad_large">16dp</dimen>
     <dimen name="pad_50">50dp</dimen>
+    <dimen name="large_text_size">18dp</dimen>
+    <dimen name="midlarge_text_size">16dp</dimen>
+    <dimen name="middle_text_size">14dp</dimen>
 </resources>

@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import cn.fuego.common.contanst.BasicSign;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.string.StringLengthLimit;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
@@ -153,12 +155,18 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 			}).getSellerInfo(req);
 		}else{
 			log.info("load list by filter: filter="+filter);
+			String keyword = (String) this.getIntent().getSerializableExtra(SharedPreferenceConst.PRODUCT_FILTER_KEYWORD);
 			GetProductListReq req = new GetProductListReq();
 			req.setToken(AppCache.getToken());
 			req.setCity(AppCache.getCityInfo().getCity());
 			req.setTypeRoot(filter.getType_id());
 			req.setZone_id(filter.getZone_id());
-			req.setSearch(false);
+			if(keyword==null || keyword.isEmpty()){
+				req.setSearch(false);
+			}else{
+				req.setSearch(true);
+				req.setKeyWord(keyword);
+			}
 			WebServiceContext.getInstance().getProductManageRest(this).getAllProductList(req);
 		}
 	}
@@ -189,14 +197,15 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 	@Override
 	public View getListItemView(View view, ProductJson item)
 	{
+			
 		TextView nameView= (TextView) view.findViewById(R.id.home_list_item_title);
-		nameView.setText(item.getName());	
+		nameView.setText(StringLengthLimit.limitStringLen(item.getName(),10));	
 		TextView oldPriceView= (TextView) view.findViewById(R.id.home_list_item_oldPrice);
-		oldPriceView.setText(String.valueOf(item.getOriginal_price()));
+		oldPriceView.setText(String.valueOf(BasicSign.RMB+item.getOriginal_price()));
 		TextView curPriceView= (TextView) view.findViewById(R.id.home_list_item_curPrice);
-		curPriceView.setText(String.valueOf(item.getPrice()));
+		curPriceView.setText(String.valueOf(BasicSign.RMB+item.getPrice()));
 		TextView despView= (TextView) view.findViewById(R.id.home_list_item_desp);
-		despView.setText(item.getDscr());
+		despView.setText(StringLengthLimit.limitStringLen(item.getDscr(),20));
 		ImageView imageView = (ImageView)view.findViewById(R.id.home_list_item_img);
 		LoadImageUtil.getInstance().loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()));
 		return view;
