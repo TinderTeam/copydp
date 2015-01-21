@@ -45,7 +45,7 @@ public class UserActivityListActivity extends MispListActivity<ActivityOrderJson
 		this.activityRes.setAvtivityView(R.layout.user_activity_order);
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
-		this.activityRes.setName(R.string.page_user_activity_order);		
+		this.activityRes.setName(getString(R.string.page_user_activity_order));		
 		//List
 		this.listViewRes.setListItemView(R.layout.user_activity_item);
 		this.listViewRes.setListView(R.id.order_listview);	
@@ -64,7 +64,7 @@ public class UserActivityListActivity extends MispListActivity<ActivityOrderJson
 	{
 		GetActivityOrderListReq req = new GetActivityOrderListReq();
 		req.setToken(AppCache.getToken());
-		req.setUserID(AppCache.getUser().getUser_id());
+		req.setUserID(AppCache.getInstance().getUser().getUser_id());
 		WebServiceContext.getInstance().getActivityManageRest(this).getActivityOrderList(req);
 		orderListTypeMap.clear();
 		orderList=new ArrayList<ActivityOrderJson>();
@@ -138,7 +138,7 @@ public class UserActivityListActivity extends MispListActivity<ActivityOrderJson
 		SetActivityOrderReq req = new SetActivityOrderReq();
 		req.setActivityID(delOrder.getActivity_id());
 		req.setToken(AppCache.getToken());
-		req.setUserID(AppCache.getUser().getUser_id());
+		req.setUserID(AppCache.getInstance().getUser().getUser_id());
 		
 		MispHttpHandler handle = new MispHttpHandler(){
 			@Override
@@ -158,13 +158,7 @@ public class UserActivityListActivity extends MispListActivity<ActivityOrderJson
 		WebServiceContext.getInstance().getActivityManageRest(handle).cancelActivityOrder(req);
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id)
-	{
-		;
-	}
-	
+ 
 	
 	
 }

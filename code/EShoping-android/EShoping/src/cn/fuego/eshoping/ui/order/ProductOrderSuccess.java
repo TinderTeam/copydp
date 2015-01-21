@@ -48,7 +48,7 @@ public class ProductOrderSuccess extends BaseActivtiy
 		this.activityRes.setAvtivityView(R.layout.order_success);
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
-		this.activityRes.setName(R.string.page_order_success);	
+		this.activityRes.setName(getString(R.string.page_order_success));	
 	}
 	
 	@Override

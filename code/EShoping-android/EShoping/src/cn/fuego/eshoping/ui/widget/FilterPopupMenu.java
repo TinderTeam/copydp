@@ -106,7 +106,7 @@ public class FilterPopupMenu implements OnDismissListener
 		};
 		WebServiceContext.getInstance().getProductManageRest(typeHandle).getProductType(typeReq);
 		//获取区域列表
-		zoneList=AppCache.getCityInfo().getZone_list();
+		zoneList=AppCache.getInstance().getCityInfo().getZone_list();
 		log.info("zone list = "+ zoneList.toString());
 	}
 

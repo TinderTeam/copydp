@@ -77,7 +77,7 @@ public class ProductOrderActivity extends BaseActivtiy
 				orderReq.setProductID(product.getProduct_id());
 				orderReq.setQuantity(orderQantity);
 				orderReq.setToken(MemoryCache.getToken());
-				orderReq.setUserID(AppCache.getUser().getUser_id());
+				orderReq.setUserID(AppCache.getInstance().getUser().getUser_id());
 				//call create order api
 				WebServiceContext.getInstance().getProductManageRest(ProductOrderActivity.this).createProductOrder(orderReq);
 			}else{
@@ -92,7 +92,7 @@ public class ProductOrderActivity extends BaseActivtiy
 		this.activityRes.setAvtivityView(R.layout.order_index);
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
-		this.activityRes.setName(R.string.page_order_submit);
+		this.activityRes.setName(getString(R.string.page_order_submit));
 	}
 	
 	@Override

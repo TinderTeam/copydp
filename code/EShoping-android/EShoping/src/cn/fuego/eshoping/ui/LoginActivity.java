@@ -21,7 +21,7 @@ public class LoginActivity extends BaseActivtiy
 	{
 		activityRes.setAvtivityView(R.layout.activity_login);
 		this.activityRes.setBackBtn(R.id.com_back_btn);	
-		this.activityRes.setName(R.string.page_login);
+		this.activityRes.setName(getString(R.string.page_login));
 		this.activityRes.setTitleTextView(R.id.com_head_title);
 	}
 	

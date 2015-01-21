@@ -33,7 +33,7 @@ public class ActivityOrderSuccess extends BaseActivtiy
 		this.activityRes.setAvtivityView(R.layout.activity_order);
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
-		this.activityRes.setName(R.string.page_attend_success);	
+		this.activityRes.setName(getString(R.string.page_attend_success));	
 	}
 	
 	@Override

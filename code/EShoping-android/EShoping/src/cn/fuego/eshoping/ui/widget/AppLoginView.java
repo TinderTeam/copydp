@@ -55,8 +55,8 @@ public class AppLoginView extends LoginFormView
 				proDialog.dismiss();
 				if (message.isSuccess()){		
 					LoginRsp rsp = (LoginRsp) message.getMessage().obj;
-					AppCache.setCustomer(rsp.getCustomer());
-					AppCache.setUser(rsp.getUser());
+					AppCache.getInstance().setCustomer(rsp.getCustomer());
+					AppCache.getInstance().setUser(rsp.getUser());
 					AppCache.setToken(rsp.getToken());
 					Intent intent = new Intent(context,MainTabbarActivity.class);
 					intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(HomeFragment.class));

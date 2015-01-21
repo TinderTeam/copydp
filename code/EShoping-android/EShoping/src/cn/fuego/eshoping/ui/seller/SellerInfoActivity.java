@@ -6,24 +6,23 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.format.HtmlUtil;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.home.ImagePagerAdapter;
 import cn.fuego.eshoping.ui.home.ProductSearchActivity;
-import cn.fuego.eshoping.ui.util.DataConvertUtil;
-import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
+import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.list.ListViewResInfo;
+import cn.fuego.misp.ui.model.ListViewResInfo;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
@@ -116,11 +115,11 @@ public class SellerInfoActivity extends BaseActivtiy
 
 	private void sellerComponentUpdateData()
 	{
-		List<String> imageList = LoadImageUtil.getImgStr(seller.getInfo());
+		List<String> imageList = HtmlUtil.getImgStr(seller.getInfo());
 		if(ValidatorUtil.isEmpty(imageList)){
 			imageList = new ArrayList<String>();
 		}
-		imageList.add(0,DataConvertUtil.getAbsUrl(seller.getImg()));
+		imageList.add(0,MemoryCache.getImageUrl()+seller.getImg());
 		ImagePagerAdapter adapter = new ImagePagerAdapter(this,group,imageList);
         viewPager.setAdapter(adapter);  
         viewPager.setCurrentItem(0); 

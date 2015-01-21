@@ -1,6 +1,5 @@
 package cn.fuego.eshoping.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,7 +8,6 @@ import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.base.ExitApplication;
-import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.RegisterReq;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
@@ -29,7 +27,7 @@ public class RegistActivity extends BaseActivtiy
 	{
 		activityRes.setAvtivityView(R.layout.activity_regist);
 		this.activityRes.setBackBtn(R.id.com_back_btn);	
-		this.activityRes.setName(R.string.page_regist);
+		this.activityRes.setName(getString(R.string.page_regist));
 		this.activityRes.setTitleTextView(R.id.com_head_title);
 	}
 	

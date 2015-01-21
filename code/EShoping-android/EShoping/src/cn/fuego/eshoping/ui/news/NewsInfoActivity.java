@@ -14,7 +14,7 @@ import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.webservice.up.model.base.NewsJson;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.list.ListViewResInfo;
+import cn.fuego.misp.ui.model.ListViewResInfo;
 
 import com.baidu.mapapi.SDKInitializer;
 

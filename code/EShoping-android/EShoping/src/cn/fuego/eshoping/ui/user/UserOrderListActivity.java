@@ -1,12 +1,10 @@
 package cn.fuego.eshoping.ui.user;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,23 +16,15 @@ import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.list.tools.IteratorSelector;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
-import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.home.HomeProductActivity;
-import cn.fuego.eshoping.ui.util.DataConvertUtil;
-import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListReq;
-import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductOrderListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductOrderListRsp;
-import cn.fuego.eshoping.webservice.up.model.SetActivityOrderReq;
-import cn.fuego.eshoping.webservice.up.model.SetActivityOrderRsp;
 import cn.fuego.eshoping.webservice.up.model.SetProductOrderReq;
-import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
-import cn.fuego.eshoping.webservice.up.model.base.ActivityOrderJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductOrderJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpHandler;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.list.ListViewResInfo;
 import cn.fuego.misp.ui.list.MispListActivity;
 import cn.fuego.misp.ui.util.LoadImageUtil;
 
@@ -55,7 +45,7 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 		this.activityRes.setAvtivityView(R.layout.user_order);
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
-		this.activityRes.setName(R.string.page_user_order);		
+		this.activityRes.setName(getString(R.string.page_user_order));		
 		//List
 		this.listViewRes.setListItemView(R.layout.user_order_item);
 		this.listViewRes.setListView(R.id.order_listview);	
@@ -74,7 +64,7 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 	{
 		GetProductOrderListReq req = new GetProductOrderListReq();
 		req.setToken(AppCache.getToken());
-		req.setUserID(AppCache.getUser().getUser_id());
+		req.setUserID(AppCache.getInstance().getUser().getUser_id());
 		WebServiceContext.getInstance().getProductManageRest(this).getProductOrderList(req);
 		productListTypeMap.clear();
 		orderList=new ArrayList<ProductOrderJson>();
@@ -114,7 +104,7 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 		}
 		deleteBtn.setTag(item);
 		ImageView imageView = (ImageView)view.findViewById(R.id.order_product_img);
-		LoadImageUtil.getInstance().loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()));
+		LoadImageUtil.getInstance().loadImage(imageView,MemoryCache.getImageUrl()+item.getImgsrc());
 		return view;
 	}
 	 
@@ -165,7 +155,7 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 		SetProductOrderReq req = new SetProductOrderReq();
 		req.setOrderID(delOrder.getOrder_id());
 		req.setToken(AppCache.getToken());
-		req.setUserID(AppCache.getUser().getUser_id());
+		req.setUserID(AppCache.getInstance().getUser().getUser_id());
 		
 		MispHttpHandler handle = new MispHttpHandler(){
 			@Override
@@ -194,10 +184,5 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 	
 	}	
 	
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id)
-	{
-			;
-	}
+ 
 }

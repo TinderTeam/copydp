@@ -62,14 +62,14 @@ public class MainActivity extends BaseActivtiy
 			}
 		}
 			);
-		MispLocationService.getInstance().requestLocation();
+		//MispLocationService.getInstance().requestLocation();
 		}
 	
 	protected void setCurrentCity()
 	{
 		if(currentCity==null && !cityList.isEmpty()){
 			CityJson city =IteratorSelector.findbyAttr(cityList, CityJson.CITY_ID, currentCity);
-			AppCache.setCityInfo(city);
+			AppCache.getInstance().setCityInfo(city);
 		}
 	}  
 	
@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivtiy
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.main);		
 		//init baidu map
-		SDKInitializer.initialize(getApplicationContext()); 
+		//SDKInitializer.initialize(getApplicationContext()); 
 		initApplication();
 		Intent intent = new Intent();
 		//SharedPreferences userInfo = getSharedPreferences(SharedPreferenceConst.UESR_INFO, 0);		 

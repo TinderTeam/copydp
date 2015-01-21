@@ -66,11 +66,11 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	private void ComponentUpdateData()
 	{
 		
-		if(AppCache.getUser()==null){
+		if(AppCache.getInstance().getUser()==null){
 			nextActivity(LoginActivity.class);
 		}else{			
-			userName.setText(AppCache.getUser().getUsername());
-			userPlace.setText(AppCache.getCityInfo().getCity());			
+			userName.setText(AppCache.getInstance().getUser().getUsername());
+			userPlace.setText(AppCache.getInstance().getCityInfo().getCity());			
 		}
 		
 		userInfoBtn.setOnClickListener(new OnClickListener(){
@@ -119,7 +119,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 
 	//跳转
 	public void nextActivity(Class clazz){
-		if(AppCache.getUser()==null){
+		if(AppCache.getInstance().getUser()==null){
 			Intent intent = new Intent();
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 			intent.setClass(this.getActivity(), LoginActivity.class);

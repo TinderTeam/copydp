@@ -34,7 +34,7 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		this.activityRes.setAvtivityView(R.layout.user_info);
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
-		this.activityRes.setName(R.string.page_user_info);	
+		this.activityRes.setName(getString(R.string.page_user_info));	
 		
 		//List
 		this.setDataList(infoList);		
@@ -58,10 +58,10 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		 * 其中Key表示Label值，比如，手机、积分等等、Value代表它的值
 		 */
 		infoList = new ArrayList<KeyValuePair<String>>();
-		infoList.add(new KeyValuePair<String>("用户名",AppCache.getUser().getUsername()));
-		infoList.add(new KeyValuePair<String>("积分",AppCache.getCustomer().getScore()+"分"));
-		infoList.add(new KeyValuePair<String>("手机号",AppCache.getCustomer().getCellphone()));
-		infoList.add(new KeyValuePair<String>("邮箱",AppCache.getCustomer().getEmail()));
+		infoList.add(new KeyValuePair<String>("用户名",AppCache.getInstance().getUser().getUsername()));
+		infoList.add(new KeyValuePair<String>("积分",AppCache.getInstance().getCustomer().getScore()+"分"));
+		infoList.add(new KeyValuePair<String>("手机号",AppCache.getInstance().getCustomer().getCellphone()));
+		infoList.add(new KeyValuePair<String>("邮箱",AppCache.getInstance().getCustomer().getEmail()));
 	}
 
 	@Override
@@ -86,13 +86,7 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		value.setText(item.getValue());
 		return view;
 	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id)
-	{
-		;
-	}
+ 
 
 	public void logoutBtnEvent(View v){
 		log.info("user logout...");

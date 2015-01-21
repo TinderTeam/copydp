@@ -24,7 +24,7 @@ public class SystemConfigActivity extends BaseActivtiy
 		this.activityRes.setAvtivityView(R.layout.user_sysconfig);
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
-		this.activityRes.setName(R.string.page_user_sysconfig);	
+		this.activityRes.setName(getString(R.string.page_user_sysconfig));	
 	}
 
 	public void to_version_update(View v){
