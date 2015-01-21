@@ -37,7 +37,17 @@ public class MISPErrorMessageConst
 	public static final int TYPE_CONVERSION_FAILED= 15;
 	public static final int SYSTEM_ERROR= 16;
 	public static final int ERROR_NET_FAIL = 17 ; // 网络连接异常
-	public static final int INPUT_NULL = 18 ; // 输入为空
+	public static final int ERROR_INPUT_NULL = 18 ; // 输入为空
+ 
+	public static final int ERROR_NO_RIGHT_OPERATE = 19; //无权操作
+ 	
+	public static final int ERROR_PHONE_INVALID = 20; //无效手机号码
+	public static final int ERROR_VERIFY_CODE_INVALID = 21; //验收码无效
+	
+	public static final int ERROR_PASSWORD_IS_EMPTY = 22;//密码不能为空
+	
+	public static final int ERROR_PASSWORD_NOT_SAME = 23;//确认密码不一致
+	public static final int ERROR_UPDATE_VERSION_FAILED = 24;//更新版本失败
 	public static String getMessageByErrorCode(int errorCode)
 	{
 		return MispMessageReader.getInstance().getPropertyByName(String.valueOf(errorCode));

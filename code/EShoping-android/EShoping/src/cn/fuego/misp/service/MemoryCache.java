@@ -55,7 +55,7 @@ public class MemoryCache
 	}
 	public static String getWebContextUrl()
 	{
-		return getHostUrl()+"/Laundry";
+		return getHostUrl()+"/copydp";
 	}
 	public static String getImageUrl()
 	{

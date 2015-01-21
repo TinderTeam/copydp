@@ -8,6 +8,7 @@ import cn.fuego.common.log.FuegoLog;
 import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.HttpListener;
 import cn.fuego.misp.service.http.MispProxyFactory;
+import cn.fuego.misp.webservice.up.rest.MispSystemManageRest;
 
 public class WebServiceContext
 {
@@ -81,4 +82,11 @@ public class WebServiceContext
 		return rest;
 	}
 
+	public MispSystemManageRest getMispSystemManageRest(HttpListener handler)
+	{
+ 
+		MispSystemManageRest rest = MispProxyFactory.create( hostURL,MispSystemManageRest.class, getHttpClient(),handler);
+
+		return rest;
+	}
 }
