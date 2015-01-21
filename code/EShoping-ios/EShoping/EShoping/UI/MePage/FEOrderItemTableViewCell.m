@@ -33,7 +33,7 @@
         }
     }else if([self.order.order_status isEqualToString:@"已使用"] || [self.order.order_status isEqualToString:@"已过期"]){
         if ([self.delegate respondsToSelector:@selector(orderWillCancel:order:)]) {
-            [self.delegate orderWillCancel:self order:self.order];
+            [self.delegate orderWillDelete:self order:self.order];
         }
     }
 }

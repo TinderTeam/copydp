@@ -213,9 +213,19 @@
 }
 
 -(void)deleteOrder:(FEProductOrder *)order{
-    NSMutableArray *tarray = [NSMutableArray arrayWithArray:self.orderCancel];
-    [tarray removeObject:order];
-    self.orderCancel = tarray;
+    if ([order.order_status isEqualToString:@"已过期"]) {
+        NSMutableArray *tarray = [NSMutableArray arrayWithArray:self.orderPassed];
+        [tarray removeObject:order];
+        self.orderPassed = tarray;
+    }else if([order.order_status isEqualToString:@"已取消"]){
+        NSMutableArray *tarray = [NSMutableArray arrayWithArray:self.orderCancel];
+        [tarray removeObject:order];
+        self.orderCancel = tarray;
+    }else if([order.order_status isEqualToString:@"已使用"]){
+        NSMutableArray *tarray = [NSMutableArray arrayWithArray:self.orderComplete];
+        [tarray removeObject:order];
+        self.orderComplete = tarray;
+    }
     [self.orderList reloadData];
 }
 

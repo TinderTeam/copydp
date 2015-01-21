@@ -16,7 +16,7 @@
 @property (nonatomic, strong, readonly) NSString *activity_title;
 @property (nonatomic, strong, readonly) NSString *activity_disc;
 @property (nonatomic, strong, readonly) NSString *imgsrc;
-@property (nonatomic, strong, readonly) NSNumber *memberlimit;
+@property (nonatomic, strong, readonly) NSString *memberlimit;
 @property (nonatomic, strong, readonly) NSNumber *datetime;
 @property (nonatomic, strong, readonly) NSNumber *datelimit;
 @property (nonatomic, strong, readonly) NSString *status;

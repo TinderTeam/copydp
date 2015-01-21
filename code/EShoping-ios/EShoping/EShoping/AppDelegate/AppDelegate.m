@@ -19,7 +19,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    _serviceURLString = @"http://120.24.217.173:9000";
+    _serviceURLString = @"http://120.24.217.173";
     return YES;
 }
 
