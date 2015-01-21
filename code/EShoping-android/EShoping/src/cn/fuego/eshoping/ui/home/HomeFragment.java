@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -63,9 +64,9 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
 	private View homeGridView;
 	private View homeTabView;
-	private List<CommonItemMeta> newProductData;
-	private List<CommonItemMeta> typeProductData;
-	private List<CommonItemMeta> allProductData;
+	private List<CommonItemMeta> newProductData = new ArrayList<CommonItemMeta>();
+	private List<CommonItemMeta> typeProductData= new ArrayList<CommonItemMeta>();
+	private List<CommonItemMeta> allProductData= new ArrayList<CommonItemMeta>();
 	private SearchView searchView;
 	
 	@Override
@@ -84,7 +85,11 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
+		log.info("current City is: " + AppCache.getInstance().getCityInfo().getCity());
+		
 		tabID = 0;
+		
+		
 		View view = super.onCreateView(inflater, container, savedInstanceState);	
 		searchView= (SearchView)view.findViewById(R.id.search_view);
 		searchView.setOnQueryTextListener(new OnQueryTextListener(){
@@ -104,7 +109,28 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			}
 			
 		});
+		
+		TextView cityView =  (TextView)view.findViewById(R.id.home_city);
+		cityView.setText(AppCache.getInstance().getCityInfo().getCity());
+		cityView.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v)
+			{
+				log.info("change city button clicked...");
+				changeCity();
+
+			}
+			
+		});
 		return view;
+	}
+
+	protected void changeCity()
+	{
+		Intent intent = new Intent();
+		intent.setClass(this.getActivity(), CitySelectListActivity.class);
+		this.startActivity(intent);		
 	}
 
 	protected void searchEvent(String query)
@@ -141,9 +167,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 	@Override
 	public List<CommonItemMeta> loadListRecv(Object obj)
 	{
-		
-		
-	
 		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
 		CommonItemMeta gridItem = new CommonItemMeta();
 		gridItem.setLayoutType(ITEM_TYPE_GRID);
@@ -154,8 +177,14 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		itemList.add(tabItem); 
 		if(tabID == 1)
 		{
-			GetProductListRsp rsp = (GetProductListRsp) obj;	
-			Map<Integer,List<ProductJson>> productGroup = divideGroup(rsp.getProductList());
+			GetProductListRsp rsp = (GetProductListRsp) obj;
+			Map<Integer,List<ProductJson>> productGroup;
+			if(rsp.getProductList()==null){
+				 productGroup = divideGroup(new ArrayList());
+			}else{
+				productGroup = divideGroup(rsp.getProductList());
+			}
+
 			for(Integer typeID : productGroup.keySet())
 			{			
 				List<ProductJson> productList = productGroup.get(typeID);
@@ -172,6 +201,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 					{
 						groupItem.setContent("未知类型");
 					}
+					
 					itemList.add(groupItem);
 					for(ProductJson product : productList)
 					{
@@ -453,8 +483,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			}
 			
 		}
-
-		
-		
 	}
+	
+
 }

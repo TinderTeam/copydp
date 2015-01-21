@@ -155,11 +155,11 @@ public class HomeProductActivity extends BaseActivtiy
 		limitView = (TextView) findViewById(R.id.order_activity_status);
 		view = (TextView) findViewById(R.id.home_product_seller_info);	
 		group = (ViewGroup)findViewById(R.id.home_product_image_view_group);
+		
 		//产品图片
 		viewPager = (ViewPager) findViewById(R.id.home_product_image);	
 		//按钮
-		orderBtn = (Button)findViewById(R.id.order_activity_cancel_btn); 
-		
+		orderBtn = (Button)findViewById(R.id.home_product_order_btn); 
 		//mMapView.setX((float)114.059319);
 		//mMapView.setY((float)22.550326);
 
@@ -170,7 +170,6 @@ public class HomeProductActivity extends BaseActivtiy
  		MapStatus mMapStatus = new MapStatus.Builder().target(point).zoom(18).build();
 		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
 		mMapView.getMap().setMapStatus(mMapStatusUpdate);
- 		 
 	}
 	
 	/**
@@ -178,7 +177,7 @@ public class HomeProductActivity extends BaseActivtiy
 	 */
 	private void ComponentUpdateData()
 	{		
-		priceView.setText(String.valueOf(product.getPrice()));
+		priceView.setText(this.getString(R.string.misp_rmb_unit)+product.getPrice());
 		limitView.setText(String.valueOf(product.getEnd_date_time()));
 		orderBtn.setOnClickListener(orderBtnHandel);
 	}

@@ -2,7 +2,6 @@ package cn.fuego.eshoping.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -43,6 +42,7 @@ public class MainActivity extends BaseActivtiy
 				if (message.isSuccess()){
 					GetCityListRsp rsp = (GetCityListRsp) message.getMessage().obj;
 					cityList=rsp.getCityList();
+					AppCache.getInstance().setCityList(cityList);
 					setCurrentCity();
 				}
 				else{
@@ -58,6 +58,7 @@ public class MainActivity extends BaseActivtiy
 			public void receiveLocation(MispLocation location)
 			{
 				currentCity=location.getCity();
+				AppCache.getInstance().setPositionCityStr(currentCity);
 				setCurrentCity();
 			}
 		}

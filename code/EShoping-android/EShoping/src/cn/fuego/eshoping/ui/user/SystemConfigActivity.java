@@ -1,7 +1,6 @@
 package cn.fuego.eshoping.ui.user;
 
 import java.io.Serializable;
-
 import android.content.Intent;
 import android.view.View;
 import cn.fuego.common.log.FuegoLog;

@@ -1,6 +1,7 @@
 package cn.fuego.eshoping.cache;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
@@ -14,11 +15,14 @@ public class AppCache extends MemoryCache
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
 	
+	private static AppCache instance;
+	
 	private  CityJson cityInfo;
+	private String positionCityStr;
 	private  UserJson user;
 	private  CustomerJson customer;
-	private static AppCache instance;
-
+	
+	private List<CityJson> cityList;
 
 	public boolean isLogined()
 	{
@@ -74,6 +78,32 @@ public class AppCache extends MemoryCache
 	public  void setCityInfo(CityJson city)
 	{
 		this.cityInfo = city;
+	}
+
+	/**
+	 * @return the cityList
+	 */
+	public List<CityJson> getCityList()
+	{
+		return cityList;
+	}
+
+	/**
+	 * @param cityList the cityList to set
+	 */
+	public void setCityList(List<CityJson> cityList)
+	{
+		this.cityList = cityList;
+	}
+
+	public String getPositionCityStr()
+	{
+		return positionCityStr;
+	}
+
+	public void setPositionCityStr(String positionCityStr)
+	{
+		this.positionCityStr = positionCityStr;
 	}
 
 }

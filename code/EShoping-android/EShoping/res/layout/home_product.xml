@@ -14,26 +14,38 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:background="@color/backcolor"
+        android:background="@color/white"
         android:fillViewport="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:visibility="visible" >
 
+            <TextView
+                android:id="@+id/product_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="产品名称"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black" />
+            
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:background="@color/white"
-
-                >
+                android:visibility="visible" >
 			
-			   <android.support.v4.view.ViewPager  
-			        android:id="@+id/home_product_image"  
-			        android:layout_width="wrap_content"  
-			        android:layout_height="wrap_content"  
-			        android:layout_gravity="center" >  
+			   <android.support.v4.view.ViewPager
+			       android:id="@+id/home_product_image"
+			       android:layout_width="wrap_content"
+			       android:layout_height="wrap_content"
+			       android:layout_gravity="center"
+			       android:visibility="visible" >
 			                
 			        <android.support.v4.view.PagerTabStrip    
 			             android:id="@+id/pagertab"    
@@ -59,29 +71,18 @@
 	    </RelativeLayout>
             </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/home_product_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="￥47"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/themecolor"
-                    android:textSize="32dp" />
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" >
 
                 <Button
-                    android:id="@+id/order_activity_cancel_btn"
+                    android:id="@+id/home_product_order_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
                     android:layout_weight="0.5"
                     android:background="@drawable/common_btn"
                     android:padding="10dp"
@@ -89,7 +90,22 @@
                     android:textColor="@color/white"
                     android:textSize="22sp" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/home_product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="29dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="￥47"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/themecolor"
+                    android:textSize="32dp" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/order_product_quantity"
@@ -114,9 +130,11 @@
                     android:id="@+id/home_product_seller_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="小肥羊火锅店"
+                    android:text="小肥羊火锅店这里可以显示非常长的介绍撒的佛山的佛i横扫i的佛啊飞鸿萨都if和 上机动班法斯宾德吧阿萨德佛哦撒的呢回复 "
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
             </LinearLayout>
 
             <TextView
@@ -174,67 +192,10 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/order_activity_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_toRightOf="@+id/order_activity_limitnum"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/TextView07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/order_activity_limitnum"
-                    android:layout_marginTop="20dp"
-                    android:layout_toLeftOf="@+id/order_activity_status"
-                    android:text="预约信息："
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/TextView08"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/TextView07"
-                    android:layout_alignBottom="@+id/TextView07"
-                    android:layout_alignLeft="@+id/order_activity_status"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/TextView06"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/TextView08"
-                    android:layout_below="@+id/TextView08"
-                    android:layout_marginTop="20dp"
-                    android:text="Large Text"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/TextView04"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/TextView05"
-                    android:layout_alignBottom="@+id/TextView05"
-                    android:layout_alignLeft="@+id/TextView06"
-                    android:text="如需团购发票，请向商家索取"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
-
-                <TextView
                     android:id="@+id/TextView05"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/TextView06"
+                    android:layout_below="@+id/order_activity_limitnum"
                     android:layout_marginTop="20dp"
                     android:layout_toLeftOf="@+id/order_activity_status"
                     android:text="温馨提示："
@@ -242,15 +203,29 @@
                     android:textColor="@color/black" />
 
                 <TextView
-                    android:id="@+id/TextView03"
+                    android:id="@+id/order_activity_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/TextView07"
-                    android:layout_below="@+id/TextView07"
-                    android:layout_marginTop="20dp"
-                    android:text="规则提醒："
+                    android:layout_alignBaseline="@+id/order_activity_limitnum"
+                    android:layout_alignBottom="@+id/order_activity_limitnum"
+                    android:layout_marginLeft="28dp"
+                    android:layout_toRightOf="@+id/order_activity_limitnum"
+                    android:text="Large Text"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/TextView04"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/TextView05"
+                    android:layout_alignBottom="@+id/TextView05"
+                    android:layout_alignLeft="@+id/order_activity_status"
+                    android:text="如需团购发票，请向商家索取"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black"
+                    android:textSize="10dp" />
 
             </RelativeLayout>
 

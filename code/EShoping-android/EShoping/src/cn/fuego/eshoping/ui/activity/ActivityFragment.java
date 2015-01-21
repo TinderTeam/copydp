@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.string.StringLengthLimit;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListReq;
@@ -53,10 +54,10 @@ public class ActivityFragment extends MispListFragment<ActivityJson>
 	public View getListItemView(View view, ActivityJson item)
 	{
 		TextView titleView = (TextView) view.findViewById(R.id.order_activity_name);
-		titleView.setText(item.getTitle());
+		titleView.setText(StringLengthLimit.limitStringLen(item.getTitle(),10));
 		
 		TextView contentView = (TextView) view.findViewById(R.id.activity_content);
-		contentView.setText(item.getDscr());
+		contentView.setText(StringLengthLimit.limitStringLen(item.getDscr(),20));
 		
 		TextView limitView = (TextView) view.findViewById(R.id.activity_stop_date);
 		limitView.setText(item.getDatelimit());

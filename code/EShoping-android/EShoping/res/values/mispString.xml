@@ -25,7 +25,7 @@
     <string name="misp_new_password">新密码</string>
     <string name="misp_confirm_password">确认密码</string>
     
-    <string name="misp_rmb_unit">￥:</string>
+    <string name="misp_rmb_unit">￥</string>
     <string name="title_activity_login">LoginActivity</string>
 
 </resources>
