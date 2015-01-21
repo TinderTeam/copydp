@@ -2,6 +2,7 @@ package cn.fuego.eshoping.cache;
 
 import java.util.ArrayList;
 
+import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
@@ -10,13 +11,34 @@ import cn.fuego.misp.service.MemoryCache;
 
 public class AppCache extends MemoryCache
 {
+	private FuegoLog log = FuegoLog.getLog(getClass());
 	
-	private static CityJson cityInfo;
-	private static UserJson user;
-	private static CustomerJson customer;
+	private  CityJson cityInfo;
+	private  UserJson user;
+	private  CustomerJson customer;
+	private static AppCache instance;
+	private String versionNname;
+	private int versionCode;
 
+	
 
-	public static CityJson getCityInfo(){
+	public String getVersionNname()
+	{
+		return versionNname;
+	}
+	public void setVersionNname(String versionNname)
+	{
+		this.versionNname = versionNname;
+	}
+	public int getVersionCode()
+	{
+		return versionCode;
+	}
+	public void setVersionCode(int versionCode)
+	{
+		this.versionCode = versionCode;
+	}
+	public  CityJson getCityInfo(){
 		if(cityInfo==null){
 			CityJson defaltCity = new CityJson();
 			defaltCity.setCity("温州");
@@ -28,30 +50,39 @@ public class AppCache extends MemoryCache
 			return cityInfo;
 		}
 	}
+	public synchronized static AppCache getInstance()
+	{
+		if(null == instance)
+		{
+			instance = new AppCache();
+		}
+		return instance;
+		
+	}
 	
-	public static UserJson getUser()
+	public  UserJson getUser()
 	{
 		return user;
 	}
 
-	public static void setUser(UserJson user)
+	public  void setUser(UserJson user)
 	{
-		AppCache.user = user;
+		this.user = user;
 	}
 
-	public static CustomerJson getCustomer()
+	public  CustomerJson getCustomer()
 	{
 		return customer;
 	}
 
-	public static void setCustomer(CustomerJson customer)
+	public  void setCustomer(CustomerJson customer)
 	{
-		AppCache.customer = customer;
+		this.customer = customer;
 	}
 
-	public static void setCityInfo(CityJson city)
+	public  void setCityInfo(CityJson city)
 	{
-		AppCache.cityInfo = city;
+		this.cityInfo = city;
 	}
 
 }

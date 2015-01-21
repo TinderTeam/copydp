@@ -15,57 +15,14 @@ import android.widget.ListView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.base.MispGridView;
 
-/**
- * 
-* @ClassName: MispListActivity 
-* @Description: TODO
-* @author Tangjun 
-* @edit Nan Bowen
-* @date 2015年1月8日 上午9:30:56 
-* 
-* @param <E>
- */
-public abstract class MispListActivity<E> extends MispBaseListActivity<E> implements MispListViewInteface,OnItemClickListener
+public abstract class MispListActivity<E> extends MispBaseListActivity<E> 
+
 {
-	private FuegoLog log = FuegoLog.getLog(getClass());
-	
-	//数据列表
-	private  List<E> dataList = new ArrayList<E>();
-	//适配器
-	private MispListAdapter<E> adapter;
-	//列表视图资源文件
-	protected ListViewResInfo listViewRes = new ListViewResInfo();
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		adapter = new MispListAdapter<E>(this, this,this.listViewRes,this.dataList);
-		ListView listView = (ListView) findViewById(this.listViewRes.getListView());
-		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(this);
-		loadSendList();
-	}
-	
-
-	public abstract void loadSendList();
-	
-	public void refreshList(List<E> newDataList)
-	{
-		this.dataList.clear();
-		if(!ValidatorUtil.isEmpty(newDataList))
-		{
-			this.dataList.addAll(newDataList);
-		}
-		repaint();
-	}
-	
-	public void repaint()
-	{
-		this.adapter.notifyDataSetChanged();
-	}
-	
+	 
+ 
+ 
 	@Override
 	public int getItemViewType(Object item)
 	{
@@ -79,71 +36,16 @@ public abstract class MispListActivity<E> extends MispBaseListActivity<E> implem
 	
 
 
-	public abstract List<E> loadListRecv(Object obj);
-	
+ 	
 	public abstract View getListItemView(View view, E item);
 
 	
 	@Override
-	public View getView(LayoutInflater inflater,View convertView, ViewGroup parent, Object item)
+	final public View getView(LayoutInflater inflater,View convertView, ViewGroup parent, Object item)
 	{
 		View view = inflater.inflate(this.listViewRes.getListItemView(), null);
 		return getListItemView(view,(E)item);
 	}
 
-	@Override
-	public void handle(MispHttpMessage message)
-	{
-		if (message.isSuccess())
-		{
-			this.dataList.clear();
-
-			List<E> newData = loadListRecv(message.getMessage().obj);
-			if (!ValidatorUtil.isEmpty(newData))
-			{
-				this.dataList.addAll(newData);
-			}
-
-			this.adapter.notifyDataSetChanged();
-
-		} else
-		{
-			log.error("query product failed");
-			this.showMessage(message);
-		}
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id)
-	{
-
-		E item = this.adapter.getItem(position);
-		Intent intent = new Intent(this,this.listViewRes.getClickActivityClass());
-		intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item);
-
-		this.startActivity(intent);
-
-	}
-
-
-	/**
-	 * @return the dataList
-	 */
-	public List<E> getDataList()
-	{
-		return dataList;
-	}
-
-
-	/**
-	 * @param dataList the dataList to set
-	 */
-	public void setDataList(List<E> dataList)
-	{
-		if(dataList==null){
-			dataList = new ArrayList<E>();
-		}
-		this.dataList = dataList;
-	}
+ 
 }

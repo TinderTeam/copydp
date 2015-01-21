@@ -36,7 +36,7 @@ public class MISPErrorMessageConst
 	public static final int ERROR_QUREY_FAILED = 14;
 	public static final int TYPE_CONVERSION_FAILED= 15;
 	public static final int SYSTEM_ERROR= 16;
-	public static final int NET_FAIL = 17 ; // 网络连接异常
+	public static final int ERROR_NET_FAIL = 17 ; // 网络连接异常
 	public static final int INPUT_NULL = 18 ; // 输入为空
 	public static String getMessageByErrorCode(int errorCode)
 	{

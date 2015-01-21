@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
-import cn.fuego.common.util.format.DateUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
-import cn.fuego.eshoping.ui.util.DataConvertUtil;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListReq;
 import cn.fuego.eshoping.webservice.up.model.GetActivityListRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ActivityJson;
@@ -41,7 +39,7 @@ public class ActivityFragment extends MispListFragment<ActivityJson>
 	public void loadSendList()
 	{
 		GetActivityListReq req = new GetActivityListReq();
-		req.setCity(AppCache.getCityInfo().getCity());
+		req.setCity(AppCache.getInstance().getCityInfo().getCity());
  		WebServiceContext.getInstance().getActivityManageRest(this).getActivityList(req);
 	}
 	@Override
@@ -67,7 +65,7 @@ public class ActivityFragment extends MispListFragment<ActivityJson>
 		attentView.setText(item.getCurrent_member()+"/"+item.getMemberlimit());
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.order_product_img);
-		LoadImageUtil.getInstance().loadImage(imageView, DataConvertUtil.getAbsUrl(item.getImgsrc()));
+		LoadImageUtil.getInstance().loadImage(imageView, MemoryCache.getImageUrl()+item.getImgsrc());
 		return view;
 	}
 

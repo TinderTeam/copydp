@@ -28,7 +28,6 @@ public class MispLocationService
  	{
  		mLocationClient = new LocationClient(context);
 		mLocationClient.registerLocationListener( listener );
-		mLocationClient.start();
 		LocationClientOption option = new LocationClientOption();
 		option.setLocationMode(LocationMode.Hight_Accuracy);//设置定位模式
 		option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
@@ -36,7 +35,8 @@ public class MispLocationService
 		option.setIsNeedAddress(true);//返回的定位结果包含地址信息
 		option.setNeedDeviceDirect(true);//返回的定位结果包含手机机头的方向
 		mLocationClient.setLocOption(option);
-		
+		mLocationClient.start();
+
 		int i = mLocationClient.requestLocation();
 		log.info("error is "+i);
  	}
@@ -45,7 +45,6 @@ public class MispLocationService
 	{
 		mLocationClient = new LocationClient(context);
 		mLocationClient.registerLocationListener( listener );
-		mLocationClient.start();
 		LocationClientOption option = new LocationClientOption();
 		option.setLocationMode(LocationMode.Hight_Accuracy);//设置定位模式
 		option.setCoorType("bd09ll");//返回的定位结果是百度经纬度,默认值gcj02
@@ -53,7 +52,8 @@ public class MispLocationService
 		option.setIsNeedAddress(true);//返回的定位结果包含地址信息
 		option.setNeedDeviceDirect(true);//返回的定位结果包含手机机头的方向
 		mLocationClient.setLocOption(option);
-		
+		mLocationClient.start();
+
 		int i = mLocationClient.requestLocation();
 		log.info("error is "+i);
 	}

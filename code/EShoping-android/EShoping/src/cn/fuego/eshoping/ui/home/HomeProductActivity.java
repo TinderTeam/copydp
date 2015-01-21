@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.format.HtmlUtil;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
@@ -21,16 +22,15 @@ import cn.fuego.eshoping.service.verification.VerificationService;
 import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.order.ProductOrderActivity;
-import cn.fuego.eshoping.ui.util.DataConvertUtil;
-import cn.fuego.eshoping.ui.util.LoadImageUtil;
 import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
+import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpHandler;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.list.ListViewResInfo;
+import cn.fuego.misp.ui.model.ListViewResInfo;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
@@ -60,13 +60,13 @@ public class HomeProductActivity extends BaseActivtiy
 		@Override
 		public void onClick(View v)
 		{
-			if(AppCache.getUser()==null){ 
+			if(AppCache.getInstance().getUser()==null){ 
 				//转至登陆页面
 				Intent intent = new Intent();
 				intent.setClass(HomeProductActivity.this, LoginActivity.class);
 				startActivity(intent);
 			}
-			if(!VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){
+			if(!VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){
 				;
 			}else{
 				Intent intent = new Intent();
@@ -163,11 +163,11 @@ public class HomeProductActivity extends BaseActivtiy
 	 */
 	private void sellerComponentUpdateData()
 	{
-		List<String> imageList = LoadImageUtil.getImgStr(seller.getInfo());
+		List<String> imageList = HtmlUtil.getImgStr(seller.getInfo());
 		if(ValidatorUtil.isEmpty(imageList)){
 			imageList = new ArrayList<String>();
 		}
-		imageList.add(0,DataConvertUtil.getAbsUrl(product.getImgsrc()));
+		imageList.add(0,MemoryCache.getImageUrl()+product.getImgsrc());
 		ImagePagerAdapter adapter = new ImagePagerAdapter(this,group,imageList);
         viewPager.setAdapter(adapter);  
         viewPager.setCurrentItem(0); 

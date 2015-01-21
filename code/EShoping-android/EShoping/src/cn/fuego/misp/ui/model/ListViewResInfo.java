@@ -1,12 +1,12 @@
-package cn.fuego.misp.ui.list;
-
-import android.view.View.OnClickListener;
-import android.widget.AdapterView.OnItemClickListener;
+package cn.fuego.misp.ui.model;
 
 public class ListViewResInfo
 {
 	public static final String SELECT_ITEM = "SELECT_ITEM";
+	public static final int VIEW_TYPE_GRID = 2;
+	public static final int VIEW_TYPE_LIST = 1;
 
+	private int listType = VIEW_TYPE_LIST;
 	private int listView;
 	private int listItemView;
 	/**
@@ -39,6 +39,14 @@ public class ListViewResInfo
 	{
 		this.clickActivityClass = clickActivityClass;
 	}
-	
+	public int getListType()
+	{
+		return listType;
+	}
+	public void setListType(int listType)
+	{
+		this.listType = listType;
+	}
+ 
 	
 }

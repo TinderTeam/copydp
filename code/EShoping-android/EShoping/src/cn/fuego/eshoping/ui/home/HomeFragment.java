@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,39 +20,28 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
-import android.widget.Toast;
-import cn.fuego.common.contanst.BasicSign;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.string.StringLengthLimit;
-import cn.fuego.common.util.list.tools.IteratorSelector;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.cache.ProductTypeCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.seller.SellerInfoActivity;
-import cn.fuego.eshoping.ui.util.DataConvertUtil;
-import cn.fuego.eshoping.ui.util.LoadImageUtil;
-import cn.fuego.eshoping.webservice.up.model.GetCityListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetSellerListRsp;
-import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
-import cn.fuego.misp.service.http.MispHttpHandler;
-import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.tool.MispLocation;
-import cn.fuego.misp.tool.MispLocationListener;
-import cn.fuego.misp.tool.MispLocationService;
-import cn.fuego.misp.ui.list.ListViewResInfo;
 import cn.fuego.misp.ui.list.MispDistinctListFragment;
 import cn.fuego.misp.ui.model.CommonItemMeta;
+import cn.fuego.misp.ui.model.ListViewResInfo;
+import cn.fuego.misp.ui.util.LoadImageUtil;
 
-public class HomeFragment extends MispDistinctListFragment implements OnItemClickListener,OnCheckedChangeListener
+public class HomeFragment extends MispDistinctListFragment implements OnCheckedChangeListener
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
 	
@@ -89,6 +77,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		listViewRes.setListView(R.id.home_main_list);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
 		ProductTypeCache.getInstance();
+
  	}
  
 	@Override
@@ -130,7 +119,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	public void loadSendList()
 	{		
 		GetProductListReq req = new GetProductListReq();
-		req.setCity(AppCache.getCityInfo().getCity());
+		req.setCity(AppCache.getInstance().getCityInfo().getCity());
 		log.info("load req:"+req.toString());
 		switch(tabID)
 		{
@@ -152,6 +141,9 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 	@Override
 	public List<CommonItemMeta> loadListRecv(Object obj)
 	{
+		
+		
+	
 		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
 		CommonItemMeta gridItem = new CommonItemMeta();
 		gridItem.setLayoutType(ITEM_TYPE_GRID);
@@ -312,7 +304,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 						Intent i= new Intent();
 						ProductJson filter = new ProductJson();
 						filter.setType_id(typeID);
-						filter.setCity(AppCache.getCityInfo().getCity());
+						filter.setCity(AppCache.getInstance().getCityInfo().getCity());
 						i.setClass(parent.getContext(), ProductSearchActivity.class);
 						i.putExtra(SharedPreferenceConst.PRODUCT_FILTER, filter);
 						parent.getContext().startActivity(i);
@@ -378,7 +370,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		        desp.setText(String.valueOf(StringLengthLimit.limitStringLen(seller.getDscr(), 20)));
 		        //商家图片
 		        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
-		        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(seller.getImg()));    		
+		        loadImageUtil.loadImage(imageView, MemoryCache.getImageUrl()+seller.getImg());    		
 			}else{
 				ProductJson product = (ProductJson) item.getContent();		
 				//产品名称
@@ -386,24 +378,24 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 		        titleView.setText(StringLengthLimit.limitStringLen(product.getName(),10));      
 		        //产品现价
 		        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
-		        curPrice.setText(String.valueOf(BasicSign.RMB+product.getPrice()));
+		        curPrice.setText(String.valueOf(getString(R.string.misp_rmb_unit)+product.getPrice()));
 		        //产品原价
 		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
-		        oldPrice.setText(String.valueOf(BasicSign.RMB+product.getOriginal_price()));
+		        oldPrice.setText(String.valueOf(getString(R.string.misp_rmb_unit)+product.getOriginal_price()));
 		        //产品描述
 		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
 		        desp.setText(String.valueOf(StringLengthLimit.limitStringLen(product.getDscr(),20)));
 		        
 		        ImageView imageView = (ImageView) convertView.findViewById(R.id.home_list_item_img); 
-		        log.info("image source="+ DataConvertUtil.getAbsUrl(product.getImgsrc()));
-		        loadImageUtil.loadImage(imageView, DataConvertUtil.getAbsUrl(product.getImgsrc()));        
+		        loadImageUtil.loadImage(imageView,MemoryCache.getImageUrl()+product.getImgsrc());        
 			}			
 	        break;	
 		}
         return view;
 	}
 
-	public void onItemClick(CommonItemMeta item)
+	@Override
+	public void onItemListClick(AdapterView<?> parent, View view,long id, CommonItemMeta item)
 	{
 		if(ITEM_TYPE_PRODUCT == item.getLayoutType())
 		{
@@ -432,7 +424,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			}
 			else
 			{
-				update(this.allProductData);	
+				refreshList(this.allProductData);	
 			}
 			
 		}
@@ -445,7 +437,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			} 
 			else
 			{
-				update(this.typeProductData);	
+				refreshList(this.typeProductData);	
 			}
 		}		
 		else 
@@ -457,7 +449,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnItemClic
 			}
 			else
 			{
-				update(this.newProductData);	
+				refreshList(this.newProductData);	
 			}
 			
 		}

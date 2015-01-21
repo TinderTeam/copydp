@@ -102,7 +102,7 @@ public class MispHttpClientInvoker extends Thread
 		} catch (Exception e)
 		{
 			log.error("call http failed.",e);
-			msg.getMessage().what = MISPErrorMessageConst.NET_FAIL;
+			msg.getMessage().what = MISPErrorMessageConst.ERROR_NET_FAIL;
 		}
 		handler.sendMessage(msg);
 		
@@ -150,6 +150,7 @@ public class MispHttpClientInvoker extends Thread
 	    }
 	    
 	    String absPath = this.getAbsUrlPath();
+	    log.info("the url is " + absPath);
 
 		if(GET_METHOD.equals(httpMethods.iterator().next()))
 		{
@@ -166,6 +167,7 @@ public class MispHttpClientInvoker extends Thread
 			{
 				//se = new StringEntity(mapper.writeValueAsString(args));
 				String json = mapper.writeValueAsString(args);
+				log.info("the request is " + json);
 				
 				 se = new ByteArrayEntity(json.getBytes()); 
 				//se = new StringEntity(json,CODE_WITH_UTF_8);

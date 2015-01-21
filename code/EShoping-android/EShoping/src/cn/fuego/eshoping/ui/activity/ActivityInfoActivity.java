@@ -2,43 +2,28 @@ package cn.fuego.eshoping.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
-import cn.fuego.eshoping.constant.ErrorMessageConst;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.service.verification.VerificationService;
 import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
-import cn.fuego.eshoping.ui.home.HomeProductActivity;
 import cn.fuego.eshoping.ui.order.ActivityOrderSuccess;
-import cn.fuego.eshoping.ui.order.ProductOrderActivity;
-import cn.fuego.eshoping.ui.order.ProductOrderSuccess;
-import cn.fuego.eshoping.ui.util.DataConvertUtil;
-import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
-import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderReq;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderRsp;
-import cn.fuego.eshoping.webservice.up.model.SetProductOrderReq;
-import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ActivityJson;
 import cn.fuego.eshoping.webservice.up.model.base.ActivityOrderJson;
-import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
-import cn.fuego.eshoping.webservice.up.model.base.ProductOrderJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpHandler;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.list.ListViewResInfo;
+import cn.fuego.misp.ui.model.ListViewResInfo;
 import cn.fuego.misp.ui.util.LoadImageUtil;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
 
 public class ActivityInfoActivity extends BaseActivtiy
@@ -52,7 +37,7 @@ public class ActivityInfoActivity extends BaseActivtiy
 	{
 		this.activityRes.setAvtivityView(R.layout.activity_details);
 		this.activityRes.setBackBtn(R.id.com_back_btn);		
-		this.activityRes.setName(R.string.page_activity_info);
+		this.activityRes.setName(getString(R.string.page_activity_info));
 		this.activityRes.setTitleTextView(R.id.com_head_title);
 	}
  
@@ -73,7 +58,7 @@ public class ActivityInfoActivity extends BaseActivtiy
 	public void attendEvent(View v)
 	{
 		log.info("attend button clicked");
-		if(AppCache.getUser()!=null && VerificationService.buyProductVerification(AppCache.getUser().getUser_id())){	
+		if(AppCache.getInstance().getUser()!=null && VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){	
 			activityAttend();
 		}else{
 			//转至登陆页面
@@ -89,7 +74,7 @@ public class ActivityInfoActivity extends BaseActivtiy
 		SetActivityOrderReq orderReq = new SetActivityOrderReq();
 		orderReq.setActivityID(activity.getActivity_id());
 		orderReq.setToken(MemoryCache.getToken());
-		orderReq.setUserID(AppCache.getUser().getUser_id());
+		orderReq.setUserID(AppCache.getInstance().getUser().getUser_id());
 		
 		MispHttpHandler handler = new  MispHttpHandler(){
 
@@ -139,7 +124,7 @@ public class ActivityInfoActivity extends BaseActivtiy
 		mMapView = (MapView) findViewById(R.id.bmapView);		
 		//活动图片
 		ImageView imageView = (ImageView)findViewById(R.id.order_product_img);
-		LoadImageUtil.getInstance().loadImage(imageView, DataConvertUtil.getAbsUrl(activity.getImgsrc()));
+		LoadImageUtil.getInstance().loadImage(imageView, MemoryCache.getImageUrl()+activity.getImgsrc());
 		
 		TextView titleView = (TextView) findViewById(R.id.activity_title);
 		titleView.setText(activity.getTitle());
