@@ -62,6 +62,7 @@
  */
 - (instancetype)initWithOrigin:(CGPoint)origin andHeight:(CGFloat)height;
 - (NSString *)titleForRowAtIndexPath:(DOPIndexPath *)indexPath;
+-(void)setSelectedMenuIndex:(NSInteger)mindex rowIndex:(NSInteger)rindex subrow:(NSInteger)sRow;
 
 @end
 

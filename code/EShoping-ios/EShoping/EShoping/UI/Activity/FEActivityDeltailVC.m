@@ -21,6 +21,7 @@
 @interface FEActivityDeltailVC ()<UITableViewDataSource,UITableViewDelegate,FEProductOrderViewDelegate>
 @property (strong, nonatomic) IBOutlet FETableView *activityDeltailTableView;
 @property (strong, nonatomic) FEProductOrderView *orderView;
+@property (strong, nonatomic) IBOutlet UILabel *activityDescription;
 
 @end
 
@@ -29,6 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.activityDescription.numberOfLines = 0;
+    self.activityDescription.text = self.activity.dscr;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -24,6 +24,8 @@
 - (void)awakeFromNib {
     // Initialization cod
     self.productImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.productDescriptionLabel.numberOfLines = 0;
+//    self.productDescriptionLabel
     
 }
 

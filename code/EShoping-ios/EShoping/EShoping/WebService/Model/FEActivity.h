@@ -10,20 +10,20 @@
 
 @interface FEActivity : FEObject
 
-@property (nonatomic, strong, readonly) NSNumber *activity_id;
-@property (nonatomic, strong, readonly) NSString *title;
-@property (nonatomic, strong, readonly) NSString *datetime;
-@property (nonatomic, strong, readonly) NSString *dscr;
-@property (nonatomic, strong, readonly) NSString *address;
-@property (nonatomic, strong, readonly) NSString *info;
-@property (nonatomic, strong, readonly) NSString *note;
-@property (nonatomic, strong, readonly) NSString *status;
-@property (nonatomic, strong, readonly) NSString *city_id;
-@property (nonatomic, strong, readonly) NSString *datelimit;
-@property (nonatomic, strong, readonly) NSString *current_member;
-@property (nonatomic, strong, readonly) NSString *memberlimit;
-@property (nonatomic, strong, readonly) NSString *imgsrc;
-@property (nonatomic, strong, readonly) NSString *point;
+@property (nonatomic, strong) NSNumber *activity_id;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *datetime;
+@property (nonatomic, strong) NSString *dscr;
+@property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *info;
+@property (nonatomic, strong) NSString *note;
+@property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) NSString *city_id;
+@property (nonatomic, strong) NSString *datelimit;
+@property (nonatomic, strong) NSString *current_member;
+@property (nonatomic, strong) NSString *memberlimit;
+@property (nonatomic, strong) NSString *imgsrc;
+@property (nonatomic, strong) NSString *point;
 
 
 @end

@@ -22,6 +22,7 @@
 #import "FECoreDataHandler.h"
 #import "CDCity.h"
 #import "CDZone.h"
+#import "FEShopingItemCell.h"
 
 @interface FEGroupCategoryVC ()<UISearchBarDelegate,DOPDropDownMenuDataSource,DOPDropDownMenuDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *groupTableView;
@@ -83,6 +84,7 @@
 
     [self initUI];
     [self requestProduct];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -104,6 +106,15 @@
     menu.dataSource = self;
     menu.delegate = self;
     [self.view addSubview:menu];
+    for (NSDictionary *dic in self.categoryArray) {
+        if (dic[_CKEY] == self.productcategory) {
+            NSInteger index = [self.categoryArray indexOfObject:dic];
+            if (index != NSNotFound) {
+                [menu setSelectedMenuIndex:0 rowIndex:index subrow:0];
+            }
+            break;
+        }
+    }
     self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
 }
 
@@ -128,7 +139,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"showProductItem"]){
         FEShopingItemVC *productVC = (FEShopingItemVC *)segue.destinationViewController;
-        productVC.product = ((FEGroupCategoryProductCell *)sender).product;
+        productVC.product = ((FEShopingItemCell *)sender).product;
     }
 }
 
@@ -225,7 +236,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.groupTableView) {
         if (self.productDatas.count) {
-            FEGroupCategoryProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupProductItemCell" forIndexPath:indexPath];
+            FEShopingItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"shopingItem" forIndexPath:indexPath];
+//            FEGroupCategoryProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"groupProductItemCell" forIndexPath:indexPath];
             [cell configWithProduct:self.productDatas[indexPath.row]];
             return cell;
         }else{
@@ -271,7 +283,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.productDatas.count) {
-        return 85;
+        return 110;
     }else{
         return 40;
     }

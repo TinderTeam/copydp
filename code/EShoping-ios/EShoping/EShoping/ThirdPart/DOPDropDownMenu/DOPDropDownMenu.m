@@ -509,7 +509,12 @@
     indicator.position = CGPointMake(title.position.x + title.frame.size.width / 2 + 8, indicator.position.y);
 }
 
-
+-(void)setSelectedMenuIndex:(NSInteger)mindex rowIndex:(NSInteger)rindex subrow:(NSInteger)sRow{
+    _currentSelectedMenudIndex = mindex;
+    _currentSelectedRow = rindex;
+    _currentSelectedSubRow = 0;
+    [self confiMenuWithSelectRow:0 subrow:0];
+}
 
 
 

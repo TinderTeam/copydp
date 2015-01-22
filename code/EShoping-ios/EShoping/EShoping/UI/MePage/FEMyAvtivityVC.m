@@ -15,7 +15,9 @@
 #import "FEShopWebServiceManager.h"
 #import "CDUser.h"
 #import "FESiginVC.h"
+#import "FEActivity.h"
 #import "FEActivityOrder.h"
+#import "FEActivityDeltailVC.h"
 
 @interface FEMyAvtivityVC ()<UITableViewDataSource, UITableViewDelegate,FESigninVCDelegate,FEMyActivityCellDelegate>
 @property (strong, nonatomic) IBOutlet FETableView *myactivityTableView;
@@ -38,9 +40,64 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    UINavigationController *nc = segue.destinationViewController;
-    FESiginVC *vc = (FESiginVC *)nc.topViewController;
-    vc.delegate = self;
+    if ([segue.identifier isEqualToString:@"userSiginSegue"]) {
+        UINavigationController *nc = segue.destinationViewController;
+        FESiginVC *vc = (FESiginVC *)nc.topViewController;
+        vc.delegate = self;
+    }else{
+        FEMyActivityCell *cell = sender;
+        FEActivityDeltailVC *vc = segue.destinationViewController;
+        
+//        @property (nonatomic, strong, readonly) NSString *activity_order_id;
+//        @property (nonatomic, strong, readonly) NSNumber *activity_id;
+//        @property (nonatomic, strong, readonly) NSNumber *customer_id;
+//        @property (nonatomic, strong, readonly) NSString *activity_title;
+//        @property (nonatomic, strong, readonly) NSString *activity_disc;
+//        @property (nonatomic, strong, readonly) NSString *imgsrc;
+//        @property (nonatomic, strong, readonly) NSString *memberlimit;
+//        @property (nonatomic, strong, readonly) NSNumber *datetime;
+//        @property (nonatomic, strong, readonly) NSNumber *datelimit;
+//        @property (nonatomic, strong, readonly) NSString *status;
+//        @property (nonatomic, strong, readonly) NSString *activity_status;
+//        @property (nonatomic, strong, readonly) NSString *username;
+//        @property (nonatomic, strong, readonly) NSString *grade;
+//        @property (nonatomic, strong, readonly) NSString *cellphone;
+//        @property (nonatomic, strong, readonly) NSString *email;
+//        
+//        
+//        @property (nonatomic, strong) NSNumber *activity_id;
+//        @property (nonatomic, strong) NSString *title;
+//        @property (nonatomic, strong) NSString *datetime;
+//        @property (nonatomic, strong) NSString *dscr;
+//        @property (nonatomic, strong) NSString *address;
+//        @property (nonatomic, strong) NSString *info;
+//        @property (nonatomic, strong) NSString *note;
+//        @property (nonatomic, strong) NSString *status;
+//        @property (nonatomic, strong) NSString *city_id;
+//        @property (nonatomic, strong) NSString *datelimit;
+//        @property (nonatomic, strong) NSString *current_member;
+//        @property (nonatomic, strong) NSString *memberlimit;
+//        @property (nonatomic, strong) NSString *imgsrc;
+//        @property (nonatomic, strong) NSString *point;
+        
+        FEActivity *activity = [FEActivity new];
+        activity.activity_id = cell.activity.activity_id;
+        activity.title = cell.activity.activity_title;
+        activity.datetime = cell.activity.datetime;
+        activity.dscr = cell.activity.activity_disc;
+//        activity.address = cell.activity.activity_id;
+//        activity.info = cell.activity.activity_id;
+        activity.status = cell.activity.status;
+//        activity.city_id = cell.activity.activity_id;
+        activity.datelimit = cell.activity.datelimit;
+        activity.current_member = @"";
+        activity.memberlimit = cell.activity.memberlimit;
+        activity.imgsrc = cell.activity.imgsrc;
+//        activity.point = cell.activity.activity_id;
+        
+        vc.activity = activity;//cell.activity;
+    }
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -73,6 +130,7 @@
         [self hideHUD:YES];
     }];
 }
+
 
 #pragma mark - FESigninVCDelegate
 -(void)signinVCDidSignin:(BOOL)isSignin{

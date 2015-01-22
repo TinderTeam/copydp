@@ -15,9 +15,11 @@
 #import "FESellerProductItemCell.h"
 #import "FESellerEvalCell.h"
 #import "FEShopingItemVC.h"
+#import "FEMapView.h"
 
 @interface FECTItemDetailVC ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet FETableView *infoTableView;
+@property (strong, nonatomic) IBOutlet FEMapView *mapView;
 
 @property (nonatomic, strong) NSMutableArray *allInfo;
 
@@ -50,6 +52,12 @@
             [weakself.allInfo removeAllObjects];
             [weakself.allInfo addObject:@[response.seller]];
             weakself.seller = response.seller;
+            NSString *positon = response.seller.position;
+            NSArray *pa = [positon componentsSeparatedByString:@","];
+            if (pa.count == 2) {
+                [weakself.mapView setPin:CLLocationCoordinate2DMake([pa[1] floatValue], [pa[0] floatValue])];
+            }
+            
             if (response.productList) {
                 [weakself.allInfo addObject:response.productList];
             }
