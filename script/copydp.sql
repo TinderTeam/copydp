@@ -1,5 +1,5 @@
 ﻿# Host: 127.0.0.1  (Version: 5.1.70-community)
-# Date: 2015-01-22 11:35:42
+# Date: 2015-01-22 18:01:18
 # Generator: MySQL-Front 5.3  (Build 2.42)
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -230,6 +230,7 @@ CREATE TABLE `t_order` (
   `order_status` varchar(255) DEFAULT '已下单',
   `note` varchar(255) DEFAULT NULL,
   `imgsrc` varchar(255) DEFAULT NULL,
+  `order_type` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -237,7 +238,7 @@ CREATE TABLE `t_order` (
 # Data for table "t_order"
 #
 
-INSERT INTO `t_order` VALUES ('131881418621840','123¥123.00×1',188,13,'123','123',189,'2014-12-15 13:37:20',1,123,321,'已作废',NULL,'548e72d3590dc.jpg');
+INSERT INTO `t_order` VALUES ('1241281421919777','永嘉宾馆',128,NULL,NULL,NULL,124,'2015-01-22 17:42:57',1,NULL,NULL,'已使用',NULL,'5492494096e22.jpg','扫码下单'),('1241281421920234','永嘉宾馆',128,NULL,NULL,NULL,124,'2015-01-22 17:50:34',1,NULL,NULL,'已使用',NULL,'5492494096e22.jpg','扫码下单'),('131881418621840','123¥123.00×1',188,13,'123','123',189,'2014-12-15 13:37:20',1,123,321,'已作废',NULL,'548e72d3590dc.jpg',NULL),('131881418621841',NULL,188,NULL,NULL,NULL,189,'2014-12-15 13:37:20',1,NULL,NULL,'已下单',NULL,NULL,'扫码下单');
 
 #
 # Source for table "t_poll_code"
@@ -552,7 +553,7 @@ CREATE VIEW `t_view_customer` AS
 
 DROP VIEW IF EXISTS `t_view_order`;
 CREATE VIEW `t_view_order` AS 
-  select `copydp`.`t_order`.`order_id` AS `order_id`,`copydp`.`t_order`.`order_name` AS `order_name`,`copydp`.`t_order`.`customer_id` AS `customer_id`,`copydp`.`t_order`.`product_id` AS `product_id`,`copydp`.`t_order`.`product_name` AS `product_name`,`copydp`.`t_order`.`order_time` AS `order_time`,`copydp`.`t_order`.`quantity` AS `quantity`,`copydp`.`t_order`.`order_price` AS `order_price`,`copydp`.`t_order`.`order_status` AS `order_status`,`copydp`.`t_user`.`username` AS `username`,`copydp`.`t_order`.`seller_id` AS `seller_id`,`copydp`.`t_order`.`imgsrc` AS `imgsrc`,`copydp`.`t_order`.`product_description` AS `product_description`,`copydp`.`t_order`.`order_original_price` AS `order_original_price`,`copydp`.`t_order`.`note` AS `note`,`copydp`.`t_product`.`type_id` AS `type_id`,`copydp`.`t_product_type`.`type_name` AS `type_name`,`copydp`.`t_product`.`end_date_time` AS `end_date_time`,`t_view_customer`.`cellphone` AS `cellphone`,`t_view_customer`.`grade` AS `grade` from ((((`copydp`.`t_order` join `copydp`.`t_product` on((`copydp`.`t_product`.`product_id` = `copydp`.`t_order`.`product_id`))) join `copydp`.`t_user` on((`copydp`.`t_user`.`user_id` = `copydp`.`t_order`.`customer_id`))) join `copydp`.`t_view_customer` on((`t_view_customer`.`user_id` = `copydp`.`t_order`.`customer_id`))) join `copydp`.`t_product_type` on((`copydp`.`t_product_type`.`type_id` = `copydp`.`t_product`.`type_id`)));
+  select `copydp`.`t_order`.`order_id` AS `order_id`,`copydp`.`t_order`.`order_name` AS `order_name`,`copydp`.`t_order`.`customer_id` AS `customer_id`,`copydp`.`t_order`.`product_id` AS `product_id`,`copydp`.`t_order`.`product_name` AS `product_name`,`copydp`.`t_order`.`product_description` AS `product_description`,`copydp`.`t_order`.`seller_id` AS `seller_id`,`copydp`.`t_order`.`order_time` AS `order_time`,`copydp`.`t_order`.`quantity` AS `quantity`,`copydp`.`t_order`.`order_price` AS `order_price`,`copydp`.`t_order`.`order_original_price` AS `order_original_price`,`copydp`.`t_order`.`order_status` AS `order_status`,`copydp`.`t_order`.`imgsrc` AS `imgsrc`,`copydp`.`t_order`.`note` AS `note`,`copydp`.`t_order`.`order_type` AS `order_type`,`copydp`.`t_user`.`username` AS `username`,`copydp`.`t_product`.`type_id` AS `type_id`,`copydp`.`t_product_type`.`type_name` AS `type_name`,`copydp`.`t_product`.`end_date_time` AS `end_date_time`,`t_view_customer`.`cellphone` AS `cellphone`,`t_view_customer`.`grade` AS `grade` from ((((`copydp`.`t_order` left join `copydp`.`t_product` on((`copydp`.`t_product`.`product_id` = `copydp`.`t_order`.`product_id`))) join `copydp`.`t_user` on((`copydp`.`t_user`.`user_id` = `copydp`.`t_order`.`customer_id`))) join `copydp`.`t_view_customer` on((`t_view_customer`.`user_id` = `copydp`.`t_order`.`customer_id`))) left join `copydp`.`t_product_type` on((`copydp`.`t_product_type`.`type_id` = `copydp`.`t_product`.`type_id`)));
 
 #
 # Source for view "t_view_product"

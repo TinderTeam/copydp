@@ -26,6 +26,7 @@ public class ProductOrderJson implements Serializable
 	private float order_price;
 	private float order_original_price;
 	private String order_status;
+	private String order_type;
 	private String note;
 	private String imgsrc;
 	private String username;
@@ -155,6 +156,13 @@ public class ProductOrderJson implements Serializable
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+	
+	public String getOrder_type() {
+		return order_type;
+	}
+	public void setOrder_type(String order_type) {
+		this.order_type = order_type;
+	}
 	@Override
 	public String toString() {
 		return "ProductOrderJson [order_id=" + order_id + ", order_name="
@@ -164,12 +172,11 @@ public class ProductOrderJson implements Serializable
 				+ ", seller_id=" + seller_id + ", order_time=" + order_time
 				+ ", quantity=" + quantity + ", order_price=" + order_price
 				+ ", order_original_price=" + order_original_price
-				+ ", order_status=" + order_status + ", note=" + note
-				+ ", imgsrc=" + imgsrc + ", username=" + username
-				+ ", end_date_time=" + end_date_time + ", type_id=" + type_id
-				+ ", type_name=" + type_name + ", cellphone=" + cellphone
-				+ ", grade=" + grade + "]";
+				+ ", order_status=" + order_status + ", order_type="
+				+ order_type + ", note=" + note + ", imgsrc=" + imgsrc
+				+ ", username=" + username + ", end_date_time=" + end_date_time
+				+ ", type_id=" + type_id + ", type_name=" + type_name
+				+ ", cellphone=" + cellphone + ", grade=" + grade + "]";
 	}
-	
 	
 }

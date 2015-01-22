@@ -124,7 +124,8 @@ class BuyAction extends BuyServiceAction {
 			$data2['order_price']=$productItem['price']*$quantity;
 			$data2['order_original_price']=$productItem['original_price']*$quantity;
 			$data2['quantity']=$quantity;
-			$data2['order_status']='已下单';		
+			$data2['order_status']='已下单';	
+			$data2['order_type']='普通订单';	
 			$order->add($data2);
 			
 		$this->assign('productID',$product_id);
@@ -143,7 +144,9 @@ class BuyAction extends BuyServiceAction {
 	    $orderInfo['userID'] = $req->userID;
 	    $orderInfo['productID'] = $req->productID;
 	    $orderInfo['quantity'] = $req->quantity;
-	    $this->log($orderInfo);
+	    $orderInfo['seller_id'] = $req->seller_id;
+	    $orderInfo['order_type'] = $req->order_type;
+	    $this->log(json_encode($orderInfo));
 	    $createOrderResult = parent::CreateOrderService($orderInfo);
 	
 	    $errorCode = $createOrderResult['errorCode'];

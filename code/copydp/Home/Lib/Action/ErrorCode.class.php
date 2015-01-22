@@ -20,5 +20,7 @@
     define('ACTIVITY_ORDER_DUPLICATE',10003);   //活动重复参与
     define('ACTIVITY_ORDER_MAXIMUM',10004);     //活动订单已达上限
     define('BUY_TIMES_OVER',10005);     		//购买次数超过限制
-	
+    define('PRODUCT_NOT_EXIST',10006);			//产品不存在
+    define('SELLER_NOT_EXIST',10007);			//商家不存在
+    define('ORDER_TYPE_WRONG',10008);			//订单类型错误
 ?>
