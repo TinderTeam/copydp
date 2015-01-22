@@ -40,9 +40,15 @@
 #import "FEProductGetSellerListResponse.h"
 #import "FECTItemDetailVC.h"
 
+#import "FEProductCreateOrderRequest.h"
+#import "FEProductCreateOrderResponse.h"
+
+#import "FEProductOrderDetailVC.h"
+
 #import "FECity.h"
 #import "FEZone.h"
 #import "CDZone.h"
+#import "CDUser.h"
 #import "GAAlertObj.h"
 
 #import "FECTItemTableViewCell.h"
@@ -153,6 +159,9 @@
         FECTItemTableViewCell *cell = (FECTItemTableViewCell *)sender;
         FECTItemDetailVC *vc = (FECTItemDetailVC *)segue.destinationViewController;
         vc.seller = cell.seller;
+    }else if([segue.identifier isEqualToString:@"showOrderDetailSegue"]){
+        FEProductOrderDetailVC *odetail = segue.destinationViewController;
+        odetail.order = sender;
     }
 }
 
@@ -427,8 +436,32 @@
     for(symbol in results)
         // EXAMPLE: just grab the first barcode
         break;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:FEString(@"提示") message:symbol.data delegate:nil cancelButtonTitle:FEString(@"OK") otherButtonTitles: nil];
-    [alert show];
+    NSData *data = [symbol.data dataUsingEncoding:NSUTF8StringEncoding];
+    if (data) {
+        id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+        if (json && [json[@"type"] isEqualToString:@"sellerID"]) {
+            __weak typeof(self) weakself = self;
+            GAAlertAction *action1 = [GAAlertAction actionWithTitle:FEString(@"确定") action:^{
+                [reader dismissViewControllerAnimated:YES completion:nil];
+                [weakself displayHUD:FEString(@"订购中...")];
+                FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:0 quantity:1 sellerID:@([json[@"value"] integerValue]) orderType:@"扫码下单"];
+                [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
+                    if (!error && response.result.errorCode.integerValue == 0) {
+                        NSLog(@"order sucess!");
+                        [weakself performSegueWithIdentifier:@"showOrderDetailSegue" sender:response.productOrder];
+                    }
+                    [weakself hideHUD:YES];
+                }];
+            }];
+            GAAlertAction *action2 = [GAAlertAction actionWithTitle:FEString(@"取消") action:^{
+                
+            }];
+            
+            [GAAlertObj showAlertWithTitle:FEString(@"订单") message:FEString(@"确定下单") actions:@[action1,action2] inViewController:reader];
+            
+        }
+    }
+    
 //    GAAlertAction *act = [GAAlertAction actionWithTitle:FEString(@"OK") action:^{
 //        [reader dismissViewControllerAnimated:YES completion:^{
 //            
@@ -443,7 +476,7 @@
     //    [info objectForKey: UIImagePickerControllerOriginalImage];
     
     // ADD: dismiss the controller (NB dismiss from the *reader*!)
-    [reader dismissViewControllerAnimated:YES completion:nil];
+//    [reader dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

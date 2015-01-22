@@ -54,12 +54,12 @@
     return obj;
 }
 
-+ (instancetype)showAlertWithTitle:(NSString *)title message:(NSString *)message actions:(NSArray *)actions {
++ (instancetype)showAlertWithTitle:(NSString *)title message:(NSString *)message actions:(NSArray *)actions inViewController:(UIViewController *)vc{
     GAAlertObj *obj = [self alertWithTitle:title message:message];
     for (GAAlertAction *action in actions) {
         [obj addAction:action];
     }
-    [obj show];
+    [obj showInViewController:vc];
     return obj;
 }
 
@@ -77,7 +77,7 @@
     }
 }
 
-- (void)show {
+- (void)showInViewController:(UIViewController *)vc{
     if (IOSVersionUp8) {
         if (!self.alertController.actions.count) {
             UIAlertAction *act = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -90,7 +90,7 @@
 //                
 //            }];
 //        }else {
-            [[UIApplication sharedApplication].delegate.window.rootViewController presentViewController:self.alertController animated:YES completion:^{
+            [vc presentViewController:self.alertController animated:YES completion:^{
                 
             }];
 //        }

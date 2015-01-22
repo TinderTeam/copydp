@@ -319,6 +319,7 @@
                         <outlet property="searchDisplayController" destination="gy2-0M-bL2" id="jan-p5-0Ej"/>
                         <outlet property="shopingTableView" destination="mcT-0M-zZr" id="MT8-8m-IvG"/>
                         <segue destination="xk9-Qi-GgG" kind="show" identifier="searchProdcutSegue" id="Uzw-LT-jJ7"/>
+                        <segue destination="Ozw-6B-xmO" kind="show" identifier="showOrderDetailSegue" id="kwP-7G-ArN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q8I-aS-4W8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -779,7 +780,7 @@
         <!--Product Order DetailVC-->
         <scene sceneID="6Zq-Pb-1d3">
             <objects>
-                <tableViewController id="Ozw-6B-xmO" customClass="FEProductOrderDetailVC" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="Ozw-6B-xmO" customClass="FEProductOrderDetailVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Ca2-f8-BAB">
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -903,7 +904,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jz3-Al-v12" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3570" y="-251"/>
+            <point key="canvasLocation" x="2903" y="-230"/>
         </scene>
         <!--Common Navgation Controller-->
         <scene sceneID="Muf-J1-g2m">
@@ -1800,7 +1801,7 @@
                                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIr-1B-rdh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIr-1B-rdh">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="m8t-kw-H6q"/>
                                                     </constraints>
@@ -3141,10 +3142,11 @@
         <image name="oversea_navibar_icon_qr" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aSS-QL-3zN"/>
-        <segue reference="pgm-Wi-ljk"/>
+        <segue reference="kwP-7G-ArN"/>
         <segue reference="Uzw-LT-jJ7"/>
         <segue reference="4Zk-Gs-suD"/>
-        <segue reference="6wJ-6C-7Vo"/>
+        <segue reference="WI5-vc-442"/>
+        <segue reference="acM-ht-qS2"/>
+        <segue reference="pgm-Wi-ljk"/>
     </inferredMetricsTieBreakers>
 </document>

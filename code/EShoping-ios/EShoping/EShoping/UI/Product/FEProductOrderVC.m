@@ -64,12 +64,12 @@
             GAAlertAction *action1 = [GAAlertAction actionWithTitle:FEString(@"取消") action:^{
                 
             }];
-            [GAAlertObj showAlertWithTitle:FEString(@"提示") message:@"该产品只有SVIP用户可以购买,现在升级！" actions:@[action,action1]];
+            [GAAlertObj showAlertWithTitle:FEString(@"提示") message:@"该产品只有SVIP用户可以购买,现在升级！" actions:@[action,action1] inViewController:self];
         }else{
             [self.checkProductView resignFirstResponder];
             [self displayHUD:FEString(@"订购中...")];
             __weak typeof(self) weakself = self;
-            FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:self.product.product_id.integerValue quantity:self.checkProductView.number orderid:nil];
+            FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:self.product.product_id.integerValue quantity:self.checkProductView.number sellerID:nil orderType:@"普通下单"];
             [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
                 if (!error && response.result.errorCode.integerValue == 0) {
                     NSLog(@"order sucess!");

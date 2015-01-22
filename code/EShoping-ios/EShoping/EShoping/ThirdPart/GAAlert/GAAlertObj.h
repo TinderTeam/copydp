@@ -24,7 +24,9 @@
 
 + (instancetype)alertWithTitle:(NSString *)title message:(NSString *)message actions:(NSArray *)actions;
 
-+ (instancetype)showAlertWithTitle:(NSString *)title message:(NSString *)message actions:(NSArray *)actions;
+//+ (instancetype)showAlertWithTitle:(NSString *)title message:(NSString *)message actions:(NSArray *)actions;
+
++ (instancetype)showAlertWithTitle:(NSString *)title message:(NSString *)message actions:(NSArray *)actions inViewController:(UIViewController *)vc;
 
 - (void)addAction:(GAAlertAction *)action;
 
