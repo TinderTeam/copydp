@@ -139,7 +139,7 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 		if(hasOtherFilter()){
 			log.info("load list by sellerID filter");
 			GetSellerReq req = new GetSellerReq();
-			req.setToken(AppCache.getToken());
+			req.setToken(AppCache.getInstance().getToken());
 			req.setSeller_id(filter.getSeller_id());		
 			WebServiceContext.getInstance().getProductManageRest(new MispHttpHandler(){
 				@Override
@@ -160,7 +160,7 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 			log.info("load list by filter: filter="+filter);
 			String keyword = (String) this.getIntent().getSerializableExtra(SharedPreferenceConst.PRODUCT_FILTER_KEYWORD);
 			GetProductListReq req = new GetProductListReq();
-			req.setToken(AppCache.getToken());
+			req.setToken(AppCache.getInstance().getToken());
 			req.setCity(AppCache.getInstance().getCityInfo().getCity());
 			req.setTypeRoot(filter.getType_id());
 			req.setZone_id(filter.getZone_id());

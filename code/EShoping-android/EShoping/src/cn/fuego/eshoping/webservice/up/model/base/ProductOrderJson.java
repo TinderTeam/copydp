@@ -26,7 +26,6 @@ public class ProductOrderJson implements Serializable
 	private float order_price;
 	private float order_original_price;
 	private String order_status;
-	private String order_type;
 	private String note;
 	private String imgsrc;
 	private String username;
@@ -178,5 +177,6 @@ public class ProductOrderJson implements Serializable
 				+ ", type_id=" + type_id + ", type_name=" + type_name
 				+ ", cellphone=" + cellphone + ", grade=" + grade + "]";
 	}
+	
 	
 }

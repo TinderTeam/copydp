@@ -81,7 +81,7 @@ public class FilterPopupMenu implements OnDismissListener
 	{
 		//获取产品类型列表
 		GetProductTypeReq typeReq = new GetProductTypeReq();
-		typeReq.setToken(AppCache.getToken());
+		typeReq.setToken(AppCache.getInstance().getToken());
 		MispHttpHandler typeHandle = new MispHttpHandler(){
 			@Override
 			public void handle(MispHttpMessage message){

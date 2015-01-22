@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="false"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -10,95 +11,129 @@
         android:background="@color/white"
         android:paddingBottom="10dp" >
 
-        <ImageView
-            android:id="@+id/order_product_img"
-            android:layout_width="120dp"
-            android:layout_height="80dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:src="@drawable/load_image_failed" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/order_activity_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/order_product_img"
-            android:layout_marginRight="50dp"
-            android:layout_toRightOf="@+id/order_product_img"
-            android:ellipsize="marquee"
-            android:text="产品名称"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/black" />
+            <ImageView
+                android:id="@+id/order_product_img"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:clickable="true"
+                android:onClick="showOrder"
+                android:src="@drawable/load_image_failed" />
 
-        <TextView
-            android:id="@+id/order_product_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/order_activity_name"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:text="1份" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/order_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView3"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignRight="@+id/order_product_quantity"
-            android:layout_toRightOf="@+id/textView3"
-            android:text="TextView" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp" >
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/order_activity_name"
-            android:layout_toRightOf="@+id/order_product_img"
-            android:text="订单号:" />
+                    <TextView
+                        android:id="@+id/order_activity_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:ellipsize="marquee"
+                        android:onClick="showOrder"
+                        android:text="产品名称五六七八九十"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/middle_text_size" />
 
-        <TextView
-            android:id="@+id/txt_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_below="@+id/textView3"
-            android:text="过   期:" />
+                    <TextView
+                        android:id="@+id/order_product_quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:onClick="showOrder"
+                        android:text="1份" />
+                </RelativeLayout>
 
-        <TextView
-            android:id="@+id/order_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_code"
-            android:layout_toRightOf="@+id/order_product_img"
-            android:text="已下单" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp" >
 
-        <TextView
-            android:id="@+id/order_overdue_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/txt_code"
-            android:layout_alignBottom="@+id/txt_code"
-            android:layout_alignLeft="@+id/order_id"
-            android:text="TextView" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="订单号:" />
 
-        <Button
-            android:id="@+id/order_delete_btn"
-            android:layout_width="60dp"
-            android:layout_height="20dp"
-            android:layout_alignBaseline="@+id/order_status"
-            android:layout_alignBottom="@+id/order_status"
-            android:layout_alignRight="@+id/order_id"
-            android:background="@drawable/common_btn"
-            android:onClick="deleteCancelOrderEvent"
-            android:text="删除订单"
-            android:textColor="@color/white" />
+                    <TextView
+                        android:id="@+id/order_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/textView3"
+                        android:clickable="true"
+                        android:onClick="showOrder"
+                        android:text="TextView" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp" >
+
+                    <TextView
+                        android:id="@+id/txt_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="过   期:" />
+
+                    <TextView
+                        android:id="@+id/order_overdue_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/txt_code"
+                        android:clickable="true"
+                        android:onClick="showOrder"
+                        android:text="TextView" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp" >
+
+                    <TextView
+                        android:id="@+id/order_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:onClick="showOrder"
+                        android:text="已下单" />
+
+                    <Button
+                        android:id="@+id/order_delete_btn"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/common_btn"
+                        android:onClick="deleteCancelOrderEvent"
+                        android:text="删除订单"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

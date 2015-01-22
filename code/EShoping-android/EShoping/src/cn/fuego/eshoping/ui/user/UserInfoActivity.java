@@ -15,6 +15,7 @@ import cn.fuego.common.util.model.KeyValuePair;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.LoginActivity;
+import cn.fuego.eshoping.ui.MainTabbarActivity;
 import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.ui.list.MispListActivity;
 
@@ -92,9 +93,9 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		log.info("user logout...");
 		AppCache.getInstance().cleanToken();
 		AppCache.getInstance().cleanUser();
-		//转至登陆页面
+		//转至主页面
 		Intent intent = new Intent();
-		intent.setClass(this,LoginActivity.class);
+		intent.setClass(this,MainTabbarActivity.class);
 		startActivity(intent);
 	}
 }

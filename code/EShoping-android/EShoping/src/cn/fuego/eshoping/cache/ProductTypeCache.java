@@ -37,7 +37,7 @@ public class ProductTypeCache
 	{
 		GetProductTypeReq req = new GetProductTypeReq();
 		req.setTypeRoot(0);
-		req.setToken(AppCache.getToken()); 
+		req.setToken(AppCache.getInstance().getToken()); 
 		WebServiceContext.getInstance().getProductManageRest(new MispHttpHandler()
 		{
 			@Override

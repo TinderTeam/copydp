@@ -130,7 +130,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			break;
 			
 		case 1:
-			WebServiceContext.getInstance().getProductManageRest(this).getTypeRecProductList(req);
+			WebServiceContext.getInstance().getProductManageRest(this).getRecommendProductList(req);
 			break;
 		case 2:
 			WebServiceContext.getInstance().getProductManageRest(this).getSellerList(req);
@@ -153,40 +153,15 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		itemList.add(tabItem); 
 		if(tabID == 1)
 		{
-			GetProductListRsp rsp = (GetProductListRsp) obj;
-			Map<Integer,List<ProductJson>> productGroup;
-			if(rsp.getProductList()==null){
-				 productGroup = divideGroup(new ArrayList());
-			}else{
-				productGroup = divideGroup(rsp.getProductList());
-			}
-
-			for(Integer typeID : productGroup.keySet())
-			{			
-				List<ProductJson> productList = productGroup.get(typeID);
-				if(!ValidatorUtil.isEmpty(productList))
+			GetProductListRsp rsp = (GetProductListRsp) obj;	
+			if(rsp.getProductList()!=null){
+				for(ProductJson product : rsp.getProductList())
 				{
-					CommonItemMeta groupItem = new CommonItemMeta();
-					groupItem.setLayoutType(ITEM_TYPE_PRODUCT_TYPE);
-					ProductTypeJson type = ProductTypeCache.getInstance().getTypeByID(typeID);
-					if(null != type)
-					{
-						groupItem.setContent(type.getType_name());
-					}
-					else
-					{
-						groupItem.setContent("未知类型");
-					}
-					
-					itemList.add(groupItem);
-					for(ProductJson product : productList)
-					{
-						CommonItemMeta item = new CommonItemMeta();
-						item.setLayoutType(ITEM_TYPE_PRODUCT);
-						item.setContent(product);
-						itemList.add(item);
-					}	
-				}
+					CommonItemMeta item = new CommonItemMeta();
+					item.setLayoutType(ITEM_TYPE_PRODUCT);
+					item.setContent(product);
+					itemList.add(item);
+				}	
 			}
 		}
 		else if(tabID==0)

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ProductJson implements Serializable
 {
+	public static final String PRODUCT_ID="product_id";
 	private int product_id;
 	private String name;
 	private int type_id;

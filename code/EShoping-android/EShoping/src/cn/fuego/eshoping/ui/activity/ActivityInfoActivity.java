@@ -75,7 +75,7 @@ public class ActivityInfoActivity extends BaseActivtiy
 	{
 		SetActivityOrderReq orderReq = new SetActivityOrderReq();
 		orderReq.setActivityID(activity.getActivity_id());
-		orderReq.setToken(MemoryCache.getToken());
+		orderReq.setToken(AppCache.getInstance().getToken());
 		orderReq.setUserID(AppCache.getInstance().getUser().getUser_id());
 		
 		MispHttpHandler handler = new  MispHttpHandler(){

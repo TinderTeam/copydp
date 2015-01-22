@@ -57,7 +57,7 @@ public class RegistActivity extends BaseActivtiy
 	
 	public void submit(View v){
 		RegisterReq req = new RegisterReq();
-		req.setToken(AppCache.getToken());
+		req.setToken(AppCache.getInstance().getToken());
 		UserJson user = new UserJson();
 		user.setUsername(name.getText().toString().trim());
 		user.setPassword(pwd.getText().toString().trim());

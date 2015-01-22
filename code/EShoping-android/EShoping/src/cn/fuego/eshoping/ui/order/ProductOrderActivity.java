@@ -81,7 +81,7 @@ public class ProductOrderActivity extends BaseActivtiy
 				SetProductOrderReq orderReq = new SetProductOrderReq();
 				orderReq.setProductID(product.getProduct_id());
 				orderReq.setQuantity(orderQantity);
-				orderReq.setToken(MemoryCache.getToken());
+				orderReq.setToken(AppCache.getInstance().getToken());
 				orderReq.setUserID(AppCache.getInstance().getUser().getUser_id());
 				//call create order api
 				WebServiceContext.getInstance().getProductManageRest(ProductOrderActivity.this).createProductOrder(orderReq);
