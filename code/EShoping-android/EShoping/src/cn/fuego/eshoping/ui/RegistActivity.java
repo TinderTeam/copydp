@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.base.ExitApplication;
 import cn.fuego.eshoping.webservice.up.model.RegisterReq;
+import cn.fuego.eshoping.webservice.up.model.RegisterRsp;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
@@ -46,7 +48,7 @@ public class RegistActivity extends BaseActivtiy
 	public void handle(MispHttpMessage message)
 	{
 		if (message.isSuccess()){
-			RegisterReq rsp = (RegisterReq) message.getMessage().obj;
+			RegisterRsp rsp = (RegisterRsp) message.getMessage().obj;
 			showMessage("注册成功，请等待管理员审核。");
 			backOnClick();
 		}
@@ -59,10 +61,37 @@ public class RegistActivity extends BaseActivtiy
 		RegisterReq req = new RegisterReq();
 		req.setToken(AppCache.getInstance().getToken());
 		UserJson user = new UserJson();
-		user.setUsername(name.getText().toString().trim());
-		user.setPassword(pwd.getText().toString().trim());
+		
+		String nameStr = name.getText().toString().trim();
+		
+	    if(ValidatorUtil.isEmpty(nameStr))
+	    {
+	    	showMessage("用户名不能为空");
+	    	return;
+	       
+	    }
+				
+		user.setUsername(nameStr);
+		
+		String pwdStr = pwd.getText().toString().trim();
+		
+		if(ValidatorUtil.isEmpty(pwdStr) || pwdStr.length()<6)
+		{
+			showMessage("密码输入不能少于6位");
+			return;
+		}
+		
+		user.setPassword(pwdStr);
+		
 		CustomerJson customer =new CustomerJson();
-		customer.setEmail(email.getText().toString().trim());
+		String emailStr = email.getText().toString().trim();
+		if(!ValidatorUtil.isEmail(emailStr))
+		{
+			showMessage("邮箱格式不正确");
+			return;
+		}
+				
+		customer.setEmail(emailStr);
 		req.setCode(code.getText().toString().trim());
 		req.setUser(user);
 		log.info("Regist req = "+req);

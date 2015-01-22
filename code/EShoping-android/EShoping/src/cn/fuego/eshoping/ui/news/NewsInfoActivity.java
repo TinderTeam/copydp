@@ -2,21 +2,15 @@ package cn.fuego.eshoping.ui.news;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
-import cn.fuego.common.util.format.DateUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.webservice.up.model.base.NewsJson;
 import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.model.ListViewResInfo;
-
-import com.baidu.mapapi.SDKInitializer;
 
 public class NewsInfoActivity extends BaseActivtiy
 {
@@ -24,9 +18,9 @@ public class NewsInfoActivity extends BaseActivtiy
 	
 	//View成员
 	private TextView titleView;
-	private TextView dateView;
-	private TextView contentView;
+ 
 	private NewsJson news;
+	private WebView descriptionView;
 	
 	@Override
 	public void initRes()
@@ -47,14 +41,19 @@ public class NewsInfoActivity extends BaseActivtiy
 		
 		//View
 		titleView = (TextView) findViewById(R.id.news_info_title);
-		dateView = (TextView) findViewById(R.id.news_info_date);
-		contentView = (TextView) findViewById(R.id.news_info_content);
+ 
 		
 		//View赋值
 		titleView.setText(news.getTitle());
-		dateView.setText(DateUtil.DateToShotString(news.getDatetime()));	
-		contentView.setMovementMethod(ScrollingMovementMethod.getInstance());//滚动  
-		contentView.setText(Html.fromHtml(news.getContent()));
+ 
+		descriptionView = (WebView) findViewById(R.id.newsDescription);
+
+		descriptionView.getSettings().setTextSize(WebSettings.TextSize.LARGER);
+		
+		descriptionView.loadData(news.getContent(), "text/html; charset=UTF-8", null);
+		
+		
+		
 	}
 
 	

@@ -30,7 +30,7 @@
             android:background="@drawable/nav_btn"
             android:button="@null"
             android:gravity="center"
-            android:text="热门推荐"
+            android:text="联盟商户"
             android:textColor="@drawable/nav_text_color" />
 
         <RadioButton
@@ -41,7 +41,7 @@
             android:background="@drawable/nav_btn"
             android:button="@null"
             android:gravity="center"
-            android:text="合作商家"
+            android:text="热门推荐"
             android:textColor="@drawable/nav_text_color" />
     </RadioGroup>
 

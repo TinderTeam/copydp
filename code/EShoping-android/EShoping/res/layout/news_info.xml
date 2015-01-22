@@ -33,29 +33,17 @@
 	            android:textColor="@color/black"
 	            android:textColorHint="@color/black" />
 	
-	        <TextView
-	            android:id="@+id/news_info_date"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="2014-12-10"
-	            android:textAppearance="?android:attr/textAppearanceSmall" />
+			 
+				        
+				        <android.webkit.WebView
+			android:id="@+id/newsDescription"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:text=""
+			    />
 	    </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" >
-
-        <TextView
-            android:id="@+id/news_info_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="精神的咖啡花洒的咖啡坏死的回复撒谎的飞吧开氏温标封ID神佛水电费的横扫"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/black" />
-
-    </FrameLayout>
+  
 
     </LinearLayout>
 </LinearLayout>

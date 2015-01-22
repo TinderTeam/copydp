@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -33,13 +32,15 @@ import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetSellerListRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
-import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.misp.ui.base.MispGridView;
+import cn.fuego.misp.ui.grid.MispGridViewAdapter;
 import cn.fuego.misp.ui.list.MispDistinctListFragment;
 import cn.fuego.misp.ui.model.CommonItemMeta;
 import cn.fuego.misp.ui.model.ListViewResInfo;
+import cn.fuego.misp.ui.model.MispGridDataModel;
 import cn.fuego.misp.ui.util.LoadImageUtil;
 
 public class HomeFragment extends MispDistinctListFragment implements OnCheckedChangeListener
@@ -62,8 +63,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
     private int tabID = 0;
     
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
-	private View homeGridView;
-	private View homeTabView;
+ 
 	private List<CommonItemMeta> newProductData = new ArrayList<CommonItemMeta>();
 	private List<CommonItemMeta> typeProductData= new ArrayList<CommonItemMeta>();
 	private List<CommonItemMeta> allProductData= new ArrayList<CommonItemMeta>();
@@ -130,10 +130,10 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			break;
 			
 		case 1:
-			WebServiceContext.getInstance().getProductManageRest(this).getRecommendProductList(req);
+			WebServiceContext.getInstance().getProductManageRest(this).getSellerList(req);
 			break;
 		case 2:
-			WebServiceContext.getInstance().getProductManageRest(this).getSellerList(req);
+			WebServiceContext.getInstance().getProductManageRest(this).getRecommendProductList(req);
 			break;
 		default:
 			break;
@@ -151,7 +151,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		CommonItemMeta tabItem = new CommonItemMeta();
 		tabItem.setLayoutType(ITEM_TYPE_TAB);
 		itemList.add(tabItem); 
-		if(tabID == 1)
+		if(tabID == 2)
 		{
 			GetProductListRsp rsp = (GetProductListRsp) obj;	
 			if(rsp.getProductList()!=null){
@@ -163,6 +163,8 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 					itemList.add(item);
 				}	
 			}
+			this.allProductData = itemList;
+
 		}
 		else if(tabID==0)
 		{
@@ -176,9 +178,11 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 					itemList.add(item);
 				}	
 			}
+			this.newProductData = itemList;
+
 			
 		}
-		else if(tabID==2)
+		else if(tabID==1)
 		{
 			GetSellerListRsp rsp = (GetSellerListRsp) obj;	
 			if(rsp.getSellerList()!=null){
@@ -190,38 +194,33 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 					itemList.add(item);
 				}	
 			}
+			this.typeProductData = itemList;
 			
 		}
-		switch (tabID)
-		{
-		case 0:
-			this.newProductData = itemList;
-			break;
-		case 1:
-			this.typeProductData = itemList;
-			break;
-		case 2:
-			this.allProductData = itemList;
-			break;
-		default:
-			this.newProductData = itemList;
-			break;
-		}
+ 
 		
 		return itemList;
 	}
-	private List<Map<String,Object>> gridInitData()
+	private List<MispGridDataModel>  gridInitData()
 	{
-		List<Map<String,Object>> mArrayList = new ArrayList<Map<String, Object>>();
+		
+		List<MispGridDataModel> mArrayList = new ArrayList<MispGridDataModel>();
+		
         for (int j = 0; j < mImageViewArray.length; j++)
 		{
-        	HashMap<String, Object> map = new HashMap<String, Object>();  
-        	map.put("ItemImage", mImageViewArray[j]);//添加图像资源的ID  
-        	map.put("ItemText", getString(mTextviewArray[j]));//按序号做ItemText  
-        	mArrayList.add(map); 
+
+        	MispGridDataModel gridData = new MispGridDataModel();
+			int typeID=ProductTypeCache.getInstance().getTypeIDByName(getString(mTextviewArray[j]));
+
+        	gridData.setData(typeID);
+        	gridData.setImage( mImageViewArray[j]);
+        	gridData.setName(getString(mTextviewArray[j]));
+   
+        	mArrayList.add(gridData); 
 		}
 			
 		 return mArrayList;
+ 
 	}
 	
 	public Map<Integer,List<ProductJson>> divideGroup(List<ProductJson> productList)
@@ -269,17 +268,17 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			{
 				view = (View) convertView.getTag();
 			}
-			List<Map<String, Object>> arrayListForEveryGridView = (List<Map<String, Object>>) item.getContent();
-			GridViewAdapter gridViewAdapter = new GridViewAdapter(this.getActivity(),arrayListForEveryGridView);
-			GridView gridView = (GridView) view.findViewById(R.id.home_gridview);
+			List<MispGridDataModel>  arrayListForEveryGridView = (List<MispGridDataModel> )item.getContent();
+			final MispGridViewAdapter gridViewAdapter = new MispGridViewAdapter(this.getActivity(),arrayListForEveryGridView);
+			MispGridView gridView = (MispGridView) view.findViewById(R.id.home_gridview);
 			gridView.setOnItemClickListener(new OnItemClickListener()
 			{
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,	int position, long id)
 				{
-					log.info("type grid icon clicked: position="+position+"content="+getString(mTextviewArray[position]));
-					int typeID=ProductTypeCache.getInstance().getTypeIDByName(getString(mTextviewArray[position]));
+					MispGridDataModel data = (MispGridDataModel) gridViewAdapter.getItem(position);
+					int typeID =   (Integer) data.getData();
 					log.info("select type id is : "+typeID);
 					if(typeID!=-1){
 						Intent i= new Intent();
@@ -435,6 +434,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			
 		}
 	}
-	
+	 
 
 }

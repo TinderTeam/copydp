@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="tabbar_home">首页</string>
     <string name="tabbar_activity">活动</string>
-    <string name="tabbar_news">最新咨询</string>
+    <string name="tabbar_news">最新资讯</string>
     <string name="tabbar_user">个人中心</string>
     <string name="misp_back">返回</string>
     <string name="misp_save">保存</string>

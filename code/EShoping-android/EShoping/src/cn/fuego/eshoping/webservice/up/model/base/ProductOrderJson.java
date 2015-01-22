@@ -26,6 +26,7 @@ public class ProductOrderJson implements Serializable
 	private float order_price;
 	private float order_original_price;
 	private String order_status;
+	private String order_type;
 	private String note;
 	private String imgsrc;
 	private String username;
