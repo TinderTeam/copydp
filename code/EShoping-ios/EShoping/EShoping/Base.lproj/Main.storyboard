@@ -1147,7 +1147,6 @@
                                             <outlet property="productDescriptionLabel" destination="wv6-ME-VNA" id="Evy-6X-9Rh"/>
                                             <outlet property="productImageView" destination="76Z-5M-Jbd" id="t6C-Jr-U3f"/>
                                             <outlet property="productPriceLabel" destination="N4P-rK-ffi" id="lQH-eh-azn"/>
-                                            <segue destination="YvB-bR-mew" kind="show" identifier="showProductItem" id="SMN-cG-FWi"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NONProductCell" rowHeight="40" id="dgS-iv-D9d">
@@ -1239,6 +1238,7 @@
                                             <outlet property="productNameLabel" destination="68m-fA-zwV" id="t89-x3-gis"/>
                                             <outlet property="productOriginPriceLabel" destination="6Jz-DA-3dE" id="08P-Fq-zbc"/>
                                             <outlet property="productValueLabel" destination="8F7-6z-DOp" id="8ua-Ax-4g1"/>
+                                            <segue destination="YvB-bR-mew" kind="show" identifier="showProductItem" id="0Eb-pE-8Ut"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1735,7 +1735,7 @@
                                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIr-1B-rdh">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GIr-1B-rdh">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="m8t-kw-H6q"/>
                                                     </constraints>
@@ -3066,10 +3066,10 @@
         <image name="oversea_navibar_icon_qr" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6wJ-6C-7Vo"/>
         <segue reference="4Zk-Gs-suD"/>
+        <segue reference="Uzw-LT-jJ7"/>
+        <segue reference="0Eb-pE-8Ut"/>
         <segue reference="2fI-Lb-rPX"/>
         <segue reference="pgm-Wi-ljk"/>
-        <segue reference="Uzw-LT-jJ7"/>
     </inferredMetricsTieBreakers>
 </document>

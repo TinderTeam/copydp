@@ -9,7 +9,7 @@
 #import "FENewsDetailVC.h"
 #import "FENews.h"
 
-@interface FENewsDetailVC ()
+@interface FENewsDetailVC ()<UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *newsShowWebView;
 
 @end
@@ -20,6 +20,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.newsShowWebView loadHTMLString:self.news.content baseURL:nil];
+    self.newsShowWebView.delegate = self;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '400%'";
+    [webView stringByEvaluatingJavaScriptFromString:str];
 }
 
 - (void)didReceiveMemoryWarning {
