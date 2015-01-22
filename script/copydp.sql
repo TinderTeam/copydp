@@ -1,5 +1,5 @@
 ﻿# Host: 127.0.0.1  (Version: 5.1.70-community)
-# Date: 2015-01-21 15:55:43
+# Date: 2015-01-22 11:35:42
 # Generator: MySQL-Front 5.3  (Build 2.42)
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -512,7 +512,7 @@ CREATE VIEW `t_view_activity` AS
 
 DROP VIEW IF EXISTS `t_view_activity_order`;
 CREATE VIEW `t_view_activity_order` AS 
-  select `copydp`.`t_activity_order`.`activity_order_id` AS `activity_order_id`,`copydp`.`t_activity_order`.`activity_id` AS `activity_id`,`copydp`.`t_activity_order`.`customer_id` AS `customer_id`,`copydp`.`t_activity_order`.`activity_title` AS `activity_title`,`copydp`.`t_activity_order`.`acitivity_disc` AS `activity_disc`,`copydp`.`t_activity_order`.`imgsrc` AS `imgsrc`,`copydp`.`t_activity_order`.`memberlimit` AS `memberlimit`,`copydp`.`t_activity_order`.`datetime` AS `datetime`,`copydp`.`t_activity_order`.`datelimit` AS `datelimit`,`copydp`.`t_activity_order`.`status` AS `status`,`copydp`.`t_activity`.`status` AS `activity_status`,`copydp`.`t_user`.`username` AS `username`,`copydp`.`t_customer`.`grade` AS `grade`,`copydp`.`t_customer`.`cellphone` AS `cellphone`,`copydp`.`t_customer`.`email` AS `email` from (((`copydp`.`t_activity_order` join `copydp`.`t_activity` on((`copydp`.`t_activity`.`activity_id` = `copydp`.`t_activity_order`.`activity_id`))) join `copydp`.`t_customer` on((`copydp`.`t_customer`.`user_id` = `copydp`.`t_activity_order`.`customer_id`))) join `copydp`.`t_user` on((`copydp`.`t_user`.`user_id` = `copydp`.`t_activity_order`.`customer_id`)));
+  select `copydp`.`t_activity_order`.`activity_order_id` AS `activity_order_id`,`copydp`.`t_activity_order`.`activity_id` AS `activity_id`,`copydp`.`t_activity_order`.`customer_id` AS `customer_id`,`copydp`.`t_activity_order`.`activity_title` AS `activity_title`,`copydp`.`t_activity_order`.`imgsrc` AS `imgsrc`,`copydp`.`t_activity_order`.`memberlimit` AS `memberlimit`,`copydp`.`t_activity_order`.`datetime` AS `datetime`,`copydp`.`t_activity_order`.`datelimit` AS `datelimit`,`copydp`.`t_activity_order`.`status` AS `status`,`copydp`.`t_activity`.`dscr` AS `activity_disc`,`copydp`.`t_activity`.`status` AS `activity_status`,`copydp`.`t_activity`.`address` AS `activity_address`,`copydp`.`t_activity`.`point` AS `activity_point`,`copydp`.`t_user`.`username` AS `username`,`copydp`.`t_customer`.`grade` AS `grade`,`copydp`.`t_customer`.`cellphone` AS `cellphone`,`copydp`.`t_customer`.`email` AS `email` from (((`copydp`.`t_activity_order` join `copydp`.`t_activity` on((`copydp`.`t_activity`.`activity_id` = `copydp`.`t_activity_order`.`activity_id`))) join `copydp`.`t_customer` on((`copydp`.`t_customer`.`user_id` = `copydp`.`t_activity_order`.`customer_id`))) join `copydp`.`t_user` on((`copydp`.`t_user`.`user_id` = `copydp`.`t_activity_order`.`customer_id`)));
 
 #
 # Source for view "t_view_community_customer"

@@ -11,13 +11,15 @@ public class ActivityOrderJson implements Serializable
 	private int activity_id;
 	private int customer_id;
 	private String activity_title;
-	private String activity_disc;
 	private String imgsrc;
 	private int memberlimit;
 	private Date datetime;
 	private Date datelimit;
 	private String status;
+	private String activity_disc;
 	private String activity_status;
+	private String activity_address;
+	private String activity_point;
 	private String username;
 	private String grade;
 	private String cellphone;
@@ -116,19 +118,33 @@ public class ActivityOrderJson implements Serializable
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getActivity_address() {
+		return activity_address;
+	}
+	public void setActivity_address(String activity_address) {
+		this.activity_address = activity_address;
+	}
+	public String getActivity_point() {
+		return activity_point;
+	}
+	public void setActivity_point(String activity_point) {
+		this.activity_point = activity_point;
+	}
 	@Override
 	public String toString() {
 		return "ActivityOrderJson [activity_order_id=" + activity_order_id
 				+ ", activity_id=" + activity_id + ", customer_id="
 				+ customer_id + ", activity_title=" + activity_title
-				+ ", activity_disc=" + activity_disc + ", imgsrc=" + imgsrc
-				+ ", memberlimit=" + memberlimit + ", datetime=" + datetime
-				+ ", datelimit=" + datelimit + ", status=" + status
-				+ ", activity_status=" + activity_status + ", username="
+				+ ", imgsrc=" + imgsrc + ", memberlimit=" + memberlimit
+				+ ", datetime=" + datetime + ", datelimit=" + datelimit
+				+ ", status=" + status + ", activity_disc=" + activity_disc
+				+ ", activity_status=" + activity_status
+				+ ", activity_address=" + activity_address
+				+ ", activity_point=" + activity_point + ", username="
 				+ username + ", grade=" + grade + ", cellphone=" + cellphone
 				+ ", email=" + email + "]";
 	}
-	
 	
  
 }
