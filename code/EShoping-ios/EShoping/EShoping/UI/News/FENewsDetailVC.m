@@ -11,6 +11,7 @@
 
 @interface FENewsDetailVC ()<UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *newsShowWebView;
+@property (strong, nonatomic) IBOutlet UILabel *newsTitle;
 
 @end
 
@@ -19,6 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.newsTitle.numberOfLines = 0;
+    self.newsTitle.text = self.news.title;
+
     [self.newsShowWebView loadHTMLString:self.news.content baseURL:nil];
     self.newsShowWebView.delegate = self;
 }

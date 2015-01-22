@@ -15,6 +15,8 @@
 @property (nonatomic, strong, readonly) NSNumber *customer_id;
 @property (nonatomic, strong, readonly) NSString *activity_title;
 @property (nonatomic, strong, readonly) NSString *activity_disc;
+@property (nonatomic, strong, readonly) NSString *activity_point;
+@property (nonatomic, strong, readonly) NSString *activity_address;
 @property (nonatomic, strong, readonly) NSString *imgsrc;
 @property (nonatomic, strong, readonly) NSString *memberlimit;
 @property (nonatomic, strong, readonly) NSString *datetime;

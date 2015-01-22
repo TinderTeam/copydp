@@ -22,6 +22,11 @@
 @property (strong, nonatomic) IBOutlet FETableView *activityDeltailTableView;
 @property (strong, nonatomic) FEProductOrderView *orderView;
 @property (strong, nonatomic) IBOutlet UILabel *activityDescription;
+@property (strong, nonatomic) IBOutlet UILabel *avtivityAddressLabel;
+@property (strong, nonatomic) IBOutlet UILabel *activityPointLabel;
+@property (strong, nonatomic) IBOutlet UILabel *createTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *attachLabel;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 
 @end
 
@@ -30,8 +35,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+//    self.title = self.activity.title;
+    self.titleLabel.numberOfLines = 0;
+    self.titleLabel.text = self.activity.title;
     self.activityDescription.numberOfLines = 0;
     self.activityDescription.text = self.activity.dscr;
+    self.avtivityAddressLabel.numberOfLines = 0;
+    self.avtivityAddressLabel.text = self.activity.address;
+    self.activityPointLabel.text = [NSString stringWithFormat:@"积分奖励： %@",self.activity.point];
+    self.createTimeLabel.text = @"";//[NSString stringWithFormat:@"创建时间：%@",self.activity.datetime];
+    self.attachLabel.text = @"";[NSString stringWithFormat:@"说明："];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,7 +56,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         FEActivityShowImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activityImageCell" forIndexPath:indexPath];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(self.activity.imgsrc)]];
+        [cell.activityImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(self.activity.imgsrc)]];
         return cell;
     }else{
         UITableViewCell *cell = [[UITableViewCell alloc] init];
@@ -79,7 +92,7 @@
         }
         return self.orderView;
     }
-    return 0;
+    return nil;
 }
 
 #pragma mark - FEProductOrderViewDelegate

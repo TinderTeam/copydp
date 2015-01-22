@@ -85,12 +85,12 @@
         activity.title = cell.activity.activity_title;
         activity.datetime = cell.activity.datetime;
         activity.dscr = cell.activity.activity_disc;
-//        activity.address = cell.activity.activity_id;
+        activity.address = cell.activity.activity_address;
+        activity.point = cell.activity.activity_point;
 //        activity.info = cell.activity.activity_id;
         activity.status = cell.activity.status;
 //        activity.city_id = cell.activity.activity_id;
         activity.datelimit = cell.activity.datelimit;
-        activity.current_member = @"";
         activity.memberlimit = cell.activity.memberlimit;
         activity.imgsrc = cell.activity.imgsrc;
 //        activity.point = cell.activity.activity_id;
