@@ -48,17 +48,13 @@ public class SystemConfigActivity extends BaseActivtiy
 					GetClientVersionRsp rsp = (GetClientVersionRsp) message.getMessage().obj;
 					Intent intent = new Intent(SystemConfigActivity.this,UpgradeActivity.class);
 					intent.putExtra(UpgradeActivity.CLIENT_INFO, (Serializable) rsp.getObj());
-
 					startActivity(intent);
 				}
 				else
 				{
 					showMessage(message);
-				}
-				
+				}				
 			}
-			
-			
 		}).getAppVersion(req);
 	}
 	

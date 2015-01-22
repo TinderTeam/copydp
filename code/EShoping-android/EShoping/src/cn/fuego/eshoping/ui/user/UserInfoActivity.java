@@ -90,7 +90,8 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 
 	public void logoutBtnEvent(View v){
 		log.info("user logout...");
-		MemoryCache.cleanToken();
+		AppCache.getInstance().cleanToken();
+		AppCache.getInstance().cleanUser();
 		//转至登陆页面
 		Intent intent = new Intent();
 		intent.setClass(this,LoginActivity.class);

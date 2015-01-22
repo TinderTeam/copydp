@@ -12,9 +12,11 @@ import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.MainTabbarActivity;
 import cn.fuego.eshoping.ui.base.BaseFragment;
+import cn.fuego.eshoping.ui.widget.AppLoginView;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.http.MispHttpHandler;
@@ -26,7 +28,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	FuegoLog log = FuegoLog.getLog(UserFragment.class);
 	
 	TextView userName;
-	TextView userPlace;
+	//TextView userPlace;
 	
 	View userInfoBtn;
 	Button myOrderBtn;
@@ -59,7 +61,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 		myActivityBtn = (Button) rootView.findViewById(R.id.user_btn_activity);
 		sysConfigBtn = (Button) rootView.findViewById(R.id.user_btn_setting);
 		userName= (TextView) rootView.findViewById(R.id.user_username);
-		userPlace= (TextView) rootView.findViewById(R.id.user_place);
+		//userPlace= (TextView) rootView.findViewById(R.id.user_place);
 	}
 
 	
@@ -68,7 +70,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 		
 		if(AppCache.getInstance().isLogined()){	
 			userName.setText(AppCache.getInstance().getUser().getUsername());
-			userPlace.setText(AppCache.getInstance().getCityInfo().getCity());			
+			//userPlace.setText(AppCache.getInstance().getCityInfo().getCity());			
 		}
 		
 		userInfoBtn.setOnClickListener(new OnClickListener(){
@@ -135,6 +137,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	public void nextActivity(Class clazz){		
 			log.info("next activity:"+clazz.toString());
 			Intent intent = new Intent();
+			intent.putExtra(SharedPreferenceConst.LOGIN_RETURN_TYPE, AppLoginView.BACK_PAGE);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 			intent.setClass(this.getActivity(), clazz);
 			this.startActivity(intent);			

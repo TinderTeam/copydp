@@ -22,7 +22,10 @@ public abstract class LoginFormView
 	 */
     private EditText textName,textPwd;    
 	private Button loginBtn;
-
+	
+    public static final int HOME_PAGE=0;
+	public static final int BACK_PAGE=1;	
+	private int returnType=HOME_PAGE;
     
 	/*
 	 *  fuction component
@@ -49,6 +52,7 @@ public abstract class LoginFormView
     	setContext(content);
     	textName = (EditText)context.findViewById(nameTextID);
 		textPwd =(EditText)context.findViewById(pswdTextID);
+		textName.setFreezesText(true);
 		loginBtn=(Button)context.findViewById(loginBtnID);
 		loginBtn.setOnClickListener(new OnClickListener(){
 			@Override

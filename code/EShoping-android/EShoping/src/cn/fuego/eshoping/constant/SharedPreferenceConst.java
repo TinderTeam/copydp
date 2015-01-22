@@ -28,5 +28,6 @@ public class SharedPreferenceConst
 	public static final String PRODUCT_FILTER = "productFilter";
 	public static final String SELLER_PRODUCT_LIST = "sellerProductList";
 	public static final String PRODUCT_FILTER_KEYWORD = "PRODUCT_FILTER_KEYWORD";
+	public static final String LOGIN_RETURN_TYPE = "LOGIN_RETURN_TYPE";
 
 }

@@ -73,7 +73,7 @@ public class MemoryCache
 		return "http://"+MemoryCache.getServerIp()+":"+MemoryCache.getServerPort();
 	}
 	
-	public static void cleanToken(){
+	public void cleanToken(){
 		token=null;
 	}
 	public static String getWebContextUrl()

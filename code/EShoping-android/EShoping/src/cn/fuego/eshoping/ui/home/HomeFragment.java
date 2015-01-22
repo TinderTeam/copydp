@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.string.StringLengthLimit;
@@ -29,6 +28,7 @@ import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.cache.ProductTypeCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.seller.SellerInfoActivity;
+import cn.fuego.eshoping.ui.widget.ProductSearchView;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetSellerListRsp;
@@ -68,6 +68,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 	private List<CommonItemMeta> typeProductData= new ArrayList<CommonItemMeta>();
 	private List<CommonItemMeta> allProductData= new ArrayList<CommonItemMeta>();
 	private SearchView searchView;
+	private ProductSearchView productSearchView;
 	
 	@Override
 	public void initRes()
@@ -91,37 +92,19 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		
 		
 		View view = super.onCreateView(inflater, container, savedInstanceState);	
-		searchView= (SearchView)view.findViewById(R.id.search_view);
-		searchView.setOnQueryTextListener(new OnQueryTextListener(){
-
-			@Override
-			public boolean onQueryTextSubmit(String query)
-			{
-				log.info("search button clicked...");
-				searchEvent(query);
-				return false;
-			}
-			@Override
-			public boolean onQueryTextChange(String newText)
-			{
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-		});
+		
+		productSearchView=new ProductSearchView(this.getActivity(),view);
 		
 		TextView cityView =  (TextView)view.findViewById(R.id.home_city);
 		cityView.setText(AppCache.getInstance().getCityInfo().getCity());
 		cityView.setOnClickListener(new OnClickListener(){
-
 			@Override
 			public void onClick(View v)
 			{
 				log.info("change city button clicked...");
 				changeCity();
 
-			}
-			
+			}		
 		});
 		return view;
 	}
@@ -133,13 +116,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		this.startActivity(intent);		
 	}
 
-	protected void searchEvent(String query)
-	{
-		Intent intent = new Intent();
-		intent.setClass(getActivity(), ProductSearchActivity.class);
-		intent.putExtra(SharedPreferenceConst.PRODUCT_FILTER_KEYWORD, query);
-		this.startActivity(intent);
-	}
 
 	@Override
 	public void loadSendList()

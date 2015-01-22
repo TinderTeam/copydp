@@ -11,6 +11,7 @@ import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.constant.ErrorMessageConst;
 import cn.fuego.eshoping.ui.MainTabbarActivity;
 import cn.fuego.eshoping.ui.MainTabbarInfo;
+import cn.fuego.eshoping.ui.RegistActivity;
 import cn.fuego.eshoping.ui.home.HomeFragment;
 import cn.fuego.eshoping.ui.order.ProductOrderSuccess;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
@@ -20,16 +21,23 @@ import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.constant.MISPErrorMessageConst;
 import cn.fuego.misp.service.http.MispHttpHandler;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.base.MispBaseActivtiy;
 import cn.fuego.misp.ui.widget.login.LoginFormView;
 
 public class AppLoginView extends LoginFormView
 {
 	FuegoLog log = FuegoLog.getLog(AppLoginView.class);
 	
+    public static final int HOME_PAGE=0;
+	public static final int BACK_PAGE=1;	
     private ProgressDialog proDialog;
-    
-    public AppLoginView(Activity context){
+	private int returnType=HOME_PAGE;
+
+	
+	
+    public AppLoginView(Activity context,int backType){
     	super(context,  R.id.txt_username, R.id.txt_password,R.id.login_btn);
+    	returnType=backType;
     }
 
 	@Override
@@ -58,9 +66,15 @@ public class AppLoginView extends LoginFormView
 					AppCache.getInstance().setCustomer(rsp.getCustomer());
 					AppCache.getInstance().setUser(rsp.getUser());
 					AppCache.setToken(rsp.getToken());
-					Intent intent = new Intent(context,MainTabbarActivity.class);
-					intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(HomeFragment.class));
-					context.startActivity(intent);
+					
+					log.info("page after login is:" + returnType);
+					if(returnType==HOME_PAGE){
+						Intent intent = new Intent(context,MainTabbarActivity.class);
+						intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(HomeFragment.class));
+						context.startActivity(intent);	
+					}else if(returnType==BACK_PAGE){
+						(context).finish();
+					}		
 				}
 				else{
 					showErrorMsg(MISPErrorMessageConst.getMessageByErrorCode(message.getErrorCode()));

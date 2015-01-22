@@ -17,6 +17,7 @@ import cn.fuego.common.util.list.tools.IteratorSelector;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.constant.ErrorMessageConst;
+import cn.fuego.eshoping.ui.activity.ActivityInfoActivity;
 import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListReq;
 import cn.fuego.eshoping.webservice.up.model.GetActivityOrderListRsp;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderReq;
@@ -49,6 +50,7 @@ public class UserActivityListActivity extends MispListActivity<ActivityOrderJson
 		//List
 		this.listViewRes.setListItemView(R.layout.user_activity_item);
 		this.listViewRes.setListView(R.id.order_listview);	
+		this.listViewRes.setClickActivityClass(ActivityInfoActivity.class);
 	}
 
 	@Override

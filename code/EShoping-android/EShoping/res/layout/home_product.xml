@@ -33,42 +33,42 @@
                 android:text="产品名称"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/black" />
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:background="@color/white"
                 android:visibility="visible" >
-			
-			   <android.support.v4.view.ViewPager
-			       android:id="@+id/home_product_image"
-			       android:layout_width="wrap_content"
-			       android:layout_height="wrap_content"
-			       android:layout_gravity="center"
-			       android:visibility="visible" >
-			                
-			        <android.support.v4.view.PagerTabStrip    
-			             android:id="@+id/pagertab"    
-			            android:layout_width="wrap_content"    
-			            android:layout_height="wrap_content"    
-			            android:layout_gravity="top"/>    
-			           
-			    </android.support.v4.view.ViewPager>
-			      <RelativeLayout    
-	        android:layout_width="fill_parent"    
-	        android:layout_height="wrap_content"   
-	        android:orientation="vertical" >    
-	    
-	        <LinearLayout    
-	            android:id="@+id/home_product_image_view_group"    
-	            android:layout_width="fill_parent"    
-	            android:layout_height="wrap_content"    
-	            android:layout_alignParentBottom="true"   
-	            android:layout_marginBottom="30dp"    
-	            android:gravity="center_horizontal"    
-	            android:orientation="horizontal" >    
-	        </LinearLayout>    
-	    </RelativeLayout>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/home_product_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="visible" >
+
+                    <android.support.v4.view.PagerTabStrip
+                        android:id="@+id/pagertab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top" />
+                </android.support.v4.view.ViewPager>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/home_product_image_view_group"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="30dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+                </RelativeLayout>
             </RelativeLayout>
 
             <RelativeLayout
@@ -76,13 +76,27 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" >
 
+                <TextView
+                    android:id="@+id/home_product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="18dp"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="￥47"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/themecolor"
+                    android:textSize="32dp" />
+
                 <Button
                     android:id="@+id/home_product_order_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="15dp"
                     android:layout_weight="0.5"
                     android:background="@drawable/common_btn"
                     android:padding="10dp"
@@ -91,50 +105,93 @@
                     android:textSize="22sp" />
 
                 <TextView
-                    android:id="@+id/home_product_price"
+                    android:id="@+id/product_sell_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:layout_toRightOf="@+id/textView2"
+                    android:text="20"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="29dp"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:text="￥47"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/themecolor"
-                    android:textSize="32dp" />
+                    android:layout_toRightOf="@+id/home_product_price"
+                    android:text="已出售："
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/order_product_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:text="商家介绍"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/black" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/home_product_seller_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="产品描述"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="小肥羊火锅店这里可以显示非常长的介绍撒的佛山的佛i横扫i的佛啊飞鸿萨都if和 上机动班法斯宾德吧阿萨德佛哦撒的呢回复 "
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" >
 
+                    <TextView
+                        android:id="@+id/home_product_disc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="小肥羊火锅店这里可以显示非常长的介绍撒的佛山的佛i横扫i的佛啊飞鸿萨都if和 上机动班法斯宾德吧阿萨德佛哦撒的呢回复 "
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/order_product_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="商家介绍"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" >
+
+                    <TextView
+                        android:id="@+id/home_product_seller_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="小肥羊火锅店这里可以显示非常长的介绍撒的佛山的佛i横扫i的佛啊飞鸿萨都if和 上机动班法斯宾德吧阿萨德佛哦撒的呢回复 "
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
@@ -151,8 +208,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:orientation="vertical"
-             >
+                android:orientation="vertical" >
 
                 <com.baidu.mapapi.map.MapView
                     android:id="@+id/bmapView"
@@ -226,9 +282,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black"
                     android:textSize="10dp" />
-
             </RelativeLayout>
-
         </LinearLayout>
 
     </ScrollView>

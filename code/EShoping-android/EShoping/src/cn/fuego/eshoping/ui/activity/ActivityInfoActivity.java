@@ -13,6 +13,7 @@ import cn.fuego.eshoping.service.verification.VerificationService;
 import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.order.ActivityOrderSuccess;
+import cn.fuego.eshoping.ui.widget.AppLoginView;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderReq;
 import cn.fuego.eshoping.webservice.up.model.SetActivityOrderRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ActivityJson;
@@ -64,6 +65,7 @@ public class ActivityInfoActivity extends BaseActivtiy
 			//转至登陆页面
 			Intent intent = new Intent();
 			intent.setClass(this, LoginActivity.class);
+			intent.putExtra(SharedPreferenceConst.LOGIN_RETURN_TYPE, AppLoginView.BACK_PAGE);
 			startActivity(intent);
 		}
 	}	

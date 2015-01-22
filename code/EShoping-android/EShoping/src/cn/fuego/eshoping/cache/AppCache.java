@@ -106,4 +106,9 @@ public class AppCache extends MemoryCache
 		this.positionCityStr = positionCityStr;
 	}
 
+	public void cleanUser()
+	{
+		user=null;
+	}
+
 }

@@ -22,6 +22,7 @@ import cn.fuego.eshoping.service.verification.VerificationService;
 import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.order.ProductOrderActivity;
+import cn.fuego.eshoping.ui.widget.AppLoginView;
 import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
@@ -57,6 +58,9 @@ public class HomeProductActivity extends BaseActivtiy
 	private List<ImageView> mImageViews = new ArrayList<ImageView>();  
 	private TextView priceView ;
 	private TextView limitView;
+	private TextView sellNumView;
+	private TextView titleView;
+	private TextView dicrView;
 	private TextView view;
 	private Button orderBtn;
 	
@@ -68,25 +72,22 @@ public class HomeProductActivity extends BaseActivtiy
 		@Override
 		public void onClick(View v)
 		{
-			if(AppCache.getInstance().getUser()==null){ 
-				//转至登陆页面
-				Intent intent = new Intent();
-				intent.setClass(HomeProductActivity.this, LoginActivity.class);
-				startActivity(intent);
-			}
-			else
-			{			
-				if(!VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){
-				;
-				}else{
+			if(AppCache.getInstance().isLogined()){
+				if(VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){
 					Intent intent = new Intent();
 					intent.setClass(HomeProductActivity.this, ProductOrderActivity.class);
 					intent.putExtra(SharedPreferenceConst.PRODUCT, product);
 					startActivity(intent);
+				}else{
+					//错误码
 				}
-				
-			}
-
+			}else{
+				//转至登陆页面
+				Intent intent = new Intent();
+				intent.setClass(HomeProductActivity.this, LoginActivity.class);
+				intent.putExtra(SharedPreferenceConst.LOGIN_RETURN_TYPE, AppLoginView.BACK_PAGE);
+				startActivity(intent);
+			}		
 		}	
 	};
 	
@@ -151,30 +152,32 @@ public class HomeProductActivity extends BaseActivtiy
 		// 获取地图控件引用
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		//产品信息
+		titleView = (TextView) findViewById(R.id.product_title);
 		priceView = (TextView) findViewById(R.id.home_product_price);
 		limitView = (TextView) findViewById(R.id.order_activity_status);
+		sellNumView = (TextView) findViewById(R.id.product_sell_num);
 		view = (TextView) findViewById(R.id.home_product_seller_info);	
+		dicrView = (TextView) findViewById(R.id.home_product_disc);	
 		group = (ViewGroup)findViewById(R.id.home_product_image_view_group);
 		
 		//产品图片
 		viewPager = (ViewPager) findViewById(R.id.home_product_image);	
 		//按钮
 		orderBtn = (Button)findViewById(R.id.home_product_order_btn); 
-
-	
 	}
 	
 	/**
 	 * 组件加载数据（同步）
 	 */
 	private void ComponentUpdateData()
-	{		
+	{
 		priceView.setText(this.getString(R.string.misp_rmb_unit)+product.getPrice());
 		limitView.setText(String.valueOf(product.getEnd_date_time()));
+		titleView.setText(product.getName());
+		sellNumView.setText(String.valueOf(product.getCurrent_member()));
+		dicrView.setText(product.getDscr());
 		orderBtn.setOnClickListener(orderBtnHandel);
-	
-		
-		}
+	}
 
 	/**
 	 * 加载商户组件数据（异步）

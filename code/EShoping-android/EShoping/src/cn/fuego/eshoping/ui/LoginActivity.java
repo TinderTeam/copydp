@@ -6,16 +6,23 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.base.ExitApplication;
 import cn.fuego.eshoping.ui.widget.AppLoginView;
+import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.model.ListViewResInfo;
 
 
 public class LoginActivity extends BaseActivtiy
 {
 	private FuegoLog log = FuegoLog.getLog(getClass());
+	
+	
+	
 	private AppLoginView loginView;
+
 	@Override
 	public void initRes()
 	{
@@ -29,7 +36,12 @@ public class LoginActivity extends BaseActivtiy
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setLoginView(new AppLoginView(this));
+		//获取需要登录页面的返回类型
+		int typeNumber=0;
+		if(this.getIntent()!=null&&this.getIntent().getSerializableExtra(SharedPreferenceConst.LOGIN_RETURN_TYPE)!=null){
+			typeNumber=(Integer)this.getIntent().getSerializableExtra(SharedPreferenceConst.LOGIN_RETURN_TYPE);
+		}	
+		setLoginView(new AppLoginView(this,typeNumber));
 		ExitApplication.getInstance().addActivity(this);	
 		Button registBtn = (Button) this.findViewById(R.id.com_next_btn);
 		registBtn.setText(R.string.page_regist);
@@ -47,9 +59,10 @@ public class LoginActivity extends BaseActivtiy
 	{
 		Intent intent = new Intent();
 		intent.setClass(this, RegistActivity.class);
-		this.startActivity(intent);	
+		this.startActivity(intent);			
 	}
 
+	
 	@Override
 	public void handle(MispHttpMessage message)
 	{

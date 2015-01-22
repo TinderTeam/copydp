@@ -16,6 +16,7 @@ import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.constant.ErrorMessageConst;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
+import cn.fuego.eshoping.ui.widget.NumberSelectWindow;
 import cn.fuego.eshoping.webservice.up.model.SetProductOrderReq;
 import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
@@ -34,6 +35,9 @@ public class ProductOrderActivity extends BaseActivtiy
 	private EditText quantitiy;
 	private ProductJson product;
 	private Button orderSubmitBtn;
+	
+	private int MAX_NUM=32768;
+	private int MIN_NUM=1;
 	
 	/**
 	 * 修改购买数量、总价联动事件
@@ -69,6 +73,7 @@ public class ProductOrderActivity extends BaseActivtiy
 		@Override
 		public void onClick(View v)
 		{
+
 			//get submit data about order
 			if(ValidatorUtil.isInt(quantitiy.getText().toString()))
 			{
@@ -83,6 +88,7 @@ public class ProductOrderActivity extends BaseActivtiy
 			}else{
 				showMessage(MISPErrorMessageConst.TYPE_CONVERSION_FAILED);
 			}
+
 		}		
 	};
 	
@@ -164,4 +170,22 @@ public class ProductOrderActivity extends BaseActivtiy
 			showMessage(message);
 		}
 	}
+	
+	public void plus(View v){	
+		int num = Integer.valueOf(quantitiy.getText().toString());
+		
+		if(num<MAX_NUM){
+			quantitiy.setText(String.valueOf(num+1));
+		}
+		log.info("plus clicked...");	
+	}
+	
+	public void minus(View v){	
+		int num = Integer.valueOf(quantitiy.getText().toString());
+		if(num>MIN_NUM){
+			quantitiy.setText(String.valueOf(num-1));
+		}
+		log.info("minus clicked...");	
+	}
+	
 }

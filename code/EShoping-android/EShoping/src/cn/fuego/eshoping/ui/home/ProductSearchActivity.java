@@ -16,6 +16,7 @@ import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.widget.FilterPopupMenu;
+import cn.fuego.eshoping.ui.widget.ProductSearchView;
 import cn.fuego.eshoping.webservice.up.model.GetProductListReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
@@ -36,6 +37,7 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
     private RadioGroup searchGroup;
     private FilterPopupMenu popupMenu;
     private ProductJson filter;
+    private ProductSearchView productSearchView;
     
 	@Override
 	public void initRes()
@@ -66,10 +68,12 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 		filter = (ProductJson) intent.getSerializableExtra(SharedPreferenceConst.PRODUCT_FILTER);
 		if(filter == null){
 			filter = new ProductJson();
+			filter.setType_id(0);
+			filter.setZone_id(0);
+		}else{
+			filter.setZone_id(0);
 		}
 		log.info("default select filter is = "+ filter );
-		filter.setType_id(0);
-		filter.setZone_id(0);
 	}	
 	
 	private void InitializationView()
@@ -82,6 +86,8 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 			searchGroup.setVisibility(android.view.View.GONE);
 		}
 		popupMenu=new FilterPopupMenu(this,searchGroup);
+		
+		productSearchView=new ProductSearchView(this);
 	}
 	
 	private void InitializationListener()
@@ -108,8 +114,6 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 		});		
 	}
 	
-
-
 	public void zoneFilter(int selectedId)
 	{
 		filter.setZone_id(selectedId);
