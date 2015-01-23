@@ -83,4 +83,5 @@ public class AppLoginView extends LoginFormView
 		};
 		WebServiceContext.getInstance().getUserManageRest(loginHandler).login(req);	
 	}
+
 }

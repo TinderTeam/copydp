@@ -54,6 +54,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 		return rootView;
 	}
 	
+	
 	private void InitializationComponent(View rootView)
 	{
 		userInfoBtn = rootView.findViewById(R.id.user_info_btn);		
@@ -137,7 +138,7 @@ public class UserFragment extends BaseFragment implements OnClickListener
 	public void nextActivity(Class clazz){		
 			log.info("next activity:"+clazz.toString());
 			Intent intent = new Intent();
-			intent.putExtra(SharedPreferenceConst.LOGIN_RETURN_TYPE, AppLoginView.BACK_PAGE);
+			//intent.putExtra(SharedPreferenceConst.LOGIN_RETURN_TYPE, AppLoginView.BACK_PAGE);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 			intent.setClass(this.getActivity(), clazz);
 			this.startActivity(intent);			

@@ -55,6 +55,8 @@ public class LoginActivity extends BaseActivtiy
 		});
 	}
     
+
+    
 	protected void toRegist()
 	{
 		Intent intent = new Intent();

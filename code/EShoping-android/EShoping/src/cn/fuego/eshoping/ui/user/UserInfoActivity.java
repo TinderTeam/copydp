@@ -59,6 +59,7 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		});
 		
 	}
+	
 
 
 	//初始化数据

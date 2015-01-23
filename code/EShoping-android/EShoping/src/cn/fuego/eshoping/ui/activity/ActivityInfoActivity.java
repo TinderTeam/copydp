@@ -51,15 +51,12 @@ public class ActivityInfoActivity extends BaseActivtiy
 		//初始化组件
 		InitializationComponent();
 	}
-
-
-
-
+	
 	//参加按钮事件
 	public void attendEvent(View v)
 	{
 		log.info("attend button clicked");
-		if(AppCache.getInstance().getUser()!=null && VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){	
+		if(AppCache.getInstance().isLogined()){	
 			activityAttend();
 		}else{
 			//转至登陆页面

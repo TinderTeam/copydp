@@ -18,6 +18,7 @@
  	<string name="sys_null"> </string>
  	<string name="page_home_city">切换城市</string>
  	<string name="page_order_submit">提交订单</string>
+ 	<string name="page_pswd">修改密码</string>
  	<string name="page_order_success">下单成功</string>
  	<string name="page_attend_success">参与成功</string>
  	<string name="page_user_sysconfig">系统设置</string>

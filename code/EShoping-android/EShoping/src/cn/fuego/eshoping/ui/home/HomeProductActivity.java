@@ -3,6 +3,8 @@ package cn.fuego.eshoping.ui.home;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -25,6 +27,8 @@ import cn.fuego.eshoping.ui.order.ProductOrderActivity;
 import cn.fuego.eshoping.ui.widget.AppLoginView;
 import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
+import cn.fuego.eshoping.webservice.up.model.SetUserGradeReq;
+import cn.fuego.eshoping.webservice.up.model.base.BaseJsonReq;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
@@ -73,13 +77,39 @@ public class HomeProductActivity extends BaseActivtiy
 		public void onClick(View v)
 		{
 			if(AppCache.getInstance().isLogined()){
-				if(VerificationService.buyProductVerification(AppCache.getInstance().getUser().getUser_id())){
+				if(VerificationService.buyProductVerification(product)){
 					Intent intent = new Intent();
 					intent.setClass(HomeProductActivity.this, ProductOrderActivity.class);
 					intent.putExtra(SharedPreferenceConst.PRODUCT, product);
 					startActivity(intent);
 				}else{
-					//错误码
+					//SVIP检验失败
+					new  AlertDialog.Builder(HomeProductActivity.this)  
+					.setTitle("用户升级" ) 
+					.setMessage("您还不是超级VIP用户，申请升级吗？" )  
+					.setPositiveButton("是" ,new android.content.DialogInterface.OnClickListener(){
+							@Override
+							public void onClick(DialogInterface dialog, int which)
+							{	
+								SetUserGradeReq req = new SetUserGradeReq();
+								req.setToken(AppCache.getInstance().getToken());
+								req.setUser(AppCache.getInstance().getUser());
+								WebServiceContext.getInstance().getUserManageRest(new MispHttpHandler(){
+									@Override
+									public void handle(MispHttpMessage message)
+									{
+										if (message.isSuccess()){
+											showMessage("申请成功，请等待管理员审批...");
+										}
+										else{
+											showMessage(message);
+										}
+									}		
+								}).upGrade(req);
+							}				
+						})  
+					.setNegativeButton("否" ,null)  
+					.show();  
 				}
 			}else{
 				//转至登陆页面

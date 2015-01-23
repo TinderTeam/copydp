@@ -1,7 +1,9 @@
 package cn.fuego.eshoping.ui.user;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
@@ -24,7 +26,7 @@ public class ResetPwdActivity extends BaseActivtiy
 	{
 		activityRes.setAvtivityView(R.layout.reset_pswd);
 		this.activityRes.setBackBtn(R.id.com_back_btn);	
-		this.activityRes.setName(getString(R.string.page_regist));
+		this.activityRes.setName(getString(R.string.page_pswd));
 		this.activityRes.setTitleTextView(R.id.com_head_title);
 	}
 	
@@ -32,9 +34,11 @@ public class ResetPwdActivity extends BaseActivtiy
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		ExitApplication.getInstance().addActivity(this);	
-		oldpswd=(EditText) this.findViewById(R.id.pswd_new);
-		newpswd=(EditText) this.findViewById(R.id.pswd_old);
+		ExitApplication.getInstance().addActivity(this);
+		Button next = (Button) this.findViewById(R.id.com_next_btn);
+		next.setText(getString(R.string.page_pswd));
+		newpswd=(EditText) this.findViewById(R.id.pswd_new);
+		oldpswd=(EditText) this.findViewById(R.id.pswd_old);
 	}
 
 	@Override

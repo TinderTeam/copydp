@@ -199,6 +199,7 @@ public class FilterPopupMenu implements OnDismissListener
 		            		popupWindow.dismiss();
 	            			childListData.clear();
 	            			updatechildren(childListData); 
+	            	
 	            		}else{	  
 	            			//选中父节点的一个内容
 		            		childListData =IteratorSelector.selectColumn(
@@ -211,6 +212,13 @@ public class FilterPopupMenu implements OnDismissListener
 	            		}
  			
 	            	}else{
+	            		if(selectStr.equals(ALL_ZONE)){	
+	            			//选中父节点的“全部”选项->恢复列表	            	
+		            		context.zoneFilter(ALL_TYPE_ID,ALL_ZONE);		            		
+		            		popupWindow.dismiss();
+	            			childListData.clear();
+	            			updatechildren(childListData); 
+	            		}
 	            		//选中区域列表
 	            		int selectedId = IteratorSelector.findbyAttr(zoneList, ZoneJson.ZONE_NAME, selectStr).getZone_id();
 	            		context.zoneFilter(selectedId,selectStr);

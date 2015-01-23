@@ -10,8 +10,8 @@ public class GetSellerReq extends BaseJsonReq
 		return seller_id;
 	}
 
-	public void setSeller_id(int seller_id) {
-		this.seller_id = seller_id;
+	public void setSeller_id(int id) {
+		this.seller_id = id;
 	}
 
 	@Override
