@@ -225,7 +225,7 @@ class UserManageAction extends Action {
 			$condition['user_id']=$userID;
 			$now = date("Y-m-d",strtotime("+1 year"));
 			$customer->where($condition)->setField('grade','SVIP');
-$customer->where($condition)->setField('vip_limit_date',$now);				
+			$customer->where($condition)->setField('vip_limit_date',$now);				
 			$this->redirect('UserManage/index','',0,'操作成功');
 		
 		}	
@@ -308,7 +308,9 @@ $customer->where($condition)->setField('vip_limit_date',$now);
 			{
 				switch($userRequest){
 				case "升级":
-						$db->where('user_id='.$userID)->setField('grade','S-VIP');
+						$now = date("Y-m-d",strtotime("+1 year"));
+						$db->where('user_id='.$userID)->setField('grade','SVIP');
+						$db->where('user_id='.$userID)->setField('vip_limit_date',$now);
 						$db->where('user_id='.$userID)->setField('request','null');
 						break;				
 				case "审批":
@@ -326,21 +328,33 @@ $customer->where($condition)->setField('vip_limit_date',$now);
 				
 			}
 			
-
-			
-			
 		}
 		public function requestDelete(){
 			
 			$db= M('customer');
 			$userID=$_GET['id'];
 			
+			$userRequest=$db->where('user_id='.$userID)->getField('request');
+			if(!empty($userRequest))
+			{
+				switch($userRequest){
+					case "升级":
+						$db->where('user_id='.$userID)->setField('request','null');
+						break;
+					case "审批":
+						$db->where('user_id='.$userID)->setField('status','已拒绝');
+						$db->where('user_id='.$userID)->setField('request','null');
+						break;
 			
-			$db->where('user_id='.$userID)->setField('request','null');
-			$db->where('user_id='.$userID)->setField('status','已拒绝');
-			$this->redirect('UserManage/index#UserRequest','',0,'操作成功');
-	
-				
+				}
+			
+				$this->redirect('UserManage/index#UserRequest','',0,'操作成功');
+			
+			
+			}else{
+				$this->redirect('UserManage/index','',0,'操作失败');
+			
+			}	
 		}
 
 	public function searchScore(){

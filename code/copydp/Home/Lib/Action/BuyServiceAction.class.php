@@ -266,8 +266,39 @@ class BuyServiceAction extends BaseAction {
 		$quantity=$orderInfo['quantity'];
 		$seller_id = $orderInfo['seller_id'];
 		$order_type = $orderInfo['order_type'];
-		
-		if("普通下单" == $order_type)
+
+		if("扫码下单" == $order_type)
+		{
+			//判断商家ID是否存在
+			$sellerViewDao=new Model('view_seller');
+			$IDCondition['user_id']  = $seller_id;
+			if($sellerViewDao->where($IDCondition)->count() != 1)
+			{
+				$rsp['errorCode'] = SELLER_NOT_EXIST;
+				return $rsp;
+			}
+			$datetime=date('Y-m-d H:i:s',time());
+			$sellerItem=$sellerViewDao->where($IDCondition)->find();
+			$sellerName=$sellerItem['seller_name'];
+			//进行下单逻辑处理
+			$orderID=$seller_id.$customer_id.strtotime($datetime);
+			
+			$order = M('order');
+			$data2['order_id']=$orderID;
+			$data2['order_name']=$sellerItem['seller_name'];
+			$data2['customer_id']=$customer_id;
+			$data2['seller_id']=$seller_id;
+			$data2['imgsrc']=$sellerItem['img'];
+			$data2['order_time']=$datetime;
+			$data2['quantity']=1;
+			$data2['order_status']='已使用';
+			$data2['order_type']='扫码下单';
+			$order->add($data2);
+			$orderIDCondition['order_id'] = $orderID;
+			$orderViewDB = M('view_order');
+			$order = $orderViewDB->where($orderIDCondition)->find();
+		}
+		else 
 		{
 			//判断是否为SVIP产品，是否超过购买限制
 			$rsp['errorCode']  = $this->GetSvipBuyTimes($product_id,$customer_id);
@@ -309,42 +340,6 @@ class BuyServiceAction extends BaseAction {
 			$orderIDCondition['order_id'] = $orderID;
 			$orderViewDB = M('view_order');
 			$order = $orderViewDB->where($orderIDCondition)->find();
-		}
-		elseif("扫码下单" == $order_type)
-		{
-			//判断商家ID是否存在
-			$sellerViewDao=new Model('view_seller');
-			$IDCondition['user_id']  = $seller_id;
-			if($sellerViewDao->where($IDCondition)->count() != 1)
-			{
-				$rsp['errorCode'] = SELLER_NOT_EXIST;
-				return $rsp;
-			}
-			$datetime=date('Y-m-d H:i:s',time());
-			$sellerItem=$sellerViewDao->where($IDCondition)->find();
-			$sellerName=$sellerItem['seller_name'];
-			//进行下单逻辑处理
-			$orderID=$seller_id.$customer_id.strtotime($datetime);
-			
-			$order = M('order');
-			$data2['order_id']=$orderID;
-			$data2['order_name']=$sellerItem['seller_name'];
-			$data2['customer_id']=$customer_id;
-			$data2['seller_id']=$seller_id;
-			$data2['imgsrc']=$sellerItem['img'];
-			$data2['order_time']=$datetime;
-			$data2['quantity']=1;
-			$data2['order_status']='已使用';
-			$data2['order_type']='扫码下单';
-			$order->add($data2);
-			$orderIDCondition['order_id'] = $orderID;
-			$orderViewDB = M('view_order');
-			$order = $orderViewDB->where($orderIDCondition)->find();
-		}
-		else 
-		{
-			$rsp['errorCode'] = ORDER_TYPE_WRONG;
-			return $rsp;
 		}
 		
 		$rsp['errorCode'] = SUCCESS;
