@@ -25,6 +25,9 @@
     <string name="misp_new_password">新密码</string>
     <string name="misp_confirm_password">确认密码</string>
     
+    
+    <string name="misp_to_scan_qr">将二维码放入框内, 即可自动扫描</string>
+    
     <string name="misp_rmb_unit">￥</string>
     <string name="title_activity_login">LoginActivity</string>
 

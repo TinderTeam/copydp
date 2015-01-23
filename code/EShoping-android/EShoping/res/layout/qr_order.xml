@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backcolor"
+    android:orientation="vertical" >
+    <include
+            android:id="@+id/include1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            layout="@layout/misp_tilte_with_back_layout" />
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:text="扫描二维码" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:lines="2"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+   <TextView
+        android:id="@+id/seller_desp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:lines="2"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+    <ImageView
+        android:id="@+id/qrcode_bitmap"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/result"/>
+</LinearLayout>

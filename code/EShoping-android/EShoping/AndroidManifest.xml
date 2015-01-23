@@ -25,6 +25,14 @@
 	
 	  
 
+	<!-- qr code permission -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    
+    <!-- baidu location permission -->
 		<uses-permission android:name="android.permission.INTERNET"/>
 		<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 		<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -60,6 +68,11 @@
             android:name="cn.fuego.misp.ui.common.upgrage.UpgradeActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="cn.fuego.misp.lib.qr.zxing.MipcaActivityCapture"
+            android:label="@string/app_name" >
+        </activity>
+       
         <activity
             android:name="cn.fuego.eshoping.ui.LoginActivity"
             android:label="@string/app_name" >
@@ -154,6 +167,10 @@
             android:name="cn.fuego.eshoping.ui.home.CitySelectListActivity"
             android:label="@string/app_name" >
         </activity>
-    </application>
+        <activity
+            android:name="cn.fuego.eshoping.ui.home.QrOrderActivity"
+            android:label="@string/app_name" >
+        </activity>
+     </application>
 
 </manifest>

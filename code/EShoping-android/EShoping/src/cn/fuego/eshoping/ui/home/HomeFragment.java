@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
     private static final int ITEM_TYPE_PRODUCT = 4; 
     
     private int tabID = 0;
+    
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
  
 	private List<CommonItemMeta> newProductData = new ArrayList<CommonItemMeta>();
@@ -75,6 +77,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		this.fragmentRes.setImage(R.drawable.tabbar_home_icon);
 		this.fragmentRes.setName(R.string.tabbar_home);
 		this.fragmentRes.setFragmentView(R.layout.home_fragment);
+		this.fragmentRes.getButtonIDList().add(R.id.home_scan_btn);
 		listViewRes.setListView(R.id.home_main_list);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
 		ProductTypeCache.getInstance();
@@ -101,19 +104,33 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			public void onClick(View v)
 			{
 				log.info("change city button clicked...");
-				changeCity();
+				toQrOrder();
 
 			}		
 		});
 		return view;
 	}
 
+	
 	protected void changeCity()
 	{
 		Intent intent = new Intent();
 		intent.setClass(this.getActivity(), CitySelectListActivity.class);
 		this.startActivity(intent);		
 	}
+	
+	@Override
+	public void onClick(View v)
+	{
+		 toQrOrder();
+	}
+	protected void toQrOrder()
+	{
+		Intent intent = new Intent();
+		intent.setClass(this.getActivity(), QrOrderActivity.class);
+		this.startActivity(intent);		
+	}
+
 
 
 	@Override
@@ -433,6 +450,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			
 		}
 	}
-	 
+ 
 
 }

@@ -30,7 +30,15 @@
             android:text="切换城市"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/theme_text_color" />
-
+  
+            <Button
+                android:id="@+id/home_scan_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                 android:text="扫码"
+                android:textColor="@color/theme_text_color"
+                android:textSize="@dimen/top_head_btn_size" />
     </RelativeLayout>
 
     <ListView
