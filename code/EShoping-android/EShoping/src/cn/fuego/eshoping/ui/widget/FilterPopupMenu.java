@@ -59,8 +59,11 @@ public class FilterPopupMenu implements OnDismissListener
     private List<String> childListData = new ArrayList<String>() ; 
 	private GroupAdapter fatherAdapter,childAdapter;
 	private int xPos;
-	private int status=TYPE_SELECT; //默认正在筛选类型
 	
+	private int currentSelect=TYPE_SELECT; //默认正在筛选类型
+	public static final String ALL_TYPE = "全部分类";	//正在筛选类型
+	public static final String ALL_ZONE = "全部商圈";	//正在筛选类型
+	public static final int ALL_TYPE_ID = 0;	//“全部”的ID类型
 	public static final int TYPE_SELECT = 0;	//正在筛选类型
 	public static final int ZONE_SELECT = 1;	//正在筛选区域
 
@@ -163,7 +166,8 @@ public class FilterPopupMenu implements OnDismissListener
 	{
 		 fatherList = (ListView) popupWindowView.findViewById(R.id.search_father_list); 
          childList = (ListView) popupWindowView.findViewById(R.id.search_child_list); 
-         bottomview = popupWindowView.findViewById(R.id.pop_window_bottom);           
+         bottomview = popupWindowView.findViewById(R.id.pop_window_bottom);   
+         fatherListData.add(0, ALL_TYPE);
          fatherAdapter = new GroupAdapter(context, fatherListData);  
          fatherList.setAdapter(fatherAdapter);
          childAdapter = new GroupAdapter(context, childListData);  
@@ -187,17 +191,29 @@ public class FilterPopupMenu implements OnDismissListener
 	            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) { 
 	            	log.info("father list item selected:id="+position+"str="+fatherListData.get(position));
 	            	String selectStr=fatherListData.get(position);
-	            	if(TYPE_SELECT==status){
+	            	if(TYPE_SELECT==currentSelect){
 	            		//选中父节点,展开子节点	
-	            		childListData =IteratorSelector.selectColumn(
-	            				typeChindrenMap.get(selectStr),
-	            				ProductTypeJson.TYPE_NAME
-	            				);
-	            		log.info("explan sub type list: "+childListData.toString());
-	            		updatechildren(childListData);  			
+	            		if(selectStr.equals(ALL_TYPE)){	
+	            			//选中父节点的“全部”选项->恢复列表	            	
+		            		context.typeFilter(ALL_TYPE_ID,ALL_TYPE);		            		
+		            		popupWindow.dismiss();
+	            			childListData.clear();
+	            			updatechildren(childListData); 
+	            		}else{	  
+	            			//选中父节点的一个内容
+		            		childListData =IteratorSelector.selectColumn(
+		            				typeChindrenMap.get(selectStr),
+		            				ProductTypeJson.TYPE_NAME
+		            				);
+		            		childListData.add(0, selectStr);  		
+		            		log.info("explan sub type list: "+childListData.toString());
+		            		updatechildren(childListData); 
+	            		}
+ 			
 	            	}else{
+	            		//选中区域列表
 	            		int selectedId = IteratorSelector.findbyAttr(zoneList, ZoneJson.ZONE_NAME, selectStr).getZone_id();
-	            		context.zoneFilter(selectedId);
+	            		context.zoneFilter(selectedId,selectStr);
 	            		popupWindow.dismiss();
 	            	}
 	            }  
@@ -208,7 +224,7 @@ public class FilterPopupMenu implements OnDismissListener
 	            	log.info("children list item selected..."+position+"str="+childListData.get(position));
 	            	String selectStr=childListData.get(position);
 	            	int selectedId = IteratorSelector.findbyAttr(allList, ProductTypeJson.TYPE_NAME, selectStr).getType_id();
-	            	context.tpyeFilter(selectedId);
+	            	context.typeFilter(selectedId,selectStr);
 	            	popupWindow.dismiss();
 	            }  
 	        });  
@@ -245,8 +261,9 @@ public class FilterPopupMenu implements OnDismissListener
 		public void showTypeFilter()
 		{	
 			//显示父类型表
-			status=this.TYPE_SELECT;
+			currentSelect=this.TYPE_SELECT;
 			fatherListData= IteratorSelector.selectColumn(typeFatherList, ProductTypeJson.TYPE_NAME);
+			fatherListData.add(0,ALL_TYPE);
 			childListData.clear();
 			update(fatherListData,new ArrayList<String>());
 			show();
@@ -255,11 +272,13 @@ public class FilterPopupMenu implements OnDismissListener
 		public void showZoneFilter()
 		{	
 			//显示区域表
-			status=this.ZONE_SELECT;
+			currentSelect=this.ZONE_SELECT;
 			fatherListData=IteratorSelector.selectColumn(zoneList, ZoneJson.ZONE_NAME);
+			fatherListData.add(0,ALL_ZONE);
 			childListData.clear();
 			update(fatherListData,new ArrayList<String>());
 			show();
 		}
+		
 
 }

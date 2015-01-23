@@ -7,15 +7,19 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/themecolor" >
+        android:background="@color/themecolor"
+        android:gravity="center" >
 
         <SearchView
             android:id="@+id/search_view"
             android:layout_width="224dp"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/home_scan_btn"
             android:iconifiedByDefault="true"
             android:imeOptions="actionSearch"
             android:inputType="textCapWords" >
+
         </SearchView>
 
         <TextView
@@ -25,20 +29,24 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:onClick="changeCity"
             android:clickable="true"
+            android:onClick="changeCity"
             android:text="切换城市"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/theme_text_color" />
-  
-            <Button
-                android:id="@+id/home_scan_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                 android:text="扫码"
-                android:textColor="@color/theme_text_color"
-                android:textSize="@dimen/top_head_btn_size" />
+            android:textColor="@color/theme_text_color"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/home_scan_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/home_city"
+            android:background="@null"
+            android:text="扫码消费|"
+            android:textColor="@color/theme_text_color"
+            android:textSize="14sp" />
+
     </RelativeLayout>
 
     <ListView

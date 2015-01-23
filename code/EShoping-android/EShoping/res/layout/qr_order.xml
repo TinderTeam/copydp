@@ -1,43 +1,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backcolor"
+    android:background="@color/white"
     android:orientation="vertical" >
+
     <include
-            android:id="@+id/include1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            layout="@layout/misp_tilte_with_back_layout" />
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="扫描二维码" />
+        layout="@layout/com_head_back_title" />
 
     <TextView
-        android:id="@+id/result"
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="商家名称"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/themecolor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/qr_seller_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="left|center_vertical"
         android:lines="2"
-        android:gravity="center_horizontal"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
-   <TextView
-        android:id="@+id/seller_desp"
+        android:text="商家名称字符串"
+        android:textColor="@color/black_85"
+        android:textSize="12sp" />
+ <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/backcolor" >
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="商家描述"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/themecolor"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/qr_seller_desp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="left|center_vertical"
         android:lines="2"
-        android:gravity="center_horizontal"
-        android:textColor="@android:color/black"
-        android:textSize="16sp" />
-    <ImageView
-        android:id="@+id/qrcode_bitmap"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/result"/>
+        android:text="商家描述字符串会很长"
+        android:textColor="@color/black_85"
+        android:textSize="12sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/backcolor" >
+    </FrameLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/themecolor"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="确 认 下 单"
+        android:onClick="submitOrder"
+        android:textColor="@color/theme_text_color"
+        android:textSize="20sp" />
+
 </LinearLayout>

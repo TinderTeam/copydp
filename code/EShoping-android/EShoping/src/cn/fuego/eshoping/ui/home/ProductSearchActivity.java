@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -114,19 +115,23 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 		});		
 	}
 	
-	public void zoneFilter(int selectedId)
+	public void zoneFilter(int selectedId, String selectStr)
 	{
 		filter.setZone_id(selectedId);
 		log.info("select by filter: "+filter);
 		super.refreshList(new ArrayList<ProductJson>());
+		RadioButton btn = (RadioButton) findViewById(R.id.product_serch_radio_area);
+		btn.setText(selectStr);
 		loadSendList();
 	}
 
-	public void tpyeFilter(int selectedId)
+	public void typeFilter(int selectedId, String selectStr)
 	{
 		filter.setType_id(selectedId);
 		log.info("select by filter: "+filter);
 		super.refreshList(new ArrayList<ProductJson>());
+		RadioButton btn = (RadioButton) findViewById(R.id.product_serch_radio_type);
+		btn.setText(selectStr);
 		loadSendList();
 	}
 

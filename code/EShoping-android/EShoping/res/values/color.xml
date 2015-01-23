@@ -16,7 +16,7 @@
 	
 	<color name="backcolor">#E7E6E3</color>  <!-- 背景墙纸颜色 -->
 	<color name="focuscolor">#0378FF</color> <!-- nav 选中字体颜色 -->
-	
+		<color name="black_85">#AA000000</color>
      <color name="result_view">#b0000000</color>
       <color name="viewfinder_mask">#60000000</color>
       <color name="possible_result_points">#c0ffff00</color> 

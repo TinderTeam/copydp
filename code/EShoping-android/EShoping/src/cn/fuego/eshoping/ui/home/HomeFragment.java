@@ -62,7 +62,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
     private static final int ITEM_TYPE_PRODUCT = 4; 
     
     private int tabID = 0;
-    
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
  
 	private List<CommonItemMeta> newProductData = new ArrayList<CommonItemMeta>();
@@ -104,14 +103,13 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			public void onClick(View v)
 			{
 				log.info("change city button clicked...");
-				toQrOrder();
+				changeCity();
 
 			}		
 		});
 		return view;
 	}
 
-	
 	protected void changeCity()
 	{
 		Intent intent = new Intent();
@@ -450,6 +448,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 			
 		}
 	}
- 
+	 
 
 }

@@ -36,7 +36,6 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		this.activityRes.setBackBtn(R.id.com_back_btn);
 		this.activityRes.setTitleTextView(R.id.com_head_title);
 		this.activityRes.setName(getString(R.string.page_user_info));	
-		
 		//List
 		this.setDataList(infoList);		
 		this.listViewRes.setListItemView(R.layout.list_item_texttype);
@@ -48,7 +47,19 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 	{
 		//初始化数据
 		super.onCreate(savedInstanceState);
+		Button registBtn = (Button) this.findViewById(R.id.com_next_btn);
+		registBtn.setText(R.string.page_regist);
+		registBtn.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v)
+			{		
+				log.info("regist button clicked...");
+				toResetPwd();
+			}
+		});
+		
 	}
+
 
 	//初始化数据
 	private void InitializationData()
@@ -98,4 +109,14 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		intent.setClass(this,MainTabbarActivity.class);
 		startActivity(intent);
 	}
+	
+	protected void toResetPwd()
+	{
+		log.info("reset pwd button clicked");
+		//转至主页面
+		Intent intent = new Intent();
+		intent.setClass(this,ResetPwdActivity.class);
+		startActivity(intent);
+	}
+
 }

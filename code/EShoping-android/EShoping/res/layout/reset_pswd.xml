@@ -17,84 +17,29 @@
         android:orientation="vertical" >
 
         <EditText
-            android:id="@+id/reg_user"
+            android:id="@+id/pswd_old"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:fitsSystemWindows="false"
             android:gravity="left|center_vertical"
-            android:hint="用户名"
+            android:hint="原密码"
             android:selectAllOnFocus="false"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceMediumInverse"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/reg_pwd"
+            android:id="@+id/pswd_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="left|center_vertical"
-            android:hint="6-32位密码"
+            android:hint="新密码"
             android:inputType="text|textPassword"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/reg_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="left|center_vertical"
-            android:hint="Email"
-            android:selectAllOnFocus="false"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMediumInverse"
-            android:textSize="14sp" />
-
-        <requestFocus />
-
-        <EditText
-            android:id="@+id/reg_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:autoText="false"
-            android:capitalize="none"
-            android:gravity="left|center_vertical"
-            android:hint="验证码（不使用验证码请留空）"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/reg_car"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:autoText="false"
-            android:capitalize="none"
-            android:ems="10"
-            android:gravity="left|center_vertical"
-            android:hint="车牌号"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/reg_cellpnone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:autoText="false"
-            android:capitalize="none"
-            android:ems="10"
-            android:gravity="left|center_vertical"
-            android:hint="手机号"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="14sp" />
+            android:textSize="14sp" />    
     </LinearLayout>
 
     <TextView
@@ -122,7 +67,7 @@
             android:background="@color/themecolor"
             android:onClick="submit"
             android:padding="10dp"
-            android:text="注  册"
+            android:text="修改密码"
             android:textColor="@color/white" />
 
     </RelativeLayout>

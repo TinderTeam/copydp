@@ -149,7 +149,12 @@
             android:name="cn.fuego.eshoping.ui.user.UserOrderListActivity"
             android:label="@string/app_name" >
         </activity>
+          <activity
+            android:name="cn.fuego.eshoping.ui.user.ResetPwdActivity"
+            android:label="@string/app_name" >
+        </activity>
         
+       
            <activity
             android:name="cn.fuego.eshoping.ui.home.ProductSearchActivity"
             android:label="@string/app_name" >
