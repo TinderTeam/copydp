@@ -61,7 +61,6 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
     private static final int ITEM_TYPE_PRODUCT = 4; 
     
     private int tabID = 0;
-    
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
  
 	private List<CommonItemMeta> newProductData = new ArrayList<CommonItemMeta>();
@@ -379,7 +378,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 	{
 		if(ITEM_TYPE_PRODUCT == item.getLayoutType())
 		{
-			if(tabID==2){
+			if(tabID==1){
 				Intent intent = new Intent(this.getActivity(),SellerInfoActivity.class);
 				intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
 				this.startActivity(intent);

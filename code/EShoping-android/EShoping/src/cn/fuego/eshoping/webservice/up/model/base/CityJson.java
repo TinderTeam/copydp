@@ -6,6 +6,7 @@ import java.util.List;
 public class CityJson  implements Serializable
 {
 	public static final String CITY_ID="city_id";
+	public static final String CITY_NAME = "city";
 	
 	private int city_id;
 	private String city;

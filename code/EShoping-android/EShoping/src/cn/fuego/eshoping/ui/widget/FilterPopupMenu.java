@@ -17,9 +17,12 @@ import cn.fuego.eshoping.ui.home.GroupAdapter;
 import cn.fuego.eshoping.ui.home.ProductSearchActivity;
 import cn.fuego.eshoping.ui.order.ProductOrderActivity;
 import cn.fuego.eshoping.ui.order.ProductOrderSuccess;
+import cn.fuego.eshoping.webservice.up.model.GetCityListReq;
+import cn.fuego.eshoping.webservice.up.model.GetCityListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetProductTypeReq;
 import cn.fuego.eshoping.webservice.up.model.GetProductTypeRsp;
 import cn.fuego.eshoping.webservice.up.model.SetProductOrderRsp;
+import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductOrderJson;
 import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
 import cn.fuego.eshoping.webservice.up.model.base.ZoneJson;
@@ -85,7 +88,6 @@ public class FilterPopupMenu implements OnDismissListener
 		MispHttpHandler typeHandle = new MispHttpHandler(){
 			@Override
 			public void handle(MispHttpMessage message){
-				log.info(message.toString());
 				if (message.isSuccess()){
 					GetProductTypeRsp rsp = (GetProductTypeRsp) message.getMessage().obj;
 					allList=rsp.getTypeList();
@@ -105,9 +107,32 @@ public class FilterPopupMenu implements OnDismissListener
 			}
 		};
 		WebServiceContext.getInstance().getProductManageRest(typeHandle).getProductType(typeReq);
+		
 		//获取区域列表
-		zoneList=AppCache.getInstance().getCityInfo().getZone_list();
-		log.info("zone list = "+ zoneList.toString());
+			//1.从缓存中取，如果缓存空（可能为本身无数据，可能为缓存未加载）则加载一次缓存
+			GetCityListReq req = new GetCityListReq();
+			req.setToken(AppCache.getInstance().getToken());
+			WebServiceContext.getInstance().getUserManageRest(new MispHttpHandler(){
+
+				@Override
+				public void handle(MispHttpMessage message)
+				{
+					if (message.isSuccess()){
+						GetCityListRsp rsp = (GetCityListRsp) message.getMessage().obj;
+						List<CityJson> allCityList=rsp.getCityList();								
+						CityJson city = IteratorSelector.findbyAttr(allCityList, CityJson.CITY_NAME, AppCache.getInstance().getCityInfo().getCity());
+						zoneList=city.getZone_list();
+						log.info("zone list = "+ zoneList.toString());
+						AppCache.getInstance().setCityList(allCityList);
+						AppCache.getInstance().setCityInfo(city);
+					}
+					else{
+						context.showMessage(message);
+					}
+				}
+				
+			}).getCityList(req);
+
 	}
 
 	private void initPopupWindow()

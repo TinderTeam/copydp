@@ -23,6 +23,8 @@ public class RegistActivity extends BaseActivtiy
 	private EditText pwd;
 	private EditText code;
 	private EditText email;
+	private EditText car;
+	private EditText cell;
 	
 	@Override
 	public void initRes()
@@ -42,6 +44,8 @@ public class RegistActivity extends BaseActivtiy
 		pwd=(EditText) this.findViewById(R.id.reg_pwd);
 		code=(EditText) this.findViewById(R.id.reg_code);
 		email=(EditText) this.findViewById(R.id.reg_email);
+		car=(EditText)this.findViewById(R.id.reg_car);
+		cell=(EditText)this.findViewById(R.id.reg_cellpnone);
 	}
 
 	@Override
@@ -60,10 +64,8 @@ public class RegistActivity extends BaseActivtiy
 	public void submit(View v){
 		RegisterReq req = new RegisterReq();
 		req.setToken(AppCache.getInstance().getToken());
-		UserJson user = new UserJson();
-		
+		UserJson user = new UserJson();	
 		String nameStr = name.getText().toString().trim();
-		
 	    if(ValidatorUtil.isEmpty(nameStr))
 	    {
 	    	showMessage("用户名不能为空");
@@ -90,8 +92,10 @@ public class RegistActivity extends BaseActivtiy
 			showMessage("邮箱格式不正确");
 			return;
 		}
-				
 		customer.setEmail(emailStr);
+		customer.setCar_id(car.getText().toString().trim());
+		customer.setCellphone(cell.getText().toString().trim());
+		
 		req.setCode(code.getText().toString().trim());
 		req.setUser(user);
 		log.info("Regist req = "+req);
