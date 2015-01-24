@@ -28,6 +28,6 @@
 @property (nonatomic, strong, readonly) NSString *password;
 @property (nonatomic, strong, readonly) NSString *username;
 @property (nonatomic, strong, readonly) NSString *role;
-
+@property (nonatomic, strong, readonly) NSString *infoString;
 
 @end

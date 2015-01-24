@@ -41,7 +41,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self requestNews];
-    self.title = FEString(@"最新咨询");
+    self.title = FEString(@"最新资询");
 }
 
 - (void)viewDidAppear:(BOOL)animated{

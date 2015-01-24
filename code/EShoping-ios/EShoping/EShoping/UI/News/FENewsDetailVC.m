@@ -29,8 +29,8 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '400%'";
-    [webView stringByEvaluatingJavaScriptFromString:str];
+//    NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '400%'";
+//    [webView stringByEvaluatingJavaScriptFromString:str];
 }
 
 - (void)didReceiveMemoryWarning {

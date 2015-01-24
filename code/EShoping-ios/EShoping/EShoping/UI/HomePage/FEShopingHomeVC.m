@@ -76,6 +76,8 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *messageBarItem;
 @property (strong, nonatomic) FESegmentControl *segment;
 
+@property (strong, nonatomic) ZBarReaderViewController *zbarReaderVC;
+
 @end
 
 @implementation FEShopingHomeVC
@@ -114,7 +116,24 @@
 
 - (IBAction)qrscan:(id)sender {
     ZBarReaderViewController *reader = [ZBarReaderViewController new];
-    reader.showsZBarControls = YES;
+    self.zbarReaderVC = reader;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, reader.view.bounds.size.height - 54, reader.view.bounds.size.width, 54)];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
+    view.backgroundColor = [UIColor blackColor];
+    
+    UIToolbar *toolbar = [UIToolbar new];
+    toolbar.frame = CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height);
+    toolbar.barStyle = UIBarStyleBlackOpaque;
+    toolbar.autoresizingMask =
+    UIViewAutoresizingFlexibleWidth |
+    UIViewAutoresizingFlexibleHeight;
+    
+    toolbar.items = [NSArray arrayWithObjects:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)],[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil],nil];
+    [view addSubview: toolbar];
+    
+    
+    reader.cameraOverlayView = view;
+    reader.showsZBarControls = NO;
     reader.readerDelegate = self;
     reader.supportedOrientationsMask = ZBarOrientationMaskAll;
     
@@ -129,6 +148,10 @@
     
     // present and release the controller
     [self presentViewController:reader animated:YES completion:nil];
+}
+
+-(void)cancel{
+    [self.zbarReaderVC dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)gotoLocation:(id)sender{
