@@ -236,13 +236,23 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 	 */
 	protected void getProductAndShowByList(List<ProductJson> productList)
 	{
-		if(selectedOrder!=null){
+		if(selectedOrder!=null)
+		{
 			ProductJson product = IteratorSelector.findbyAttr(productList, ProductJson.PRODUCT_ID, selectedOrder.getProduct_id());
-			Intent intent = new Intent();
-			intent.setClass(this, HomeProductActivity.class);
-			log.info("show product : "+ product.toString());
-			intent.putExtra(ListViewResInfo.SELECT_ITEM, product);
-			startActivity(intent);
+			
+			if(null == product)
+			{
+				showMessage("该订单产品不存在");
+			}
+			else
+			{
+				Intent intent = new Intent();
+				intent.setClass(this, HomeProductActivity.class);
+				log.info("show product : "+ product.toString());
+				intent.putExtra(ListViewResInfo.SELECT_ITEM, product);
+				startActivity(intent);
+			}
+
 		}
 	}	
 	

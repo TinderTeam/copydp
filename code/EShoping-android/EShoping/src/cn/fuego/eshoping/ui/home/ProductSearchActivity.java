@@ -15,6 +15,7 @@ import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.string.StringLengthLimit;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.cache.ProductTypeCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.widget.FilterPopupMenu;
 import cn.fuego.eshoping.ui.widget.ProductSearchView;
@@ -23,6 +24,7 @@ import cn.fuego.eshoping.webservice.up.model.GetProductListRsp;
 import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
+import cn.fuego.eshoping.webservice.up.model.base.ProductTypeJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
 import cn.fuego.misp.service.http.MispHttpHandler;
@@ -89,6 +91,14 @@ public class ProductSearchActivity extends  MispListActivity<ProductJson>
 		popupMenu=new FilterPopupMenu(this,searchGroup);
 		
 		productSearchView=new ProductSearchView(this);
+		
+		RadioButton btn = (RadioButton) findViewById(R.id.product_serch_radio_type);
+		ProductTypeJson productType = ProductTypeCache.getInstance().getTypeByID(filter.getType_id());
+		if(null != productType)
+		{
+			btn.setText(productType.getType_name());
+
+		}
 	}
 	
 	private void InitializationListener()

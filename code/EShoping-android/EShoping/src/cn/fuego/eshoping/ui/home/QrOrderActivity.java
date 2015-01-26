@@ -150,6 +150,7 @@ public class QrOrderActivity extends MispHttpActivtiy
 					{
 						showMessage(message);
 					}		
+					finish();
 				}
 			}).createProductOrder(req);
 		}else{

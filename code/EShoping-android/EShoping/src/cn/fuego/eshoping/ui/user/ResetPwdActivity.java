@@ -3,7 +3,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
@@ -11,7 +10,7 @@ import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.base.ExitApplication;
 import cn.fuego.eshoping.webservice.up.model.ModifyPwdReq;
-import cn.fuego.eshoping.webservice.up.model.RegisterRsp;
+import cn.fuego.eshoping.webservice.up.model.ModifyPwdRsp;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.http.MispHttpMessage;
  
@@ -45,7 +44,7 @@ public class ResetPwdActivity extends BaseActivtiy
 	public void handle(MispHttpMessage message)
 	{
 		if (message.isSuccess()){
-			RegisterRsp rsp = (RegisterRsp) message.getMessage().obj;
+			ModifyPwdRsp rsp = (ModifyPwdRsp) message.getMessage().obj;
 			showMessage("修改成功");
 			backOnClick();
 		}

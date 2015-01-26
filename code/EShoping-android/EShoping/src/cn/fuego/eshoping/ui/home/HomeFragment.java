@@ -36,6 +36,8 @@ import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
 import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
+import cn.fuego.misp.service.http.MispHttpHandler;
+import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.base.MispGridView;
 import cn.fuego.misp.ui.grid.MispGridViewAdapter;
 import cn.fuego.misp.ui.list.MispDistinctListFragment;
@@ -62,13 +64,18 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
     private static final int ITEM_TYPE_PRODUCT = 4; 
     
     private int tabID = 0;
+    
+    private  final int TAB_0 = 0;
+    private  final int TAB_1 = 1;
+    private  final int TAB_2 = 2;
+    
+    
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
  
-	private List<CommonItemMeta> newProductData = new ArrayList<CommonItemMeta>();
-	private List<CommonItemMeta> typeProductData= new ArrayList<CommonItemMeta>();
-	private List<CommonItemMeta> allProductData= new ArrayList<CommonItemMeta>();
-	private SearchView searchView;
-	private ProductSearchView productSearchView;
+	private List<CommonItemMeta> newProductData;
+	private List<CommonItemMeta> typeProductData;
+	private List<CommonItemMeta> allProductData;
+ 	private ProductSearchView productSearchView;
 	
 	@Override
 	public void initRes()
@@ -81,6 +88,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
 		ProductTypeCache.getInstance();
 
+
  	}
  
 	@Override
@@ -89,10 +97,9 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 	{
 		log.info("current City is: " + AppCache.getInstance().getCityInfo().getCity());
 		
-		tabID = 0;
-		
-		
+		tabID = TAB_0;
 		View view = super.onCreateView(inflater, container, savedInstanceState);	
+ 
 		
 		productSearchView=new ProductSearchView(this.getActivity(),view);
 		
@@ -137,25 +144,26 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		GetProductListReq req = new GetProductListReq();
 		req.setCity(AppCache.getInstance().getCityInfo().getCity());
 		log.info("load req:"+req.toString());
+		refresh(newProductData);
+
 		switch(tabID)
 		{
-		case 0:
-			WebServiceContext.getInstance().getProductManageRest(this).getNewProductList(req);
+		case TAB_0:
+			WebServiceContext.getInstance().getProductManageRest(tabHander0).getNewProductList(req);
 			break;
 			
-		case 1:
-			WebServiceContext.getInstance().getProductManageRest(this).getSellerList(req);
+		case TAB_1:
+			WebServiceContext.getInstance().getProductManageRest(tabHander1).getSellerList(req);
 			break;
-		case 2:
-			WebServiceContext.getInstance().getProductManageRest(this).getRecommendProductList(req);
+		case TAB_2:
+			WebServiceContext.getInstance().getProductManageRest(tabHander2).getRecommendProductList(req);
 			break;
 		default:
 			break;
 		}
 	}
 	
-	@Override
-	public List<CommonItemMeta> loadListRecv(Object obj)
+	private List<CommonItemMeta> getHeaderData()
 	{
 		List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
 		CommonItemMeta gridItem = new CommonItemMeta();
@@ -164,56 +172,131 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		itemList.add(gridItem);
 		CommonItemMeta tabItem = new CommonItemMeta();
 		tabItem.setLayoutType(ITEM_TYPE_TAB);
-		itemList.add(tabItem); 
-		if(tabID == 2)
-		{
-			GetProductListRsp rsp = (GetProductListRsp) obj;	
-			if(rsp.getProductList()!=null){
-				for(ProductJson product : rsp.getProductList())
-				{
-					CommonItemMeta item = new CommonItemMeta();
-					item.setLayoutType(ITEM_TYPE_PRODUCT);
-					item.setContent(product);
-					itemList.add(item);
-				}	
-			}
-			this.allProductData = itemList;
-
-		}
-		else if(tabID==0)
-		{
-			GetProductListRsp rsp = (GetProductListRsp) obj;	
-			if(rsp.getProductList()!=null){
-				for(ProductJson product : rsp.getProductList())
-				{
-					CommonItemMeta item = new CommonItemMeta();
-					item.setLayoutType(ITEM_TYPE_PRODUCT);
-					item.setContent(product);
-					itemList.add(item);
-				}	
-			}
-			this.newProductData = itemList;
-
-			
-		}
-		else if(tabID==1)
-		{
-			GetSellerListRsp rsp = (GetSellerListRsp) obj;	
-			if(rsp.getSellerList()!=null){
-				for(SellerJson seller : rsp.getSellerList())
-				{
-					CommonItemMeta item = new CommonItemMeta();
-					item.setLayoutType(ITEM_TYPE_PRODUCT);		
-					item.setContent(seller);
-					itemList.add(item);
-				}	
-			}
-			this.typeProductData = itemList;
-			
-		}
- 
-		
+		itemList.add(tabItem);
 		return itemList;
+	}
+	private MispHttpHandler tabHander0 = new MispHttpHandler()
+	{
+		
+		@Override
+		public void handle(MispHttpMessage message)
+		{
+
+
+				if(message.isSuccess())
+				{
+
+					List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
+
+						GetProductListRsp rsp = (GetProductListRsp) message.getMessage().obj;	
+						if(rsp.getProductList()!=null){
+							for(ProductJson product : rsp.getProductList())
+							{
+								CommonItemMeta item = new CommonItemMeta();
+								item.setLayoutType(ITEM_TYPE_PRODUCT);
+								item.setContent(product);
+								itemList.add(item);
+							}	
+						}
+						
+						newProductData = itemList;
+				}
+				else
+				{
+					showMessage(message);
+				}
+				if(tabID==TAB_0)
+				{
+					refresh(newProductData);
+				}
+			
+		}
+	}; 
+	private MispHttpHandler tabHander1 = new MispHttpHandler()
+	{
+		
+		@Override
+		public void handle(MispHttpMessage message)
+		{
+
+
+				if(message.isSuccess())
+				{
+
+ 
+					 
+					List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
+
+						GetSellerListRsp rsp = (GetSellerListRsp) message.getMessage().obj;	
+						if(rsp.getSellerList()!=null)
+						{
+							for(SellerJson seller : rsp.getSellerList())
+							{
+								CommonItemMeta item = new CommonItemMeta();
+								item.setLayoutType(ITEM_TYPE_PRODUCT);		
+								item.setContent(seller);
+								itemList.add(item);
+							}	
+						}
+						 
+						typeProductData = itemList;
+						
+					 
+				}
+				else
+				{
+					showMessage(message);
+				}
+				if(tabID==TAB_1)
+				{
+					refresh(typeProductData);
+				}
+			
+		}
+	}; 
+	
+	
+	private MispHttpHandler tabHander2 = new MispHttpHandler()
+	{
+		
+		@Override
+		public void handle(MispHttpMessage message)
+		{
+ 
+				if(message.isSuccess())
+				{
+
+					List<CommonItemMeta> itemList = new ArrayList<CommonItemMeta>();	
+
+					GetProductListRsp rsp = (GetProductListRsp) message.getMessage().obj;	
+					if(rsp.getProductList()!=null){
+						for(ProductJson product : rsp.getProductList())
+						{
+							CommonItemMeta item = new CommonItemMeta();
+							item.setLayoutType(ITEM_TYPE_PRODUCT);
+							item.setContent(product);
+							itemList.add(item);
+						}	
+					}
+					allProductData  = itemList;
+						
+					 
+				}
+				else
+				{
+					showMessage(message);
+				}
+				if(tabID==TAB_2)
+				{
+					refresh(allProductData);
+				}
+			
+		}
+	}; 
+	@Override
+	public List<CommonItemMeta> loadListRecv(Object obj)
+	{
+		return null;
 	}
 	private List<MispGridDataModel>  gridInitData()
 	{
@@ -393,7 +476,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 	{
 		if(ITEM_TYPE_PRODUCT == item.getLayoutType())
 		{
-			if(tabID==1){
+			if(tabID==TAB_1){
 				Intent intent = new Intent(this.getActivity(),SellerInfoActivity.class);
 				intent.putExtra(ListViewResInfo.SELECT_ITEM, (Serializable) item.getContent());
 				this.startActivity(intent);
@@ -411,42 +494,46 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		int radioButtonId = group.getCheckedRadioButtonId();
 		if (radioButtonId == R.id.home_radio_all)
 		{   
-			tabID = 2;
+			tabID = TAB_2;
 			if(ValidatorUtil.isEmpty(this.allProductData))
 			{
 				loadSendList();	
 			}
-			else
-			{
-				refreshList(this.allProductData);	
-			}
+			refresh(this.allProductData);	
+			
 			
 		}
 		else if (radioButtonId == R.id.home_radio_type)
 		{
-			tabID = 1;
+			tabID = TAB_1;
 			if(ValidatorUtil.isEmpty(this.typeProductData))
 			{
 				loadSendList();	
 			} 
-			else
-			{
-				refreshList(this.typeProductData);	
-			}
+			refresh(this.typeProductData);	
+			
 		}		
 		else 
 		{
-			tabID = 0;
+			tabID = TAB_0;
 			if(ValidatorUtil.isEmpty(this.newProductData))
 			{
 				loadSendList();	
 			}
-			else
-			{
-				refreshList(this.newProductData);	
-			}
-			
+			refresh(this.newProductData);	
 		}
+	}
+	
+	private void refresh(List<CommonItemMeta> newDataList)
+	{
+		List<CommonItemMeta> dataList = this.getHeaderData();
+		if(!ValidatorUtil.isEmpty(newDataList))
+		{
+			dataList.addAll(newDataList);
+
+		}
+		refreshList(dataList);	
+
 	}
 	 
 

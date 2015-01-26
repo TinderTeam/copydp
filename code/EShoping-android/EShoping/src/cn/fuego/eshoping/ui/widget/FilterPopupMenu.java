@@ -219,9 +219,14 @@ public class FilterPopupMenu implements OnDismissListener
 	            			childListData.clear();
 	            			updatechildren(childListData); 
 	            		}
-	            		//选中区域列表
-	            		int selectedId = IteratorSelector.findbyAttr(zoneList, ZoneJson.ZONE_NAME, selectStr).getZone_id();
-	            		context.zoneFilter(selectedId,selectStr);
+	            		else
+	            		{
+	            			//选中区域列表
+		            		int selectedId = IteratorSelector.findbyAttr(zoneList, ZoneJson.ZONE_NAME, selectStr).getZone_id();
+		            		context.zoneFilter(selectedId,selectStr);
+	            		}
+	            	
+
 	            		popupWindow.dismiss();
 	            	}
 	            }  

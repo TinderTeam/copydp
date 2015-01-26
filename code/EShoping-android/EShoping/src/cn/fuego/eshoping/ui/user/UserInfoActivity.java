@@ -48,7 +48,7 @@ public class UserInfoActivity extends MispListActivity<KeyValuePair<String>>
 		//初始化数据
 		super.onCreate(savedInstanceState);
 		Button registBtn = (Button) this.findViewById(R.id.com_next_btn);
-		registBtn.setText(R.string.page_regist);
+		registBtn.setText("修改密码");
 		registBtn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v)

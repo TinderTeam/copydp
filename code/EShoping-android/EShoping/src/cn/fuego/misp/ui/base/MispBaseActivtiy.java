@@ -86,7 +86,7 @@ public abstract class MispBaseActivtiy extends Activity implements OnClickListen
 		}
 	}
 	
-	protected void initBackButton()
+	private void initBackButton()
 	{
 		View button = findViewById(activityRes.getBackBtn());
 		if(null == button)
