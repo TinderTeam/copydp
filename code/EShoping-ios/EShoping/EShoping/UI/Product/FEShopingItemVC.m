@@ -8,6 +8,7 @@
 
 typedef enum : NSUInteger {
     CELL_PRODUCT_DESCRIPTION,
+    CELL_PRODUCT_INTR,
     CELL_SELLER_TITILE,
     CELL_SELLER_CONTENT_TEXT,
     CELL_SELLER_MAP,
@@ -75,7 +76,7 @@ typedef enum : NSUInteger {
         self.pinfo = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@""];
         CGSize size = [string boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 50, 99999) withTextFont:[UIFont systemFontOfSize:15]];
         for (NSMutableDictionary *item in _productInfo) {
-            if ([item[__CELL_XIB_NAME] isEqualToString:@"productInfoCell"]) {
+            if ([item[__CELL_XIB_NAME] isEqualToString:@"productDetailCell"]) {
                 [item  setObject:@(size.height) forKey:__CELL_HIGHT];
                 break;
             }
@@ -129,18 +130,28 @@ typedef enum : NSUInteger {
             NSDictionary *info = @{__CELL_TYPE:@(CELL_SELLER_TITILE), __CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商品信息")};
             [_productInfo addObject:info];
             
+            CGSize size = [weakself.product.dscr boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, 99999) withTextFont:[UIFont appFontWithSize:16]];
+            CGFloat height1 = (30 + size.height);
             
-            NSMutableDictionary *info1 = [NSMutableDictionary dictionaryWithDictionary:@{__CELL_TYPE:@(CELL_PRODUCT_DESCRIPTION),__CELL_XIB_NAME:@"productInfoCell",__CELL_HIGHT:@(50)}];
-            [_productInfo addObject:info1];
+            info = @{__CELL_TYPE:@(CELL_PRODUCT_DESCRIPTION),__CELL_XIB_NAME:@"productInfoCell",__CELL_HIGHT:@(height1)};
+            [_productInfo addObject:info];
+            
+            
+            info = @{__CELL_TYPE:@(CELL_SELLER_TITILE), __CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商品详情")};
+            [_productInfo addObject:info];
+            
+            NSMutableDictionary *info3 = [NSMutableDictionary dictionaryWithDictionary:@{__CELL_TYPE:@(CELL_PRODUCT_INTR),__CELL_XIB_NAME:@"productDetailCell",__CELL_HIGHT:@(50)}];
+            [_productInfo addObject:info3];
+            
             
             info = @{__CELL_TYPE:@(CELL_SELLER_TITILE), __CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商家介绍")};
             [_productInfo addObject:info];
-            CGSize size = [response.seller.dscr boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 20, 99999) withTextFont:[UIFont appFontWithSize:16]];
-            CGFloat height = (50 - 15 + size.height);
-            NSMutableDictionary *info2 = [NSMutableDictionary dictionaryWithDictionary:@{__CELL_TYPE:@(CELL_SELLER_CONTENT_TEXT),__CELL_XIB_NAME:@"sellerInfoCell",__CELL_HIGHT:@(height)}];
+//            CGSize size = [response.seller.dscr boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 20, 99999) withTextFont:[UIFont appFontWithSize:16]];
+//            CGFloat height = (50 - 15 + size.height);
+            NSMutableDictionary *info2 = [NSMutableDictionary dictionaryWithDictionary:@{__CELL_TYPE:@(CELL_SELLER_CONTENT_TEXT),__CELL_XIB_NAME:@"sellerInfoCell",__CELL_HIGHT:@(20)}];
             [_productInfo addObject:info2];
-//            info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"特惠详情")};
-//            [_productInfo addObject:info];
+
+            
             info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商户位置")};
             [_productInfo addObject:info];
             info = @{__CELL_TYPE:@(CELL_SELLER_MAP),__CELL_XIB_NAME:@"mapCell",__CELL_HIGHT:@(150)};
@@ -230,10 +241,17 @@ typedef enum : NSUInteger {
             [((FEProductNoteCell *)cell) configWithProduct:self.product];
         }else if([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_PRODUCT_DESCRIPTION){
             
-            UILabel *pinfo = (UILabel *)[cell viewWithTag:1];
-            pinfo.numberOfLines = 0;
-            pinfo.text = self.pinfo;
-
+            UILabel *title = (UILabel *)[cell viewWithTag:1];
+            title.text = self.product.name;
+            UILabel *dlabel = (UILabel *)[cell viewWithTag:2];
+            dlabel.numberOfLines = 0;
+            dlabel.text = self.product.dscr;
+            
+        }else if ([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_PRODUCT_INTR){
+            
+            UILabel *dlabel = (UILabel *)[cell viewWithTag:1];
+            dlabel.numberOfLines = 0;
+            dlabel.text = self.pinfo;
         }
         return cell;
     }

@@ -561,7 +561,40 @@
                                             <outlet property="limitTimeLabel" destination="kiF-qb-0PX" id="XNa-6F-tca"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="productInfoCell" rowHeight="70" id="VlT-Ot-gJD">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="productInfoCell" rowHeight="79" id="G6B-r5-eBH">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G6B-r5-eBH" id="W6W-Jp-X1L">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJd-1V-dpY">
+                                                    <rect key="frame" x="20" y="5" width="575" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="swT-PS-dLE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6P-AX-VSD">
+                                                    <rect key="frame" x="20" y="27" width="575" height="51"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="e6P-AX-VSD" firstAttribute="top" secondItem="hJd-1V-dpY" secondAttribute="bottom" constant="2" id="0wr-Z6-H7R"/>
+                                                <constraint firstItem="hJd-1V-dpY" firstAttribute="top" secondItem="W6W-Jp-X1L" secondAttribute="top" constant="5" id="A8E-zi-m5f"/>
+                                                <constraint firstAttribute="trailing" secondItem="hJd-1V-dpY" secondAttribute="trailing" constant="5" id="CCv-K8-X4d"/>
+                                                <constraint firstItem="hJd-1V-dpY" firstAttribute="leading" secondItem="W6W-Jp-X1L" secondAttribute="leading" constant="20" id="I6r-sV-tB5"/>
+                                                <constraint firstAttribute="trailing" secondItem="e6P-AX-VSD" secondAttribute="trailing" constant="5" id="WS6-sl-kIn"/>
+                                                <constraint firstAttribute="bottom" secondItem="e6P-AX-VSD" secondAttribute="bottom" id="cWR-XP-4wo"/>
+                                                <constraint firstItem="e6P-AX-VSD" firstAttribute="leading" secondItem="W6W-Jp-X1L" secondAttribute="leading" constant="20" id="wSM-lw-94d"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="productDetailCell" rowHeight="70" id="VlT-Ot-gJD">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VlT-Ot-gJD" id="rw2-Sm-NLH">
