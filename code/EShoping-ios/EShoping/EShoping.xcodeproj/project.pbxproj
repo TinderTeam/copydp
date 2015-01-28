@@ -98,7 +98,6 @@
 		148798781A31489600565491 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1487987A1A31489600565491 /* Localizable.strings */; };
 		1487987E1A314DAB00565491 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 148798801A314DAB00565491 /* InfoPlist.strings */; };
 		148798841A319E9900565491 /* UIFont+AppFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 148798831A319E9900565491 /* UIFont+AppFont.m */; };
-		148798871A31A64000565491 /* FEMessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 148798861A31A64000565491 /* FEMessageTableViewCell.m */; };
 		1487988A1A31A9C400565491 /* FEActivityListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 148798891A31A9C400565491 /* FEActivityListRequest.m */; };
 		1487988D1A31AA8500565491 /* FEActivityListResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 1487988C1A31AA8500565491 /* FEActivityListResponse.m */; };
 		148798901A31ABD000565491 /* FEActivityOrderListRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1487988F1A31ABD000565491 /* FEActivityOrderListRequest.m */; };
@@ -366,8 +365,6 @@
 		148798811A314DAC00565491 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		148798821A319E9900565491 /* UIFont+AppFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+AppFont.h"; sourceTree = "<group>"; };
 		148798831A319E9900565491 /* UIFont+AppFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+AppFont.m"; sourceTree = "<group>"; };
-		148798851A31A64000565491 /* FEMessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEMessageTableViewCell.h; sourceTree = "<group>"; };
-		148798861A31A64000565491 /* FEMessageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEMessageTableViewCell.m; sourceTree = "<group>"; };
 		148798881A31A9C400565491 /* FEActivityListRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEActivityListRequest.h; sourceTree = "<group>"; };
 		148798891A31A9C400565491 /* FEActivityListRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEActivityListRequest.m; sourceTree = "<group>"; };
 		1487988B1A31AA8500565491 /* FEActivityListResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEActivityListResponse.h; sourceTree = "<group>"; };
@@ -858,8 +855,6 @@
 				14C8F57E1A1B23D300E04B04 /* FEFuncCollectionViewCell.m */,
 				14C8F5801A1B33A100E04B04 /* FEShopingItemCell.h */,
 				14C8F5811A1B33A100E04B04 /* FEShopingItemCell.m */,
-				148798851A31A64000565491 /* FEMessageTableViewCell.h */,
-				148798861A31A64000565491 /* FEMessageTableViewCell.m */,
 				14B52ABD1A442B7C0005F0D7 /* FECategoryCollectionView.h */,
 				14B52ABE1A442B7C0005F0D7 /* FECategoryCollectionView.m */,
 			);
@@ -1316,7 +1311,6 @@
 				1408A7631A37D4B400D02D52 /* FEActivityVC.m in Sources */,
 				1447164D1A6D5010003359FC /* FEUserGradeRequest.m in Sources */,
 				14AA2C401A259B01005FDA8F /* FEBaseRequest.m in Sources */,
-				148798871A31A64000565491 /* FEMessageTableViewCell.m in Sources */,
 				1408A74D1A35DC4000D02D52 /* FEUserSigninResponse.m in Sources */,
 				14DDD5B31A3A984E00C5B190 /* FEShopSeller.m in Sources */,
 				1408A7851A38895000D02D52 /* FEZone.m in Sources */,

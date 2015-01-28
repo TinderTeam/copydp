@@ -56,7 +56,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         FEActivityShowImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"activityImageCell" forIndexPath:indexPath];
-        [cell.activityImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(self.activity.imgsrc)]];
+        [cell.activityImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(self.activity.imgsrc)]];
         return cell;
     }else{
         UITableViewCell *cell = [[UITableViewCell alloc] init];

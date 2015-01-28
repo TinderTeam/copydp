@@ -28,7 +28,7 @@
 
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
-    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(product.imgsrc)]];
+    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(product.imgsrc)]];
     self.productTitleLabel.text = product.name;
     self.productDescriptionLabel.text = product.dscr;
     self.productPriceLabel.text = [NSString stringWithFormat:@"￥%@",product.price];

@@ -20,10 +20,10 @@
 
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
-    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(product.imgsrc)]];
+    [self.productImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(product.imgsrc)]];
     self.productDescriptionLabel.text = product.dscr;
     self.productTitleLabel.text = product.name;
-    self.productPriceLabel.text = [NSString priceStringWithNumber:product.price];
+    self.productPriceLabel.text = product.price;//[NSString priceStringWithNumber:product.price];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

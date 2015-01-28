@@ -71,10 +71,16 @@
                 [weakself hideHUD:YES];
             }];
         }else{
-            [[GAAlertObj alertWithTitle:FEString(@"提示") message:FEString(@"新密码不一致,请重新输入")] show];
+            GAAlertAction *action = [GAAlertAction actionWithTitle:FEString(@"确定") action:^{
+                
+            }];
+            [GAAlertObj showAlertWithTitle:FEString(@"提示") message:FEString(@"新密码不一致,请重新输入") actions:@[action] inViewController:self];
         }
     }else{
-        [[GAAlertObj alertWithTitle:FEString(@"提示") message:FEString(@"输入的原始密码不正确")] show];
+        GAAlertAction *action = [GAAlertAction actionWithTitle:FEString(@"确定") action:^{
+            
+        }];
+        [GAAlertObj showAlertWithTitle:FEString(@"提示") message:FEString(@"输入的原始密码不正确") actions:@[action] inViewController:self];
     }
 }
 

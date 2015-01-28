@@ -12,8 +12,9 @@
 @implementation FERate
 
 DEFINE_SINGLETON_FOR_CLASS(FERate);
-
+#if 0
 +(void)load{
+    
     FERate *rate = [FERate sharedFERate];
     NSInteger runtimes = [FEUserDefaultsObjectForKey(FERunTimes) integerValue];
     runtimes++;
@@ -24,6 +25,7 @@ DEFINE_SINGLETON_FOR_CLASS(FERate);
         [rate performSelector:@selector(rate:) withObject:nil afterDelay:5];
     }
 }
+#endif
 
 -(void)rate:(id)sender{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:FEString(@"SMART_HOME") message:FEString(@"RATE_RATE") delegate:self cancelButtonTitle:FEString(@"RATE_LARER") otherButtonTitles:FEString(@"RATE_GOTORATE"),FEString(@"RATE_NEVER"), nil];

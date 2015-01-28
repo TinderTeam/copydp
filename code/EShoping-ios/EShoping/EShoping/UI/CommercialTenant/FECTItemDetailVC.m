@@ -36,7 +36,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    FTCoreTextView *textV = [[FTCoreTextView alloc]initWithFrame:CGRectMake(0, 0, 300, 300)];
+    FTCoreTextView *textV = [[FTCoreTextView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 20, 300)];
+    [self configCoreText:textV];
     [self.view addSubview:textV];
     textV.delegate = self;
     _tview = textV;
@@ -46,7 +47,7 @@
     self.allInfo = [NSMutableArray new];
     if (self.seller) {
         [self.allInfo addObject:@[self.seller]];
-        [self.ShopImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(self.seller.img)]];
+        [self.ShopImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(self.seller.img)]];
     }
     [self requestSellerDetail];
 }
@@ -105,25 +106,9 @@
             FTCoreTextView *tview = (FTCoreTextView *)[cell viewWithTag:1];
             tview.text = self.seller.info;
             tview.delegate = self;
+            [self configCoreText:tview];
             
-            FTCoreTextStyle *defaultStyle = [[FTCoreTextStyle alloc] init];
-            defaultStyle.name = FTCoreTextTagDefault;
-            defaultStyle.textAlignment = FTCoreTextAlignementJustified;
-            defaultStyle.font = [UIFont systemFontOfSize:14];
             
-            FTCoreTextStyle *h1Style = [defaultStyle copy];
-            h1Style.name = @"h1";
-            h1Style.font = [UIFont boldSystemFontOfSize:14*2.0f];
-            h1Style.textAlignment = FTCoreTextAlignementCenter;
-            
-            FTCoreTextStyle *h2Style = [h1Style copy];
-            h2Style.name = @"h2";
-            h2Style.font = [UIFont boldSystemFontOfSize:14*1.25];
-            
-            FTCoreTextStyle *pStyle = [defaultStyle copy];
-            pStyle.name = @"p";
-            
-            [tview addStyles:@[defaultStyle, h1Style, h2Style, pStyle]];
 //            UIWebView *mapView = (UIWebView *)[cell viewWithTag:1];
 //            [mapView loadHTMLString:self.seller.info baseURL:nil];
             return cell;
@@ -148,6 +133,27 @@
     }
     
     return nil;
+}
+
+-(void)configCoreText:(FTCoreTextView *)core{
+    FTCoreTextStyle *defaultStyle = [[FTCoreTextStyle alloc] init];
+    defaultStyle.name = FTCoreTextTagDefault;
+    defaultStyle.textAlignment = FTCoreTextAlignementJustified;
+    defaultStyle.font = [UIFont systemFontOfSize:14];
+    
+    FTCoreTextStyle *h1Style = [defaultStyle copy];
+    h1Style.name = @"h1";
+    h1Style.font = [UIFont boldSystemFontOfSize:14*2.0f];
+    h1Style.textAlignment = FTCoreTextAlignementCenter;
+    
+    FTCoreTextStyle *h2Style = [h1Style copy];
+    h2Style.name = @"h2";
+    h2Style.font = [UIFont boldSystemFontOfSize:14*1.25];
+    
+    FTCoreTextStyle *pStyle = [defaultStyle copy];
+    pStyle.name = @"p";
+    
+    [core addStyles:@[defaultStyle, h1Style, h2Style, pStyle]];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

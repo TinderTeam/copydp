@@ -33,7 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.imageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(self.order.imgsrc)]];
+    [self.imageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(self.order.imgsrc)]];
     self.titleLabel.text = self.order.product_name;
     self.numberLabel.text = self.order.quantity.stringValue;
     self.priceLabel.text = self.order.order_price.stringValue;

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FELabel : UILabel
-
+@property (nonatomic, assign) BOOL drawMidLine;
 @end

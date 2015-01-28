@@ -30,7 +30,8 @@
 
 - (void)addAction:(GAAlertAction *)action;
 
-- (void)show;
+//- (void)show;
+- (void)showInViewController:(UIViewController *)vc;
 
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *message;

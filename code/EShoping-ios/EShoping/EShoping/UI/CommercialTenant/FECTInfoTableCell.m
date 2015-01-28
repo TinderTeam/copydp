@@ -21,7 +21,7 @@
 
 -(void)configWithSeller:(FEShopSeller *)seller{
     _seller = seller;
-    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(seller.img)]];
+    [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(seller.img)]];
     self.titleLabel.text = seller.seller_name;
     self.descriptionLabel.text = seller.dscr;
     self.cityLabel.text = seller.city;

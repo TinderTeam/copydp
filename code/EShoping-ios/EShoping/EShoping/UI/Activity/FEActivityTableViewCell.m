@@ -21,7 +21,7 @@
 
 -(void)configWithActivity:(FEActivity *)activity{
     _activity = activity;
-    [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(activity.imgsrc)] placeholderImage:nil];
+    [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(activity.imgsrc)] placeholderImage:nil];
     self.activityDescriptionLabel.text = activity.dscr;
     self.activityTitleLabel.text = activity.title;
     self.activityJoinLabel.text = [NSString stringWithFormat:@"参与人数: %@/%@",activity.current_member,activity.memberlimit] ;

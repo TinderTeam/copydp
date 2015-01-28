@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 FUEGO. All rights reserved.
 //
 
-#define __SERVICE_BASE_URL [NSString stringWithFormat:@"%@/copydp/index.php",__WEB_SERVICE_IP]
+//#define __SERVICE_BASE_URL [NSString stringWithFormat:@"%@/copydp/index.php",__WEB_SERVICE_IP]
 
 
 #import "FEShopWebServiceManager.h"

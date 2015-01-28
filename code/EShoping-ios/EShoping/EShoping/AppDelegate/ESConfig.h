@@ -80,7 +80,17 @@ return shared##className; \
                                                 @[FELoginUser,FELoginUser.usercustomer]];\
                                                 [FECoreData saveCoreData];}
 
-#define FEShopImageUrlSring(_A)                 [NSString stringWithFormat:@"%@/copydp/Public/uploads/img/%@",__WEB_SERVICE_IP,_A]
+
+#define kServerIP               @"120.24.217.173"
+#define kServerPort             @"80"
+#define kBasePath               @"/copydp/index.php"
+#define kImagePath              @"/copydp/Public/uploads/img/"
+
+#define kImageURL(_A)           [NSString stringWithFormat:@"http://%@:%@%@%@",kServerIP,kServerPort,kImagePath,_A]
+#define __SERVICE_BASE_URL    [NSString stringWithFormat:@"http://%@:%@%@",kServerIP,kServerPort,kBasePath]
+
+
+//#define kImageURL(_A)                 [NSString stringWithFormat:@"%@/copydp/Public/uploads/img/%@",__WEB_SERVICE_IP,_A]
 
 //notification
 #define FERegionCityDidChang                    @"RegionCityDidChange"

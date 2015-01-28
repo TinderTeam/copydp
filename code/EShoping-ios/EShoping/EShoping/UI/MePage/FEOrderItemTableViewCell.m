@@ -41,7 +41,7 @@
 -(void)configWithProduct:(FEProductOrder *)product{
     _order = product;
     self.orderProductDescription.text = product.product_description;
-    [self.orderProductImageView sd_setImageWithURL:[NSURL URLWithString:FEShopImageUrlSring(product.imgsrc)]];
+    [self.orderProductImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(product.imgsrc)]];
     self.orderProductNameLabel.text = product.product_name;
     self.orderProductStatusLabel.text = product.order_status;
     self.orderLimitTimeLabel.text = [product.end_date_time substringToIndex:10];

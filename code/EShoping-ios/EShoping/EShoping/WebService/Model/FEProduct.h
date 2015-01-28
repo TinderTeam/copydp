@@ -17,8 +17,8 @@
 @property (nonatomic, strong, readonly) NSNumber *seller_id;
 @property (nonatomic, strong, readonly) NSString *update_date;
 @property (nonatomic, strong, readonly) NSString *end_date_time;
-@property (nonatomic, strong, readonly) NSNumber *price;
-@property (nonatomic, strong, readonly) NSNumber *original_price;
+@property (nonatomic, strong, readonly) NSString *price;
+@property (nonatomic, strong, readonly) NSString *original_price;
 @property (nonatomic, strong, readonly) NSString *dscr;
 @property (nonatomic, strong, readonly) NSString *basic_infor;
 @property (nonatomic, strong, readonly) NSString *svip_product_id;

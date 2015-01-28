@@ -38,10 +38,10 @@
     
     if (imgs) {
         NSMutableArray *mimgs = [NSMutableArray arrayWithArray:imgs];
-        [mimgs insertObject:FEShopImageUrlSring(product.imgsrc) atIndex:0];
+        [mimgs insertObject:kImageURL(product.imgsrc) atIndex:0];
         _imageArray = mimgs;//[NSArray arrayWithObjects:product.imgsrc, nil];
     }else{
-        _imageArray = [NSArray arrayWithObjects:FEShopImageUrlSring(product.imgsrc), nil];
+        _imageArray = [NSArray arrayWithObjects:kImageURL(product.imgsrc), nil];
     }
     
     self.pageIndicate.numberOfPages = self.imageArray.count;
