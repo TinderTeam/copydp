@@ -53,7 +53,7 @@ class SellerManageAction extends Action {
 		$sellerIDCondition['user_id']=$id;
 		$Data['qr_code']='true';
 		$sellerdb->where($sellerIDCondition)->save($Data);
-		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向	
+		$this->redirect('SellerManage/index#seller_manage','',0,'全部查询');//页面重定向	
 	}
 		
 	public function hideCode($id=0){
@@ -61,7 +61,7 @@ class SellerManageAction extends Action {
 		$sellerIDCondition['user_id']=$id;
 		$Data['qr_code']='false';
 		$sellerdb->where($sellerIDCondition)->save($Data);
-		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向
+		$this->redirect('SellerManage/index#seller_manage','',0,'全部查询');//页面重定向
 	}
 	
 	public function svipEdit($type=0,$id=0){
