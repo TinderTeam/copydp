@@ -197,7 +197,8 @@
 							
 							//获取总类信息
 							$typedb=new Model('product_type');
-							$condition['father_id']=$maintypeid[$i];
+							$condition['father_id']=$maintypeid[$mainKey-1];
+
 							$subtypeid=$typedb->where($condition)->getField('type_id',true);	
 							
 							$where['_string'] = '(type_id = "'. $maintypeid[$mainKey-1] .'")';

@@ -232,7 +232,11 @@ margin-right: 10px;
 							</div>
 							<div class="con">
 								<div class="">
-									<div id="output" data="__APP__/Buy/SellerOrder?id={$userID}"></div>		
+									<?php
+										$qrcode='{"type":"sellerID","value":"'.$userID.'"}';
+									?>
+									<!--<div id="output" data="{'type':'sellerID','value':'{$userID}'}"></div>	-->
+									<div id="output" data='{$qrcode}'></div>		
 								</div>				
 							</div>
 						</div>
