@@ -32,8 +32,8 @@ class OrderManageAction extends Action {
 			if($_POST['orderDate']!=""){
 				$OrderCondition['order_time']=$_POST['orderDate'];
 			}
-			if($_POST['userID']!=""){
-				$OrderCondition['customer_id']=$_POST['userID'];
+			if($_POST['orderStatus']!=""){
+				$OrderCondition['order_status']=$_POST['orderStatus'];
 			}
 			if($_POST['userName']!=""){
 				$OrderCondition['username']=$_POST['userName'];
@@ -53,14 +53,17 @@ class OrderManageAction extends Action {
 			if($_POST['orderName']!=""){
 				$OrderCondition['order_name']=$_POST['orderName'];
 			}
+			
 
 			$orderCount = $order->where($OrderCondition)->count();
 			$orderList = $order->where($OrderCondition)->select();
 			
-			$this->assign('orderList',$orderList);
+			print_r($OrderCondition);
 			
+			$this->assign('orderList',$orderList);		
 			$this->assign("currentPage","order");				
 			$this->display();
+			
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");

@@ -116,6 +116,7 @@ margin-right: 10px;
 									<th width="10%">会员级别</th>	
 									<th width="10%">积分</th>
 									<th width="15%">手机</th>	
+									<th width="15%">SVIP到期时间</th>	
 									<th width="15%">用户状态</th>							
 									<th width="30%">操作</th>
 								</tr>					
@@ -129,6 +130,7 @@ margin-right: 10px;
 									<td align="center" >{$v1.grade}</td>
 									<td align="center"> {$v1.score}</td>
 									<td align="center" >{$v1.cellphone}</td>
+									<td align="center" >{$v1.vip_limit_date}</td>
 									<td align="center">{$v1.status}</td >		
 									<td valign="middle">
 										<if condition="$v1.status eq '冻结' ">

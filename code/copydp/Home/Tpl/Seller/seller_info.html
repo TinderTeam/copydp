@@ -174,7 +174,11 @@
 													</div>
 													<div class="con">
 														<div class="">
-															<div id="output" data='{"type":"sellerID","value":"{$sellerID}"}'></div>		
+														<?php
+															$qrcode='{"type":"sellerID","value":"'.$sellerID.'"}';
+														?>
+														<!--<div id="output" data="{'type':'sellerID','value':'{$userID}'}"></div>	-->
+															<div id="output" data='{$qrcode}'></div>		
 														</div>				
 													</div>
 												</div>

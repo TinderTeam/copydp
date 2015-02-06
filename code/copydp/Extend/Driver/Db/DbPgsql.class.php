@@ -191,7 +191,7 @@ class DbPgsql extends Db{
      * @access private
      * @return array
      */
-    private function getAll() {
+    public function getAll() {
         //返回数据集
         $result   =  pg_fetch_all($this->queryID);
         pg_result_seek($this->queryID,0);

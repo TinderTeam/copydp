@@ -65,12 +65,19 @@ class IndexAction extends IndexServiceAction {
 			$iplookup=$this->iplookup(); 
 			if($iplookup['ip']=='127.0.0.1'){
 				$city="深圳";
-				
 			}else{
-				$city=$this->unescape($iplookup['city']);
+				$city=$this->unescape($iplookup['city']);			
 			}					
 		}
-		$WebUtilService->setSessionCityName($city);			
+		
+		$cityDB= M('city');
+		$cityCondition['city']=$city;
+		$cityID=$cityDB->where($cityCondition)->getField('city_id');
+		$_SESSION['cityID']=$cityID;
+		$_SESSION['city']=$city;
+		$_SESSION['cityID']=$cityID;
+		
+
 		$this->display();
     }
 	

@@ -52,12 +52,9 @@
 		//判断产品是否已过期
 		$conditionTime['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));	
 		$Days=round((strtotime($endTime)-strtotime(date('Y-m-d H:i:s',time())))/3600/24);
-		
 		$data['product_status']="已过期";
 		$productDB->where($productIDCondition)->where($conditionTime)->save($data);			
-
 		$productStatus = $productDB->where($productIDCondition)->getField('product_status');
-
 	?>
 	
 	<!----主界面---->
@@ -82,7 +79,7 @@
 									<em>{$count}折</em>
 								</span>
 								<span class="price-original">
-									价值&nbsp;
+									原价&nbsp;
 									<em>&#165;</em>
 									{$productOPrice}
 								</span>
@@ -155,7 +152,8 @@
 							<div class="slide J_switch J_switch_carousel imgloading">
 								<div class="img-wrap J_wrap">
 									<img  src="__PUBLIC__/uploads/img/{$productImgsrc}" >
-								</div>							
+								</div>	
+								<!--  ignore image list			
 								<div class="imgctrl J_ctrl">
 									<?php
 										$imgList=explode(";",$productImgList);
@@ -166,6 +164,7 @@
 										</a>
 									</volist>								
 								</div>
+								 -->		
 							</div>
 						</div>
 					</div>
@@ -236,9 +235,10 @@
 										<table width="100%" cellpadding="0" cellspacing="0" class="detail-table">
 											<thead>
 												<tr>
-													<th width="50%">名称</th>
+													<th width="25%">名称</th>
 													<th width="25%">数量</th>
-													<th width="25%">单价</th>
+													<th width="25%">优惠价</th>
+													<th width="25%">原价</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -246,6 +246,7 @@
 													<td>{$productName}</td>
 													<td class="tc">1份</td>
 													<td class="tc">{$productPrice}元</td>
+													<td class="tc">{$productOPrice}元</td>
 												</tr>
 											</tbody>
 										</table>

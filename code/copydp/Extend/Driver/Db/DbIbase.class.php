@@ -194,7 +194,7 @@ class DbIbase extends Db{
      * @access private
      * @return array
      */
-    private function getAll() {
+    public function getAll() {
         //返回数据集
         $result = array();
         while ( $row = ibase_fetch_assoc($this->queryID)) {

@@ -190,7 +190,7 @@ class DbOracle extends Db{
      * @access private
      * @return array
      */
-     private function getAll() {
+     public function getAll() {
         //返回数据集
         $result = array();
         $this->numRows = oci_fetch_all($this->queryID, $result, 0, -1, OCI_FETCHSTATEMENT_BY_ROW);

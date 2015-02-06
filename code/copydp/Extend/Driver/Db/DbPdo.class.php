@@ -211,7 +211,7 @@ class DbPdo extends Db{
      * @access private
      * @return array
      */
-    private function getAll() {
+    public function getAll() {
         //返回数据集
         $result =   $this->PDOStatement->fetchAll(PDO::FETCH_ASSOC);
         $this->numRows = count( $result );

@@ -8,7 +8,6 @@ class UserManageAction extends Action {
             //加载会员管理列表
             import("ORG.Util.Page");
             $db = M('view_customer');
-
             $count = $db->count();
             $Page = new Page($count,5);
 			$list = $db->limit($Page->firstRow.','.$Page->listRows)->select();

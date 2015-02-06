@@ -102,7 +102,6 @@
 									$Productdb= M('view_svip_product');
 									$productCondition['svip_product_id']=$v1['svip_product_id'];
 									$product = $Productdb->where($productCondition)->select();
-									
 									$n=Count($product);
 								?>
 								<tr>
