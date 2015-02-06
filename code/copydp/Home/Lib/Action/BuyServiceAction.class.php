@@ -291,7 +291,7 @@ class BuyServiceAction extends BaseAction {
 			$data2['imgsrc']=$sellerItem['img'];
 			$data2['order_time']=$datetime;
 			$data2['quantity']=1;
-			$data2['order_status']='已使用';
+			$data2['order_status']='已下单';
 			$data2['order_type']='扫码下单';
 			$order->add($data2);
 			$orderIDCondition['order_id'] = $orderID;
