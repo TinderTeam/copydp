@@ -24,7 +24,28 @@
                 android:layout_marginBottom="50dp">
 
             </ListView>
- 
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" >
+
+                <Button
+                     
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/common_btn"
+                    android:onClick="logoutBtnEvent"
+                    android:text="退出账号"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
            
         </LinearLayout>
 

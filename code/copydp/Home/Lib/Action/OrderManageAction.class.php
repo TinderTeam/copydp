@@ -63,7 +63,6 @@ class OrderManageAction extends Action {
 			$this->assign('orderList',$orderList);		
 			$this->assign("currentPage","order");				
 			$this->display();
-			
 		}else{
 		  	$this->assign("jumpUrl","__APP__/Index/login");
 			$this->error("您还没有登录呢");

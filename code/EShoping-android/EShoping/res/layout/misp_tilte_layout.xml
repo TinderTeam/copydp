@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:background="@null"
-                android:drawableLeft="@drawable/detail_back"
+                android:drawableLeft="@drawable/back_w"
                 android:text="@string/misp_back"
                 android:textColor="@color/theme_text_color"
                 android:textSize="@dimen/top_head_btn_size"

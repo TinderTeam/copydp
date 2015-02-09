@@ -83,7 +83,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		this.fragmentRes.setImage(R.drawable.tabbar_home_icon);
 		this.fragmentRes.setName(R.string.tabbar_home);
 		this.fragmentRes.setFragmentView(R.layout.home_fragment);
-		this.fragmentRes.getButtonIDList().add(R.id.home_scan_btn);
+		this.fragmentRes.getButtonIDList().add(R.id.home_scan_to_order_btn);
 		listViewRes.setListView(R.id.home_main_list);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
 		ProductTypeCache.getInstance();

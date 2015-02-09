@@ -10,7 +10,7 @@
 
             <Button
                 android:id="@+id/com_back_btn"
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:background="@color/themecolor"
@@ -23,18 +23,41 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+	            android:layout_height="match_parent"
+	            android:layout_gravity="center"
+	            android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+	            android:layout_weight="1"
+	            android:background="@drawable/edittext_sel"
+                  >
 
-                <SearchView
-                    android:id="@+id/search_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:gravity="end" >
-                </SearchView>
+            <SearchView
+                android:id="@+id/search_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:imeOptions="actionSearch"
+                android:inputType="textCapWords"
+                android:queryHint="搜索" >
+
+            </SearchView>
 
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/dd"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@color/themecolor"
+                android:drawableLeft="@drawable/back_w"
+                android:gravity="left|center_vertical"
+                android:height="@dimen/top_head_height"
+                android:text="@string/com_back"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
