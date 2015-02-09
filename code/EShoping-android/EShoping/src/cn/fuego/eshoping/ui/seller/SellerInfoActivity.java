@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,7 +26,11 @@ import cn.fuego.misp.service.http.MispHttpMessage;
 import cn.fuego.misp.ui.model.ListViewResInfo;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.model.LatLng;
 
 public class SellerInfoActivity extends BaseActivtiy
 {
@@ -37,10 +42,13 @@ public class SellerInfoActivity extends BaseActivtiy
  	private MapView mMapView = null;
  	private ViewGroup group =null;
 	private ViewPager viewPager=null;
-	private ImageView imageView;
-	private TextView positionView ;
-	private TextView nameView;
+ 	private TextView nameView;
+	
+	private TextView cityView;
+	private TextView zoneView;
+	private TextView typeView;
 	private TextView infoView;
+
 	private TextView discView;
 	
 	/**
@@ -97,19 +105,54 @@ public class SellerInfoActivity extends BaseActivtiy
 	{
 		// 获取地图控件引用
 		mMapView = (MapView) findViewById(R.id.bmapView);
-		//产品信息
-		positionView = (TextView) findViewById(R.id.seller_city);
-		nameView = (TextView) findViewById(R.id.seller_name);
-	//infoView = (TextView) findViewById(R.id.seller_info);
-		discView = (TextView) findViewById(R.id.seller_disc);
+		String location = seller.getPosition();
+
+		
+		log.info("location: "+location);
+		LatLng point = null;
+		if(location!=null&&!location.isEmpty()&&location.split(",").length ==2){
+			log.info("location X: "+location.split(",")[0]);
+			log.info("location Y: "+location.split(",")[1]);
+			point = new LatLng(Float.valueOf(location.split(",")[1]),Float.valueOf(location.split(",")[0]));  
+			//在地图上添加Marker，并显示  
+
+		}
+		else
+		{
+			point = new LatLng(39.91488,116.404017); 
+		}
+ 		MapStatus mMapStatus = new MapStatus.Builder().target(point).zoom(18).build();
+		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+		mMapView.getMap().setMapStatus(mMapStatusUpdate);
+		
+		
 		viewPager = (ViewPager)findViewById(R.id.seller_img);
 		group= (ViewGroup)findViewById(R.id.seller_image_view_group);
+		//产品信息
+		nameView = (TextView) findViewById(R.id.seller_name);
+		discView = (TextView) findViewById(R.id.seller_desp);
+
+
+		cityView = (TextView) findViewById(R.id.seller_city);
+		zoneView = (TextView) findViewById(R.id.seller_zone);
+		typeView = (TextView) findViewById(R.id.seller_type);
 		
-		positionView.setText(seller.getCity()+seller.getZone_name());
+		infoView = (TextView) findViewById(R.id.seller_info);
+
+
+	//infoView = (TextView) findViewById(R.id.seller_info);
 		nameView.setText(seller.getSeller_name());
+		discView.setText(seller.getDscr());
+
+		
+		cityView.setText("所在城市："+seller.getCity());
+		zoneView.setText("所在城市："+seller.getZone_name());
+		typeView.setText("所在城市："+seller.getType_name());
+		
+		infoView.setText(Html.fromHtml(HtmlUtil.removeImg(seller.getInfo())));
+		
 		sellerComponentUpdateData();
 		//infoView.setText(Html.fromHtml(seller.getInfo()));
-		discView.setText(seller.getDscr());
 	}
 
 

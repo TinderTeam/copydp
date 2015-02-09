@@ -67,7 +67,7 @@ public class DateUtil
 
 	public static Date stringToDate(String date)
 	{
-		DateFormat d = DateFormat.getDateInstance(DateFormat.MEDIUM);
+		SimpleDateFormat d = new SimpleDateFormat("yyyy-mm-dd");
 
 		Date da;
 		if (null == date || date.trim().isEmpty())

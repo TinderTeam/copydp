@@ -7,21 +7,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
-import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.LoginActivity;
-import cn.fuego.eshoping.ui.MainTabbarActivity;
 import cn.fuego.eshoping.ui.base.BaseFragment;
-import cn.fuego.eshoping.ui.widget.AppLoginView;
-import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
-import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
-import cn.fuego.misp.service.http.MispHttpHandler;
 import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.ui.model.FragmentResInfo;
 
 public class UserFragment extends BaseFragment implements OnClickListener
 {

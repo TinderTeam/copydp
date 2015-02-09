@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -65,7 +66,8 @@ public class HomeProductActivity extends BaseActivtiy
 	private TextView sellNumView;
 	private TextView titleView;
 	private TextView dicrView;
-	private TextView view;
+	private TextView productDetailView;
+	private TextView sellInfoView;
 	private Button orderBtn;
 	
 	/**
@@ -179,16 +181,22 @@ public class HomeProductActivity extends BaseActivtiy
 	 
 	private void InitializationComponent()
 	{
-		// 获取地图控件引用
 		mMapView = (MapView) findViewById(R.id.bmapView);
+
 		//产品信息
-		titleView = (TextView) findViewById(R.id.product_title);
 		priceView = (TextView) findViewById(R.id.home_product_price);
 		limitView = (TextView) findViewById(R.id.order_activity_status);
 		sellNumView = (TextView) findViewById(R.id.product_sell_num);
-		view = (TextView) findViewById(R.id.home_product_seller_info);	
+		
+		titleView = (TextView) findViewById(R.id.product_title);
+
 		dicrView = (TextView) findViewById(R.id.home_product_disc);	
+		
+		productDetailView = (TextView) findViewById(R.id.home_product_detail);	
+		sellInfoView = (TextView) findViewById(R.id.home_product_seller_info);	
+
 		group = (ViewGroup)findViewById(R.id.home_product_image_view_group);
+		 
 		
 		//产品图片
 		viewPager = (ViewPager) findViewById(R.id.home_product_image);	
@@ -206,6 +214,10 @@ public class HomeProductActivity extends BaseActivtiy
 		titleView.setText(product.getName());
 		sellNumView.setText(String.valueOf(product.getCurrent_member()));
 		dicrView.setText(product.getDscr());
+		
+		productDetailView.setText(Html.fromHtml(HtmlUtil.removeImg(product.getBasic_infor())));
+
+ 
 		orderBtn.setOnClickListener(orderBtnHandel);
 	}
 
@@ -214,7 +226,7 @@ public class HomeProductActivity extends BaseActivtiy
 	 */
 	private void sellerComponentUpdateData()
 	{
-		List<String> imageList = HtmlUtil.getImgStr(seller.getInfo());
+ 		List<String> imageList = HtmlUtil.getImgStr(seller.getInfo());
 		if(ValidatorUtil.isEmpty(imageList)){
 			imageList = new ArrayList<String>();
 		}
@@ -223,20 +235,28 @@ public class HomeProductActivity extends BaseActivtiy
         viewPager.setAdapter(adapter);  
         viewPager.setCurrentItem(0); 
         viewPager.setOnPageChangeListener(adapter);		
-		view.setText(seller.getDscr());
+		sellInfoView.setText(seller.getDscr());
 		
 		//定义Maker坐标点  
 		String location = seller.getPosition();
+		
 		log.info("location: "+location);
-		if(location!=null&&!location.isEmpty()&&location.split(",").length!=0){
+		LatLng point = null;
+		if(location!=null&&!location.isEmpty()&&location.split(",").length ==2){
 			log.info("location X: "+location.split(",")[0]);
 			log.info("location Y: "+location.split(",")[1]);
-			LatLng point = new LatLng(Float.valueOf(location.split(",")[0]),Float.valueOf(location.split(",")[1]));  
+			point = new LatLng(Float.valueOf(location.split(",")[1]),Float.valueOf(location.split(",")[0]));  
 			//在地图上添加Marker，并显示  
-	 		MapStatus mMapStatus = new MapStatus.Builder().target(point).zoom(18).build();
-			MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
-			mMapView.getMap().setMapStatus(mMapStatusUpdate);
+
 		}
+		else
+		{ 
+			 point = new LatLng(39.91488,116.404017);  
+		}
+ 		MapStatus mMapStatus = new MapStatus.Builder().target(point).zoom(18).build();
+		MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
+		mMapView.getMap().setMapStatus(mMapStatusUpdate);
+ 
 	}
 
 	

@@ -4,50 +4,77 @@
     android:background="@color/white"
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:background="@color/themecolor"
-        android:gravity="center" >
+        android:orientation="horizontal" >
 
-        <SearchView
-            android:id="@+id/search_view"
-            android:layout_width="224dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/home_scan_btn"
-            android:iconifiedByDefault="true"
-            android:imeOptions="actionSearch"
-            android:inputType="textCapWords" >
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+             android:orientation="vertical" >
 
-        </SearchView>
+            <TextView
+                android:id="@+id/home_city"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="changeCity"
+                android:text="城市"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/theme_text_color"
+                android:textSize="@dimen/large_text_size" />
 
-        <TextView
-            android:id="@+id/home_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            android:onClick="changeCity"
-            android:text="切换城市"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/theme_text_color"
-            android:textSize="14sp" />
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/home_scan_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/home_city"
-            android:background="@null"
-            android:text="扫码消费|"
-            android:textColor="@color/theme_text_color"
-            android:textSize="14sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            
+            android:layout_weight="1"
+             android:background="@drawable/edittext_sel"
+            android:orientation="horizontal" >
 
-    </RelativeLayout>
+            <SearchView
+                android:id="@+id/search_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:imeOptions="actionSearch"
+                android:inputType="textCapWords"
+                android:queryHint="搜索" >
+
+            </SearchView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+             android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/home_scan_to_order_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/home_scan_to_order"
+                android:textColor="@color/theme_text_color"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/home_main_list"

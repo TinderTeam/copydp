@@ -57,49 +57,7 @@
 	    </RelativeLayout>
 
             </RelativeLayout>
-	      <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/backcolor" >
-
-            </FrameLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp" >
-
-                <TextView
-                    android:id="@+id/seller_city"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="left|center_vertical"
-                    android:text="北京市朝阳区"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black_85"
-                    android:textSize="15dp" />
-
-                <Button
-                    android:id="@+id/seller_show_product_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/common_btn"
-                    android:onClick="showSellerProductEvent"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="全部产品"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
+ 
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -116,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="商家名称"
+                android:text="基本信息"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/themecolor"
                 android:textSize="20sp" />
@@ -131,6 +89,38 @@
 
                 <TextView
                     android:id="@+id/seller_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="小肥羊火锅店"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black_85"
+                    android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/seller_desp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="小肥羊火锅店"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black_85"
+                    android:textSize="16sp" />
+                 <TextView
+                    android:id="@+id/seller_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="小肥羊火锅店"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black_85"
+                    android:textSize="16sp" />
+                  <TextView
+                    android:id="@+id/seller_zone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="小肥羊火锅店"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black_85"
+                    android:textSize="16sp" />
+                   <TextView
+                    android:id="@+id/seller_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="小肥羊火锅店"
@@ -169,10 +159,10 @@
                 android:paddingRight="20dp" >
 
                 <TextView
-                    android:id="@+id/seller_disc"
+                    android:id="@+id/seller_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="小肥羊火锅店"
+                    android:text="小肥羊ddd"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black_85"
                     android:textSize="16sp" />
@@ -223,16 +213,41 @@
                 android:background="@color/backcolor" >
             </FrameLayout>
 
- 				<TextView
- 				    android:id="@+id/seller_info"
- 				    android:layout_width="wrap_content"
- 				    android:layout_height="wrap_content"
- 				    android:layout_margin="@dimen/activity_horizontal_margin"
- 				    android:layout_weight="1"
- 				    android:gravity="left"
- 				    android:textAppearance="?android:attr/textAppearanceLarge"
- 				    android:textColor="@color/black"
- 				    android:textSize="15dp" />
+              <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp" >
+
+ 
+
+                <Button
+                    android:id="@+id/seller_show_product_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/common_btn"
+                    android:onClick="showSellerProductEvent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="全部产品"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/backcolor" >
+
+            </FrameLayout>
 
         </LinearLayout>
 
