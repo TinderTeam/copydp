@@ -113,7 +113,7 @@
 									<td align="center" >{$product[0].dsrc}</td>
 									<td align="center" >{$n}</td>
 									<td align="center" >
-										<!---<input type="submit" value="编辑"  onclick="editsvipProduct('{$v1.svip_product_id}')"/>--->
+										<input type="submit" value="编辑"  onclick="editsvipProduct('{$v1.svip_product_id}')"/>
 										<input type="submit" value="删除"  onclick="svipProductRemove('{$v1.svip_product_id}')"/>
 									</td>
 								</tr>					
@@ -125,7 +125,12 @@
 					
 					<strong class="btn-type-b btn-fn-c">
 						<input type="submit" value="发布新SVIP产品"  class="form-btn" onclick="newSVIPProduct()" />
+						
 					</strong>	
+					<strong class="btn-type-b btn-fn-c">
+						<button id="SVIPProductOrder" type="button" class="form-btn"  >SVIP订单管理</button>
+					</strong>
+					
 				</div>
 			</div>	<!--<div class="um-con">-->
 			
@@ -301,12 +306,12 @@
 									<td align="center"> {$v1.city}</td>
 									<td align="center"> {$v1.status}</td>
 									<td align="center">
-									{$v1.qr_code}
-										<if condition="$v1.qr_code eq 'true'">
-											<input type="submit" value="隐藏"  onclick="javascript:this.form.action='__URL__/hideCode?id={$v1.user_id}';"/>
-										<else/>
-											<input type="submit" value="显示"  onclick="javascript:this.form.action='__URL__/showCode?id={$v1.user_id}';"/>
-										</if>
+										<span class="qr_status_{$v1.user_id}">{$v1.qr_code}</span>
+										
+											<button type="button" onclick="hideCode('{$v1.user_id}');">隐藏</button>
+										
+											<button type="button" onclick="showCode('{$v1.user_id}');">显示</button>
+										
 									</td>
 									<td align="center" >{$v1.description}</td>
 									<td align="center" >
@@ -823,6 +828,51 @@
 	{
 		top.location="__APP__/SellerCenter/productDelete?productID="+id;
 	}
+	
+	//showCode改Score产品
+	 function showCode(id)
+	{
+
+		$.ajax({
+			  type:"post",
+			  url:"__APP__/SellerManage/showCode?id="+id,
+			  data:"",
+			  dataType:"html",
+			  error:
+			  function(){
+				  alert("当前ajax操作出错！");
+				
+
+			  },
+			  success:function(msg){
+			  alert('操作成功');
+			  $(".qr_status_"+id).html('true');
+				//alert(msg);
+			  }
+		});		
+	}
+	//showCode改Score产品
+	function hideCode(id)
+	{
+		$.ajax({
+			  type:"post",
+			  url:"__APP__/SellerManage/hideCode?id="+id,
+			  data:"",
+			  dataType:"html",
+			  error:
+			  function(){
+				  alert("当前ajax操作出错！");
+			  },
+			  success:function(msg){
+				  alert('操作成功');
+				  $(".qr_status_"+id).html('false');	
+				//alert(msg);
+			  }
+		});
+	}
+	
+	
+	
 </script>
 <script type="text/javascript">
 	function selectChange(num){
@@ -843,6 +893,11 @@
 			}
 		});
 	}
+	
+	$('#SVIPProductOrder').click(function(){
+		top.location="__APP__/SellerManage/svipOrder";
+	});
+
 	</script>
 
 

@@ -16,7 +16,7 @@
 						$idcondition['type_id']=$type_id;	
 						$typename=$typedb->where($idcondition)->getField('type_name');
 					?>
-					<a href="__APP__/Seller/sellerList?typeID={$type_id}">{$typename}</a>							
+					<a href="__APP__/Seller/typeSelect?SelectType={$type_id}">{$typename}</a>				
 				</volist>
 			</dd>
 		</dl>
@@ -30,8 +30,6 @@
 				<?php
 					//获取区域
 					$city_id=$_SESSION['cityID'];
-
-					
 					$zonedb=new Model('city_zone');							
 					$zonecondition['city_id']=$city_id;			
 					$zoneid=$zonedb->where($zonecondition)->limit(15)->order('rand()')->getField('zone_id',true);

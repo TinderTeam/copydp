@@ -272,7 +272,7 @@
 													$noticeDB=new Model('product_notice');
 													$NoticeProductIDCondition['product_id']=$productID;
 													$orderinfo=$noticeDB->where($NoticeProductIDCondition)->getField('orderinfo');
-													$rule=$noticeDB->where($NoticeProductIDCondition)->getField(rule);
+													$rule=$noticeDB->where($NoticeProductIDCondition)->getField('rule');
 													$warning=$noticeDB->where($NoticeProductIDCondition)->getField('warning');
 												?>
 												<dl>

@@ -91,12 +91,13 @@
 										print("编辑SVIP产品");
 										$svipProduct = M('view_svip_product');
 										$svipProductIDCondition['svip_product_id']=$id;
+									
 										$svipProduct=$svipProduct->where($svipProductIDCondition)->find();
 										
 										$productDB=M('view_product');
 										$productIDCondiiton['svip_product_id']=$id;
-										$productItem= $productDB->where($svipProductIDCondition)->select();	
-	
+										$productIDCondiiton['product_status']='正常';
+										$productItem= $productDB->where($productIDCondiiton)->select();	
 									}
 								?>
 								<input name="svip_product_id" style="display:none" value="{$id}"/>
@@ -155,12 +156,12 @@
 													<?php
 															$productType=M('product_type');
 															$condition['father_id'] = 0;
-															$type=$productType->where($condition)->select();
+															$typeList=$productType->where($condition)->select();
 													?>
 																							
 													<select id="typeSelect"  class="form-select-sim selectTarget"  onchange="selectChange()">
-														<option  value="">请选择类型</option>
-													<foreach name='type' item='mainType'>
+														<option  value="">{$svipProduct.type_name}</option>
+													<foreach name='typeList' item='mainType'>
 														<option value="{$mainType.type_id}">{$mainType.type_name}</option>
 													</foreach>											
 													</select>
@@ -170,7 +171,14 @@
 															$all_type=$productType->select();
 													?>
 													<select id="type_id" name="type_id" class="form-select-sim form-select-sim-m zone-select ">
-														<option  selected="selected" value="">请选择子类型</option></span>
+													
+														<?php
+																if($type=='edit'){
+																	print('<option selected="selected" value="'.$svipProduct['type_id'].'">'.$svipProduct['type_name'].'</option>/>');
+																}else{
+																	print('<option  selected="selected" value="">请选择子类型</option></span>')	;									
+																}
+														?>											
 														<foreach name='all_type' item='subtype'>
 															<if condition="$subtype.father_id eq 0">
 																<option class="showOption" value="{$subtype.type_id}">
@@ -188,6 +196,7 @@
 													
 													<select id="copy" name="null" class="form-select-sim form-select-sim-m zone-select Hide">
 														<option  selected="selected" value="">请选择子类型</option></span>
+
 														<foreach name='all_type' item='subtype'>
 															<if condition="$subtype.father_id eq 0">
 																<option class="copy_tpyeGroup{$subtype.type_id} copy" value="{$subtype.type_id}"
@@ -260,7 +269,7 @@
 													</tbody>
 	
 													<foreach name='productItem' item='v1'>													
-														<tr class="load_{$v1.seller_id}">
+														<tr class="load_{$v1.seller_id} exist_items" index="{$v1.seller_id}">
 															<td valign="middle" align="left" class="sellerID_{$v1.seller_id}" data="{$v1.seller_id}">{$v1.seller_id}</td>
 															<td valign="middle" align="left" class="sellerName_{$v1.seller_id}" data="{$v1.username}">{$v1.username}</td>
 															<td class="sellerCity_{$v1.seller_id}" align="center" data="{$v1.city}"> {$v1.city}</td>														
@@ -368,8 +377,19 @@
 		});	
     </script>
 	
+	
+
+	
 	<script>
 	var idList = new Array();　//创建一个数组
+	
+	//初始化idList
+	$('.exist_items').each(function(){
+		idList[idList.length]=$(this).attr('index');
+		$('#sellerList').val(idList);
+	});
+	
+	
 	
 	
 	$(".addin").click(function(){
@@ -383,7 +403,6 @@
 				}
 			}
 		}
-		
 		if(ok){
 			$('.loaditem').append(
 				'<tr class="load_'+id+'">'+
@@ -395,11 +414,9 @@
 					'</td>'+
 				'</tr>'
 			);
-			idList[idList.length]=id;
-			
+			idList[idList.length]=id;		
 			$('#sellerList').val(idList);
 		}
-
 	});
 
 	function removeItem(id){
@@ -410,6 +427,7 @@
 				$('#sellerList').val(idList);
 			}
 		}
+		alert($('#sellerList').val());
 	}
 
 	function updateItem(array){
@@ -449,8 +467,7 @@
 					'</td>'+
 				'</tr>'
 			);
-			idList[idList.length]=id;
-			
+			idList[idList.length]=id;	
 			$('#sellerList').val(idList);
 		}
 

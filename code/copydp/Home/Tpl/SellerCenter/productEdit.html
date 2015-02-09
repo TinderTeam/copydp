@@ -99,9 +99,28 @@
 											<div class="form-block">
 												<span class="label">概述：</span>
 												<input type="text" class="form-txt form-txt-l" 
-												 value="{$productItem['describe']}"   name="describe">
+												 value="{$productItem['describe']}"   name="describe">											
+											</div>
+
+											<div class="form-block">
+												<span class="label">预约信息：</span>
+												<input type="text" class="form-txt form-txt-l" 
+												 value="{$productItem['orderinfo']}"   name="orderinfo">											
+											</div>
 											
-											</div>											
+											<div class="form-block">
+												<span class="label">规则提醒：</span>
+												<input type="text" class="form-txt form-txt-l" 
+												 value="{$productItem['rule']}" name="rules"/>											
+											</div>
+											
+											<div class="form-block">
+												<span class="label">温馨提示：</span>
+												<input type="text" class="form-txt form-txt-l" 
+												 value="{$productItem['warning']}"   name="warning"/>											
+											</div>
+
+											
 											<if condition="$scoreType eq true">	
 											<else/>
 												<div id="trPriceInfo"  class="form-block">

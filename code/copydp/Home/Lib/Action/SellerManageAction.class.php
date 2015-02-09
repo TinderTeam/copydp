@@ -1,7 +1,8 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
 header("Content-Type:text/html;charset=utf-8");
-class SellerManageAction extends Action {
+
+class SellerManageAction extends BaseAction {
     public function index(){
 		$this->assign("currentPage","seller");
 		
@@ -23,6 +24,57 @@ class SellerManageAction extends Action {
 		}
     }
 
+	public function svipOrder($type=0){
+		
+		$this->debug('show svip product order page...');
+		import("ORG.Util.Page");
+		
+		$orderDB = M('view_order');
+		$svipProductConditionEmpty['svip_product_id']=array('neq',"");
+		$svipProductConditionNormal['svip_product_id']=array('neq',"普通");
+		$svipProductConditionNormal['_complex'] = $svipProductConditionEmpty;
+
+		if($_POST['product_name']!=null){
+			$filter['product_name']=array('like','%'.$_POST['product_name'].'%');;
+		}
+		
+		if($type=='seller'){
+			$db=new Model('user');
+			$userName=$_SESSION['login_user'];
+			$condition['username']=$userName;	
+			$user_id= $db->where($condition)->getField('user_id');
+			$filter['seller_id']=$user_id;
+		}
+		
+		
+		if($_POST['seller_name']!=null){
+			$filter['seller_name']=array('like','%'.$_POST['seller_name'].'%');;
+		}
+		
+			
+		if($_POST['typeID']!=null){
+			$filter['type_id']=$_POST['typeID'];
+		}
+		
+		
+		trace($_POST['product_id'],'info');
+		trace($_POST['seller_name'],'info');
+		trace($_POST['typeID'],'info');
+		
+		if(count($filter)!=0){
+			trace('in','info');
+			$svipProductConditionNormal['_complex'] = $filter;	
+		}
+
+		$count = $orderDB->where($svipProductConditionNormal)->count();
+		$this->debug("select all svip products' order. counts: ".$count);
+		$Page = new Page($count,5);
+		$show = $Page->show();
+		$list=$orderDB->where($svipProductConditionNormal)->order('order_id')->limit($Page->firstRow.','.$Page->listRows)->select();
+		$this->assign('page1',$show);	
+		$this->assign('list',$list);
+		$this->display();
+	}
 	
 	public function svipProductRemove($id=0){
 		trace($info,'id='.$id);
@@ -53,7 +105,7 @@ class SellerManageAction extends Action {
 		$sellerIDCondition['user_id']=$id;
 		$Data['qr_code']='true';
 		$sellerdb->where($sellerIDCondition)->save($Data);
-		$this->redirect('SellerManage/index#seller_manage','',0,'全部查询');//页面重定向	
+		$this->ajaxReturn('true'.$data, 'Ajax 成功！', 1);
 	}
 		
 	public function hideCode($id=0){
@@ -61,7 +113,8 @@ class SellerManageAction extends Action {
 		$sellerIDCondition['user_id']=$id;
 		$Data['qr_code']='false';
 		$sellerdb->where($sellerIDCondition)->save($Data);
-		$this->redirect('SellerManage/index#seller_manage','',0,'全部查询');//页面重定向
+		
+		$this->ajaxReturn('true'.$data, 'Ajax 成功！', 1);
 	}
 	
 	public function svipEdit($type=0,$id=0){
@@ -82,13 +135,12 @@ class SellerManageAction extends Action {
 		$this->assign('sellerInfo',$sellerInfo);
 		$this->assign('type',$type);
 		$this->display();
-	
 	}
 	
 	
 	public function saveSVIPProduct(){	
-	$type=$_POST['type'];
-	trace($info,$type);	
+		$type=$_POST['type'];
+		trace($info,$type);	
 	//图片处理
 		//导入图片上传类  
         import("ORG.Net.UploadFile");  
@@ -115,15 +167,11 @@ class SellerManageAction extends Action {
         }    
 		
 	//图片处理over
-	
-
 			//log
-	
 			trace($info,'limit_consumption_num='.$_POST['limit_consumption_num']);
 			trace($info,'limit_consumption_period='.$_POST['limit_consumption_period']);
 			trace($info,'create_datetime='.date('y-m-d h:i:s',time()));		
 			trace($info,'sellerIDList='.$_POST['sellerIDList']);
-			
 			trace($info,'name='.$_POST['name']);		
 			trace($info,'type_id='.$_POST['type_id']);
 			trace($info,'end_date_time='.$_POST['end_date_time']);
@@ -136,7 +184,24 @@ class SellerManageAction extends Action {
 			$datasvip['limit_consumption_num']=$_POST['limit_consumption_num'];
 			$datasvip['limit_consumption_period']=$_POST['limit_consumption_period'];
 			$datasvip['create_datetime']=date('y-m-d h:i:s',time());
-					
+			
+			$idListStr=$_POST['sellerIDList'];
+			$idList=explode(',',$idListStr);
+				
+
+			$datap['name']=$_POST['name'];
+			$datap['type_id']=$_POST['type_id'];
+			$this->debug('id='.$datap['type_id']);
+			$datap['update_date']=date('y-m-d h:i:s',time());
+			$datap['end_date_time']=$_POST['end_date_time'];
+			$datap['price']=$_POST['price'];
+			$datap['original_price']=$_POST['original_price'];
+			$datap['describe']=$_POST['dsrc'];
+			$datap['basic_infor']=$_POST['info'];
+			
+			$datap['imgsrc']=$imgsrc;
+			$datap['product_status']='正常';
+				
 		if($type!='edit'){
 		
 			//create svip
@@ -145,99 +210,69 @@ class SellerManageAction extends Action {
 			
 			//create product
 			$productdb=M('product');
-			$idListStr=$_POST['sellerIDList'];
-			$idList=explode(',',$idListStr);
-			
+
 			foreach($idList as $id){
 				trace($info,'idList[]'.$id);
-				$datap['name']=$_POST['name'];
-				$datap['type_id']=$_POST['type_id'];
 				$datap['seller_id']=$id;
-				$datap['update_date']=date('y-m-d h:i:s',time());
-				$datap['end_date_time']=$_POST['end_date_time'];
-				$datap['price']=$_POST['price'];
-				$datap['original_price']=$_POST['original_price'];
-				$datap['describe']=$_POST['dsrc'];
-				$datap['basic_infor']=$_POST['info'];
 				$datap['svip_product_id']=$svipid;
-				$datap['imgsrc']=$imgsrc;
-				$datap['product_status']='正常';
 				$productdb->add($datap);
 			}				
 			trace($info,'save product');
 		}else if($type=='edit'){
-		/*
-			trace($info,'svip 编辑');	
-			//update svip
-			$svipIDcondition['svup_product_id']=$_POST['svip_product_id'];
-			$svipid=$svipProductdb->where($svipIDcondition)->save($datasvip);	
-			trace($info,'更新SVIP信息');	
-			
-			//update product
-			$productdb=M('product');	
-
-			trace($info,'开始更新SVIP子产品信息');	
-			//先获取已有的产品
-			$sproductList=$productdb->where($svipIDcondition)->select();
-			trace($info,'子产品列表数量'.count($sproductList));
-	
-			
-			$idListStr=$_POST['sellerIDList'];
-			trace($info,'获取到新的商家id'.$idListStr);	
-			$idList=explode(',',$idListStr);
-			
-			//进行ID比对，如果没有则删除该产品
-			foreach($sproductList as $product){
-				$exist='false';
-				foreach($idList as $id){
-					if($product['product_id']==$id){
-						$exist='true';
+			$this->info('edit svip product');
+			//对每一个子产品进行一次更新，更新的原则：1.新增、2.修改、3.删除		
+			//先获取原产品列表
+			$svipProduct = M('view_svip_product');
+			$svipProductIDCondition['svip_product_id']=$_POST['svip_product_id'];
+			$svipProduct=$svipProduct->where($svipProductIDCondition)->find();
+			$productViewDB=M('view_product');
+			$productIDCondiiton['svip_product_id']=$id;
+			$oldProductList= $productViewDB->where($svipProductIDCondition)->select();	
+			$productDB=M('product');
+			//根据旧产品序列进行更新
+			$this->debug('update by old product list');
+			foreach($oldProductList as $oldProduct){			
+				$oldProductExist=false;
+				foreach($idList as $id){					
+					if($id==$oldProduct['seller_id']){
+						$this->debug('id item matched,id:'.$id);
+						$oldProductExist=true;
+						//更新产品
+						$upadateCondition['seller_id']=$id;
+						$upadateCondition['svip_product_id']=$_POST['svip_product_id'];
+						$datap['product_status']='正常';
+						$productDB->where($upadateCondition)->save($datap);
 					}
-				}
-				trace($info,'产品编号为'.$product['product_id'].'的产品更改后存在状态为'.$exist);	
-				
-				if($exist=='false'&&$product['product_id']!=""){
-					$deleteCondition['product_id']=$product['product_id'];					
-					$productdb->where($deleteCondition)->delete();
-					trace($info,'产品编号为'.$product['product_id'].'的产品删除');	
-				}else{
-					$deleteCondition['product_id']=$product['product_id'];		
-					$datap['name']=$_POST['name'];
-					$datap['type_id']=$_POST['type_id'];
-					$datap['seller_id']=$id;
-					$datap['update_date']=date('y-m-d h:i:s',time());
-					$datap['end_date_time']=$_POST['end_date_time'];
-					$datap['price']=$_POST['price'];
-					$datap['original_price']=$_POST['original_price'];
-					$datap['describe']=$_POST['dsrc'];
-					$datap['basic_infor']=$_POST['info'];
-					$datap['svip_product_id']=$svipid;
-					$datap['imgsrc']=$imgsrc;
-					$datap['product_status']='正常';
-					$productdb->where($deleteCondition)->save($datap);
-					
-					trace($info,'产品编号为'.$product['product_id'].'的产品被更新');	
+				}		
+				if(!$oldProductExist){
+					//删除旧的产品(状态变更)
+					$this->debug('Id item unmatched. Item will be deleted,id:'.$oldProduct['seller_id']);
+					$deleteCondition['svip_product_id']=$_POST['svip_product_id'];
+					$deleteCondition['seller_id']=$oldProduct['seller_id'];						
+					$datap['product_status']='已停止';
+					$productDB->where($deleteCondition)->save($datap);
 				}
 			}
 			
+			trace('update by new product list','info');
+			//根据新产品序列进行更新
 			foreach($idList as $id){
-				trace($info,'idList[]'.$id);
-				$productCondition['product_id']=$id;
-				$datap['name']=$_POST['name'];
-				$datap['type_id']=$_POST['type_id'];
-				$datap['seller_id']=$id;
-				$datap['update_date']=date('y-m-d h:i:s',time());
-				$datap['end_date_time']=$_POST['end_date_time'];
-				$datap['price']=$_POST['price'];
-				$datap['original_price']=$_POST['original_price'];
-				$datap['describe']=$_POST['dsrc'];
-				$datap['basic_infor']=$_POST['info'];
-				$datap['svip_product_id']=$svipid;
-				$datap['imgsrc']=$imgsrc;
-				$datap['product_status']='正常';
-				$productdb->where($productCondition)->save($datap);
-			}	
-*/			
+				$newProductExist=false;
+				foreach($oldProductList as $oldProduct){
+					if($id==$oldProduct['seller_id']){
+						$this->debug('new id item exist');
+						$newProductExist=true;
+					}
+				}
+				if(!$newProductExist){
+					//新建新子产品
+					$this->debug('new Id item unmatched. Item will be created,id:'.$id);
+					$datap['seller_id']=$id;
+					$datap['svip_product_id']=$_POST['svip_product_id'];
+					$productDB->add($datap);
+				}
+			}
+			
 		}
 		$this->redirect('SellerManage/index','',0,'全部查询');//页面重定向
 	}

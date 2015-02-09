@@ -58,7 +58,7 @@ class OrderManageAction extends Action {
 			$orderCount = $order->where($OrderCondition)->count();
 			$orderList = $order->where($OrderCondition)->select();
 			
-			print_r($OrderCondition);
+			//print_r($OrderCondition);
 			
 			$this->assign('orderList',$orderList);		
 			$this->assign("currentPage","order");				

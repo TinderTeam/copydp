@@ -30,7 +30,7 @@ class BuyAction extends BuyServiceAction {
 			
 			trace($info,'$privilege='.$privilege.";grade=".$grade);
 			//购买商品校验
-			if($privilege!="普通")
+			if($privilege!="普通"&&$privilege!=null&&$privilege!="")
 			{
 				if($grade=="VIP"){
 					$this->assign("jumpUrl","__APP__/Buy/product_info?productID=".$productID);

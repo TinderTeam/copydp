@@ -12,8 +12,6 @@
     define('RESULT_NULL',8);                //搜索结果为空
     define('USERNAME_OR_PASSWORD_WRONG',9); //用户名或密码错误
     define('ERROR_TOKEN_INVALID',10); 		//token 失效
-    
-    
     define('USER_UNCHECKED',10000);             //用户未审核
     define('USER_APPROVAL_REFUSED',10001);      //用户审核未通过
     define('CODE_IS_INVALID',10002);            //激活码已失效

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>笑谣林</title>
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/new-detail.min.a8caab113457f7a2093fedfdb0a8dbe6.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/newhome/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+	<link rel="stylesheet" href="__PUBLIC__/css/cssnew/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" />
+	<!-- <link rel="stylesheet" href="http://t2.s2.dpfile.com/t/cssnew/my/rate-pop.min.5ec84ae0b63499fec0e87d82923458a0.css" type="text/css" />
+	<link type="text/css" href="http://t1.s2.dpfile.com/t/cssnew/my/order.min.5a7226cd2f3426def2f1ad35c9e6efa2.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="http://t3.s2.dpfile.com/t/cssnew/neworder/page/c.process.min.92c908b76c13b72d9517a6cd433cc597.css" type="text/css" />
+	<link rel="stylesheet" href="http://j1.s2.dpfile.com/s/c/app/main/base-old.min.97b2942750e98b1213fe2f167b08db28.css" type="text/css" />
+	<link rel="stylesheet" href="http://j2.s2.dpfile.com/s/c/app/shop/add.min.0fe62b4e4cc3553c338ed7e73a89c1e4.css" type="text/css" /> -->
+	<style>
+		body {
+			background-color: #f2f2f2;
+		}
+		.wrap{
+		width: 1190px;
+		margin: 15px auto;
+		}
+		.wrap .user-main {
+		float: right;
+		width: 1000px;
+		}
+
+		.user-main .um-con .modebox li {
+		float: left;
+		height: 39px;
+		width: 190px;
+		margin-right: 10px;
+		}
+		.span-input{
+			margin-top: 5px;
+		}
+
+		.span-select{
+			width: 129px;
+			height: 20px;
+		}
+		.btnbar{
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+	</style>
+</head>
+<body id="body" data-type="">
+	<!---标题栏---->
+		<include file="./Home/Tpl/Public/header.html"/>
+	<!---标题栏End---->
+	<div class="head responsive">
+		<!---Logo栏---->
+			<include file="./Home/Tpl/Public/logobar.html"/>
+		<!---Logo栏End---->
+		
+		<!-----主菜单---->
+		<div class="nav-bar">
+			<div class="cont">						
+				<include file="./Home/Tpl/Public/menu.html"/>
+			</div>
+		</div>
+		<!-----主菜单End---->
+	</div>
+	<!--<div class="wrap">-->
+	<div class="wrap">
+		<div class="user-nav J_user_nav">
+			<!-----管理菜单---->
+			<include file="./Home/Tpl/Public/managemenu.html"/>
+			<!-----管理菜单---->
+		</div>
+		<div class="user-main">		
+			<!--<div class="um-con">-->
+			<div id="seller_manage" class="um-con">
+				<div class="modebox my-comm J_my_comm" >
+					<div class="hd">
+						<input id="nav" value="{$nav}" style="display:none;"/>
+						<h4>SVIP订单管理</h4>
+						<span>查询SVIP产品消费订单</span>
+					</div>
+				<form name="forml" action="__URL__/svipOrder" method="post">
+					<ul class="tab-filter">
+						<li>
+							<div class="span-input">
+								<span>产品名称</span><input type="text" name="product_name"/>
+							</div> 						
+						</li>
+						<li>
+							<div class="span-input">
+								<span>商家名称</span><input type="text" name="seller_name"/>
+							</div> 	
+						</li>		
+						</li>
+						<li>
+							<div class="span-input">
+							<span >行业类别</span>
+								<?php
+										$productType=M('product_type');
+										$condition['father_id'] = 0;
+										$type=$productType->where($condition)->select();
+								?>
+																						
+								<select class="selectTarget1 span-select"  onchange="selectChange(1)">
+									<option  value="">请选择类型</option>
+								<foreach name='type' item='mainType'>
+									<option value="{$mainType.type_id}">{$mainType.type_name}</option>
+								</foreach>											
+								</select>
+							</div>							
+						</li>
+						<li>
+							<div class="span-input">.
+							<span >子类别</span>
+									<?php
+										$productType=M('product_type');
+										$all_type=$productType->select();
+								?>
+								<select id="type_id1" name="typeID" class="span-select">
+									<option  selected="selected" value="">请选择子类型</option></span>
+									<foreach name='all_type' item='subtype'>
+										<if condition="$subtype.father_id eq 0">
+											<option class="showOption1" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>	
+											<else/>
+											<option class="showOption1" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>
+											
+										</if>
+																											
+									</foreach>											
+								</select>								
+								<select name="null" class="form-select-sim form-select-sim-m zone-select Hide">
+									<option  selected="selected" value="">请选择子类型</option></span>
+									<foreach name='all_type' item='subtype'>
+										<if condition="$subtype.father_id eq 0">
+											<option class="copy1" value="{$subtype.type_id}"
+										>{$subtype.type_name}</option>
+											<else/>											
+											<option fatherID="{$subtype.father_id}" typeID="{$subtype.type_id}" class="copy1" value="{$subtype.type_id}">
+												{$subtype.type_name}
+											</option>
+										</if>																												
+									</foreach>											
+								</select>															
+							</div>							
+						</li>
+						<li>
+								<strong class="btn-type-b btn-fn-c btnbar">
+									<input id="btnAdd" type="submit" value="查询" class="form-btn">
+								</strong> 								
+						</li>
+					</ul>
+			
+				</form>
+					<div class="pay-confirm">
+						<form id="freezeDeal" action="__URL__/freezeDeal?type=" method="post">	
+						<table width="100%" class="confirm-order-tab" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<th class="t-order">
+										订单信息
+									</th>
+									<th class="t-time">
+										买家信息
+									</th>
+									<th class="t-amount">
+										产品信息
+									</th>
+									<th class="t-price">
+										价格信息
+									</th>
+									<th class="t-status">
+										交易状态
+									</th>
+									<th class="t-op">
+										操作
+									</th>
+								</tr>
+								<foreach name='list' item='v1'>	
+									<tr>
+										<td class="t-order">
+											<div class="txt">
+												<h4>
+													<a href="#">
+														订单名称：{$v1.order_name}
+													</a>
+												</h4>
+												<h5>
+													<span>
+														订单号：{$v1.order_id}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														订单时间：{$v1.order_time}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														过期时间：{$v1.end_date_time}
+													</span>
+												</h5>	
+											</div>
+										</td>
+										<td>
+											<div class="txt">
+												<h4>
+													<a href="#">
+														用户名：{$v1.username}
+													</a>
+												</h4>
+												<h5>
+													<span>
+														用户编号：{$v1.customer_id}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														用户权限：{$v1.grade}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														手机号码：{$v1.cellphone}
+													</span>
+												</h5>
+											</div>
+										</td>
+										<td class="t-amount">
+											<div class="pic">
+												<a href="#"><img src="__PUBLIC__/uploads/img/{$v1.imgsrc}" width="85" height="53" /></a>
+											</div>
+											<div class="txt">
+												<h4>
+													<a href="#">
+														产品名：{$v1.product_name}
+													</a>
+												</h4>
+												<h5>
+													<span>
+														产品类型：{$v1.type_name}
+													</span>
+												</h5>
+												<h5>
+													<span>
+														商家名称：{$v1.seller_name}
+													</span>
+												</h5>
+
+											</div>
+										</td>
+											<td class="t-price">
+											<div class="txt">
+													<h4>
+														<a href="#">
+															购买数量：{$v1.quantity}
+														</a>
+													</h4>
+													<h5>
+														<span>
+															订单价格：￥{$v1.order_price}
+														</span>
+													</h5>
+
+											</div>
+										</td>
+										<td class="t-status">
+											<div>{$v1.order_status}</div>
+										</td>
+										<td class="t-op">
+											<!--- <a onclick="show_abolish_confirm({$v1.order_id})" >作废</a>  --->
+										</td>				
+								</foreach>		
+								<tr >
+									<td colspan="6" style=" text-align: center;" ><span>{$page1}</span></td>
+								</tr>
+							</tbody>
+						</table>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+				
+		</div><!--<div class="user-main">-->
+	</div><!--	<div class="wrap">-->
+		
+	<!---footer-->
+		<include file="./Home/Tpl/Public/footer.html"/>
+	<!---footer-->
+<script type="text/javascript">
+	function selectChange(num){
+		var id=$(".selectTarget"+num).val();
+		
+		$(".showOption"+num).each(function(){	
+			$(this).remove();
+		});
+		
+		$(".copy"+num).each(function(){
+			var fatherID=$(this).attr("fatherID");
+			var typeID=$(this).attr("typeID");
+			var name=$(this).html();
+			if(fatherID==id){				
+				$("#type_id"+num).append(
+					"<option class='showOption"+num+"' value='"+typeID+"'>"+name +"</option>"
+				); 
+			}
+		});
+	}
+
+	$('#SVIPProductOrder').click(function(){
+		alert('test');
+	});
+
+	</script>
+
+</body>
+</html>

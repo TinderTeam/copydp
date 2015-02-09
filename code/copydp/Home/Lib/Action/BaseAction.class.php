@@ -14,9 +14,6 @@ class ResultJson
     }
 
 }
-
-
-
 class BaseAction extends Action 
 {
      protected $errorCode = 0;
@@ -25,6 +22,16 @@ class BaseAction extends Action
 	 public function log($log)
 	 {
 	   Log::write($log);
+	 }
+	 
+	 public function info($log)
+	 {
+	   Log::write($log,"Info");
+	 }
+	
+	 public function debug($log)
+	 {
+	   Log::write($log,"Debug");
 	 }
 	
 	 public function getReqJson()
@@ -85,6 +92,26 @@ class BaseAction extends Action
     return $prefix . $uuid;  
   }  
 
-
+	
 	
 }
+
+ class BaseService{
+		  public function log($log)
+		 {
+		   Log::write($log);
+		 }
+		 
+		 public function info($log)
+		 {
+		   Log::write($log,"Info");
+		 }
+		
+		 public function debug($log)
+		 {
+		   Log::write($log,"Debug");
+		 }
+		 public function error($log){
+			Log::write($log);
+		 }
+	 }
