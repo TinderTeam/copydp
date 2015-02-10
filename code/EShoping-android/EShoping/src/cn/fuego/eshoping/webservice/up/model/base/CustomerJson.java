@@ -8,7 +8,7 @@ import java.util.Date;
  * @author jun
  *
  */
-public class CustomerJson implements Serializable
+public class CustomerJson implements Serializable,Cloneable
 {
 	private int user_id;
 	private String grade;
@@ -100,6 +100,21 @@ public class CustomerJson implements Serializable
 	{
 		this.vip_limit_date = vip_limit_date;
 	}
-	
+	@Override
+	public CustomerJson clone()
+	{
+		CustomerJson p = null;
+		// TODO Auto-generated method stub
+		try
+		{
+			p =(CustomerJson) super.clone();
+		} catch (CloneNotSupportedException e)
+		{
+			// TODO Auto-generated catch block
+			p = new CustomerJson();
+			e.printStackTrace();
+		}
+		return p;
+	}
 
 }

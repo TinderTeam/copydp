@@ -94,7 +94,13 @@ public class RegistActivity extends BaseActivtiy
 		}
 		customer.setEmail(emailStr);
 		customer.setCar_id(car.getText().toString().trim());
-		customer.setCellphone(cell.getText().toString().trim());
+		String cellStr = cell.getText().toString().trim();
+		if(!ValidatorUtil.isMobile(cellStr))
+		{
+			showMessage("电话格式不正确");
+			return;
+		}
+		customer.setCellphone(cellStr);
 		
 		req.setCode(code.getText().toString().trim());
 		req.setUser(user);

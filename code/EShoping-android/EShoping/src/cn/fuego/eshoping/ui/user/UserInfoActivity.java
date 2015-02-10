@@ -50,11 +50,13 @@ public class UserInfoActivity extends MispInfoListActivity
 			
 			list.add(new CommonItemMeta(CommonItemMeta.DIVIDER_ITEM, null, null));
 
-    		list.add(new CommonItemMeta(CommonItemMeta.BUTTON_TO_EDIT_ITEM, "手机号码", customer.getCellphone()));
-			list.add(new CommonItemMeta(CommonItemMeta.BUTTON_TO_EDIT_ITEM, "邮箱", customer.getEmail()));
+    		list.add(new CommonItemMeta(CommonItemMeta.BUTTON_TO_EDIT_ITEM, MODIFY_INFO, null));
+    		list.add(new CommonItemMeta(CommonItemMeta.TEXT_CONTENT, "手机号码", customer.getCellphone()));
+			list.add(new CommonItemMeta(CommonItemMeta.TEXT_CONTENT, "邮箱", customer.getEmail()));
 
  			
-			
+			list.add(new CommonItemMeta(CommonItemMeta.DIVIDER_ITEM, null, null));
+
  			list.add(new CommonItemMeta(CommonItemMeta.BUTTON_TO_EDIT_ITEM, MODIFY_PASSWORD, ""));
 
 
@@ -75,10 +77,16 @@ public class UserInfoActivity extends MispInfoListActivity
 		{
 			String title =   item.getTitle();
   
-			if(MODIFY_PASSWORD.equals(title))
+			Intent intent = new Intent();
+			if(MODIFY_INFO.equals(title))
 			{
-				 toResetPwd();
+				intent.setClass(this, UserEditActivity.class);
 			}
+			else if(MODIFY_PASSWORD.equals(title))
+			{
+				intent.setClass(this, ResetPwdActivity.class);
+			}
+			this.startActivityForResult(intent,1);
  		}
 	}
 
@@ -108,6 +116,8 @@ public class UserInfoActivity extends MispInfoListActivity
 		intent.setClass(this,MainTabbarActivity.class);
 		startActivity(intent);
 	}
+	
+	
 	 
  
 

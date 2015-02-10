@@ -12,7 +12,7 @@ import cn.fuego.eshoping.webservice.up.model.LoginReq;
 import cn.fuego.eshoping.webservice.up.model.LoginRsp;
 import cn.fuego.eshoping.webservice.up.model.ModifyPwdReq;
 import cn.fuego.eshoping.webservice.up.model.ModifyPwdRsp;
-import cn.fuego.eshoping.webservice.up.model.ModifyUserReq;
+import cn.fuego.eshoping.webservice.up.model.ModifyCustomerReq;
 import cn.fuego.eshoping.webservice.up.model.RegisterReq;
 import cn.fuego.eshoping.webservice.up.model.RegisterRsp;
 import cn.fuego.eshoping.webservice.up.model.SetUserGradeReq;
@@ -65,7 +65,7 @@ public interface UserManageRest
  
 	//修改个人信息
 	@POST
-	@Path("/upGrade_rest")
-	ModifyUserReq upGrade(ModifyUserReq req);
+	@Path("/modifyCustomerInfo_rest")
+	BaseJsonRsp modifyCustomer(ModifyCustomerReq req);
 	
 }
