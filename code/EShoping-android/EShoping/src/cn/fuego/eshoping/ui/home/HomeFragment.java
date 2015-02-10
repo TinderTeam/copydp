@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.SearchView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.string.StringLengthLimit;
@@ -72,9 +71,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
     
 	private LoadImageUtil loadImageUtil = LoadImageUtil.getInstance();
  
-	private List<CommonItemMeta> newProductData;
-	private List<CommonItemMeta> typeProductData;
-	private List<CommonItemMeta> allProductData;
+
  	private ProductSearchView productSearchView;
 	
 	@Override
@@ -144,19 +141,36 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		GetProductListReq req = new GetProductListReq();
 		req.setCity(AppCache.getInstance().getCityInfo().getCity());
 		log.info("load req:"+req.toString());
-		refresh(newProductData);
-
+ 
 		switch(tabID)
 		{
 		case TAB_0:
-			WebServiceContext.getInstance().getProductManageRest(tabHander0).getNewProductList(req);
+			
+			if(ValidatorUtil.isEmpty(ProductCache.getInstance().getNewProductData()))
+			{
+				WebServiceContext.getInstance().getProductManageRest(tabHander0).getNewProductList(req);
+			}
+			refresh(ProductCache.getInstance().getNewProductData());	
+ 
 			break;
 			
 		case TAB_1:
-			WebServiceContext.getInstance().getProductManageRest(tabHander1).getSellerList(req);
+			
+ 			if(ValidatorUtil.isEmpty(ProductCache.getInstance().getTypeProductData()))
+			{
+				WebServiceContext.getInstance().getProductManageRest(tabHander1).getSellerList(req);
+
+  			} 
+ 			 refresh(ProductCache.getInstance().getTypeProductData());	
+ 
 			break;
 		case TAB_2:
-			WebServiceContext.getInstance().getProductManageRest(tabHander2).getRecommendProductList(req);
+			if(ValidatorUtil.isEmpty(ProductCache.getInstance().getAllProductData()))
+			{
+				WebServiceContext.getInstance().getProductManageRest(tabHander2).getRecommendProductList(req);
+			}
+			 refresh(ProductCache.getInstance().getAllProductData());	
+ 
 			break;
 		default:
 			break;
@@ -198,8 +212,8 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 								itemList.add(item);
 							}	
 						}
-						
-						newProductData = itemList;
+						ProductCache.getInstance().setNewProductData(itemList);
+						//newProductData = itemList;
 				}
 				else
 				{
@@ -207,7 +221,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 				}
 				if(tabID==TAB_0)
 				{
-					refresh(newProductData);
+					refresh(ProductCache.getInstance().getNewProductData());
 				}
 			
 		}
@@ -239,7 +253,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 							}	
 						}
 						 
-						typeProductData = itemList;
+						ProductCache.getInstance().setTypeProductData(itemList);
 						
 					 
 				}
@@ -249,7 +263,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 				}
 				if(tabID==TAB_1)
 				{
-					refresh(typeProductData);
+					refresh(ProductCache.getInstance().getTypeProductData());
 				}
 			
 		}
@@ -278,7 +292,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 							itemList.add(item);
 						}	
 					}
-					allProductData  = itemList;
+					ProductCache.getInstance().setAllProductData(itemList);
 						
 					 
 				}
@@ -288,7 +302,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 				}
 				if(tabID==TAB_2)
 				{
-					refresh(allProductData);
+					refresh(ProductCache.getInstance().getAllProductData());
 				}
 			
 		}
@@ -442,6 +456,12 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		        //商家类别 25
 		        TextView typeView = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
 		        typeView.setText(String.valueOf(seller.getType_name()));
+		        
+		       //刷新残留数据
+		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
+		        oldPrice.setText("");
+		       
+		        
 		        //商家描述
 		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
 		        desp.setText(String.valueOf(StringLengthLimit.limitStringLen(seller.getDscr(), 20)));
@@ -459,6 +479,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		        //产品原价
 		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
 		        oldPrice.setText(String.valueOf(getString(R.string.misp_rmb_unit)+product.getOriginal_price()));
+		        oldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); 
 		        //产品描述
 		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);
 		        desp.setText(String.valueOf(StringLengthLimit.limitStringLen(product.getDscr(),20)));
@@ -495,33 +516,19 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		if (radioButtonId == R.id.home_radio_all)
 		{   
 			tabID = TAB_2;
-			if(ValidatorUtil.isEmpty(this.allProductData))
-			{
-				loadSendList();	
-			}
-			refresh(this.allProductData);	
-			
-			
 		}
 		else if (radioButtonId == R.id.home_radio_type)
 		{
 			tabID = TAB_1;
-			if(ValidatorUtil.isEmpty(this.typeProductData))
-			{
-				loadSendList();	
-			} 
-			refresh(this.typeProductData);	
-			
+ 
 		}		
 		else 
 		{
 			tabID = TAB_0;
-			if(ValidatorUtil.isEmpty(this.newProductData))
-			{
-				loadSendList();	
-			}
-			refresh(this.newProductData);	
+ 
 		}
+		
+		loadSendList();	
 	}
 	
 	private void refresh(List<CommonItemMeta> newDataList)

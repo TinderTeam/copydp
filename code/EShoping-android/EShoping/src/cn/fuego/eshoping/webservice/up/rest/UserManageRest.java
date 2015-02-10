@@ -12,6 +12,7 @@ import cn.fuego.eshoping.webservice.up.model.LoginReq;
 import cn.fuego.eshoping.webservice.up.model.LoginRsp;
 import cn.fuego.eshoping.webservice.up.model.ModifyPwdReq;
 import cn.fuego.eshoping.webservice.up.model.ModifyPwdRsp;
+import cn.fuego.eshoping.webservice.up.model.ModifyUserReq;
 import cn.fuego.eshoping.webservice.up.model.RegisterReq;
 import cn.fuego.eshoping.webservice.up.model.RegisterRsp;
 import cn.fuego.eshoping.webservice.up.model.SetUserGradeReq;
@@ -62,5 +63,9 @@ public interface UserManageRest
 	@Path("/city_rest")
 	GetCityListRsp getCityList(GetCityListReq req);
  
- 
+	//修改个人信息
+	@POST
+	@Path("/upGrade_rest")
+	ModifyUserReq upGrade(ModifyUserReq req);
+	
 }

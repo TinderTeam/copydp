@@ -7,6 +7,7 @@ public class MispCommonIDName
 	/**for title**/
 	public static final int misp_title_name = R.id.misp_title_name;
 	public static final int misp_title_back = R.id.misp_title_back;
+	public static final int misp_tilte_save = R.id.misp_title_save;
 
  	
 	/**for grid view**/
@@ -31,7 +32,8 @@ public class MispCommonIDName
  	public static final int layout_misp_list_item_submit_btn = R.layout.misp_list_item_submit_btn;
 
  
- 	
+	public static final int misp_icon_img = R.id.misp_icon_img;
+
 	public static final int item_imgtype_name = R.id.item_imgtype_name;
 	public static final int item_imgtype_img = R.id.item_imgtype_img;
 	public static final int item_texttype_name = R.id.item_texttype_name;
@@ -64,8 +66,24 @@ public class MispCommonIDName
 	public static final int misp_upgrade_old_version_txt = R.id.misp_upgrade_old_version_txt;
 	public static final int misp_upgrade_count_txt = R.id.misp_upgrade_count_txt;
 	public static final int misp_uprade_progress_count = R.id.misp_uprade_progress_count;
+	public static final int misp_icon_img_view = R.id.misp_icon_img_view;
+	public static final int misp_pop_title=R.id.pop_window_title;
+	
+	/**for text edit**/
+	
+	public static final int layout_misp_text_edit= R.layout.misp_text_edit;
+	public static final int misp_text_edit_txt= R.id.misp_text_edit_txt;
+	
+	/** for web view **/
 
-	 
+	public static final int layout_misp_web_display = R.layout.misp_web_display;
+ 
+	public static final int misp_web_view = R.id.misp_web_view;
+
+	/** for wait dialog **/
+	public static final int layout_misp_wait_dialog = R.layout.misp_wait_dialog;
+	public static final int style_misp_wait_dialog = R.style.MispWaitDailog;
+
 	
 	
  }

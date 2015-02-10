@@ -119,10 +119,12 @@ public class MipcaActivityCapture extends Activity implements Callback {
 		if (resultString.equals("")) {
 			Toast.makeText(MipcaActivityCapture.this, "Scan failed!", Toast.LENGTH_SHORT).show();
 		}else {
+			//Toast.makeText(MipcaActivityCapture.this, resultString, Toast.LENGTH_SHORT).show();
+
 			Intent resultIntent = new Intent();
 			Bundle bundle = new Bundle();
 			bundle.putString("result", resultString);
-			bundle.putParcelable("bitmap", barcode);
+			//bundle.putParcelable("bitmap", barcode);
 			resultIntent.putExtras(bundle);
 			this.setResult(RESULT_OK, resultIntent);
 		}

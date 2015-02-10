@@ -45,8 +45,8 @@ public class UserInfoActivity extends MispInfoListActivity
 			list.add(new CommonItemMeta(CommonItemMeta.DIVIDER_ITEM, null, null));
 
 			
-			list.add(new CommonItemMeta(CommonItemMeta.BUTTON_TO_EDIT_ITEM, "用户名", user.getUsername()));
- 			list.add(new CommonItemMeta(CommonItemMeta.BUTTON_TO_EDIT_ITEM, "积分", customer.getScore()));
+			list.add(new CommonItemMeta(CommonItemMeta.TEXT_CONTENT, "用户名", user.getUsername()));
+ 			list.add(new CommonItemMeta(CommonItemMeta.TEXT_CONTENT, "积分", customer.getScore()));
 			
 			list.add(new CommonItemMeta(CommonItemMeta.DIVIDER_ITEM, null, null));
 

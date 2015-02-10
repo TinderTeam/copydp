@@ -163,7 +163,7 @@ public class ProductOrderActivity extends BaseActivtiy
 				intent.putExtra(SharedPreferenceConst.PRODUCT_ORDER, order);
 				startActivity(intent);
 			}else{
-				showMessage(ErrorMessageConst.GET_PRODUCT_ORDER_FAILED);
+				showMessage(ErrorMessageConst.PRODUCT_NOT_EXIST);
 			}
 		}
 		else{

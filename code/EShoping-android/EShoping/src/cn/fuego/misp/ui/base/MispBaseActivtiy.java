@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -24,7 +25,13 @@ public abstract class MispBaseActivtiy extends Activity implements OnClickListen
 	private FuegoLog log = FuegoLog.getLog(MispBaseActivtiy.class);
 	private Map<Integer,Button> buttonViewList = new HashMap<Integer,Button>();
 	private TextView titleView;
+	private Button saveButton;
 	public void backOnClick()
+	{
+		this.finish();
+	}
+	
+	public void saveOnClick(View v)
 	{
 		this.finish();
 	}
@@ -34,7 +41,8 @@ public abstract class MispBaseActivtiy extends Activity implements OnClickListen
 	{
 		initRes();
 		// TODO Auto-generated method stub
- 		super.onCreate(savedInstanceState);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+  		super.onCreate(savedInstanceState);
  		if(0 != activityRes.getAvtivityView())
  		{
  			setContentView(activityRes.getAvtivityView());
@@ -84,8 +92,33 @@ public abstract class MispBaseActivtiy extends Activity implements OnClickListen
 				titleView.setText(this.activityRes.getName());
 			}
 		}
+		if(!ValidatorUtil.isEmpty(activityRes.getSaveBtnName()))
+		{
+			saveButton = (Button) findViewById(MispCommonIDName.misp_tilte_save);
+			saveButton.setVisibility(View.VISIBLE);
+			saveButton.setText(activityRes.getSaveBtnName());
+			saveButton.setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					saveOnClick(v);
+					
+				}
+			});
+		}
+		
+		
 	}
 	
+	
+	
+	public Button getSaveButton()
+	{
+		return saveButton;
+	}
+
 	private void initBackButton()
 	{
 		View button = findViewById(activityRes.getBackBtn());
@@ -128,7 +161,7 @@ public abstract class MispBaseActivtiy extends Activity implements OnClickListen
 	public void showMessage(String message)
 	{
 		Toast toast;
-		toast = Toast.makeText(getApplicationContext(), message , Toast.LENGTH_LONG);
+		toast = Toast.makeText(getApplicationContext(), message , Toast.LENGTH_SHORT);
 		toast.show();
 	}
 	public int getScreenWidth()

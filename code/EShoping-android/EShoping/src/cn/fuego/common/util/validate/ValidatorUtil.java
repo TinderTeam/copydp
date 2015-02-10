@@ -23,6 +23,12 @@ import java.util.regex.Pattern;
 
 public class ValidatorUtil
 {
+	
+	public static boolean isLength(String value,int min,int maxLength)
+	{
+		return ValidatorRules.isValid( ValidatorRules.isLength(min, maxLength), value);
+		 
+	}
 	public static boolean isEmpty(List list)
 	{
 		if(null == list)
@@ -144,8 +150,12 @@ public class ValidatorUtil
      */  
     public static boolean isPhone(String phone)
     {  
-        String regEx = "(\\+\\d+)?1[3458]\\d{9}$";  
-        return Pattern.matches(regEx,phone);  
+         return Pattern.matches(ValidatorRules.isPhone(),phone);  
+    }  
+    
+    public static boolean isMobile(String phone)
+    {  
+         return Pattern.matches(ValidatorRules.isMobile(),phone);  
     }  
     /** 
      * 验证日期（年月日） 

@@ -33,9 +33,9 @@ public class MISPErrorMessageConst
 	public static final int TARGET_NOT_EXISTED = 11; // 操作对象已经不存在
 	public static final int ADMIN_NOT_DELETED = 12; //超级管理员不能被删除
 	public static final int OPERATE_PROHIBITED = 13; //无权操作
-	public static final int ERROR_QUREY_FAILED = 14;
-	public static final int TYPE_CONVERSION_FAILED= 15;
-	public static final int SYSTEM_ERROR= 16;
+	public static final int ERROR_QUREY_FAILED = 14; //查询失败
+	public static final int TYPE_CONVERSION_FAILED= 15; //类型转换错误
+	public static final int SYSTEM_ERROR= 16;  //系统错误
 	public static final int ERROR_NET_FAIL = 17 ; // 网络连接异常
 	public static final int ERROR_INPUT_NULL = 18 ; // 输入为空
  

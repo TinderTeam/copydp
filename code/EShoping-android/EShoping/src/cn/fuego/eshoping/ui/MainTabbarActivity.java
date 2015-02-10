@@ -1,29 +1,19 @@
 package cn.fuego.eshoping.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
-import cn.fuego.common.util.list.tools.IteratorSelector;
 import cn.fuego.eshoping.R;
-import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.base.ExitApplication;
-import cn.fuego.eshoping.webservice.up.model.GetCityListRsp;
-import cn.fuego.eshoping.webservice.up.model.base.CityJson;
-import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
-import cn.fuego.misp.service.http.MispHttpHandler;
-import cn.fuego.misp.service.http.MispHttpMessage;
-import cn.fuego.misp.tool.MispLocation;
-import cn.fuego.misp.tool.MispLocationListener;
-import cn.fuego.misp.tool.MispLocationService;
 import cn.fuego.misp.ui.base.MispBaseFragment;
 import cn.fuego.misp.ui.model.FragmentResInfo;
 
@@ -123,4 +113,48 @@ public class MainTabbarActivity extends FragmentActivity
           
         return view;  
     } 
+    
+  
+
+	@Override  
+    public boolean onKeyDown(int keyCode, KeyEvent event)  
+    {  
+        if (keyCode == KeyEvent.KEYCODE_BACK )  
+        {  
+            // 创建退出对话框  
+            AlertDialog isExit = new AlertDialog.Builder(this).create();  
+            // 设置对话框标题  
+            isExit.setTitle("系统提示");  
+            // 设置对话框消息  
+            isExit.setMessage("确定要退出吗");  
+            // 添加选择按钮并注册监听  
+            isExit.setButton("确定", listener);  
+            isExit.setButton2("取消", listener);  
+            // 显示对话框  
+            isExit.show();  
+  
+        }  
+          
+        return false;  
+          
+    }  
+    /**监听对话框里面的button点击事件*/  
+    DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener()  
+    {  
+        public void onClick(DialogInterface dialog, int which)  
+        {  
+            switch (which)  
+            {  
+            case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序  
+                finish();  
+                int nPid = android.os.Process.myPid();  
+                android.os.Process.killProcess(nPid);  
+                break;  
+            case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框  
+                break;  
+            default:  
+                break;  
+            }  
+        }  
+    };
 }
