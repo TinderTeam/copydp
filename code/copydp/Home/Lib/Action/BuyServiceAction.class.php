@@ -269,6 +269,7 @@ class BuyServiceAction extends BaseAction {
 
 		if("扫码下单" == $order_type)
 		{
+			$this->log("scan order...");
 			//判断商家ID是否存在
 			$sellerViewDao=new Model('view_seller');
 			$IDCondition['user_id']  = $seller_id;
@@ -277,29 +278,96 @@ class BuyServiceAction extends BaseAction {
 				$rsp['errorCode'] = SELLER_NOT_EXIST;
 				return $rsp;
 			}
-			$datetime=date('Y-m-d H:i:s',time());
-			$sellerItem=$sellerViewDao->where($IDCondition)->find();
-			$sellerName=$sellerItem['seller_name'];
-			//进行下单逻辑处理
-			$orderID=$seller_id.$customer_id.strtotime($datetime);
-			
-			$order = M('order');
-			$data2['order_id']=$orderID;
-			$data2['order_name']=$sellerItem['seller_name'];
-			$data2['customer_id']=$customer_id;
-			$data2['seller_id']=$seller_id;
-			$data2['imgsrc']=$sellerItem['img'];
-			$data2['order_time']=$datetime;
-			$data2['quantity']=1;
-			$data2['order_status']='已下单';
-			$data2['order_type']='扫码下单';
-			$order->add($data2);
-			$orderIDCondition['order_id'] = $orderID;
-			$orderViewDB = M('view_order');
-			$order = $orderViewDB->where($orderIDCondition)->find();
+			//判断商家是否是SVIP商家
+			$productViewDao = new Model('view_product');
+			$SVIPcondition['seller_id'] = $seller_id;
+			$SVIPIDList = $productViewDao->where($SVIPcondition)->getField('svip_product_id',true);
+			$svip_product_id = "";
+			foreach ($SVIPIDList as $SVIPID)
+			{
+				if("普通" != $SVIPID)
+				{
+					$svip_product_id = $SVIPID;
+					break;
+				}
+			}
+			if("" != $svip_product_id)
+			{
+				$this->log("svip product id is".$svip_product_id);
+				//商家有SVIP产品
+				$SVIPcondition['svip_product_id'] = $svip_product_id;
+				$product_id = $productViewDao->where($SVIPcondition)->getField('product_id');
+				$this->log("product id is".$product_id);
+				//判断是否为SVIP产品，是否超过购买限制
+				$rsp['errorCode']  = $this->GetSvipBuyTimes($product_id,$customer_id);
+				if($rsp['errorCode'] != SUCCESS)
+				{
+					$rsp['productOrder'] = NULL;
+					return  $rsp;
+				}
+				//判断产品ID是否存在
+				$product=new Model('view_product');
+				$productIDCondition['product_id']  = $product_id;
+				if($product->where($productIDCondition)->count() != 1)
+				{
+					$rsp['errorCode'] = PRODUCT_NOT_EXIST;
+					return $rsp;
+				}
+				$datetime=date('Y-m-d H:i:s',time());
+				$productItem=$product->where($productIDCondition)->find();
+				//进行下单逻辑处理
+				$orderID=$product_id.$customer_id.strtotime($datetime);
+				$orderName=$productItem['name']."¥".$productItem['price']."×1";
+					
+				$order = M('order');
+				$data2['order_id']=$orderID;
+				$data2['order_name']=$orderName;
+				$data2['customer_id']=$customer_id;
+				$data2['product_id']=$product_id;
+				$data2['product_name']=$productItem['name'];
+				$data2['product_description']=$productItem['dscr'];
+				$data2['seller_id']=$productItem['seller_id'];
+				$data2['imgsrc']=$productItem['imgsrc'];
+				$data2['order_time']=$datetime;
+				$data2['order_price']=$productItem['price']*$quantity;
+				$data2['order_original_price']=$productItem['original_price']*1;
+				$data2['quantity']=1;
+				$data2['order_status']='已下单';
+				$data2['order_type']='扫码下单';
+				$order->add($data2);
+				$orderIDCondition['order_id'] = $orderID;
+				$orderViewDB = M('view_order');
+				$order = $orderViewDB->where($orderIDCondition)->find();
+			}
+			else 
+			{
+				$this->log("seller no SVIP product");
+				//商家没有SVIP的产品
+				$datetime=date('Y-m-d H:i:s',time());
+				$sellerItem=$sellerViewDao->where($IDCondition)->find();
+				$sellerName=$sellerItem['seller_name'];
+				//进行下单逻辑处理
+				$orderID=$seller_id.$customer_id.strtotime($datetime);
+				
+				$order = M('order');
+				$data2['order_id']=$orderID;
+				$data2['order_name']=$sellerItem['seller_name'];
+				$data2['customer_id']=$customer_id;
+				$data2['seller_id']=$seller_id;
+				$data2['imgsrc']=$sellerItem['img'];
+				$data2['order_time']=$datetime;
+				$data2['quantity']=1;
+				$data2['order_status']='已下单';
+				$data2['order_type']='扫码下单';
+				$order->add($data2);
+				$orderIDCondition['order_id'] = $orderID;
+				$orderViewDB = M('view_order');
+				$order = $orderViewDB->where($orderIDCondition)->find();
+			}
 		}
 		else 
 		{
+			$this->log("narmol order...");
 			//判断是否为SVIP产品，是否超过购买限制
 			$rsp['errorCode']  = $this->GetSvipBuyTimes($product_id,$customer_id);
 			if($rsp['errorCode'] != SUCCESS)

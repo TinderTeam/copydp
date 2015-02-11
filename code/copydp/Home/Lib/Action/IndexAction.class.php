@@ -55,7 +55,24 @@ class IndexAction extends IndexServiceAction {
 	    $this->returnJson($errorCode,null);
 	}
 	
-	
+	//APP修改个人信息
+	public function modifyCustomerInfo_rest()
+	{
+		$this->doAuth();
+		$errorCode = SUCCESS;
+		$customerDao= new Model("customer");
+		$req =  $this->getReqObj();
+		$customer=$req->customer;
+		$data['user_id']=$customer->user_id;
+		$data['phone']=$customer->phone;
+		$data['email']=$customer->email;
+		$result = $customerDao->save($data);
+		if(false === $result)
+		{
+			$errorCode = OPERATE_FAILED;
+		}
+		$this->returnJson($errorCode,null);
+	}
 
 	public function index(){
 		//处理城市
