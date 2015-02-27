@@ -41,7 +41,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSMutableArray *productInfo;
 @property (nonatomic, strong) FEShopSeller *seller;
 @property (nonatomic, strong) FTCoreTextView *holdTextview;
-@property (nonatomic, strong) FTCoreTextView *holdTextview1;
+//@property (nonatomic, strong) FTCoreTextView *holdTextview1;
 
 @property (nonatomic, strong) NSString *pinfo;
 @property (nonatomic, strong) NSString *sinfo;
@@ -56,12 +56,12 @@ typedef enum : NSUInteger {
     _holdTextview = [[FTCoreTextView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 20, 20)];
     _holdTextview.delegate = self;
     
-    _holdTextview1 = [[FTCoreTextView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 20, 20)];
-    _holdTextview1.delegate = self;
-    _holdTextview1.hidden = YES;
+//    _holdTextview1 = [[FTCoreTextView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 20, 20)];
+//    _holdTextview1.delegate = self;
+//    _holdTextview1.hidden = YES;
     
     _holdTextview.hidden = YES;
-    [self.view addSubview:_holdTextview1];
+//    [self.view addSubview:_holdTextview1];
     [self.view addSubview:_holdTextview];
     
     [self initUI];
@@ -83,20 +83,21 @@ typedef enum : NSUInteger {
         }
         
         [self.productShowTableView reloadData];
-    }else if(self.holdTextview1 == coreTextView){
-//        info = @{__CELL_TYPE:@(CELL_SELLER_TITILE), __CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商家介绍")};
-        
-        NSAttributedString *astring = coreTextView.attributedString;
-        NSString *string = astring.string;
-        self.sinfo = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@""];
-        CGSize size = [string boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 50, 99999) withTextFont:[UIFont systemFontOfSize:16]];
-        for (NSMutableDictionary *item in _productInfo) {
-            if ([item[__CELL_TYPE] integerValue] == CELL_SELLER_CONTENT_TEXT) {
-                [item setObject:@(size.height) forKey:__CELL_HIGHT];
-                break;
-            }
-        }
     }
+//    else if(self.holdTextview1 == coreTextView){
+//
+//        
+//        NSAttributedString *astring = coreTextView.attributedString;
+//        NSString *string = astring.string;
+//        self.sinfo = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@""];
+//        CGSize size = [string boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 50, 99999) withTextFont:[UIFont systemFontOfSize:16]];
+//        for (NSMutableDictionary *item in _productInfo) {
+//            if ([item[__CELL_TYPE] integerValue] == CELL_SELLER_CONTENT_TEXT) {
+//                [item setObject:@(size.height) forKey:__CELL_HIGHT];
+//                break;
+//            }
+//        }
+//    }
 }
 
 
@@ -146,10 +147,10 @@ typedef enum : NSUInteger {
             
             info = @{__CELL_TYPE:@(CELL_SELLER_TITILE), __CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商家介绍")};
             [_productInfo addObject:info];
-//            CGSize size = [response.seller.dscr boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 20, 99999) withTextFont:[UIFont appFontWithSize:16]];
-//            CGFloat height = (50 - 15 + size.height);
-            NSMutableDictionary *info2 = [NSMutableDictionary dictionaryWithDictionary:@{__CELL_TYPE:@(CELL_SELLER_CONTENT_TEXT),__CELL_XIB_NAME:@"sellerInfoCell",__CELL_HIGHT:@(20)}];
-            [_productInfo addObject:info2];
+            size = [response.seller.dscr boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 20, 99999) withTextFont:[UIFont appFontWithSize:16]];
+            CGFloat height = 30 + size.height;
+            info = @{__CELL_TYPE:@(CELL_SELLER_CONTENT_TEXT),__CELL_XIB_NAME:@"sellerInfoCell",__CELL_HIGHT:@(height)};
+            [_productInfo addObject:info];
 
             
             info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"商户位置")};
@@ -164,7 +165,7 @@ typedef enum : NSUInteger {
             weakself.seller = response.seller;
             [weakself.productShowTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
             _holdTextview.text = self.product.basic_infor;
-            _holdTextview1.text = self.seller.info;
+//            _holdTextview1.text = self.seller.info;
         }
     }];
     
@@ -234,9 +235,8 @@ typedef enum : NSUInteger {
             
             UILabel *sinfo = (UILabel *)[cell viewWithTag:1];
             sinfo.numberOfLines = 0;
-            sinfo.text = self.sinfo;
-    
-//            [self configCoreText:sinfo];
+            sinfo.text = self.seller.dscr;
+
         }else if([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_SELLER_NOTE){
             [((FEProductNoteCell *)cell) configWithProduct:self.product];
         }else if([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_PRODUCT_DESCRIPTION){
