@@ -62,8 +62,8 @@ class BuyAction extends BuyServiceAction {
 					$svipOrderList=$svipOrderDB->where($SVIPOrderCondition)->select();
 					$num=0;
 					foreach( $svipOrderList as $svipOrder){
-						$orderDate=$svipOrder['datetime'];
-						$diff=(date('y-m-d h:i:s',time())-$orderDate)/(3600*24);											
+						$orderDate=$svipOrder['order_time'];
+    					$diff=floor((strtotime(date('Y-m-d H:i:s',time()))-strtotime($orderDate))/(3600*24));										
 						if($diff<$standDiff){
 							$num=$num+1;
 						}

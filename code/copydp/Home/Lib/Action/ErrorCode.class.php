@@ -21,4 +21,5 @@
     define('PRODUCT_NOT_EXIST',10006);			//产品不存在
     define('SELLER_NOT_EXIST',10007);			//商家不存在
     define('ORDER_TYPE_WRONG',10008);			//订单类型错误
+    define('PRODUCT_OUT_OF_DATE',10009);		//产品已过期
 ?>

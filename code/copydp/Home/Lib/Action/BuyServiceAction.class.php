@@ -243,8 +243,10 @@ class BuyServiceAction extends BaseAction {
     			$svipOrderList=$svipOrderDB->where($SVIPOrderCondition)->select();
     			$num=0;
     			foreach( $svipOrderList as $svipOrder){
-    				$orderDate=$svipOrder['datetime'];
-    				$diff=(date('y-m-d h:i:s',time())-$orderDate)/(3600*24);
+    				$orderDate=$svipOrder['order_time'];
+    				$diff=floor((strtotime(date('Y-m-d H:i:s',time()))-strtotime($orderDate))/(3600*24));
+    				$this->info((strtotime(date('Y-m-d H:i:s',time()))-strtotime($orderDate)));
+    				$this->info("last order time is ".$orderDate.". Now diff is ".$diff);
     				if($diff<$standDiff){
     					$num=$num+1;
     				}
@@ -311,6 +313,13 @@ class BuyServiceAction extends BaseAction {
 				if($product->where($productIDCondition)->count() != 1)
 				{
 					$rsp['errorCode'] = PRODUCT_NOT_EXIST;
+					return $rsp;
+				}
+				//判断产品是否已过期
+				$endTime = $product->where($productIDCondition)->getField('end_date_time');
+				if(strtotime(date('Y-m-d H:i:s',time()))>strtotime($endTime))
+				{
+					$rsp['errorCode'] = PRODUCT_OUT_OF_DATE;
 					return $rsp;
 				}
 				$datetime=date('Y-m-d H:i:s',time());
