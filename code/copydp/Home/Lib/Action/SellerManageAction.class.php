@@ -38,7 +38,9 @@ class SellerManageAction extends BaseAction {
 			$filter['product_name']=array('like','%'.$_POST['product_name'].'%');;
 		}
 		
-		if($type=='seller'){
+		$this->debug('type='.$type);
+		if($type!=0){
+			$this->debug('in');
 			$db=new Model('user');
 			$userName=$_SESSION['login_user'];
 			$condition['username']=$userName;	
@@ -168,23 +170,11 @@ class SellerManageAction extends BaseAction {
 		
 	//图片处理over
 			//log
-			trace($info,'limit_consumption_num='.$_POST['limit_consumption_num']);
-			trace($info,'limit_consumption_period='.$_POST['limit_consumption_period']);
-			trace($info,'create_datetime='.date('y-m-d h:i:s',time()));		
-			trace($info,'sellerIDList='.$_POST['sellerIDList']);
-			trace($info,'name='.$_POST['name']);		
-			trace($info,'type_id='.$_POST['type_id']);
-			trace($info,'end_date_time='.$_POST['end_date_time']);
-			trace($info,'price='.$_POST['price']);
-			trace($info,'original_price='.$_POST['original_price']);
-			trace($info,'describe='.$_POST['describe']);
-			trace($info,'imgsrc='.$imgsrc);
-			
 			$svipProductdb= M('svip_product');
 			$datasvip['limit_consumption_num']=$_POST['limit_consumption_num'];
 			$datasvip['limit_consumption_period']=$_POST['limit_consumption_period'];
 			$datasvip['create_datetime']=date('y-m-d h:i:s',time());
-			
+			$productNotice = M('product_notice');
 			$idListStr=$_POST['sellerIDList'];
 			$idList=explode(',',$idListStr);
 				
@@ -199,10 +189,16 @@ class SellerManageAction extends BaseAction {
 			$datap['describe']=$_POST['dsrc'];
 			$datap['basic_infor']=$_POST['info'];
 			
+			$data3['orderinfo']=$_POST['orderinfo'];			
+			$data3['rule']=$_POST['rules'];
+			$data3['warning']=$_POST['warning'];	
+			
+		
 			$datap['imgsrc']=$imgsrc;
 			$datap['product_status']='正常';
 				
 		if($type!='edit'){
+		
 		
 			//create svip
 			$svipid=$svipProductdb->add($datasvip);	
@@ -212,13 +208,19 @@ class SellerManageAction extends BaseAction {
 			$productdb=M('product');
 
 			foreach($idList as $id){
+				
 				trace($info,'idList[]'.$id);
 				$datap['seller_id']=$id;
-				$datap['svip_product_id']=$svipid;
-				$productdb->add($datap);
+				$datap['svip_product_id']=$svipid;				
+				$newID=$productdb->add($datap);
+				$data3['product_id']=$newID;			
+				$productNotice ->add($data3);				
 			}				
 			trace($info,'save product');
 		}else if($type=='edit'){
+		
+			$this->debug('create');
+			
 			$this->info('edit svip product');
 			//对每一个子产品进行一次更新，更新的原则：1.新增、2.修改、3.删除		
 			//先获取原产品列表
@@ -242,6 +244,10 @@ class SellerManageAction extends BaseAction {
 						$upadateCondition['svip_product_id']=$_POST['svip_product_id'];
 						$datap['product_status']='正常';
 						$productDB->where($upadateCondition)->save($datap);
+						
+						$currentProduct=$productDB->where($upadateCondition)->find();
+						$IDcondition['product_id']=$currentProduct['product_id'];
+						$productNotice ->where($IDcondition)->save($data3);
 					}
 				}		
 				if(!$oldProductExist){
@@ -269,7 +275,9 @@ class SellerManageAction extends BaseAction {
 					$this->debug('new Id item unmatched. Item will be created,id:'.$id);
 					$datap['seller_id']=$id;
 					$datap['svip_product_id']=$_POST['svip_product_id'];
-					$productDB->add($datap);
+					$newID=$productdb->add($datap);
+					$data3['product_id']=$newID;			
+					$productNotice ->add($data3);	
 				}
 			}
 			

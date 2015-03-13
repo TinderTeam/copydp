@@ -39,7 +39,38 @@
 	<!---footer-->
 	<link href="__PUBLIC__/ueditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 	
+<style>
+		body {
+			background-color: #f2f2f2;
+		}
+		.wrap{
+		width: 1190px;
+		margin: 15px auto;
+		}
+		.wrap .user-main {
+		float: right;
+		width: 1000px;
+		}
 
+		.user-main .um-con .modebox li {
+		float: left;
+		height: 39px;
+		width: 190px;
+		margin-right: 10px;
+		}
+		.span-input{
+			margin-top: 5px;
+		}
+
+		.span-select{
+			width: 129px;
+			height: 20px;
+		}
+		.btnbar{
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+	</style>
 	
 </head>
 
@@ -68,9 +99,7 @@
 		<!---左侧导航栏--->
 		<div class="user-nav J_user_nav">
 			<!-----管理菜单---->
-			<ul>
-				<li class="cur"><a href="#">SVIP产品新增</a><i class="n-arr"></i></li>
-			</ul>
+				<include file="./Home/Tpl/Public/managemenu.html"/>
 			<!-----管理菜单---->
 		</div><!---左侧导航栏--->
 		<!---中间主要内容--->
@@ -126,7 +155,23 @@
 												 value="{$svipProduct.dsrc}"   name="dsrc">
 											
 											</div>
+											<div class="form-block">
+												<span class="label">预约信息：</span>
+												<input type="text" class="form-txt form-txt-l" 
+												 value="{$productItem['orderinfo']}"   name="orderinfo">											
+											</div>
 											
+											<div class="form-block">
+												<span class="label">规则提醒：</span>
+												<input type="text" class="form-txt form-txt-l" 
+												 value="{$productItem['rule']}" name="rules"/>											
+											</div>
+											
+											<div class="form-block">
+												<span class="label">温馨提示：</span>
+												<input type="text" class="form-txt form-txt-l" 
+												 value="{$productItem['warning']}"   name="warning"/>											
+											</div>
 											<div class="form-block">
 												<span class="label">限制类型：</span>
 												<select name="limit_consumption_period">

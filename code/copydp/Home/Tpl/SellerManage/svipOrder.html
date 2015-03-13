@@ -201,7 +201,13 @@
 												</h5>
 												<h5>
 													<span>
-														过期时间：{$v1.end_date_time}
+														<?php
+															if($v1['order_time']!=""){
+																$date = strtotime($v1['order_time']);
+																$showdate=date('Y-m-d H:i:s',$date+30*24*3600);
+															}
+														?>
+														过期时间：{$showdate}
 													</span>
 												</h5>	
 											</div>

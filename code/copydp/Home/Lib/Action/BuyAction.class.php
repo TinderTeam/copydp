@@ -23,7 +23,6 @@ class BuyAction extends BuyServiceAction {
 			$dbProduct =new Model('product');
 			$productCondition['product_id'] = $productID;
 			$privilege = $dbProduct->where($productCondition)->getField('svip_product_id');
-			
 			$dbCustomer = new Model('customer');
 			$IDCondition['user_id'] = $userID;
 			$grade = $dbCustomer->where($IDCondition)->getField('grade');

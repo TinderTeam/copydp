@@ -1,6 +1,6 @@
 <?php
 // 本类由系统自动生成，仅供测试用途
-class UserManageAction extends Action {
+class UserManageAction extends BaseAction {
     public function index(){
 		$this->assign("currentPage","user");
 		if($_SESSION['login_user']!=""){
@@ -95,6 +95,7 @@ class UserManageAction extends Action {
 		$userID=$_POST['userID'];
 		$userName=$_POST['userName'];
 		$phoneNum=$_POST['phoneNum'];
+		$grade=$_POST['grade'];
 		
 		if($userID!=''){
 			$keyID = '%'.$userID.'%';
@@ -108,8 +109,13 @@ class UserManageAction extends Action {
 			$keyNum = '%'.$phoneNum.'%';
 		   $condition['cellphone'] = array('like',$keyNum);
 		}
+		
+		$this->debug('grade:'.$grade);
+		if($grade!=''){			
+		   $condition['grade'] = $grade;
+		}
         		
-		if($userID!='' or $userName!='' or $phoneNum!='')
+		if($userID!='' or $userName!='' or $phoneNum!='' or $grade!='')
 		{
 			//$map="user_name like('%".$userName."%') or user_id like('%".$userID."%' ) or cellphone like('%".$phoneNum."%')";
 			

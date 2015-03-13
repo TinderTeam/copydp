@@ -158,7 +158,7 @@ class SellerCenterAction extends Action {
 	
 	//产品截至时间到期，且处于已下单状态的订单更新为已过期
 	$product = M('product');
-	$order = M('order');
+	$order = M('view_order');
 	$condition1['end_date_time']=array('LT',date('Y-m-d H:i:s',time()));			//判断截至时间小于当前时间的条件
 	
 	$countOldProduct = $product->where($condition1)->count();
@@ -166,9 +166,10 @@ class SellerCenterAction extends Action {
 	
 	for($i=0;$i<$countOldProduct;$i++)
 	{
+		$orderDB = M('order');
 		$condition2['product_id'] = $oldProductID[$i];
 		$data['order_status']="已过期";
-		$order->where($condition2)->where('order_status="已下单"')->save($data);		//更新订单状态
+		$orderDB->where($condition2)->where('order_status="已下单"')->save($data);		//更新订单状态
 	}
 	
 	//将超期30日的订单更新为已过期（需求）

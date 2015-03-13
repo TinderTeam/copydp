@@ -378,6 +378,7 @@ class IndexAction extends IndexServiceAction {
 		$customerData['grade']='VIP';
 		$customerData['email']=$_POST['email'];
 		$customerData['car_id']=$_POST['car_id'];
+		$customerData['create_date']=date('Y-m-d H:i:s',time());
 		$condition['username']=$_POST['recommender_name'];
 		$recommender_id = $admin->where($condition)->getField('user_id');
 		$customerData['recommender_id']=$recommender_id;
