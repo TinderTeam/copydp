@@ -117,9 +117,18 @@
 - (IBAction)qrscan:(id)sender {
     ZBarReaderViewController *reader = [ZBarReaderViewController new];
     self.zbarReaderVC = reader;
+    
+    UIView *maskView = [[UIView alloc] initWithFrame:reader.view.bounds];
+    maskView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
+    maskView.backgroundColor = [UIColor colorWithRed:.3 green:.3 blue:.3 alpha:.4];
+    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, reader.view.bounds.size.height - 54, reader.view.bounds.size.width, 54)];
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
     view.backgroundColor = [UIColor blackColor];
+    
+    [maskView addSubview:view];
+    
+    
     
     UIToolbar *toolbar = [UIToolbar new];
     toolbar.frame = CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height);
@@ -132,7 +141,7 @@
     [view addSubview: toolbar];
     
     
-    reader.cameraOverlayView = view;
+    reader.cameraOverlayView = maskView;
     reader.showsZBarControls = NO;
     reader.readerDelegate = self;
     reader.supportedOrientationsMask = ZBarOrientationMaskAll;
@@ -466,15 +475,21 @@
             __weak typeof(self) weakself = self;
             GAAlertAction *action1 = [GAAlertAction actionWithTitle:FEString(@"确定") action:^{
                 [reader dismissViewControllerAnimated:YES completion:nil];
-                [weakself displayHUD:FEString(@"订购中...")];
-                FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:0 quantity:1 sellerID:@([json[@"value"] integerValue]) orderType:@"扫码下单"];
-                [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
-                    if (!error && response.result.errorCode.integerValue == 0) {
-                        NSLog(@"order sucess!");
-                        [weakself performSegueWithIdentifier:@"showOrderDetailSegue" sender:response.productOrder];
-                    }
-                    [weakself hideHUD:YES];
-                }];
+                if (FELoginUser) {
+                    [weakself displayHUD:FEString(@"订购中...")];
+                    FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:0 quantity:1 sellerID:@([json[@"value"] integerValue]) orderType:@"扫码下单"];
+                    [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
+                        if (!error && response.result.errorCode.integerValue == 0) {
+                            NSLog(@"order sucess!");
+                            [weakself performSegueWithIdentifier:@"showOrderDetailSegue" sender:response.productOrder];
+                        }
+                        [weakself hideHUD:YES];
+                    }];
+                }else{
+                    [self performSegueWithIdentifier:@"loginSegue" sender:self];
+                    //loginSegue
+                }
+                
             }];
             GAAlertAction *action2 = [GAAlertAction actionWithTitle:FEString(@"取消") action:^{
                 

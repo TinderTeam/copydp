@@ -51,14 +51,14 @@
         }
     }
     
-    self.getCurrentCity = [[FEGetCurrentCity alloc] init];
-    [self.getCurrentCity getCity:^(NSError *error, NSString *city) {
-        if (!error) {
-            NSLog(@"get city success - %@",city);
-        }else{
-            NSLog(@"get city error %@",error);
-        }
-    }];
+//    self.getCurrentCity = [[FEGetCurrentCity alloc] init];
+//    [self.getCurrentCity getCity:^(NSError *error, NSString *city) {
+//        if (!error) {
+//            NSLog(@"get city success - %@",city);
+//        }else{
+//            NSLog(@"get city error %@",error);
+//        }
+//    }];
    
 }
 
@@ -91,11 +91,11 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
-        if(indexPath.section == 0){
-            cell.textLabel.text = @"定位城市";
-        }else{
-            cell.textLabel.text = ((CDCity *)_city[indexPath.section - 1][CITYS][indexPath.row]).cityititle;
-        }
+//        if(indexPath.section == 0){
+//            cell.textLabel.text = @"定位城市";
+//        }else{
+            cell.textLabel.text = ((CDCity *)_city[indexPath.section][CITYS][indexPath.row]).cityititle;
+//        }
         
         return cell;
     }
@@ -109,11 +109,11 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return self.searchResult.count;
     }else{
-        if (section == 0) {
-            return 1;
-        }else{
-            return [_city[section - 1][CITYS] count];
-        }
+//        if (section == 0) {
+//            return 1;
+//        }else{
+        return [_city[section][CITYS] count];
+//        }
     }
 }
 
@@ -121,7 +121,7 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return 1;
     }else{
-        return _city.count + 1;
+        return _city.count;
     }
     
 }
@@ -158,11 +158,11 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return nil;
     }else{
-        if (section == 0) {
-            return @"";
-        }else{
-            return _city[section-1][FIRSTLETTER];
-        }
+//        if (section == 0) {
+//            return @"";
+//        }else{
+            return _city[section][FIRSTLETTER];
+//        }
         
     }
 }
@@ -172,10 +172,10 @@
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         FEUserDefaultsSetObjectForKey(((CDCity *)self.searchResult[indexPath.row]).cityititle, FEShopRegionKey);
     }else{
-        if (indexPath.section == 0) {
-            return;
-        }
-        FEUserDefaultsSetObjectForKey(((CDCity *)_city[indexPath.section - 1][CITYS][indexPath.row]).cityititle, FEShopRegionKey);
+//        if (indexPath.section == 0) {
+//            return;
+//        }
+        FEUserDefaultsSetObjectForKey(((CDCity *)_city[indexPath.section][CITYS][indexPath.row]).cityititle, FEShopRegionKey);
     }
     FEUserDefaultsSync;
     [[NSNotificationCenter defaultCenter] postNotificationName:FERegionCityDidChang object:nil];

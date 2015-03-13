@@ -53,13 +53,26 @@
 
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
+    if ([product.product_status isEqualToString:@"已过期"]) {
+        self.orderButton.enabled = NO;
+        [self.orderButton setTitle:FEString(@"已过期") forState:UIControlStateNormal];
+    }else{
+        [self.orderButton setTitle:FEString(@"立即抢购") forState:UIControlStateNormal];
+    }
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",product.price];
-    [self.orderButton setTitle:FEString(@"立即抢购") forState:UIControlStateNormal];
+    
 }
 
 -(void)configWithActivity:(FEActivity *)activity{
     _activity = activity;
-    self.priceLabel.text = [NSString stringWithFormat:@"剩余%ld天",(long)[activity.datelimit dateFromNow]];
+    long day = (long)[activity.datelimit dateFromNow];
+    if (day > 0) {
+        self.priceLabel.text = [NSString stringWithFormat:@"剩余%ld天",day];
+    }else{
+        self.priceLabel.text = @"已过期";
+    }
+    
+    [self.orderButton setEnabled:NO];
     [self.orderButton setTitle:FEString(@"立即参与") forState:UIControlStateNormal];
 }
 

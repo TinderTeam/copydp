@@ -97,10 +97,13 @@
         if (!error && response.result.errorCode.integerValue == 0) {
 //            weakself.orderDatas = response.orderList;
 //            [weakself.orderList reloadData];
-            weakself.orderPlace = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已下单"]];
-            weakself.orderComplete = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已使用"]];
-            weakself.orderCancel = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已取消"]];
-            weakself.orderPassed = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@",@"已过期"]];
+            weakself.orderPlace = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@ && SELF.activty_status != %@",@"已下单",@"已过期"]];
+            weakself.orderComplete = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@ && SELF.activty_status != %@",@"已使用",@"已过期"]];
+            weakself.orderCancel = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@ && SELF.activty_status != %@",@"已取消",@"已过期"]];
+            weakself.orderPassed = [response.orderList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF.order_status == %@ || SELF.activty_status == %@",@"已过期",@"已过期"]];
+            for (FEProductOrder *order in weakself.orderPassed) {
+                order.order_status = @"已过期";
+            }
             [weakself.orderList reloadData];
         }
     }];

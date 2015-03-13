@@ -203,6 +203,41 @@
     return nil;
 }
 
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *hView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
+    hView.backgroundColor = [UIColor clearColor];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(3, 0, self.view.bounds.size.width - 6, .5)];
+    line.backgroundColor = [UIColor grayColor];
+    [hView addSubview:line];
+    
+    FELabel *hLabel = [[FELabel alloc] initWithFrame:CGRectMake(5, 0, hView.bounds.size.width - 20, 30)];
+    hLabel.font = [UIFont appFontWithSize:20];
+    hLabel.textColor = [UIColor orangeColor];
+    [hView addSubview:hLabel];
+    id item = [self.allInfo[section] firstObject];
+    if ([item isKindOfClass:[FEShopSeller class]]) {
+        if (section == 0) {
+            hLabel.text = FEString(@"基本信息");
+        }else if(section == 1){
+            hLabel.text = FEString(@"商户介绍");
+        }else{
+            hLabel.text = FEString(@"商家位置");
+        }
+        
+    }else if([item isKindOfClass:[FEProduct class]]){
+        hLabel.text = FEString(@"商户产品");
+    }else if([item isKindOfClass:[FESellerEval class]]){
+        hLabel.text = FEString(@"商户评价");
+    }
+    return hView;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 30;
+}
+
+
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     
     NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '300%'";

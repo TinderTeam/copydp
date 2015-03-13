@@ -22,6 +22,7 @@
     [self.itemImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(seller.img)]];
     self.titleLabel.text = seller.seller_name;
     self.descriptionLabel.text = seller.dscr;
+    self.typeLabel.text = seller.type_name;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

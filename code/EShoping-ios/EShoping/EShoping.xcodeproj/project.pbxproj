@@ -95,6 +95,7 @@
 		145B218D1A3495E3000AE204 /* FEShopCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 145B218C1A3495E3000AE204 /* FEShopCategory.m */; };
 		146080B71A2CBD560057EA9A /* NSString+Attribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 146080B61A2CBD560057EA9A /* NSString+Attribute.m */; };
 		146080BA1A2F49E40057EA9A /* FETableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 146080B91A2F49E40057EA9A /* FETableView.m */; };
+		1467B0761AB28CEC0077E178 /* FEModifyInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1467B0751AB28CEC0077E178 /* FEModifyInfoVC.m */; };
 		148798781A31489600565491 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1487987A1A31489600565491 /* Localizable.strings */; };
 		1487987E1A314DAB00565491 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 148798801A314DAB00565491 /* InfoPlist.strings */; };
 		148798841A319E9900565491 /* UIFont+AppFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 148798831A319E9900565491 /* UIFont+AppFont.m */; };
@@ -359,6 +360,8 @@
 		146080B61A2CBD560057EA9A /* NSString+Attribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Attribute.m"; sourceTree = "<group>"; };
 		146080B81A2F49E40057EA9A /* FETableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FETableView.h; sourceTree = "<group>"; };
 		146080B91A2F49E40057EA9A /* FETableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FETableView.m; sourceTree = "<group>"; };
+		1467B0741AB28CEC0077E178 /* FEModifyInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEModifyInfoVC.h; sourceTree = "<group>"; };
+		1467B0751AB28CEC0077E178 /* FEModifyInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEModifyInfoVC.m; sourceTree = "<group>"; };
 		148798791A31489600565491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1487987B1A31489900565491 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1487987F1A314DAB00565491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -891,6 +894,8 @@
 				145826E51A3B24CD00E0BE61 /* FEModifyPasswordVC.m */,
 				143C17AB1A5FA98C0014CF9B /* FEOrderItemDetaiVC.h */,
 				143C17AC1A5FA98C0014CF9B /* FEOrderItemDetaiVC.m */,
+				1467B0741AB28CEC0077E178 /* FEModifyInfoVC.h */,
+				1467B0751AB28CEC0077E178 /* FEModifyInfoVC.m */,
 			);
 			path = MePage;
 			sourceTree = "<group>";
@@ -1265,6 +1270,7 @@
 				1408A75F1A3726A900D02D52 /* FEMyAvtivityVC.m in Sources */,
 				1415464E1A163A87004C0500 /* FECommonViewController.m in Sources */,
 				14AA2C931A2834D8005FDA8F /* FEProductCancelOrderRequest.m in Sources */,
+				1467B0761AB28CEC0077E178 /* FEModifyInfoVC.m in Sources */,
 				14DDD5AD1A3A960800C5B190 /* FEProductGetSellerRequest.m in Sources */,
 				145B218D1A3495E3000AE204 /* FEShopCategory.m in Sources */,
 				14C8F5911A1B77F800E04B04 /* FEGroupProductCell.m in Sources */,

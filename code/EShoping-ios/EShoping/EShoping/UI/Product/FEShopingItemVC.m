@@ -222,7 +222,7 @@ typedef enum : NSUInteger {
         return cell;
     }else if(indexPath.section == 1){
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:_productInfo[indexPath.row][__CELL_XIB_NAME] forIndexPath:indexPath];
-        cell.textLabel.text = _productInfo[indexPath.row][__CELL_CONTENT];
+        
         if ([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_SELLER_MAP) {
             FEMapView *mapview = (FEMapView *)[cell viewWithTag:10];
             NSString *positon = self.seller.position;
@@ -252,6 +252,15 @@ typedef enum : NSUInteger {
             UILabel *dlabel = (UILabel *)[cell viewWithTag:1];
             dlabel.numberOfLines = 0;
             dlabel.text = self.pinfo;
+        }else if([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_SELLER_TITILE){
+            cell.textLabel.text = _productInfo[indexPath.row][__CELL_CONTENT];
+            UIView *line = [cell viewWithTag:2];
+            if (!line) {
+                line = [[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.bounds.size.width - 20, .5)];
+                line.tag = 2;
+                line.backgroundColor = [UIColor grayColor];
+                [cell addSubview:line];
+            }
         }
         return cell;
     }

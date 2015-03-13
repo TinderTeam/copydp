@@ -40,5 +40,7 @@
 	<string>商家不存在</string>
 	<key>10008</key>
 	<string>订单类型错误</string>
+	<key>10009</key>
+	<string>产品已过期</string>
 </dict>
 </plist>

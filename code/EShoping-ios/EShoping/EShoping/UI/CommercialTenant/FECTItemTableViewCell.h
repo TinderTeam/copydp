@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, strong, readonly) FEShopSeller *seller;
+@property (strong, nonatomic) IBOutlet UILabel *typeLabel;
 
 -(void)configWithSeller:(FEShopSeller *)seller;
 

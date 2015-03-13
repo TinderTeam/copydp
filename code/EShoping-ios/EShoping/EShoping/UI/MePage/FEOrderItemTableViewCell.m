@@ -14,6 +14,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.orderProductImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

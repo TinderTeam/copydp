@@ -12,10 +12,12 @@
 #import "FEActivityListResponse.h"
 #import "FEActivityTableViewCell.h"
 #import "FEActivityDeltailVC.h"
+#import <XHRefreshControl/XHRefreshControl.h>
 
-@interface FEActivityVC ()<UITableViewDataSource,UITableViewDelegate>
+@interface FEActivityVC ()<UITableViewDataSource,UITableViewDelegate,XHRefreshControlDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *activityTableView;
 @property (strong, nonatomic) NSArray *activityList;
+@property (strong, nonatomic) XHRefreshControl *refresh;
 
 @end
 
@@ -34,13 +36,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = FEString(@"活动");
-    [self requestActivity];
+    
+    self.refresh = [[XHRefreshControl alloc] initWithScrollView:self.activityTableView delegate:self];
+    
+    
+    __weak typeof(self) weakself = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:FERegionCityDidChang object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        weakself.activityList = nil;
+        [weakself.activityTableView reloadData];
+        [weakself requestActivity];
+    }];
+//    [self requestActivity];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
+    [self.refresh startPullDownRefreshing];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -55,8 +69,37 @@
             weakself.activityList = response.activityList;
             [weakself.activityTableView reloadData];
         }
+        [weakself.refresh endPullDownRefreshing];
     }];
 }
+
+#pragma mark - XHRefreshControlDelegate
+-(BOOL)isPullDownRefreshed{
+    return YES;
+}
+
+/**
+ *  获取是否下啦刷新中
+ *
+ *  @return 返回预期结果
+ */
+- (BOOL)isLoading{
+    return [self.refresh isLoading];
+}
+
+
+
+- (void)beginPullDownRefreshing{
+    self.activityList = nil;
+    [self.activityTableView reloadData];
+    [self requestActivity];
+}
+
+-(void)beginLoadMoreRefreshing{
+
+}
+
+
 
 #pragma mark - prepareForSegue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{

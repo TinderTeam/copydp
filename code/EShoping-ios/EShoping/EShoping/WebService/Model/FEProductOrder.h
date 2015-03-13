@@ -21,7 +21,7 @@
 @property (nonatomic, strong, readonly) NSNumber *quantity;
 @property (nonatomic, strong, readonly) NSNumber *order_price;
 @property (nonatomic, strong, readonly) NSNumber *order_original_price;
-@property (nonatomic, strong, readonly) NSString *order_status;
+@property (nonatomic, strong) NSString *order_status;
 @property (nonatomic, strong, readonly) NSString *note;
 @property (nonatomic, strong, readonly) NSString *imgsrc;
 @property (nonatomic, strong, readonly) NSString *username;
