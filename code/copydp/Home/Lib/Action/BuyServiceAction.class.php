@@ -26,19 +26,22 @@ class BuyServiceAction extends BaseAction {
 	}
 	//增加产品补充信息字段，补充已购买人数，剩余天数
 	public  function addProductInfo($productList)
-	{
+	{	
 		for($i=0;$i<count($productList);$i++)
 		{
-			$productOrderDB = M('order');
-			$condition['product_id'] = $productList[$i]['product_id'];
-    		$productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
-	    	$endTime = $productList[$i]['end_date_time'];
-	    	$productDB = M('product');
-	    	$productList[$i]['leavingDays']=round((strtotime($endTime)-strtotime(date('Y-m-d H:i:s',time())))/3600/24);
+			if($productList[$i] != null)
+			{
+				$productOrderDB = M('order');
+				$condition['product_id'] = $productList[$i]['product_id'];
+	    		$productList[$i]['current_member'] = $productOrderDB->where($condition)->count();
+		    	$endTime = $productList[$i]['end_date_time'];
+		    	$productDB = M('product');
+		    	$productList[$i]['leavingDays']=round((strtotime($endTime)-strtotime(date('Y-m-d H:i:s',time())))/3600/24);
+			}
 		}
 		return $productList;
 	}
-    //获取推荐产品列表
+    //获取热门推荐产品列表
     public function recommendProductService($city)
     {
     	$this->updateProductStatus();
@@ -46,11 +49,14 @@ class BuyServiceAction extends BaseAction {
 		$rcmViewCondition['city']=$city;
 		$statusCondition['product_status']="正常";
 		$rcmIDList=$productViewDB->where($rcmViewCondition)->where($statusCondition)->getField('product_id',true);
-		
 		$map['product_id']=array('in',$rcmIDList);
 		$productDB = new Model('view_product');
 		$productList = $productDB->where($map)->select();
-		$productList = $this->addProductInfo($productList);
+		if ((null != $productList) && (count($productList) != 0))
+		{
+			//判断产品是否为空
+			$productList = $this->addProductInfo($productList);
+		}
 		$rsp['errorCode'] = SUCCESS;
 		$rsp['productList'] = $productList;
 		$this->log("the productList is".$productList);
@@ -65,7 +71,11 @@ class BuyServiceAction extends BaseAction {
         $productCityCondition['city']=$city;
         $statusCondition['product_status']="正常";
         $productList=$productViewDB->where($productCityCondition)->where($statusCondition)->order('update_date desc')->limit(4)->select();
-        $productList = $this->addProductInfo($productList);
+    	if ((null != $productList) && (count($productList) != 0))
+		{
+			//判断产品是否为空
+			$productList = $this->addProductInfo($productList);
+		}
         $rsp['errorCode'] = SUCCESS;
         $rsp['productList'] = $productList;
         $this->log("the productList is".$productList);

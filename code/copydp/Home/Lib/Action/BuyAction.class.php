@@ -246,7 +246,7 @@ class BuyAction extends BuyServiceAction {
 	public function recommend_product_info($id=0){
 		$this->display();
     }
-    //APP获取推荐产品列表
+    //APP获取热门推荐产品列表
     public function RecommendProduct_rest(){
         
         $req =  $this->getReqObj();
@@ -318,7 +318,15 @@ class BuyAction extends BuyServiceAction {
         //获取商家信息
         $condition['user_id'] = $req->seller_id;
         $sellerViewDB = new Model('view_seller');
-        $seller = $sellerViewDB->where($condition)->find();        
+        $seller = $sellerViewDB->where($condition)->find();
+        if(count($seller) ==0)
+        {
+        	$Rsp['seller'] = null;
+        	$Rsp['productList'] = null;
+        	$Rsp['sellerEvalList'] = null;
+        	$errorCode = SELLER_NOT_EXIST;
+        	$this->returnJson($errorCode,$Rsp);
+        }       
         $seller['dscr'] = $sellerViewDB->where($condition)->getField('description');
         unset($seller['description']);
         

@@ -12,10 +12,10 @@ class ClientVersionAction extends BaseAction
 		$data['company_id']=0;
 		$data['app_name']="笑谣林";
 		$data['apk_name']="Eshoping.apk";
-		$data['version_name']="V1.1";
-		$data['version_code']=2;
+		$data['version_name']="V1.0";
+		$data['version_code']=1;
 		$data['client_type']="ANDROID";
-		$data['apk_url'] = "/Public/App/Android/Eshoping.apk";
+		$data['apk_url'] = "/Public/App/Android/EShoping.apk";
 		$data['qr_code']="";
 		$data['version_status']="";
 		$rsp['obj']=$data;

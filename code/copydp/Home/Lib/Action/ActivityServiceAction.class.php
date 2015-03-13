@@ -14,8 +14,16 @@ class ActivityServiceAction extends BaseAction {
 		$activityCount = $activityViewDB->where($activityFilter)->count();
 		for($i=0;$i<$activityCount;$i++)
 		{
+			$condition['activity_id'] = $activityList[$i]['activity_id'];
+			//更新活动状态
+			$activityDB = M('activity');
+			$activityDate=$activityList[$i]['datelimit'];
+			if(strtotime(date('Y-m-d H:i:s',time()))>strtotime($activityDate))
+			{
+				$activityDB->where($condition)->setField('status', "已过期");
+			}
+			//根据活动订单数量，加入参与人数
 		    $activityOrderDB = M('activity_order');
-		    $condition['activity_id'] = $activityList[$i]['activity_id'];
 		    $activityList[$i]['current_member'] = $activityOrderDB->where($condition)->count(); 
 		}
 		$rsp['errorCode'] = SUCCESS;
