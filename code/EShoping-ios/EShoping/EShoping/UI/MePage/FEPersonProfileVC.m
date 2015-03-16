@@ -15,13 +15,17 @@
 #import "CDCustomerUser.h"
 #import "FEResult.h"
 #import "FEUserSignoutResponse.h"
+#import "FEModifyInfoVC.h"
+#import "FECustomer.h"
 
 @interface FEPersonProfileVC ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet FETableView *profileTableView;
 @property (strong, nonatomic) IBOutlet UITableViewCell *nickNameCell;
 @property (strong, nonatomic) IBOutlet UITableViewCell *myscoreCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *phomeNumberCell;
-@property (strong, nonatomic) IBOutlet UITableViewCell *emailCell;
+//@property (strong, nonatomic) IBOutlet UITableViewCell *phomeNumberCell;
+//@property (strong, nonatomic) IBOutlet UITableViewCell *emailCell;
+@property (strong, nonatomic) IBOutlet UILabel *phoneNumber;
+@property (strong, nonatomic) IBOutlet UILabel *email;
 
 @property (nonatomic, strong) UIView *footView;
 
@@ -35,10 +39,19 @@
     self.navigationController.navigationBar.barTintColor = FEThemeWhite;
     self.navigationController.navigationBar.tintColor = FEThemeOrange;
     self.title = FEString(@"个人资料");
+    [self refresh];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self refresh];
+}
+
+-(void)refresh{
     self.nickNameCell.detailTextLabel.text = FELoginUser.username;
     self.myscoreCell.detailTextLabel.text = [NSString stringWithFormat:@"%@ 分",FELoginUser.usercustomer.score];
-    self.phomeNumberCell.detailTextLabel.text = FELoginUser.usercustomer.cellphone;
-    self.emailCell.detailTextLabel.text = FELoginUser.usercustomer.email;
+    self.phoneNumber.text = FELoginUser.usercustomer.cellphone;
+    self.email.text = FELoginUser.usercustomer.email;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,6 +99,25 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:FEUserStatDidChang object:nil];
         }
     }];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"modifySegue"]) {
+        FEModifyInfoVC *vc = segue.destinationViewController;
+        FECustomer *customer = [FECustomer new];
+        CDCustomerUser *cdcustomer = FELoginUser.usercustomer;//[FECoreData touchCustomerByIdentifier:customer.user_id];
+         customer.grade = cdcustomer.grade;
+         customer.score = cdcustomer.score;
+         customer.cellphone = cdcustomer.cellphone;
+         customer.email = cdcustomer.email;
+         customer.car_id = cdcustomer.car_id;
+         customer.recommender_id = cdcustomer.recommender_id;
+         customer.status = cdcustomer.status;
+         customer.request = cdcustomer.request;
+         customer.login_date = cdcustomer.login_date;
+        customer.user_id = FELoginUser.user_id;
+        vc.customer = customer;
+    }
 }
 
 

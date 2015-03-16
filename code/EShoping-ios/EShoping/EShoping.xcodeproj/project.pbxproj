@@ -96,6 +96,9 @@
 		146080B71A2CBD560057EA9A /* NSString+Attribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 146080B61A2CBD560057EA9A /* NSString+Attribute.m */; };
 		146080BA1A2F49E40057EA9A /* FETableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 146080B91A2F49E40057EA9A /* FETableView.m */; };
 		1467B0761AB28CEC0077E178 /* FEModifyInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1467B0751AB28CEC0077E178 /* FEModifyInfoVC.m */; };
+		1467B0791AB2A5000077E178 /* FEScanMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1467B0781AB2A5000077E178 /* FEScanMaskView.m */; };
+		1467B07C1AB2D7990077E178 /* FEUserModifyRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1467B07B1AB2D7990077E178 /* FEUserModifyRequest.m */; };
+		1467B07F1AB675350077E178 /* FEQROrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1467B07E1AB675350077E178 /* FEQROrderVC.m */; };
 		148798781A31489600565491 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1487987A1A31489600565491 /* Localizable.strings */; };
 		1487987E1A314DAB00565491 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 148798801A314DAB00565491 /* InfoPlist.strings */; };
 		148798841A319E9900565491 /* UIFont+AppFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 148798831A319E9900565491 /* UIFont+AppFont.m */; };
@@ -362,6 +365,12 @@
 		146080B91A2F49E40057EA9A /* FETableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FETableView.m; sourceTree = "<group>"; };
 		1467B0741AB28CEC0077E178 /* FEModifyInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEModifyInfoVC.h; sourceTree = "<group>"; };
 		1467B0751AB28CEC0077E178 /* FEModifyInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEModifyInfoVC.m; sourceTree = "<group>"; };
+		1467B0771AB2A5000077E178 /* FEScanMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEScanMaskView.h; sourceTree = "<group>"; };
+		1467B0781AB2A5000077E178 /* FEScanMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEScanMaskView.m; sourceTree = "<group>"; };
+		1467B07A1AB2D7990077E178 /* FEUserModifyRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEUserModifyRequest.h; sourceTree = "<group>"; };
+		1467B07B1AB2D7990077E178 /* FEUserModifyRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEUserModifyRequest.m; sourceTree = "<group>"; };
+		1467B07D1AB675350077E178 /* FEQROrderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEQROrderVC.h; sourceTree = "<group>"; };
+		1467B07E1AB675350077E178 /* FEQROrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEQROrderVC.m; sourceTree = "<group>"; };
 		148798791A31489600565491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1487987B1A31489900565491 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1487987F1A314DAB00565491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -564,6 +573,8 @@
 				1408A7471A35DC4000D02D52 /* FEUserSignoutResquest.m */,
 				1447164B1A6D5010003359FC /* FEUserGradeRequest.h */,
 				1447164C1A6D5010003359FC /* FEUserGradeRequest.m */,
+				1467B07A1AB2D7990077E178 /* FEUserModifyRequest.h */,
+				1467B07B1AB2D7990077E178 /* FEUserModifyRequest.m */,
 			);
 			path = UserManager;
 			sourceTree = "<group>";
@@ -730,6 +741,8 @@
 				14DDD5B71A3AC79A00C5B190 /* FEMapView.m */,
 				1498941B1A4ABE7A00903B22 /* FEGetCurrentCity.h */,
 				1498941C1A4ABE7A00903B22 /* FEGetCurrentCity.m */,
+				1467B0771AB2A5000077E178 /* FEScanMaskView.h */,
+				1467B0781AB2A5000077E178 /* FEScanMaskView.m */,
 			);
 			path = FECommon;
 			sourceTree = "<group>";
@@ -860,6 +873,8 @@
 				14C8F5811A1B33A100E04B04 /* FEShopingItemCell.m */,
 				14B52ABD1A442B7C0005F0D7 /* FECategoryCollectionView.h */,
 				14B52ABE1A442B7C0005F0D7 /* FECategoryCollectionView.m */,
+				1467B07D1AB675350077E178 /* FEQROrderVC.h */,
+				1467B07E1AB675350077E178 /* FEQROrderVC.m */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -1231,6 +1246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1467B07F1AB675350077E178 /* FEQROrderVC.m in Sources */,
 				14B52AB91A415CD70005F0D7 /* FEProductOrderDetailVC.m in Sources */,
 				14C8F5971A1C310600E04B04 /* FESiginVC.m in Sources */,
 				141546831A178FF6004C0500 /* FECitySelectVC.m in Sources */,
@@ -1254,6 +1270,7 @@
 				1408A79A1A38992200D02D52 /* CDCity.m in Sources */,
 				141546771A1785FE004C0500 /* FEShopingHomeVC.m in Sources */,
 				140BB7331A2CB22600A73ADF /* FESegmentControl.m in Sources */,
+				1467B07C1AB2D7990077E178 /* FEUserModifyRequest.m in Sources */,
 				140BB7251A2C527B00A73ADF /* FEProductOrderView.m in Sources */,
 				14C8F5821A1B33A100E04B04 /* FEShopingItemCell.m in Sources */,
 				140BB71D1A2B03C800A73ADF /* DOPDropDownMenu.m in Sources */,
@@ -1376,6 +1393,7 @@
 				148798C21A32CD4100565491 /* FECommunityTopic.m in Sources */,
 				148798A41A31FD0900565491 /* FENewsListResponse.m in Sources */,
 				1415464A1A163A87004C0500 /* FECheckButton.m in Sources */,
+				1467B0791AB2A5000077E178 /* FEScanMaskView.m in Sources */,
 				1415464D1A163A87004C0500 /* FECommonTabBarController.m in Sources */,
 				14AA2CB41A2842E7005FDA8F /* FEProductTypeResponse.m in Sources */,
 				140BB7121A2AFF7700A73ADF /* FEProductType.m in Sources */,

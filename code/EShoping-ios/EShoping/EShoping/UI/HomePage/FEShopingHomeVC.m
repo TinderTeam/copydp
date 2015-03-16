@@ -44,6 +44,7 @@
 #import "FEProductCreateOrderResponse.h"
 
 #import "FEProductOrderDetailVC.h"
+#import "FEQROrderVC.h"
 
 #import "FECity.h"
 #import "FEZone.h"
@@ -54,6 +55,7 @@
 #import "FECTItemTableViewCell.h"
 
 #import <ZBarSDK/ZBarReaderViewController.h>
+#import "FEScanMaskView.h"
 
 #define __CATEGORY_TYPE @"type"
 #define __CATEGORY_SOURCE @"source"
@@ -77,6 +79,7 @@
 @property (strong, nonatomic) FESegmentControl *segment;
 
 @property (strong, nonatomic) ZBarReaderViewController *zbarReaderVC;
+
 
 @end
 
@@ -118,9 +121,9 @@
     ZBarReaderViewController *reader = [ZBarReaderViewController new];
     self.zbarReaderVC = reader;
     
-    UIView *maskView = [[UIView alloc] initWithFrame:reader.view.bounds];
+    FEScanMaskView *maskView = [[FEScanMaskView alloc] initWithFrame:reader.view.bounds];
     maskView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
-    maskView.backgroundColor = [UIColor colorWithRed:.3 green:.3 blue:.3 alpha:.4];
+    maskView.backgroundColor = [UIColor clearColor];//[UIColor colorWithRed:.3 green:.3 blue:.3 alpha:.4];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, reader.view.bounds.size.height - 54, reader.view.bounds.size.width, 54)];
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin;
@@ -155,11 +158,17 @@
                    config: ZBAR_CFG_ENABLE
                        to: 0];
     
+//    FECommonNavgationController *nc = [[FECommonNavgationController alloc] initWithRootViewController:reader];
+//    reader.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(cancel)];
+    
     // present and release the controller
     [self presentViewController:reader animated:YES completion:nil];
 }
 
+
 -(void)cancel{
+    FEScanMaskView *mview = (FEScanMaskView *)self.zbarReaderVC.cameraOverlayView;
+    [mview stop];
     [self.zbarReaderVC dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -194,6 +203,9 @@
     }else if([segue.identifier isEqualToString:@"showOrderDetailSegue"]){
         FEProductOrderDetailVC *odetail = segue.destinationViewController;
         odetail.order = sender;
+    }else if ([segue.identifier isEqualToString:@"qrOrderSegue"]){
+        FEQROrderVC *vc = segue.destinationViewController;
+        vc.sellerID = sender;
     }
 }
 
@@ -472,30 +484,36 @@
     if (data) {
         id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
         if (json && [json[@"type"] isEqualToString:@"sellerID"]) {
-            __weak typeof(self) weakself = self;
-            GAAlertAction *action1 = [GAAlertAction actionWithTitle:FEString(@"确定") action:^{
-                [reader dismissViewControllerAnimated:YES completion:nil];
-                if (FELoginUser) {
-                    [weakself displayHUD:FEString(@"订购中...")];
-                    FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:0 quantity:1 sellerID:@([json[@"value"] integerValue]) orderType:@"扫码下单"];
-                    [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
-                        if (!error && response.result.errorCode.integerValue == 0) {
-                            NSLog(@"order sucess!");
-                            [weakself performSegueWithIdentifier:@"showOrderDetailSegue" sender:response.productOrder];
-                        }
-                        [weakself hideHUD:YES];
-                    }];
-                }else{
-                    [self performSegueWithIdentifier:@"loginSegue" sender:self];
-                    //loginSegue
-                }
-                
-            }];
-            GAAlertAction *action2 = [GAAlertAction actionWithTitle:FEString(@"取消") action:^{
-                
-            }];
-            
-            [GAAlertObj showAlertWithTitle:FEString(@"订单") message:FEString(@"确定下单") actions:@[action1,action2] inViewController:reader];
+//            __weak typeof(self) weakself = self;
+//            if (FELoginUser) {
+            [reader dismissViewControllerAnimated:NO completion:nil];
+            [self performSegueWithIdentifier:@"qrOrderSegue" sender:json[@"value"]];
+//            }else{
+//                [self performSegueWithIdentifier:@"loginSegue" sender:self];
+//            }
+//            GAAlertAction *action1 = [GAAlertAction actionWithTitle:FEString(@"确定") action:^{
+//                [reader dismissViewControllerAnimated:YES completion:nil];
+//                if (FELoginUser) {
+//                    [weakself displayHUD:FEString(@"订购中...")];
+//                    FEProductCreateOrderRequest *rdata = [[FEProductCreateOrderRequest alloc] initWithUid:FELoginUser.user_id.integerValue productID:0 quantity:1 sellerID:@([json[@"value"] integerValue]) orderType:@"扫码下单"];
+//                    [[FEShopWebServiceManager sharedInstance] productOrderCreate:rdata response:^(NSError *error, FEProductCreateOrderResponse *response) {
+//                        if (!error && response.result.errorCode.integerValue == 0) {
+//                            NSLog(@"order sucess!");
+//                            [weakself performSegueWithIdentifier:@"showOrderDetailSegue" sender:response.productOrder];
+//                        }
+//                        [weakself hideHUD:YES];
+//                    }];
+//                }else{
+//                    [self performSegueWithIdentifier:@"loginSegue" sender:self];
+//                    //loginSegue
+//                }
+//                
+//            }];
+//            GAAlertAction *action2 = [GAAlertAction actionWithTitle:FEString(@"取消") action:^{
+//                
+//            }];
+//            
+//            [GAAlertObj showAlertWithTitle:FEString(@"订单") message:FEString(@"确定下单") actions:@[action1,action2] inViewController:reader];
             
         }
     }

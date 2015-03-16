@@ -7,7 +7,8 @@
 //
 
 #import "FECommonViewController.h"
+@class FECustomer;
 
 @interface FEModifyInfoVC : FECommonViewController
-
+@property (nonatomic, strong) FECustomer *customer;
 @end

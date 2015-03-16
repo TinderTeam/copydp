@@ -68,11 +68,11 @@
     long day = (long)[activity.datelimit dateFromNow];
     if (day > 0) {
         self.priceLabel.text = [NSString stringWithFormat:@"剩余%ld天",day];
+        [self.orderButton setEnabled:YES];
     }else{
         self.priceLabel.text = @"已过期";
+        [self.orderButton setEnabled:NO];
     }
-    
-    [self.orderButton setEnabled:NO];
     [self.orderButton setTitle:FEString(@"立即参与") forState:UIControlStateNormal];
 }
 

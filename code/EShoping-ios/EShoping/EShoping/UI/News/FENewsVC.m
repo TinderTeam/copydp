@@ -113,7 +113,9 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    FENews *news = self.newsList[indexPath.row];
+    CGSize size = [news.title boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 30, 99999) withTextFont:[UIFont appFontWithSize:16]];
+    return size.height + 20;
 }
 
 #pragma mark - UITableViewDelegate

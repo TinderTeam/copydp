@@ -48,37 +48,6 @@
         FEMyActivityCell *cell = sender;
         FEActivityDeltailVC *vc = segue.destinationViewController;
         
-//        @property (nonatomic, strong, readonly) NSString *activity_order_id;
-//        @property (nonatomic, strong, readonly) NSNumber *activity_id;
-//        @property (nonatomic, strong, readonly) NSNumber *customer_id;
-//        @property (nonatomic, strong, readonly) NSString *activity_title;
-//        @property (nonatomic, strong, readonly) NSString *activity_disc;
-//        @property (nonatomic, strong, readonly) NSString *imgsrc;
-//        @property (nonatomic, strong, readonly) NSString *memberlimit;
-//        @property (nonatomic, strong, readonly) NSNumber *datetime;
-//        @property (nonatomic, strong, readonly) NSNumber *datelimit;
-//        @property (nonatomic, strong, readonly) NSString *status;
-//        @property (nonatomic, strong, readonly) NSString *activity_status;
-//        @property (nonatomic, strong, readonly) NSString *username;
-//        @property (nonatomic, strong, readonly) NSString *grade;
-//        @property (nonatomic, strong, readonly) NSString *cellphone;
-//        @property (nonatomic, strong, readonly) NSString *email;
-//        
-//        
-//        @property (nonatomic, strong) NSNumber *activity_id;
-//        @property (nonatomic, strong) NSString *title;
-//        @property (nonatomic, strong) NSString *datetime;
-//        @property (nonatomic, strong) NSString *dscr;
-//        @property (nonatomic, strong) NSString *address;
-//        @property (nonatomic, strong) NSString *info;
-//        @property (nonatomic, strong) NSString *note;
-//        @property (nonatomic, strong) NSString *status;
-//        @property (nonatomic, strong) NSString *city_id;
-//        @property (nonatomic, strong) NSString *datelimit;
-//        @property (nonatomic, strong) NSString *current_member;
-//        @property (nonatomic, strong) NSString *memberlimit;
-//        @property (nonatomic, strong) NSString *imgsrc;
-//        @property (nonatomic, strong) NSString *point;
         
         FEActivity *activity = [FEActivity new];
         activity.activity_id = cell.activity.activity_id;
@@ -117,7 +86,12 @@
 }
 
 -(void)requestActivityCancel:(FEActivityOrder *)activity{
-    [self displayHUD:FEString(@"取消中...")];
+    if ([activity.activity_status isEqualToString:@"已过期"]) {
+        [self displayHUD:FEString(@"删除中...")];
+    }else{
+        [self displayHUD:FEString(@"取消中...")];
+    }
+    
     __weak typeof(self) weakself = self;
     FEActivityOrderCancelRequest *rdate = [[FEActivityOrderCancelRequest alloc] initWithUserID:FELoginUser.user_id.integerValue activityID:activity.activity_id.integerValue];
     [[FEShopWebServiceManager sharedInstance] activityOrderCancel:rdate response:^(NSError *error, FEActivityOrderCreateResponse *response) {

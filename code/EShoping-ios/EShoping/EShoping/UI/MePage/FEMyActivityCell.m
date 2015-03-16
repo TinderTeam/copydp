@@ -28,7 +28,14 @@
     self.activityTitleLabel.text = activity.activity_title;
     self.limitLabel.text = [NSString stringWithFormat:@"限制人数:%@",activity.memberlimit];
     self.passTimeLabel.text = @"";
-    self.activityStatusLabel.text = activity.status;
+    if ([activity.activity_status isEqualToString:@"已过期"]) {
+        self.activityStatusLabel.text = @"已过期";
+        [self.activityActionBtn setTitle:@"删除" forState:UIControlStateNormal];
+    }else{
+        self.activityStatusLabel.text = activity.status;
+        [self.activityActionBtn setTitle:@"取消订单" forState:UIControlStateNormal];
+    }
+    
     
 }
 

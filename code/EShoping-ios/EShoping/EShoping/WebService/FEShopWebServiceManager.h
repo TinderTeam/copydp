@@ -69,6 +69,7 @@ return [self postmanager:rdata responseClass:[classResponse class] response:bloc
 @class FEProductGetSellerListRequest;
 @class FEProductGetSellerListResponse;
 @class FEUserGradeRequest;
+@class FEUserModifyRequest;
 
 @interface FEShopWebServiceManager : AFHTTPRequestOperationManager
 
@@ -95,6 +96,8 @@ DEFINE_WEBSERVICE_METHOD_HEADER(modifyPassword, FEUserModifyPswRequest, FEUserMo
 DEFINE_WEBSERVICE_METHOD_HEADER(signout, FEUserSignoutResquest, FEUserSignoutResponse)
 //up grade
 DEFINE_WEBSERVICE_METHOD_HEADER(userUpGrade, FEUserGradeRequest, FEBaseResponse);
+//modify
+DEFINE_WEBSERVICE_METHOD_HEADER(userModify, FEUserModifyRequest, FEBaseResponse);
 
 /*-------------------------------------------
  ;product service interface

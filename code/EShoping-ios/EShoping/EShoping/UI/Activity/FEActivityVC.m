@@ -78,6 +78,10 @@
     return YES;
 }
 
+-(BOOL)isLoadMoreRefreshed{
+    return NO;
+}
+
 /**
  *  获取是否下啦刷新中
  *
