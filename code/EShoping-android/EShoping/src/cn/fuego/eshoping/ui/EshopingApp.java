@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.misp.dao.SharedPreUtil;
 import cn.fuego.misp.service.MemoryCache;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -30,6 +31,9 @@ public class EshopingApp extends Application
 	{
 		// TODO Auto-generated method stub
 		super.onCreate();
+		
+		SharedPreUtil.initSharedPreference(getApplicationContext());
+
 		PackageManager packageManager = getPackageManager();
 
 		try
@@ -38,6 +42,8 @@ public class EshopingApp extends Application
 			MemoryCache.setVersionCode(packInfo.versionCode);
 			MemoryCache.setVersionNname(packInfo.versionName);
 			MemoryCache.setDensity(getResources().getDisplayMetrics().density);
+			
+			AppCache.getInstance().load();
 	 
 			
 			//initial image cache

@@ -31,4 +31,6 @@ public class ErrorMessageConst extends MISPErrorMessageConst
 
 	public static final int SELLER_NOT_EXIST = 10007 ; //商家不存在
 	public static final int ORDER_TYPE_WRONG = 10008 ; //订单类型错误
+	public static final int PRODUCT_OVER_DUE = 10009 ; //产品已过期
+
 }

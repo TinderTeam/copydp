@@ -1,7 +1,9 @@
 package cn.fuego.eshoping.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
@@ -35,7 +37,16 @@ public class MainTabbarActivity extends FragmentActivity
     //定义一个布局  
     private LayoutInflater layoutInflater;  
 
- 
+	public static void jump(Activity activity,Class clazz,int code)
+	{
+		Intent intent = new Intent();
+
+		intent.setClass(activity, MainTabbarActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+		intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(clazz));
+		activity.startActivityForResult(intent, code);
+	}
 	
     public void onCreate(Bundle savedInstanceState) {  
         super.onCreate(savedInstanceState);  
@@ -146,7 +157,7 @@ public class MainTabbarActivity extends FragmentActivity
             switch (which)  
             {  
             case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序  
-                finish();  
+            	finish();  
                 int nPid = android.os.Process.myPid();  
                 android.os.Process.killProcess(nPid);  
                 break;  

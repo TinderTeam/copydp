@@ -107,7 +107,17 @@ public class UserActivityListActivity extends MispListActivity<ActivityOrderJson
 		idView.setTag(item);
 		
 		TextView statusView= (TextView) view.findViewById(R.id.order_status);
-		statusView.setText(item.getStatus());
+
+		if("已过期".equals(item.getActivity_status()))
+		{
+			statusView.setText(item.getActivity_status());
+
+		}
+		else
+		{
+			statusView.setText(item.getStatus());
+
+		}
 		statusView.setTag(item);
 		
 		Button deleteBtn = (Button)view.findViewById(R.id.order_activity_cancel_btn);

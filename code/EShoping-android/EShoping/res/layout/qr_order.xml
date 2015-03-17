@@ -30,7 +30,7 @@
         android:layout_marginRight="20dp"
         android:gravity="left|center_vertical"
         android:lines="2"
-        android:text="商家名称字符串"
+        android:text=""
         android:textColor="@color/black_85"
         android:textSize="12sp" />
  <FrameLayout
@@ -64,7 +64,7 @@
         android:layout_marginRight="20dp"
         android:gravity="left|center_vertical"
         android:lines="2"
-        android:text="商家描述字符串会很长"
+        android:text=""
         android:textColor="@color/black_85"
         android:textSize="12sp" />
 

@@ -87,18 +87,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+         android:layout_marginLeft="20dp"
         android:background="@color/white" >
 
-        <TextView
-            android:id="@+id/order_activity_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="剩余天数:"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/themecolor" />
 
         <TextView
             android:id="@+id/order_overdue_date"

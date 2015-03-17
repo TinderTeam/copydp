@@ -12,6 +12,7 @@ import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.ui.MainTabbarActivity;
 import cn.fuego.eshoping.ui.MainTabbarInfo;
+import cn.fuego.eshoping.ui.activity.ActivityFragment;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.home.HomeFragment;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
@@ -35,10 +36,8 @@ public class ProductOrderSuccess extends BaseActivtiy
 		@Override
 		public void onClick(View v)
 		{
-			Intent intent = new Intent();
-			intent.setClass(ProductOrderSuccess.this, MainTabbarActivity.class);
-			intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(HomeFragment.class));
-			startActivity(intent);
+			MainTabbarActivity.jump(ProductOrderSuccess.this, HomeFragment.class, 1);
+ 
 		}
 	};
 	

@@ -35,11 +35,21 @@ public class DataTypeConvert
 	public static float float1(float f1)
 	{
 		  BigDecimal  bd=new  BigDecimal(f1);
-		  BigDecimal  bd1=bd.setScale(2,bd.ROUND_HALF_UP);
+		  BigDecimal  bd1=bd.setScale(1,bd.ROUND_HALF_UP);
 		  float f2=(float) bd1.doubleValue();
  		  
 		  return f2;
 	}
+	
+	public static String float2(float f1)
+	{
+		  BigDecimal  bd=new  BigDecimal(f1);
+		  BigDecimal  bd1=bd.setScale(2,bd.ROUND_HALF_UP);
+ 
+		  String   f2=bd1.toString();
+		  return f2;
+	}
+	
 	public static String intToByteStr(int value,int bit)
 	{
 		 byte[] src = new byte[4];  

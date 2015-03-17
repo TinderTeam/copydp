@@ -6,7 +6,7 @@ public class MemoryCache
 {
 	private static String token;
 	private static String version = "0.1";
-	private static String serverIp = "120.24.217.173";
+	private static String serverIp = "xyof.net";
 	private static String serverPort = "80";
 	private static float density = 1;
  
@@ -47,12 +47,7 @@ public class MemoryCache
 	{
 		return token;
 	}
-
-	public static void setToken(String token)
-	{
-		MemoryCache.token = token;
-	}
-
+ 
 	public static String getVersion()
 	{
 		return version;
@@ -72,10 +67,7 @@ public class MemoryCache
 	{
 		return "http://"+MemoryCache.getServerIp()+":"+MemoryCache.getServerPort();
 	}
-	
-	public void cleanToken(){
-		token=null;
-	}
+ 
 	public static String getWebContextUrl()
 	{
 		return getHostUrl()+"/copydp";
@@ -84,4 +76,11 @@ public class MemoryCache
 	{
 		return MemoryCache.getHostUrl() + "/copydp/Public/uploads/img/";
 	}
+
+	public static void setToken(String token)
+	{
+		MemoryCache.token = token;
+	}
+
+ 
  }

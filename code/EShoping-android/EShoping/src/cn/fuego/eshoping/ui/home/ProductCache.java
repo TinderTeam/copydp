@@ -13,6 +13,22 @@ public class ProductCache
 	
  	private static ProductCache instance;
 	
+ 	
+ 	public void clear()
+ 	{
+ 		if(null != newProductData)
+ 		{
+ 			newProductData.clear();
+ 		}
+ 		if(null != typeProductData)
+ 		{
+ 			typeProductData.clear();
+ 		}
+ 		if(null != allProductData)
+ 		{
+ 			allProductData.clear();
+ 		}
+ 	}
 	 
 	public synchronized static ProductCache getInstance()
 	{

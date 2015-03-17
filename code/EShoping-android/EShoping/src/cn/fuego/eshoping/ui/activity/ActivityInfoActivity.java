@@ -1,15 +1,17 @@
 package cn.fuego.eshoping.ui.activity;
 
+import java.util.Date;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.util.format.DateUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
-import cn.fuego.eshoping.service.verification.VerificationService;
 import cn.fuego.eshoping.ui.LoginActivity;
 import cn.fuego.eshoping.ui.base.BaseActivtiy;
 import cn.fuego.eshoping.ui.order.ActivityOrderSuccess;
@@ -56,7 +58,14 @@ public class ActivityInfoActivity extends BaseActivtiy
 	public void attendEvent(View v)
 	{
 		log.info("attend button clicked");
-		if(AppCache.getInstance().isLogined()){	
+		if("已过期".equals(activity.getStatus()))
+		{
+			showMessage("活动已过期");
+			return;
+
+		}
+		if(AppCache.getInstance().isLogined())
+		{	
 			activityAttend();
 		}else{
 			//转至登陆页面
@@ -130,6 +139,19 @@ public class ActivityInfoActivity extends BaseActivtiy
 		
 		TextView contentView = (TextView) findViewById(R.id.activity_dscr);
 		contentView.setText(activity.getDscr());
+		
+		TextView overdueDate = (TextView) findViewById(R.id.order_overdue_date);
+		Date dateLimit = DateUtil.shortStrToDate(activity.getDatelimit());
+		int dateNum = DateUtil.countDayNum(dateLimit, new Date(System.currentTimeMillis()));
+		if(dateNum>=0)
+		{
+			overdueDate.setText("剩余天数："+dateNum+"天");
+		}
+		else
+		{
+			overdueDate.setText("活动已过期");
+		}
+		
 	}
 
 	@Override

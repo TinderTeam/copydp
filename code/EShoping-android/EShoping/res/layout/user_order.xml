@@ -15,22 +15,27 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
         <RadioGroup
+            android:id="@+id/orderStatusRadioGroup"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
             >
+
             <RadioButton
+                android:id="@+id/selectNormalOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@drawable/nav_btn"
                 android:button="@null"
+                android:checked="true"
                 android:gravity="center"
-                android:text="已订购"
-                android:onClick="selectNormalOrder"
+                 android:text="已订购"
                 android:textColor="@drawable/nav_text_color" />
 
             <RadioButton
+                android:id="@+id/selectUsedOrder"
+                
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -38,10 +43,11 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="已使用"
-                 android:onClick="selectUsedOrder"
-                android:textColor="@drawable/nav_text_color" />
+                 android:textColor="@drawable/nav_text_color" />
 
             <RadioButton
+                android:id="@+id/selectCancelOrder"
+                
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -49,10 +55,11 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="已取消"
-                 android:onClick="selectCancelOrder"
-                android:textColor="@drawable/nav_text_color" />
+                 android:textColor="@drawable/nav_text_color" />
 
             <RadioButton
+                android:id="@+id/selectOverDueOrder"
+                
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
@@ -60,8 +67,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="已过期"
-                 android:onClick="selectOverDueOrder"
-                android:textColor="@drawable/nav_text_color" />
+                 android:textColor="@drawable/nav_text_color" />
         </RadioGroup>
     </LinearLayout>
     <ListView

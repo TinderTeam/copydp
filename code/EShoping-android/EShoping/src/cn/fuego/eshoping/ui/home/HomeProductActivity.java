@@ -20,6 +20,7 @@ import cn.fuego.common.util.format.HtmlUtil;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
+import cn.fuego.eshoping.constant.ErrorMessageConst;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
 import cn.fuego.eshoping.service.verification.VerificationService;
 import cn.fuego.eshoping.ui.LoginActivity;
@@ -78,6 +79,11 @@ public class HomeProductActivity extends BaseActivtiy
 		@Override
 		public void onClick(View v)
 		{
+			if("已过期".equals(product.getProduct_status()))
+			{
+				showMessage(ErrorMessageConst.PRODUCT_OVER_DUE);
+				return;
+			}
 			if(AppCache.getInstance().isLogined()){
 				if(VerificationService.buyProductVerification(product)){
 					Intent intent = new Intent();

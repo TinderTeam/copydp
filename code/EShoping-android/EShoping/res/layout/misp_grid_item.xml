@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="休闲娱乐"
-        android:textColor="@color/backcolor"
+        android:textColor="@color/black"
         android:textSize="12dp" />
 
 </RelativeLayout>

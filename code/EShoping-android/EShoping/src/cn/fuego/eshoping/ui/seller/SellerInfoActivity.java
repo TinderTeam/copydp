@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -12,18 +13,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
+import cn.fuego.common.string.StringLengthLimit;
 import cn.fuego.common.util.format.HtmlUtil;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
+import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.constant.SharedPreferenceConst;
-import cn.fuego.eshoping.ui.base.BaseActivtiy;
+import cn.fuego.eshoping.ui.home.HomeProductActivity;
 import cn.fuego.eshoping.ui.home.ImagePagerAdapter;
 import cn.fuego.eshoping.ui.home.ProductSearchActivity;
+import cn.fuego.eshoping.webservice.up.model.GetSellerReq;
+import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
 import cn.fuego.eshoping.webservice.up.model.base.ProductJson;
 import cn.fuego.eshoping.webservice.up.model.base.SellerJson;
+import cn.fuego.eshoping.webservice.up.rest.WebServiceContext;
 import cn.fuego.misp.service.MemoryCache;
-import cn.fuego.misp.service.http.MispHttpMessage;
+import cn.fuego.misp.ui.list.MispListActivity;
 import cn.fuego.misp.ui.model.ListViewResInfo;
+import cn.fuego.misp.ui.util.LoadImageUtil;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapStatus;
@@ -32,7 +39,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
 
-public class SellerInfoActivity extends BaseActivtiy
+public class SellerInfoActivity extends MispListActivity<ProductJson>
 {
 	private FuegoLog log = FuegoLog.getLog(SellerInfoActivity.class);
 	//对象
@@ -54,7 +61,7 @@ public class SellerInfoActivity extends BaseActivtiy
 	/**
 	 * 显示所有产品
 	 */	
-	public void showSellerProductEvent(View v)
+	/*public void showSellerProductEvent(View v)
 	{
 		log.info("show seller products list clicked...");
 		
@@ -64,19 +71,26 @@ public class SellerInfoActivity extends BaseActivtiy
 		//jump to product list
 		Intent intent = new Intent();
 		intent.setClass(this, ProductSearchActivity.class);
-		/*
-		 * mark: 这里由于接口设计缘故没有提供条件话查询的通用接口，而是在seller获取的接口中代来了product的信息
-		 * 故而同search product activity的结构无法匹配。
-		 */
+		  //
+		 //mark: 这里由于接口设计缘故没有提供条件话查询的通用接口，而是在seller获取的接口中代来了product的信息
+		 // 故而同search product activity的结构无法匹配。
+		 //
 		intent.putExtra(SharedPreferenceConst.PRODUCT_FILTER,productFilter);
 		startActivity(intent);
-	}	
+	}	*/
 	
 	@Override
 	public void initRes()
 	{
 		this.activityRes.setAvtivityView(R.layout.seller_info);
 		this.activityRes.setBackBtn(R.id.com_back_btn);	
+		
+		this.listViewRes.setListItemView(R.layout.home_list_item);
+		this.listViewRes.setListView(R.id.product_search_list);	
+		
+		this.listViewRes.setClickActivityClass(HomeProductActivity.class);
+		this.setAdapterForScrollView(true);
+		InitializationData();
 	}
 	
 	@Override
@@ -85,7 +99,7 @@ public class SellerInfoActivity extends BaseActivtiy
 		SDKInitializer.initialize(getApplicationContext());
 		super.onCreate(savedInstanceState);
 		//初始化数据
-		InitializationData();
+		
 		//初始化组件
 		InitializationComponent();
 	}
@@ -146,8 +160,8 @@ public class SellerInfoActivity extends BaseActivtiy
 
 		
 		cityView.setText("所在城市："+seller.getCity());
-		zoneView.setText("所在城市："+seller.getZone_name());
-		typeView.setText("所在城市："+seller.getType_name());
+		zoneView.setText("所在区域："+seller.getZone_name());
+		typeView.setText("商户类型："+seller.getType_name());
 		
 		infoView.setText(Html.fromHtml(HtmlUtil.removeImg(seller.getInfo())));
 		
@@ -167,6 +181,7 @@ public class SellerInfoActivity extends BaseActivtiy
         viewPager.setAdapter(adapter);  
         viewPager.setCurrentItem(0); 
         viewPager.setOnPageChangeListener(adapter);
+        
 	}
 
 	@Override
@@ -192,11 +207,47 @@ public class SellerInfoActivity extends BaseActivtiy
 		// 在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
 		mMapView.onPause();
 	}
-	
+ 
 	@Override
-	public void handle(MispHttpMessage message)
+	public View getListItemView(View view, ProductJson item)
 	{
-		// TODO Auto-generated method stub
+		TextView nameView= (TextView) view.findViewById(R.id.home_list_item_title);
+		nameView.setText(StringLengthLimit.limitStringLen(item.getName(),10));	
+		TextView oldPriceView= (TextView) view.findViewById(R.id.home_list_item_oldPrice);
+		oldPriceView.setText(String.valueOf(getString(R.string.misp_rmb_unit)+item.getOriginal_price()));
+		oldPriceView.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); 
+
+		TextView curPriceView= (TextView) view.findViewById(R.id.home_list_item_curPrice);
+		curPriceView.setText(String.valueOf(getString(R.string.misp_rmb_unit)+item.getPrice()));
+		TextView despView= (TextView) view.findViewById(R.id.home_list_item_desp);
+		despView.setText(StringLengthLimit.limitStringLen(item.getDscr(),20));
+		ImageView imageView = (ImageView)view.findViewById(R.id.home_list_item_img);
+		LoadImageUtil.getInstance().loadImage(imageView, MemoryCache.getImageUrl()+item.getImgsrc());
+		return view;
+	}
+
+	@Override
+	public void loadSendList()
+	{
+		if(null != seller)
+		{		
+			GetSellerReq req = new GetSellerReq();
+	    	req.setToken(AppCache.getInstance().getToken());
+			req.setSeller_id(seller.getUser_id());
+			 
+			
+			WebServiceContext.getInstance().getProductManageRest(this).getSellerInfo(req);
+		}
+ 
+
 		
+	}
+
+	@Override
+	public List<ProductJson> loadListRecv(Object obj)
+	{
+		GetSellerRsp rsp = (GetSellerRsp)obj;
+		List<ProductJson> data = rsp.getProductList();
+		return data;
 	}
 }

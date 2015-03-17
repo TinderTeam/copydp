@@ -12,6 +12,7 @@ import cn.fuego.eshoping.constant.ErrorMessageConst;
 import cn.fuego.eshoping.ui.MainTabbarActivity;
 import cn.fuego.eshoping.ui.MainTabbarInfo;
 import cn.fuego.eshoping.ui.RegistActivity;
+import cn.fuego.eshoping.ui.activity.ActivityFragment;
 import cn.fuego.eshoping.ui.home.HomeFragment;
 import cn.fuego.eshoping.ui.order.ProductOrderSuccess;
 import cn.fuego.eshoping.webservice.up.model.GetSellerRsp;
@@ -63,16 +64,16 @@ public class AppLoginView extends LoginFormView
 				proDialog.dismiss();
 				if (message.isSuccess()){		
 					LoginRsp rsp = (LoginRsp) message.getMessage().obj;
-					AppCache.getInstance().setCustomer(rsp.getCustomer());
-					AppCache.getInstance().setUser(rsp.getUser());
-					AppCache.setToken(rsp.getToken());
+					AppCache.getInstance().update(rsp.getToken(), rsp.getUser(), rsp.getCustomer());
+ 
 					
 					log.info("page after login is:" + returnType);
-					if(returnType==HOME_PAGE){
-						Intent intent = new Intent(context,MainTabbarActivity.class);
-						intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(HomeFragment.class));
-						context.startActivity(intent);	
-					}else if(returnType==BACK_PAGE){
+					if(returnType==HOME_PAGE)
+					{
+						MainTabbarActivity.jump(context, HomeFragment.class, 1);
+ 	
+					}else if(returnType==BACK_PAGE)
+					{
 						(context).finish();
 					}		
 				}

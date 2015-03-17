@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.fuego.common.log.FuegoLog;
@@ -35,6 +37,7 @@ import cn.fuego.misp.ui.model.ListViewResInfo;
 import cn.fuego.misp.ui.util.LoadImageUtil;
 
 public class UserOrderListActivity extends  MispListActivity<ProductOrderJson>
+implements OnCheckedChangeListener
 {
 FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 	
@@ -63,6 +66,9 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 	{
 		//初始化数据
 		super.onCreate(savedInstanceState);	
+		
+		RadioGroup radioGroup = (RadioGroup) findViewById(R.id.orderStatusRadioGroup);
+		radioGroup.setOnCheckedChangeListener(this);
 	}
 	
 	@Override
@@ -141,22 +147,7 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 		return selectList;
 	}
 	
-	public void selectCancelOrder(View v){
-		log.info("select type:"+ getString(R.string.order_type_cancel));
-		refreshList(getOrderListByType(R.string.order_type_cancel));
-	}
-	public void selectUsedOrder(View v){
-		log.info("select type:"+ getString(R.string.order_type_used));
-		refreshList(getOrderListByType(R.string.order_type_used));
-	}
-	public void selectNormalOrder(View v){
-		log.info("select type:"+ getString(R.string.order_type_ordered));
-		refreshList(getOrderListByType(R.string.order_type_ordered));
-	}
-	public void selectOverDueOrder(View v){
-		log.info("select type:"+ getString(R.string.order_type_overdue));
-		refreshList(getOrderListByType(R.string.order_type_overdue));
-	}
+
 	
 	/**
 	 * 删除、取消事件处理
@@ -254,7 +245,45 @@ FuegoLog log = FuegoLog.getLog(UserOrderListActivity.class);
 			}
 
 		}
+	}
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId)
+	{
+		switch (checkedId)
+		{
+		case R.id.selectCancelOrder:
+			selectCancelOrder(group);
+			break;
+		case R.id.selectUsedOrder:
+			selectUsedOrder(group);
+			break;
+		case R.id.selectNormalOrder:
+			selectNormalOrder(group);
+			break;
+		case R.id.selectOverDueOrder:
+			selectOverDueOrder(group);
+			break;
+		default:
+			break;
+		}
+		
 	}	
-	
+	public void selectCancelOrder(View v){
+		log.info("select type:"+ getString(R.string.order_type_cancel));
+		refreshList(getOrderListByType(R.string.order_type_cancel));
+	}
+	public void selectUsedOrder(View v){
+		log.info("select type:"+ getString(R.string.order_type_used));
+		refreshList(getOrderListByType(R.string.order_type_used));
+	}
+	public void selectNormalOrder(View v){
+		log.info("select type:"+ getString(R.string.order_type_ordered));
+		refreshList(getOrderListByType(R.string.order_type_ordered));
+	}
+	public void selectOverDueOrder(View v){
+		log.info("select type:"+ getString(R.string.order_type_overdue));
+		refreshList(getOrderListByType(R.string.order_type_overdue));
+	}
  
 }

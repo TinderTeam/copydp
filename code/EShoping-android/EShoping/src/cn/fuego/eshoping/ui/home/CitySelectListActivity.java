@@ -83,9 +83,10 @@ public class CitySelectListActivity extends  MispListActivity<CityJson>
 	public void onItemListClick(AdapterView<?> parent, View view,long id, CityJson item)
 	{		
 		AppCache.getInstance().setCityInfo(item);
-		Intent intent = new Intent();
-		intent.setClass(this, MainTabbarActivity.class);
-		startActivity(intent);
+		
+		ProductCache.getInstance().clear();
+		MainTabbarActivity.jump(this, HomeFragment.class, 1);
+ 
 	}
 
 }

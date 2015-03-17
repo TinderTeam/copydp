@@ -118,11 +118,13 @@ public class QrOrderActivity extends MispHttpActivtiy
 			}
 			else
 			{
+				this.finish();
 				showMessage("商家不存在");
 			}		
  		}
 		else
 		{
+			this.finish();
 			showMessage(message);
 		}		
 	}

@@ -74,10 +74,8 @@ public class ActivityOrderSuccess extends BaseActivtiy
 	public void moreEvent(View v)
 	{
 		log.info("more button event...");
-		Intent intent = new Intent();
-		intent.setClass(ActivityOrderSuccess.this, MainTabbarActivity.class);
-		intent.putExtra(MainTabbarActivity.SELECTED_TAB, MainTabbarInfo.getIndexByClass(ActivityFragment.class));		
-		startActivity(intent);
+		MainTabbarActivity.jump(this, ActivityFragment.class, 1);
+ 
 	}
 	@Override
 	public void handle(MispHttpMessage message)

@@ -57,13 +57,14 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/home_scan_to_order_btn"
+            
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
              android:orientation="vertical" >
 
             <Button
-                android:id="@+id/home_scan_to_order_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

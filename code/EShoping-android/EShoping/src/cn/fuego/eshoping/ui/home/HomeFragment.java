@@ -21,6 +21,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import cn.fuego.common.log.FuegoLog;
 import cn.fuego.common.string.StringLengthLimit;
+import cn.fuego.common.util.format.DataTypeConvert;
 import cn.fuego.common.util.validate.ValidatorUtil;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
@@ -80,8 +81,7 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		this.fragmentRes.setImage(R.drawable.tabbar_home_icon);
 		this.fragmentRes.setName(R.string.tabbar_home);
 		this.fragmentRes.setFragmentView(R.layout.home_fragment);
-		this.fragmentRes.getButtonIDList().add(R.id.home_scan_to_order_btn);
-		listViewRes.setListView(R.id.home_main_list);
+ 		listViewRes.setListView(R.id.home_main_list);
 		listViewRes.setClickActivityClass(HomeProductActivity.class);
 		ProductTypeCache.getInstance();
 
@@ -111,6 +111,10 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 
 			}		
 		});
+		View scranView =  view.findViewById(R.id.home_scan_to_order_btn);
+		scranView.setOnClickListener(this);
+
+
 		return view;
 	}
 
@@ -475,10 +479,10 @@ public class HomeFragment extends MispDistinctListFragment implements OnCheckedC
 		        titleView.setText(StringLengthLimit.limitStringLen(product.getName(),10));      
 		        //产品现价
 		        TextView curPrice = (TextView) convertView.findViewById(R.id.home_list_item_curPrice);
-		        curPrice.setText(String.valueOf(getString(R.string.misp_rmb_unit)+product.getPrice()));
+		        curPrice.setText(String.valueOf(getString(R.string.misp_rmb_unit)+DataTypeConvert.float2(product.getPrice())));
 		        //产品原价
 		        TextView oldPrice = (TextView) convertView.findViewById(R.id.home_list_item_oldPrice);
-		        oldPrice.setText(String.valueOf(getString(R.string.misp_rmb_unit)+product.getOriginal_price()));
+		        oldPrice.setText(String.valueOf(getString(R.string.misp_rmb_unit)+DataTypeConvert.float2(product.getOriginal_price())));
 		        oldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG ); 
 		        //产品描述
 		        TextView desp = (TextView) convertView.findViewById(R.id.home_list_item_desp);

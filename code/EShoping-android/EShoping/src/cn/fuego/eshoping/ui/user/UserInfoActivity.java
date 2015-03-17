@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import cn.fuego.eshoping.R;
 import cn.fuego.eshoping.cache.AppCache;
 import cn.fuego.eshoping.ui.MainTabbarActivity;
+import cn.fuego.eshoping.ui.home.HomeFragment;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
 import cn.fuego.misp.constant.MispCommonIDName;
@@ -109,12 +110,12 @@ public class UserInfoActivity extends MispInfoListActivity
 	
 	public void logoutBtnEvent(View v)
 	{
- 		AppCache.getInstance().cleanToken();
-		AppCache.getInstance().cleanUser();
-		//转至主页面
-		Intent intent = new Intent();
-		intent.setClass(this,MainTabbarActivity.class);
-		startActivity(intent);
+ 		AppCache.getInstance().clear();
+ 		//转至主页面
+		
+		MainTabbarActivity.jump(this, HomeFragment.class, 1);
+		this.finish();
+ 
 	}
 	
 	

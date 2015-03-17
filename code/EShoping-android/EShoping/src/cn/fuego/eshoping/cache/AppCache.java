@@ -9,6 +9,7 @@ import cn.fuego.eshoping.webservice.up.model.base.CityJson;
 import cn.fuego.eshoping.webservice.up.model.base.CustomerJson;
 import cn.fuego.eshoping.webservice.up.model.base.UserJson;
 import cn.fuego.eshoping.webservice.up.model.base.ZoneJson;
+import cn.fuego.misp.dao.SharedPreUtil;
 import cn.fuego.misp.service.MemoryCache;
 
 public class AppCache extends MemoryCache
@@ -23,6 +24,13 @@ public class AppCache extends MemoryCache
 	private  CustomerJson customer;
 	
 	private List<CityJson> cityList;
+	
+	
+	public static final String USER_CACHE="user";
+	public static final String CUSTOMER_CACHE="customer";
+	public static final String TOKEN_CACHE="token";
+	
+	
 
 	public boolean isLogined()
 	{
@@ -55,25 +63,51 @@ public class AppCache extends MemoryCache
 		
 	}
 	
+	public void clear()
+	{
+		MemoryCache.setToken(null);
+		user = null;
+		customer = null;
+		SharedPreUtil.getInstance().delete(USER_CACHE);
+		SharedPreUtil.getInstance().delete(CUSTOMER_CACHE);
+		SharedPreUtil.getInstance().delete(TOKEN_CACHE);
+				
+	}
+	
+	public void update(CustomerJson customer)
+	{
+		this.customer = customer;
+		SharedPreUtil.getInstance().put(CUSTOMER_CACHE, customer);
+		load();
+
+	}
+	public void update(String token,UserJson user,CustomerJson customer)
+	{
+ 
+		SharedPreUtil.getInstance().put(USER_CACHE, user);
+		SharedPreUtil.getInstance().put(CUSTOMER_CACHE, customer);
+		SharedPreUtil.getInstance().put(TOKEN_CACHE,token );
+		load();
+
+	}
+	public void load()
+	{
+		this.user =  (UserJson) SharedPreUtil.getInstance().get(USER_CACHE);
+		this.customer = (CustomerJson) SharedPreUtil.getInstance().get(CUSTOMER_CACHE);
+		MemoryCache.setToken((String) SharedPreUtil.getInstance().get(TOKEN_CACHE));
+ 
+	}
+ 
 	public  UserJson getUser()
 	{
 		return user;
 	}
-
-	public  void setUser(UserJson user)
-	{
-		this.user = user;
-	}
-
+ 
 	public  CustomerJson getCustomer()
 	{
 		return customer;
 	}
-
-	public  void setCustomer(CustomerJson customer)
-	{
-		this.customer = customer;
-	}
+ 
 
 	public  void setCityInfo(CityJson city)
 	{
@@ -106,9 +140,6 @@ public class AppCache extends MemoryCache
 		this.positionCityStr = positionCityStr;
 	}
 
-	public void cleanUser()
-	{
-		user=null;
-	}
+	 
 
 }
