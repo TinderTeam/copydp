@@ -31,6 +31,7 @@ typedef enum : NSUInteger {
 #import "FEShopWebServiceManager.h"
 #import "FEMapView.h"
 #import "FEProductNoteCell.h"
+#import "CDCity.h"
 #import <FTCoreText/FTCoreTextView.h>
 
 
@@ -64,7 +65,6 @@ typedef enum : NSUInteger {
 //    [self.view addSubview:_holdTextview1];
     [self.view addSubview:_holdTextview];
     
-    [self initUI];
     [self requestSeller];
 }
 
@@ -84,39 +84,8 @@ typedef enum : NSUInteger {
         
         [self.productShowTableView reloadData];
     }
-//    else if(self.holdTextview1 == coreTextView){
-//
-//        
-//        NSAttributedString *astring = coreTextView.attributedString;
-//        NSString *string = astring.string;
-//        self.sinfo = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@""];
-//        CGSize size = [string boundingRectWithSize:CGSizeMake(self.view.bounds.size.width - 50, 99999) withTextFont:[UIFont systemFontOfSize:16]];
-//        for (NSMutableDictionary *item in _productInfo) {
-//            if ([item[__CELL_TYPE] integerValue] == CELL_SELLER_CONTENT_TEXT) {
-//                [item setObject:@(size.height) forKey:__CELL_HIGHT];
-//                break;
-//            }
-//        }
-//    }
 }
 
-
--(void)initUI{
-    
-//    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn1.frame = CGRectMake(0, 0, 30, 30);
-//    [btn1 setImage:[UIImage imageNamed:@"common_navi_bar_icon_share_rest"] forState:UIControlStateNormal];
-//    UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn2.frame = CGRectMake(0, 0, 30, 30);
-//    [btn2 setImage:[UIImage imageNamed:@"common_navi_bar_icon_favorite_off_rest"] forState:UIControlStateNormal];
-//    
-//    
-//    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithCustomView:btn1];
-//    item1.style = UIBarButtonItemStyleBordered;
-//    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];
-//    item2.style = UIBarButtonItemStyleBordered;
-//    self.navigationItem.rightBarButtonItems = @[item2,item1];
-}
 
 -(void)requestSeller{
     __weak typeof(self) weakself = self;
@@ -159,7 +128,7 @@ typedef enum : NSUInteger {
             [_productInfo addObject:info];
             info = @{__CELL_TYPE:@(CELL_SELLER_TITILE),__CELL_XIB_NAME:@"productSectionTitle",__CELL_HIGHT:@(30),__CELL_CONTENT:FEString(@"购买须知")};
             [_productInfo addObject:info];
-            info = @{__CELL_TYPE:@(CELL_SELLER_NOTE),__CELL_XIB_NAME:@"productNoteCell",__CELL_HIGHT:@(120)};
+            info = @{__CELL_TYPE:@(CELL_SELLER_NOTE),__CELL_XIB_NAME:@"productNoteCell",__CELL_HIGHT:@(90)};
             [_productInfo addObject:info];
             
             weakself.seller = response.seller;
@@ -229,6 +198,11 @@ typedef enum : NSUInteger {
             NSArray *pa = [positon componentsSeparatedByString:@","];
             if (pa.count == 2) {
                 [mapview setPin:CLLocationCoordinate2DMake([pa[1] floatValue], [pa[0] floatValue])];
+            }else{
+                CDCity *city = [FECoreData touchCityByName:FEUserDefaultsObjectForKey(FEShopRegionKey)];
+                CGFloat lon = city.x.floatValue;
+                CGFloat lat = city.y.floatValue;
+                [mapview setPin:CLLocationCoordinate2DMake(lat, lon)];
             }
             
         }else if([_productInfo[indexPath.row][__CELL_TYPE] integerValue] == CELL_SELLER_CONTENT_TEXT){

@@ -81,7 +81,7 @@ return shared##className; \
                                                 [FECoreData saveCoreData];}
 
 
-#define kServerIP               @"120.24.217.173"
+#define kServerIP               @"www.xyof.net"
 #define kServerPort             @"80"
 #define kBasePath               @"/copydp/index.php"
 #define kImagePath              @"/copydp/Public/uploads/img/"

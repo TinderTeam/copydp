@@ -15,6 +15,7 @@
     // Initialization code
     self.descriptionLabel.numberOfLines = 0;
     self.descriptionLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    self.itemImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 -(void)configWithSeller:(FEShopSeller *)seller{

@@ -34,17 +34,17 @@
 -(void)configWithProduct:(FEProduct *)product{
     _product = product;
     self.saleLabel.text = [NSString stringWithFormat:@"%@ %@",FEString(@"已售"),product.current_member];
-    NSArray *imgs = [product.imglist componentsSeparatedByString:@","];
+//    NSArray *imgs = [product.imglist componentsSeparatedByString:@","];
+//    
+//    if (imgs) {
+//        NSMutableArray *mimgs = [NSMutableArray arrayWithArray:imgs];
+//        [mimgs insertObject:kImageURL(product.imgsrc) atIndex:0];
+//        _imageArray = mimgs;//[NSArray arrayWithObjects:product.imgsrc, nil];
+//    }else{
+    _imageArray = [NSArray arrayWithObjects:kImageURL(product.imgsrc), nil];
+//    }
     
-    if (imgs) {
-        NSMutableArray *mimgs = [NSMutableArray arrayWithArray:imgs];
-        [mimgs insertObject:kImageURL(product.imgsrc) atIndex:0];
-        _imageArray = mimgs;//[NSArray arrayWithObjects:product.imgsrc, nil];
-    }else{
-        _imageArray = [NSArray arrayWithObjects:kImageURL(product.imgsrc), nil];
-    }
-    
-    self.pageIndicate.numberOfPages = self.imageArray.count;
+    self.pageIndicate.numberOfPages = 0;//self.imageArray.count;
     [self.imageShowCollectionView reloadData];
 }
 

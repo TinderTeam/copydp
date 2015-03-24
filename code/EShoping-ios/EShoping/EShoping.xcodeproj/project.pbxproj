@@ -371,9 +371,7 @@
 		1467B07B1AB2D7990077E178 /* FEUserModifyRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEUserModifyRequest.m; sourceTree = "<group>"; };
 		1467B07D1AB675350077E178 /* FEQROrderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEQROrderVC.h; sourceTree = "<group>"; };
 		1467B07E1AB675350077E178 /* FEQROrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEQROrderVC.m; sourceTree = "<group>"; };
-		148798791A31489600565491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1487987B1A31489900565491 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		1487987F1A314DAB00565491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		148798811A314DAC00565491 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		148798821A319E9900565491 /* UIFont+AppFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+AppFont.h"; sourceTree = "<group>"; };
 		148798831A319E9900565491 /* UIFont+AppFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+AppFont.m"; sourceTree = "<group>"; };
@@ -1177,7 +1175,6 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
 				"zh-Hans",
 			);
@@ -1429,7 +1426,6 @@
 		1487987A1A31489600565491 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				148798791A31489600565491 /* en */,
 				1487987B1A31489900565491 /* zh-Hans */,
 			);
 			name = Localizable.strings;
@@ -1438,7 +1434,6 @@
 		148798801A314DAB00565491 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1487987F1A314DAB00565491 /* en */,
 				148798811A314DAC00565491 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;

@@ -408,7 +408,7 @@
 //        default:
 //            return 0;
 //    }
-    return 110;
+    return 80;
     
 }
 
@@ -570,9 +570,10 @@
                     
                     NSString *region = FEUserDefaultsObjectForKey(FEShopRegionKey);
                     if (!region) {
-                        FEUserDefaultsSetObjectForKey(fecity.city, FEShopRegionKey);
+                        //默认为温州
+                        FEUserDefaultsSetObjectForKey(@"温州", FEShopRegionKey);
                         FEUserDefaultsSync;
-                        [weakself.regionBarItem setTitle:fecity.city];
+                        [weakself.regionBarItem setTitle:@"温州"];
                     }
                     
                     CDCity *city = [FECoreData touchCityByName:fecity.city];

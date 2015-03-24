@@ -283,7 +283,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.productDatas.count) {
-        return 110;
+        return 80;
     }else{
         return 40;
     }
