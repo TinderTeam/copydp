@@ -16,6 +16,7 @@
 #import "FESellerEvalCell.h"
 #import "FEShopingItemVC.h"
 #import "FEMapView.h"
+#import "CDCity.h"
 #import <FTCoreText/FTCoreTextView.h>
 
 @interface FECTItemDetailVC ()<UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,FTCoreTextViewDelegate>{
@@ -118,6 +119,11 @@
             NSArray *pa = [self.seller.position componentsSeparatedByString:@","];
             if (pa.count == 2) {
                 [mapView setPin:CLLocationCoordinate2DMake([pa[1] floatValue], [pa[0] floatValue])];
+            }else{
+                CDCity *city = [FECoreData touchCityByName:FEUserDefaultsObjectForKey(FEShopRegionKey)];
+                CGFloat lon = city.x.floatValue;
+                CGFloat lat = city.y.floatValue;
+                [mapView setPin:CLLocationCoordinate2DMake(lat, lon)];
             }
             return cell;
         }
@@ -208,7 +214,7 @@
     UIView *hView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)];
     hView.backgroundColor = [UIColor clearColor];
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(3, 0, self.view.bounds.size.width - 6, .5)];
-    line.backgroundColor = [UIColor grayColor];
+    line.backgroundColor = FEColor(239, 239, 244, 1);
     [hView addSubview:line];
     
     FELabel *hLabel = [[FELabel alloc] initWithFrame:CGRectMake(5, 0, hView.bounds.size.width - 20, 30)];

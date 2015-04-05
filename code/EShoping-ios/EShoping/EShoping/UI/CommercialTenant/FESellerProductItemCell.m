@@ -16,6 +16,7 @@
     // Initialization code
     self.productDescriptionLabel.numberOfLines = 0;
     self.productDescriptionLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    self.productImageView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 -(void)configWithProduct:(FEProduct *)product{
@@ -23,7 +24,7 @@
     [self.productImageView sd_setImageWithURL:[NSURL URLWithString:kImageURL(product.imgsrc)]];
     self.productDescriptionLabel.text = product.dscr;
     self.productTitleLabel.text = product.name;
-    self.productPriceLabel.text = product.price;//[NSString priceStringWithNumber:product.price];
+    self.productPriceLabel.text = [NSString priceStringWithNumber:@(product.price.floatValue)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

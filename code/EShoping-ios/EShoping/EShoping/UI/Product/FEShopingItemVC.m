@@ -232,7 +232,7 @@ typedef enum : NSUInteger {
             if (!line) {
                 line = [[UIView alloc] initWithFrame:CGRectMake(10, 0, self.view.bounds.size.width - 20, .5)];
                 line.tag = 2;
-                line.backgroundColor = [UIColor grayColor];
+                line.backgroundColor = FEColor(239, 239, 244, 1);
                 [cell addSubview:line];
             }
         }

@@ -139,7 +139,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_activityList.count) {
-        return 110;
+        return 80;
     }
     return 30;
 }

@@ -311,7 +311,6 @@
 		141546661A163E71004C0500 /* UIColor+Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Theme.m"; sourceTree = "<group>"; };
 		141546671A163E71004C0500 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		141546681A163E71004C0500 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		1415466F1A164818004C0500 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		141546751A1785FE004C0500 /* FEShopingHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEShopingHomeVC.h; sourceTree = "<group>"; };
 		141546761A1785FE004C0500 /* FEShopingHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEShopingHomeVC.m; sourceTree = "<group>"; };
 		141546781A1786C4004C0500 /* FEShopingDiscoverVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEShopingDiscoverVC.h; sourceTree = "<group>"; };
@@ -1418,7 +1417,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				141546201A163A11004C0500 /* Base */,
-				1415466F1A164818004C0500 /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";

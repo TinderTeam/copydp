@@ -34,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"切换城市";
     _city = [NSMutableArray new];
     _allcitys = [FECoreData fetchCity];
     self.edgesForExtendedLayout = UIRectEdgeNone;
