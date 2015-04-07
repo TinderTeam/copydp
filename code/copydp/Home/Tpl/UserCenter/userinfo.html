@@ -60,6 +60,35 @@
 							<span>
 								手机已绑定 {$cellphone}
 							</span>
+							<span onclick ="diag()">
+								<a href="#">修改</a>
+								
+								<script type="text/javascript">
+									function diag()
+									{
+										var str=prompt("手机号码绑定","请输入您的手机号码");
+										if(str)
+										{
+											$.ajax({
+												  type:"post",
+												  url:"__URL__/modifyPhone",
+												  data:"data="+str,
+												  dataType:"html",
+												  error:
+												  function(){
+													  alert("当前ajax操作出错！");
+												  },
+												  success:function(msg){
+												  	alert("您的绑定手机已经更新。");
+													location.reload(); 
+												  }
+											});		
+
+										}
+									}
+								</script>
+								
+							</span>
 						</p>
 						<p>
 							<span>

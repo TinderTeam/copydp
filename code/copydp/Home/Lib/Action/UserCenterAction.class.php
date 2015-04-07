@@ -2,6 +2,24 @@
 // 本类由系统自动生成，仅供测试用途
 class UserCenterAction extends Action {
 
+
+
+	public function modifyPhone($data){
+		$phone=$data;
+		
+		$UserDB= new Model("user");
+		$condition['username']=$_SESSION['login_user'];
+		$userid=$UserDB->where($condition)->getField('user_id');
+		
+		
+		$CustomerDB = new Model("customer");
+		$customerCondition['user_id']=$userid;
+		$customerData['cellphone']=$phone;
+
+		$CustomerDB->where($customerCondition)->save($customerData);
+		$this->ajaxReturn(null, 'Ajax 成功！', 1);
+	}
+
 	public function admire($data){
 	
 		//获取用户名、手机号码、积分

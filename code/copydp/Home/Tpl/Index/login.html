@@ -227,23 +227,27 @@
 											</li>
 											<li>
 												<span class="ws">密码</span>
-												<input class="text foc J_login_password focus {required:true,minlength:6}" style="vertical-align:middle; height: 20px;"  name="password" type="password" tabindex="1" autocomplete="off"/>
-										    <li><span class="ws">激活码</span>
-												<input class="text J_login_username focus" style="vertical-align:middle; height: 20px;"  name="code" type="text" value="" tabindex="2" size="30" autocomplete="off"  placeholder="无激活码请留空"/>											
+												<input id="password" class="text foc J_login_password focus {required:true,minlength:6}" style="vertical-align:middle; height: 20px;"  name="password" type="password" tabindex="1" autocomplete="off"/>
+										    <li>
+												<span class="ws">密码确认</span>
+												<input class="text foc J_login_password focus {required:true,minlength:6,equalTo:'#password'}" style="vertical-align:middle; height: 20px;"  name="passwordconfirm" type="password" tabindex="2" autocomplete="off"/>
+										    
+											<li><span class="ws">激活码</span>
+												<input class="text J_login_username focus" style="vertical-align:middle; height: 20px;"  name="code" type="text" value="" tabindex="3" size="30" autocomplete="off"  placeholder="无激活码请留空"/>											
 											</li>
 											<li>
 												<span class="ws">Email</span>
-												<input idtype="email" class="text J_login_username focus {required:true,email:true} ajaxCheck"  style="vertical-align:middle; height: 20px;"  name="email" type="text" value="" tabindex="3" size="30" autocomplete="off"  placeholder="Email"/>
+												<input idtype="email" class="text J_login_username focus {required:true,email:true} ajaxCheck"  style="vertical-align:middle; height: 20px;"  name="email" type="text" value="" tabindex="4" size="30" autocomplete="off"  placeholder="Email"/>
 												<label class="email-err"></label>
 											</li>
 											<li>
 												<span class="ws">车牌号</span>
-												<input class="text J_login_username focus" style="vertical-align:middle; height: 20px;"  name="car_id" type="text" value="" tabindex="3" size="30" autocomplete="off"  placeholder="车牌号"/>
+												<input class="text J_login_username focus" style="vertical-align:middle; height: 20px;"  name="car_id" type="text" value="" tabindex="5" size="30" autocomplete="off"  placeholder="车牌号"/>
 											
 											</li>											
 											<li>
 												<span class="ws">手机号码</span>
-												<input class="text J_login_username focus {required:true}" style="vertical-align:middle; height: 20px;"   name="cellphone" type="text" value="" tabindex="4" size="30" autocomplete="off"  placeholder="手机号码"/>
+												<input class="text J_login_username focus {required:true}" style="vertical-align:middle; height: 20px;"   name="cellphone" type="text" value="" tabindex="6" size="30" autocomplete="off"  placeholder="手机号码"/>
 								
 											</li>											
 											<li class="J_action">

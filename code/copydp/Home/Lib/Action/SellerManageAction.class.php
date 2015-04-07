@@ -325,7 +325,6 @@ class SellerManageAction extends BaseAction {
 	//搜索
 	public function searchSeller(){
 		if($_SESSION['login_user']!=""){
-		
 		$db = M('view_seller');
         import("ORG.Util.Page"); 
 		//mysql_query("set names utf8");
@@ -333,12 +332,12 @@ class SellerManageAction extends BaseAction {
 		$sellerName=$_GET['seller_name'];
 		$cityName=$_GET['city_name'];
 		$typeID=$_GET['typeID'];
-		trace($typeID,'提示');
+
 		if($sellerID!=''){
 		   $condition['user_id'] = $sellerID;
 		}
 		if($sellerName!=''){
-		   $condition['username'] = $sellerName;
+		   $condition['seller_name'] =array('like','%'.$sellerName.'%'); ;
 		}
 		if($cityName!=''){
 		   $condition['city'] = $cityName;
