@@ -2,7 +2,7 @@
 return array(
 	//'配置项'=>'配置值'
 
-    'SHOW_PAGE_TRACE' =>true, // 显示页面Trace信息
+    'SHOW_PAGE_TRACE' =>false, // 显示页面Trace信息
 	
 	// 添加邮箱配置信息
 	'MAIL_ADDRESS'=>'copydp@fuego.cn', // 邮箱地址
