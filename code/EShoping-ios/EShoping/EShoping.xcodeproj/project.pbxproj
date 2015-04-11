@@ -295,7 +295,6 @@
 		141546461A163A87004C0500 /* FERate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FERate.m; sourceTree = "<group>"; };
 		141546471A163A87004C0500 /* FETextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FETextField.h; sourceTree = "<group>"; };
 		141546481A163A87004C0500 /* FETextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FETextField.m; sourceTree = "<group>"; };
-		141546521A163A98004C0500 /* EShoping-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EShoping-Prefix.pch"; sourceTree = "<group>"; };
 		141546541A163AD3004C0500 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		141546551A163AD3004C0500 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		141546571A163AE1004C0500 /* ESConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESConfig.h; sourceTree = "<group>"; };
@@ -477,6 +476,7 @@
 		14AA2CB31A2842E7005FDA8F /* FEProductTypeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductTypeResponse.m; sourceTree = "<group>"; };
 		14AA2CB51A284A55005FDA8F /* FEProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProduct.h; sourceTree = "<group>"; };
 		14AA2CB61A284A55005FDA8F /* FEProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProduct.m; sourceTree = "<group>"; };
+		14B110F31AD95F32000B759F /* EShoping-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EShoping-Prefix.pch"; sourceTree = "<group>"; };
 		14B52AAB1A3DE3010005F0D7 /* FEProductNoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FEProductNoteCell.h; sourceTree = "<group>"; };
 		14B52AAC1A3DE3010005F0D7 /* FEProductNoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FEProductNoteCell.m; sourceTree = "<group>"; };
 		14B52AAE1A3FC6D20005F0D7 /* CDCustomerUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDCustomerUser.h; sourceTree = "<group>"; };
@@ -693,12 +693,12 @@
 		1415460D1A163A10004C0500 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				141546521A163A98004C0500 /* EShoping-Prefix.pch */,
 				1415460E1A163A10004C0500 /* Info.plist */,
 				1415460F1A163A10004C0500 /* main.m */,
 				1487987A1A31489600565491 /* Localizable.strings */,
 				148798801A314DAB00565491 /* InfoPlist.strings */,
 				143C178B1A5EBC530014CF9B /* ErrorCode.plist */,
+				14B110F31AD95F32000B759F /* EShoping-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
