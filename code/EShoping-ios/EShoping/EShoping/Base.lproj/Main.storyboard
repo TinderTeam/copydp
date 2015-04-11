@@ -1797,6 +1797,9 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TdW-ZX-NNs">
                                                     <rect key="frame" x="85" y="69" width="505" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="kxx-tH-3ly"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1809,12 +1812,18 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="do5-7z-rgc">
                                                     <rect key="frame" x="85" y="87" width="505" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="5QA-gd-38A"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eag-O0-acj">
                                                     <rect key="frame" x="85" y="51" width="505" height="16"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="j9G-gV-HLu"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1939,23 +1948,19 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="webViewCell" id="M1T-CU-IEz">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="webViewCell" textLabel="cLE-U1-RLo" style="IBUITableViewCellStyleDefault" id="M1T-CU-IEz">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M1T-CU-IEz" id="LJD-dK-jEq">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Meb-tw-j39" customClass="FTCoreTextView">
-                                                    <rect key="frame" x="10" y="0.0" width="590" height="44"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cLE-U1-RLo">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Meb-tw-j39" firstAttribute="top" secondItem="LJD-dK-jEq" secondAttribute="top" id="8pd-F9-gBa"/>
-                                                <constraint firstItem="Meb-tw-j39" firstAttribute="leading" secondItem="LJD-dK-jEq" secondAttribute="leading" constant="10" id="99P-GY-Cz1"/>
-                                                <constraint firstAttribute="trailing" secondItem="Meb-tw-j39" secondAttribute="trailing" id="p7n-m3-3Al"/>
-                                                <constraint firstAttribute="bottom" secondItem="Meb-tw-j39" secondAttribute="bottom" id="zTO-q1-lFf"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="mapCell" id="J7e-gm-d0i">
@@ -3279,10 +3284,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kwP-7G-ArN"/>
-        <segue reference="ENo-nj-6Gf"/>
+        <segue reference="Uzw-LT-jJ7"/>
         <segue reference="xxn-GX-vMo"/>
         <segue reference="4Zk-Gs-suD"/>
-        <segue reference="Uzw-LT-jJ7"/>
-        <segue reference="0Eb-pE-8Ut"/>
+        <segue reference="6wJ-6C-7Vo"/>
+        <segue reference="ENo-nj-6Gf"/>
     </inferredMetricsTieBreakers>
 </document>

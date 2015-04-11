@@ -1556,7 +1556,7 @@
 				INFOPLIST_FILE = EShoping/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8eec08ae-b800-4a13-af9b-ea8ee3997343";
+				PROVISIONING_PROFILE = "0b943538-c3ca-4c06-8bc6-a2054e2321eb";
 			};
 			name = Release;
 		};
