@@ -29,6 +29,7 @@
 @property (nonatomic, strong) NSMutableArray *allInfo;
 @property (strong, nonatomic) IBOutlet UIImageView *ShopImageView;
 @property (strong, nonatomic) FTCoreTextView *tview;
+@property (strong, nonatomic) NSString *sellerDes;
 
 @end
 
@@ -38,6 +39,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     FTCoreTextView *textV = [[FTCoreTextView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width - 20, 300)];
+    self.sellerDes = @"";
     [self configCoreText:textV];
     [self.view addSubview:textV];
     textV.delegate = self;
@@ -104,10 +106,12 @@
             return cell;
         }else if(indexPath.section == 1){
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"webViewCell" forIndexPath:indexPath];
-            FTCoreTextView *tview = (FTCoreTextView *)[cell viewWithTag:1];
-            tview.text = self.seller.info;
-            tview.delegate = self;
-            [self configCoreText:tview];
+            cell.textLabel.numberOfLines = 0;
+            cell.textLabel.text = self.sellerDes;
+//            FTCoreTextView *tview = (FTCoreTextView *)[cell viewWithTag:1];
+//            tview.text = self.seller.info;
+//            tview.delegate = self;
+//            [self configCoreText:tview];
             
             
 //            UIWebView *mapView = (UIWebView *)[cell viewWithTag:1];
@@ -244,15 +248,6 @@
 }
 
 
--(void)webViewDidFinishLoad:(UIWebView *)webView{
-    
-    NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '300%'";
-    [webView stringByEvaluatingJavaScriptFromString:str];
-//    [webView sizeToFit];
-//    _webViewHeight = webView.frame.size.height;
-//    [self.infoTableView reloadData];
-}
-
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([sender isKindOfClass:[FESellerProductItemCell class]]) {
@@ -262,16 +257,17 @@
 }
 
 - (void)coreTextViewfinishedRendering:(FTCoreTextView *)coreTextView{
-    if (coreTextView.tag != 1) {
-        NSAttributedString *astring = coreTextView.attributedString;
-        NSString *string = astring.string;
+//    if (coreTextView.tag != 1) {
+    NSAttributedString *astring = coreTextView.attributedString;
+    NSString *string = [astring.string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@""];//astring.string;
+    self.sellerDes = string;
         CGSize size = [string boundingRectWithSize:CGSizeMake(self.view.bounds.size.width, 99999) withTextFont:[UIFont systemFontOfSize:14]];
         //    CGSize textSize = [string boundingRectWithSize:CGSizeMake(self.view.bounds.size.width, 99999)
         //                                                   options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
         //                                                   context:nil].size;
-        _webViewHeight = size.height + 10;
-        [self.infoTableView reloadData];
-    }
+    _webViewHeight = size.height + 10;
+    [self.infoTableView reloadData];
+//    }
 }
 
 /*

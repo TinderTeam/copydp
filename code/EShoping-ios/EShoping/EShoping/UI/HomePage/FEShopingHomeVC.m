@@ -113,8 +113,11 @@
     self.tabBarController.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_home_pressed"];
     [self.regionBarItem setTitle:FEUserDefaultsObjectForKey(FEShopRegionKey)];
     self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:FEString(@"返回") style:UIBarButtonItemStylePlain target:self action:nil];
+    self.searchDisplayController.navigationItem.backBarButtonItem = backButton;
     self.navigationItem.leftBarButtonItem = self.regionBarItem;
     self.navigationItem.rightBarButtonItem = self.messageBarItem;
+    
 }
 
 - (IBAction)qrscan:(id)sender {
@@ -408,7 +411,7 @@
 //        default:
 //            return 0;
 //    }
-    return 80;
+    return 82;
     
 }
 
