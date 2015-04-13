@@ -231,12 +231,7 @@
 											</div>
 											
 											<div class="form-block">
-												<if condition="$pageType eq 'edit'">
-													<img name="img0" src="/copydp/Public/uploads/img/{$seller.img}" alt="请上传活动封面" style="margin-left:90px;height:200px;width:350px;" id="img0">
-												<else/>
-											
-												</if>											
-																							
+												<img id="img0" name="img0" src="/copydp/Public/uploads/img/{$seller.img}" alt="请上传商家图片" style="margin-left:90px;height:200px;width:350px;">											
 											</div> 	
 											
 											<div class="form-block">
@@ -296,9 +291,15 @@
 	<div>
 	
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/uploadPreview.min.js" charset="UTF-8"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script>
+        $(function () {
+            $("#up0").uploadPreview({ Img: "img0"});
+        });
+    </script>
 	<script type="text/javascript">		
 	function typeSelectChange(){
 		var id=$(".selectTarget").val();	

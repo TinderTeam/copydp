@@ -208,7 +208,7 @@
 											</div>				
 											---->
 											<div class="form-block">
-												<span class="label">封面上传：</span>										
+												<span class="label">封面上传：</span>									
 												<input name="img[]" type="file" id="up0" onchange="viewmypic(showimg,this.form.up0);"
 												/>(推荐大小 350*200)										
 												
@@ -216,11 +216,7 @@
 
 											
 											<div class="form-block">
-												<if condition="$productItem['imgsrc'] eq ''">
-													
-												<else/>
-													<img name="img0" src="__PUBLIC__/uploads/img/{$productItem['imgsrc']}" alt="请上传活动封面" style="margin-left:90px;height:200px;width:350px;" id="img0">
-												</if>
+												<img id="img0" name="img0" src="__PUBLIC__/uploads/img/{$productItem['imgsrc']}" alt="请上传产品照片" style="margin-left:90px;height:200px;width:350px;">
 											</div> 
 											<!---
 											<div class="form-block">
@@ -268,10 +264,15 @@
 	</div>
 	
 	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/uploadPreview.min.js" charset="UTF-8"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/umeditor.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
-	
+	<script>
+        $(function () {
+            $("#up0").uploadPreview({ Img: "img0"});
+        });
+    </script>
 	<script type="text/javascript">	
 	   //实例化编辑器
 		var um = UM.getEditor('editor');

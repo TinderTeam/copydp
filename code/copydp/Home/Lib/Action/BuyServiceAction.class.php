@@ -222,7 +222,7 @@ class BuyServiceAction extends BaseAction {
     	$grade = $dbCustomer->where($IDCondition)->getField('grade');
     	$errorCode = SUCCESS;
     	//购买商品校验
-    	if($privilege!="普通")
+    	if(($privilege!="普通")&&($privilege!= null))
     	{
     		if($grade=="VIP"){
     			$errorCode = CLIENT_VERSION_LOW;
@@ -297,7 +297,7 @@ class BuyServiceAction extends BaseAction {
 			$svip_product_id = "";
 			foreach ($SVIPIDList as $SVIPID)
 			{
-				if("普通" != $SVIPID)
+				if(("普通" != $SVIPID)&&(null != $SVIPID))
 				{
 					$svip_product_id = $SVIPID;
 					break;
