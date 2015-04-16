@@ -151,10 +151,8 @@
 						//查询子类列表
 						$fatherTypeCondition['father_id']=$typeRoot;
 						$subTypeList=$typeDB->where($fatherTypeCondition)->getField('type_id',true);
-						for($i=0;$i<count($subTypeList);$i++){
-							$TypeFilterCondition['type_id'] = $subTypeList[$i];
-						}
-						$TypeFilterCondition['type_id'] = $typeRoot;
+						array_push($subTypeList,$typeRoot);
+						$TypeFilterCondition['type_id']=array('in',$subTypeList);
 						$TypeFilterCondition['_logic'] = "OR";
 						$productFilter['_complex']=$TypeFilterCondition;
 					}else{
