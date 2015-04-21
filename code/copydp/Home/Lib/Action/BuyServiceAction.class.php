@@ -201,8 +201,8 @@ class BuyServiceAction extends BaseAction {
         //显示订单列表
         $viewOrder = M('view_order');
         $condition['customer_id'] = $userID;
-        $orderCount = $viewOrder->where($condition)->count();
-        $orderList = $viewOrder->where($condition)->select();
+        $orderCount = $viewOrder->where($condition)->where('order_status="已下单" OR order_status="已取消" OR order_status="已使用" OR order_status="完成" OR order_status="已过期"')->count();
+        $orderList = $viewOrder->where($condition)->where('order_status="已下单" OR order_status="已取消" OR order_status="已使用" OR order_status="完成" OR order_status="已过期"')->select();
         
         $rsp['errorCode'] = SUCCESS;
         $rsp['orderList'] = $orderList;
@@ -459,8 +459,9 @@ class BuyServiceAction extends BaseAction {
     
         $order = M('order');
         $condition['order_id'] = $orderInfo['orderID'];
-
-        if($order->where($condition)->delete())
+        $data['order_status']="已作废";
+        
+        if($order->where($condition)->save($data))
         {
             $rsp['errorCode'] = SUCCESS;
             return  $rsp;

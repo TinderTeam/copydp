@@ -149,9 +149,8 @@ class SellerCenterAction extends Action {
 		$condition1['order_time']=array('LT',date('Y-m-d H:i:s',time()-3600*24*30));			//判断截至时间小于当前时间的条件
 		$order = M('order');
 		$data['order_status']="已过期";
-		$order->where($condition1)->save($data);//更新订单状态
-	}
-	
+		$order->where($condition1)->where('order_status="已下单"')->save($data);//更新订单状态
+	}	
 	
 	
 	public function orderManage($filter_type=0){
