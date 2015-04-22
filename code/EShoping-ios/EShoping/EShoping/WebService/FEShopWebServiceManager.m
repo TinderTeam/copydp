@@ -164,14 +164,14 @@ DEFINE_WEBSERVICE_METHOD_FOR_CLASS(communityReplyTopic, FECommunityReplyTopicReq
 }
 
 -(void)showerror:(NSError *)error{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"EShoping" message:[NSString stringWithFormat:@"%@",error.localizedDescription] delegate:nil cancelButtonTitle:FEString(@"OK") otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kAppName message:@"网络连接错误" delegate:nil cancelButtonTitle:FEString(@"确定") otherButtonTitles:nil];
     [alert show];
 }
 
 -(void)showerrorResponse:(FEBaseResponse *)response{
     if (response.result.errorCode.integerValue != 0) {
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:[self getErrorCode:response.result.errorCode.stringValue] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误" message:[self getErrorCode:response.result.errorCode.stringValue] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
     }
 }

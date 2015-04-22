@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ttg-6I-rzP">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ttg-6I-rzP">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -966,7 +966,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="110" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rOp-Ln-7Dw" customClass="FETableView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="nonActivityCell" rowHeight="30" id="ugU-dP-Wyt">
@@ -1071,10 +1071,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rOp-Ln-7Dw" firstAttribute="leading" secondItem="tfz-Sz-cu7" secondAttribute="leading" id="CXh-k0-K4d"/>
-                            <constraint firstAttribute="bottom" secondItem="rOp-Ln-7Dw" secondAttribute="bottom" id="IDp-bP-pql"/>
-                            <constraint firstItem="rOp-Ln-7Dw" firstAttribute="top" secondItem="tfz-Sz-cu7" secondAttribute="top" id="VAL-dk-AWG"/>
-                            <constraint firstAttribute="trailing" secondItem="rOp-Ln-7Dw" secondAttribute="trailing" id="ir9-Wu-egP"/>
+                            <constraint firstItem="rOp-Ln-7Dw" firstAttribute="top" secondItem="tfz-Sz-cu7" secondAttribute="top" id="8Up-SD-auh"/>
+                            <constraint firstItem="rOp-Ln-7Dw" firstAttribute="bottom" secondItem="XcA-Lq-1z2" secondAttribute="top" id="Epe-z4-2hx"/>
+                            <constraint firstAttribute="trailing" secondItem="rOp-Ln-7Dw" secondAttribute="trailing" id="keU-9f-TM8"/>
+                            <constraint firstItem="rOp-Ln-7Dw" firstAttribute="leading" secondItem="tfz-Sz-cu7" secondAttribute="leading" id="nF9-99-wIw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qqo-rO-aEA"/>
