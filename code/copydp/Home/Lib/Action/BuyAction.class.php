@@ -147,7 +147,6 @@ class BuyAction extends BuyServiceAction {
 	    $orderInfo['order_type'] = $req->order_type;
 	    $this->log(json_encode($orderInfo));
 	    $createOrderResult = parent::CreateOrderService($orderInfo);
-	
 	    $errorCode = $createOrderResult['errorCode'];
 	    if($createOrderResult['productOrder']==false)
 	    {

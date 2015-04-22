@@ -219,7 +219,17 @@
 											</div>
 											<div class="form-block">
 												<span class="label">地理坐标：</span>
-												<p>请点击地图拾取坐标，当前坐标：(<span id="x-value">0</span>,<span id="y-value">0</span>)</p>
+												<?php
+
+													if($seller['position']!=null){
+														$arr = explode(",",$seller['position']);
+													}else{
+														$arr[0]='0';
+														$arr[1]='0';
+													}
+													
+												?>
+												<p>请点击地图拾取坐标，当前坐标：(<span id="x-value">{$arr[0]}</span>,<span id="y-value">{$arr[1]}</span>)</p>
 												<div id="allmap" class="img map"></div>												
 											</div>
 											
@@ -251,7 +261,7 @@
 										
 											<input id="btnAdd" type="button" value="提交审批" class="Hide"/>
 
-											<input id="position" name="position" type="hidden" class="Hide"/>
+											<input id="position" name="position" type="hidden" class="Hide" value="{$seller['position']}"/>
 											<button type="button" class="form-btn submit-btn">提交审批</button>
 										</strong> 
 									</div><!--提交区域-->

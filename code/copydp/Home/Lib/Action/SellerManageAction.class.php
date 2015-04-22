@@ -127,8 +127,9 @@ class SellerManageAction extends BaseAction {
 		}
 		
 		//load seller list
-		$sellerdb= M('view_seller');		
-		$sellerInfo=$sellerdb->select();
+		$sellerdb= M('view_seller');
+		$condition['status'] = "正常";		
+		$sellerInfo=$sellerdb->where($condition)->select();
 		trace($info,'load seller list. list='.$sellerInfo);
 		
 		//log
@@ -315,6 +316,18 @@ class SellerManageAction extends BaseAction {
 			$seller=$sellerDB->where($sellerIdCondition)->select();
 			$this->assign("seller",$seller[0]);
 		}
+// 		if(""==$seller['position'])
+// 		{
+// 			$xPosition = 0;
+// 			$yPosition = 0;
+// 		}else{
+// 			$arr = explode(",",$seller['position']);
+// 			$xPosition = $arr[0];
+// 			$yPosition = $arr[1];
+// 		}
+// 		echo $seller['position'];
+// 		echo $xPosition = $arr[0];
+// 		echo $yPosition = $arr[1];
 		$this->assign("pageType",$pageType);
 		$this->assign("sellerID",$sellerID);
 		$this->display("sellerAdd");
@@ -449,8 +462,10 @@ class SellerManageAction extends BaseAction {
 						$errMsg=($upload->getErrorMsg());						
 					}else{  
 						//上传成功，获取上传信息  
-						$info = $upload->getUploadFileInfo();  
-						$data2['img']=$info[0]['savename'];					
+						$info = $upload->getUploadFileInfo();  				
+					}
+					if($info[0]['savename']!=""){
+						$data2['img']=$info[0]['savename'];
 					}    					
 					$seller = M('seller');	
 					$data2['seller_name']=$_POST['seller_name'];					

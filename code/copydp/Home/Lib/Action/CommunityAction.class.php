@@ -127,7 +127,7 @@ class CommunityAction extends CommunityServiceAction {
 		if($_SESSION['login_user']!=""){
 			if($_POST['type']=="edit"){
 				$communityDB=M('community');	
-				$condition['conmmunity_id']=$_POST['communityID'];			
+				$condition['community_id']=$_POST['communityID'];			
 				$Data['context']=$_POST['info'];
 				$Data['title']=$_POST['title'];	
 				$Data['datetime']=date('Y-m-d H:i:s',time());			
@@ -147,7 +147,8 @@ class CommunityAction extends CommunityServiceAction {
 				$Data['community_type']=$_POST['community_type'];			
 				$Data['customer_id']=$user_id;
 				$communityDB->add($Data);	
-				$this->display('community');
+				$this->assign("jumpUrl","__APP__/Community/community");
+				$this->success("操作成功");
 			}
 			
 		}else{

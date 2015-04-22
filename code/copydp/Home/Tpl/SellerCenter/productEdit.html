@@ -78,6 +78,8 @@
 										$product = M('product');
 										$productIDCondition['product_id']=$productID;
 										$productItem=$product->where($productIDCondition)->find();
+										$productNoticeDB = M('product_notice');
+										$productNotice = $productNoticeDB->where($productIDCondition)->find();
 									}
 								?>
 							<input name="product_id" style="display:none" value="{$productID}"/>
@@ -105,19 +107,19 @@
 											<div class="form-block">
 												<span class="label">预约信息：</span>
 												<input type="text" class="form-txt form-txt-l" 
-												 value="{$productItem['orderinfo']}"   name="orderinfo">											
+												 value="{$productNotice['orderinfo']}"   name="orderinfo">											
 											</div>
 											
 											<div class="form-block">
 												<span class="label">规则提醒：</span>
 												<input type="text" class="form-txt form-txt-l" 
-												 value="{$productItem['rule']}" name="rules"/>											
+												 value="{$productNotice['rule']}" name="rules"/>											
 											</div>
 											
 											<div class="form-block">
 												<span class="label">温馨提示：</span>
 												<input type="text" class="form-txt form-txt-l" 
-												 value="{$productItem['warning']}"   name="warning"/>											
+												 value="{$productNotice['warning']}"   name="warning"/>											
 											</div>
 
 											
@@ -132,7 +134,19 @@
 												?>
 																										
 												<select class="selectTarget3 span-select"  onchange="selectChange(3)">
-													<option  value="">请选择类型</option>
+													<?php
+														if(!$newProduct){
+															$showfathercondition['type_id'] = $productItem['type_id'];
+															$showfathertype=$productType->where($showfathercondition)->find();
+															$showfathertypeid=$showfathertype['father_id'];
+															$showfathercondition['type_id'] = $showfathertypeid;
+															$showfathertype=$productType->where($showfathercondition)->find();
+															print('<option  value="'.$productItem['type_id'].'">'.$showfathertype['type_name'].'</option>');
+														}else{
+															print('<option  value="">请选择类型</option>');
+														}
+													?>
+												
 												<foreach name='type' item='mainType'>
 													<option value="{$mainType.type_id}">{$mainType.type_name}</option>
 												</foreach>											
@@ -142,7 +156,16 @@
 													$all_type=$productType->select();
 												?>
 												<select id="type_id3" name="type_id" class="span-select">
-													<option  selected="selected" value="">请选择子类型</option></span>
+													<?php
+														if(!$newProduct){
+															$showsoncondition['type_id'] = $productItem['type_id'];
+															$showsontype=$productType->where($showsoncondition)->find();
+															print('<option  value="'.$productItem['type_id'].'">'.$showsontype['type_name'].'</option>');
+														}else{
+															print('<option  selected="selected" value="">请选择子类型</option></span>');
+														}
+													?>
+
 													<foreach name='all_type' item='subtype'>
 														<if condition="$subtype.father_id eq 0">
 															<option class="showOption3" value="{$subtype.type_id}">

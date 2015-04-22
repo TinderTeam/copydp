@@ -78,9 +78,10 @@ class SellerCenterAction extends Action {
         }else{  
             //上传成功，获取上传信息  
             $info = $upload->getUploadFileInfo();  
-			$data2['imgsrc']=$info[0]['savename'];
         }    
-        
+        if($info[0]['savename']!=""){
+			$data2['imgsrc']=$info[0]['savename'];
+        }
 		//获取商家ID
 		$userIDCondition['username'] = $_SESSION['login_user'];
 		$user = M('user');
